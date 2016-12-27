@@ -1,3 +1,4 @@
+package entity;
 public class bAuthor {
 
 	Book authors;

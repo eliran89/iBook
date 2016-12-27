@@ -1,5 +1,9 @@
 package boundry;
 public class editorGUI extends readerGUI {
+	public editorGUI(String role , String Name)
+	{
+		super(role, Name);
+	}
 
 	public void checkReview() {
 		// TODO - implement editorGUI.checkReview

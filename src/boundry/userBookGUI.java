@@ -1,5 +1,8 @@
 package boundry;
-public class userBookGUI extends MainWindowGUI {
+
+import javax.swing.JPanel;
+
+public class userBookGUI extends JPanel {
 
 	public void orderBook() {
 		// TODO - implement userBookGUI.orderBook

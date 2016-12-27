@@ -1,33 +1,34 @@
+package entity;
+
 public class User {
-
-	private String userName;
+	private String username;
 	private String password;
-	private String privilage;
-	private fType status;
-
-	public void getPrivilage() {
-		// TODO - implement User.getPrivilage
-		throw new UnsupportedOperationException();
+	private int privilege;
+	public User(String usernam,String password,int privilege)
+	{
+		super();
+		this.username=username;
+		this.password=password;
+		this.privilege=privilege;
 	}
-
-	public void create() {
-		// TODO - implement User.create
-		throw new UnsupportedOperationException();
+	public User(String username,String password)
+	{
+		super();
+		this.username= username;
+		this.password= password;
+		this.privilege=0;
 	}
-
-	public void setDetails() {
-		// TODO - implement User.setDetails
-		throw new UnsupportedOperationException();
+	public User()
+	{
+		super();
+		this.username=null;
+		this.password=null;
+		this.privilege=0;
 	}
-
-	public void setPrivilege() {
-		// TODO - implement User.setPrivilege
-		throw new UnsupportedOperationException();
-	}
-
-	public void changeFtype() {
-		// TODO - implement User.changeFtype
-		throw new UnsupportedOperationException();
-	}
-
+	public String getUsername(){return this.username;}
+	public String getpassword(){return this.password;}
+	public int getprivilege(){return this.privilege;}
+	public void setUsername(String username){this.username=username;}
+	public void setPassword(String password){this.password=password;}
+	public void setprivilege(int privilege){this.privilege=privilege;}
 }

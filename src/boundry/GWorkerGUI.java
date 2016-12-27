@@ -1,5 +1,9 @@
 package boundry;
 public abstract class GWorkerGUI extends editorGUI {
+	public GWorkerGUI(String role , String Name)
+	{
+		super(role, Name);
+	}
 
 	public void addBook() {
 		// TODO - implement GWorkerGUI.addBook

@@ -1,6 +1,10 @@
-import boundry.GWorkerGUI;
+package boundry;
 
 public class managerGUI extends GWorkerGUI {
+	public managerGUI(String role , String Name)
+	{
+		super(role, Name);
+	}
 
 	public void suspendBook() {
 		// TODO - implement managerGUI.suspendBook

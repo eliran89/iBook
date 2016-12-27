@@ -1,5 +1,9 @@
 package boundry;
 public class LWorkerGUI extends GWorkerGUI {
+	public LWorkerGUI(String role , String Name)
+	{
+		super(role, Name);
+	}
 
 	public void editReaderDetails() {
 		// TODO - implement LWorkerGUI.editReaderDetails

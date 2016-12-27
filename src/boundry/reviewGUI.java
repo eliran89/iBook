@@ -1,5 +1,8 @@
 package boundry;
-public class reviewGUI extends MainWindowGUI {
+
+import javax.swing.JPanel;
+
+public class reviewGUI extends JPanel {
 
 	public void getReview() {
 		// TODO - implement reviewGUI.getReview

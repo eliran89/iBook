@@ -1,5 +1,5 @@
 package controller;
-import reviews;
+
 
 public class reviewController {
 
@@ -8,10 +8,6 @@ public class reviewController {
 		throw new UnsupportedOperationException();
 	}
 
-	public reviews getReview() {
-		// TODO - implement reviewController.getReview
-		throw new UnsupportedOperationException();
-	}
 
 	public void checkReview() {
 		// TODO - implement reviewController.checkReview
@@ -43,10 +39,6 @@ public class reviewController {
 		throw new UnsupportedOperationException();
 	}
 
-	public reviews newReview() {
-		// TODO - implement reviewController.newReview
-		throw new UnsupportedOperationException();
-	}
 
 	public void makeVisible() {
 		// TODO - implement reviewController.makeVisible

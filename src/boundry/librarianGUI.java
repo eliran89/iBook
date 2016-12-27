@@ -1,5 +1,9 @@
 package boundry;
 public class librarianGUI extends LWorkerGUI {
+	public librarianGUI(String role , String Name)
+	{
+		super(role, Name);
+	}
 
 	public void scopeUpdate() {
 		// TODO - implement librarianGUI.scopeUpdate

@@ -1,19 +1,9 @@
 package boundry;
-public class InterestedReaderGUI extends MainWindowGUI {
 
-	public void reviewSearch() {
-		// TODO - implement InterestedReaderGUI.reviewSearch
-		throw new UnsupportedOperationException();
+public class InterestedReaderGUI extends MainWindowGUI{
+	public InterestedReaderGUI(String role , String Name) {
+		super(role , Name);
 	}
 
-	public void displayResults() {
-		// TODO - implement InterestedReaderGUI.displayResults
-		throw new UnsupportedOperationException();
-	}
-
-	public void chooseReview() {
-		// TODO - implement InterestedReaderGUI.chooseReview
-		throw new UnsupportedOperationException();
-	}
 
 }

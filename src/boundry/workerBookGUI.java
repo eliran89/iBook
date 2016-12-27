@@ -1,5 +1,8 @@
 package boundry;
-public class workerBookGUI extends MainWindowGUI {
+
+import javax.swing.JPanel;
+
+public class workerBookGUI extends JPanel {
 
 	public void addBook() {
 		// TODO - implement workerBookGUI.addBook

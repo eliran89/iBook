@@ -1,6 +1,11 @@
 package boundry;
-public class readerGUI extends InterestedReaderGUI {
 
+public class readerGUI extends InterestedReaderGUI {
+	
+	public readerGUI(String role , String Name)
+	{
+		super(role, Name);
+	}
 	public void makeReview() {
 		// TODO - implement readerGUI.makeReview
 		throw new UnsupportedOperationException();
