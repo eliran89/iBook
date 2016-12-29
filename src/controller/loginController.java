@@ -1,5 +1,6 @@
 package controller;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,7 +41,7 @@ public class loginController {
 			i=Integer.parseInt((usel.get(2)));
 			use.setprivilege(i);
 			System.out.println(name);
-			InterestedReaderGUI mainG;
+			InterestedReaderGUI mainG = null;
 			if(i == 6)
 				mainG = new managerGUI("Manager",name);
 			else if(i == 5)
@@ -61,13 +62,5 @@ public class loginController {
 			mainG.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		}
 	}
-		static public void logout(){
-			
-			LoginGUI log = new LoginGUI();
-				log.setSize(550,320);
-				log.setVisible(true);
-			    log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			
-
-	}
+		
 }

@@ -10,27 +10,54 @@ import com.mysql.jdbc.ResultSet;
 import simpleChat.ClientConsole;
 import simpleChatCommon.ChatIF;
 import client.IBookClient;
-import entity.User;
+import entity.*;
 
 public class DBController {
 	static public ArrayList<String> rs = null;
 	static public volatile Boolean allowToProceed = false;
 	static private String host;
 	static private int port;
-	//static public  IBookClient client;
 	ClientConsole chat;
+	
+	
+	/**Constractor*/
 	public DBController(String host , int port)
 	{
 		this.host = host;
 		this.port = port;
 	}
+	/**END Constractor*/
 	
+	
+	/**getFromDB General*/
+	
+	static public ArrayList<String> getFromDB(String query){
+		try {
+			rs = null;
+			allowToProceed = false;
+			ClientConsole chat= new ClientConsole(host, port);
+
+			ClientConsole.accept(query);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		while(allowToProceed == false);	
+		return rs;
+		
+	}
+	/**END getFromDB General*/
+	
+	
+	/**getFromDB for User*/
 	static public ArrayList<String> getFromDB(User use){
 		User res= new User();
 		try {
 			rs = null;
 			allowToProceed = false;
 			ClientConsole chat= new ClientConsole(host, port);
+
 			ClientConsole.accept("select * from user where username = '"+ use.getUsername()+"' and"
 					+ " password = '"+use.getpassword()+"'");
 
@@ -53,16 +80,18 @@ public class DBController {
 		System.out.println("did not get a user");
 		return null;
 	}
+	/**END getFromDB for User*/
 	
+	
+	
+    /**existsInDB for User*/
 	static public Boolean existsInDB(User use) throws SQLException{
-		//Boolean bool = false;
 		Boolean bool;
 		try {
-			
-			//ClientConsole.client.openConnection();
 			ClientConsole chat= new ClientConsole(host, port);
 			rs = null;
 			allowToProceed = false;
+
 			ClientConsole.accept("select * from user where username = '"+ use.getUsername()+"' and"
 					+ " password = '"+use.getpassword()+"'");
 			
@@ -87,6 +116,40 @@ public class DBController {
 		
 		return bool;
 	}
+	/**END existsInDB for User*/
+	
+	
+	/**exitsInDB General*/
+	static public Boolean existsInDB(String query) throws SQLException{
+		Boolean bool;
+		try {
+			ClientConsole chat= new ClientConsole(host, port);
+			rs = null;
+			allowToProceed = false;
+			ClientConsole.accept(query);	
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		while(allowToProceed == false);	
+		
+		if( rs == null)
+		{
+			System.out.println("rs is: null");
+			bool = false;
+		}
+		else
+		{
+			bool = true;
+			System.out.println("rs is: "+rs.toString());
+		}
+			
+		
+		return bool;
+	}
+	/**END exitsInDB General*/
+	
+	
 
 }
