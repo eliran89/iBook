@@ -1,19 +1,15 @@
 package simpleChat;
 
+import java.io.IOException;
+
 // This file contains material supporting section 3.7 of the textbook:
 // "Object Oriented Software Engineering" and is issued under the open-source
 // license found at www.lloseng.com 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.SQLException;
 
 import javax.swing.JFrame;
 
 import boundry.LoginGUI;
-
-import com.mysql.jdbc.ResultSet;
 
 import client.IBookClient;
 import simpleChatCommon.ChatIF;
@@ -135,9 +131,8 @@ public class ClientConsole implements ChatIF
     {
       host = "localhost";
     }
-    //ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
     
-    
+
     dbhandler = new DBController(host,DEFAULT_PORT);
     LoginGUI log = new LoginGUI();
 	log.setSize(550,320);

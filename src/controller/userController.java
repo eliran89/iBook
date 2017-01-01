@@ -1,17 +1,14 @@
 package controller;
 
+
+
 import javax.swing.JFrame;
 
 import boundry.LoginGUI;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+
 
 public class userController {
-    @FXML
-    private Button lgoBtn;
 
-    @FXML
 	static public void logout(){
     	LoginGUI.err = false;
 		LoginGUI log = new LoginGUI();

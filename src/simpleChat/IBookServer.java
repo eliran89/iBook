@@ -11,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.ResultSet;
+import com.mysql.jdbc.ResultSetMetaData;
 
 import dbSql.mysqlConnection;
 import ocsf.server.*;
@@ -65,30 +66,46 @@ public class IBookServer extends AbstractServer
 	  
 	  	//ResultSet queryAns;
 	    System.out.println("Message received: " + msg + " from " + client);
-	    ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
-	    ArrayList<String> result1 = null;
-	    //result1.add(null);
-	    try{
-	    	//System.out.println("server: "+queryAns);
-	    	if(queryAns.next());{
-	    		String res = queryAns.getString(1);//+" \t " +queryAns.getString(2)+"\t"+queryAns.getString(3);
-	    		result1 = new ArrayList<String>();
-		    	result1.add(res);
-		    	res = queryAns.getString(2);
-		    	result1.add(res);
-		    	res = queryAns.getString(3);
-		    	result1.add(res);
-		     	System.out.println("server result:" + result1.toString());
-	    	}
+	    String query = msg.toString();
+	    if(query.contains("select"))
+	    {
+	    	ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
+		    ArrayList<String> result1 = null;
+		    //result1.add(null);
+	
+		    try{
 
-	    }catch(Exception e){
-	    	
-	    	e.getStackTrace();}
-	    try {
-			client.sendToClient(result1);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		    	ResultSetMetaData rsmd = (ResultSetMetaData) queryAns.getMetaData();
+		    	int columnsNumber = rsmd.getColumnCount();
+		    	
+		    	while(queryAns.next())
+		    	{
+		    		if (result1 == null)
+		    			result1 = new ArrayList<String>();
+		    		for(int i = 1;i <= columnsNumber ; i++)
+		    		{
+		    			String res = queryAns.getString(i);
+		    			result1.add(res);
+		    		}
+		    		
+		    	}
+		    	//System.out.println("server result:" + result1.toString() +"number of collumns = "+columnsNumber);
+		    	queryAns.close();
+		     	client.sendToClient(result1);
+		    	}
+		    catch(Exception e){
+		    	
+		    	e.getStackTrace();}
+		    try {
+				client.sendToClient(result1);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+	    }
+	    else
+	    {
+	    	ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
+	    }
 	    
 	  }
   
