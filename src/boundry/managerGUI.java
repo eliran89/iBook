@@ -1,9 +1,16 @@
 package boundry;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+
 public class managerGUI extends GWorkerGUI {
-	public managerGUI(String role , String Name)
-	{
-		super(role, Name);
+	public managerGUI( String name , String role) {
+		
+		super(name,role);
+		
+
 	}
 
 	public void suspendBook() {

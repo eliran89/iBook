@@ -15,8 +15,11 @@ import entity.User;
 
 public class loginController {
 	
-	private static User use;
+	public static User use;
 	private static ArrayList<String> usel;
+	public static MainWindowGUI mainG = null;
+	
+	
 	static public void login(String username , String password) throws SQLException{
 		Boolean bool;
 		String name = null;
@@ -41,21 +44,36 @@ public class loginController {
 			i=Integer.parseInt((usel.get(2)));
 			use.setprivilege(i);
 			System.out.println(name);
-			InterestedReaderGUI mainG = null;
+			
 			if(i == 6)
-				mainG = new managerGUI("Manager",name);
+			{
+				mainPanel panel =new managerGUI(name,"Manager");
+				mainG = new MainWindowGUI(panel);
+			}
 			else if(i == 5)
-				mainG = new librarianGUI("Librarian",name);
+			{
+				mainPanel panel =new librarianGUI(name,"Librarian");
+				mainG = new MainWindowGUI(panel);
+			}
 			else if(i == 4)
-				mainG = new LWorkerGUI("Library worker",name);
+			{
+				mainPanel panel =new LWorkerGUI(name,"Library Worker");
+				mainG = new MainWindowGUI(panel);
+			}
 			else if(i == 3)
-				mainG = new editorGUI("Editor",name);
+			{
+				mainPanel panel =new editorGUI(name,"Editor");
+				mainG = new MainWindowGUI(panel);
+			}
 			else if(i == 2)
-				mainG = new readerGUI("Reader",name);
+			{
+				mainPanel panel =new readerGUI(name,"Reader");
+				mainG = new MainWindowGUI(panel);
+			}
 			else
 			{
-				//DBController.getFromDB(String sql)
-				mainG = new InterestedReaderGUI("Interested Reader",name);
+				mainPanel panel =new InterestedReaderGUI(name,"InterestedReader");
+				mainG = new MainWindowGUI(panel);
 			}
 			mainG.setSize(1000,900);
 			mainG.setVisible(true);

@@ -31,7 +31,7 @@ public class reviewGUI extends mainPanel {
 	public static int n = 0;
 	private String[] columnHeader = {"Book Name","Review Name","Reviewer"};
 	public static String[][] data;
-	public static int row = -1;
+	private static int row = -1;
 	
 	public reviewGUI(String name,String role) {
 		
@@ -185,6 +185,7 @@ public class reviewGUI extends mainPanel {
 
 	public void displayReview(String text) {
 		JTextPane txtpnFds = new JTextPane();
+		txtpnFds.setEditable(false);
 		txtpnFds.setText(text);
 		txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtpnFds.setBounds(206, 252, 439, 228);

@@ -1,8 +1,14 @@
 package boundry;
-public class editorGUI extends readerGUI {
-	public editorGUI(String role , String Name)
-	{
-		super(role, Name);
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+
+public class editorGUI extends mainPanel {
+	public editorGUI( String name , String role) {
+		super(name,role);
+		
 	}
 
 	public void checkReview() {

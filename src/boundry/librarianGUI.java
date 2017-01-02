@@ -1,8 +1,14 @@
 package boundry;
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+
 public class librarianGUI extends LWorkerGUI {
-	public librarianGUI(String role , String Name)
-	{
-		super(role, Name);
+	public librarianGUI( String name , String role) {
+		super(name,role);
+		
 	}
 
 	public void scopeUpdate() {

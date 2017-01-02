@@ -65,7 +65,7 @@ public class IBookServer extends AbstractServer
   {
 	  
 	  	//ResultSet queryAns;
-	    System.out.println("Message received: " + msg + " from " + client);
+	   // System.out.println("Message received: " + msg + " from " + client);
 	    String query = msg.toString();
 	    if(query.contains("select"))
 	    {

@@ -1,3 +1,5 @@
+package entity;
+
 public class periodicReader extends reader {
 
 	private periodicType pType;

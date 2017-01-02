@@ -1,8 +1,14 @@
 package boundry;
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+
 public class LWorkerGUI extends GWorkerGUI {
-	public LWorkerGUI(String role , String Name)
-	{
-		super(role, Name);
+	public LWorkerGUI( String name , String role) {
+		super(name,role);
+		
 	}
 
 	public void editReaderDetails() {

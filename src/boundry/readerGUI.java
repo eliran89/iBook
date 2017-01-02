@@ -1,10 +1,16 @@
 package boundry;
 
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+
 public class readerGUI extends InterestedReaderGUI {
 	
-	public readerGUI(String role , String Name)
-	{
-		super(role, Name);
+	public readerGUI( String name , String role) {
+		super(name,role);
+		
+	
 	}
 	public void makeReview() {
 		// TODO - implement readerGUI.makeReview

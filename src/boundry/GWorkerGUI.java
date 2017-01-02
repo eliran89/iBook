@@ -1,8 +1,15 @@
 package boundry;
+
+import java.awt.Color;
+import java.awt.Font;
+
+import javax.swing.JLabel;
+
 public abstract class GWorkerGUI extends editorGUI {
-	public GWorkerGUI(String role , String Name)
-	{
-		super(role, Name);
+	public GWorkerGUI( String name , String role) {
+		super(name,role);
+		
+
 	}
 
 	public void addBook() {
