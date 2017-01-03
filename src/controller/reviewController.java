@@ -30,14 +30,14 @@ public class reviewController {
 		
 		/**Search by Keywords*/
 		if(type.equals("Key Word"))
-			info = DBController.getFromDB("select `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
+			info = DBController.getFromDB("select distinct `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
 					+"from reviews , book ,bkey"
 					+ " where reviews.BookID = book.bookID and book.bookID = bkey.bookID and bkey.Word like '%"+item+"%' and reviews.visible =1");
 		
 		/**build the basic panel*/
 		reviewGUI panel;
 		
-		/**if his an interested reader add it to the title*/
+		/**if his an interested reader add it to the title*/ 
 		if(loginController.use.getprivilege() == 1)
 			panel = new reviewGUI(loginController.use.getUsername(),"InterestedReader");
 		
@@ -81,7 +81,7 @@ public class reviewController {
 
 	}
 	
-	/**goToMainWindow method*/
+	
 	public static void GoToMainWindow()
 	{
 		mainPanel mainP = null;
@@ -91,7 +91,7 @@ public class reviewController {
 			mainP = new readerGUI(loginController.use.getUsername(),"Reader");
 		loginController.mainG.setContentPane(mainP);
 		loginController.mainG.revalidate();
-	}/**goToMainWindow method END*/
+	}
 	
 	/**displayRiview method*/
 	public static void displayReview(String bName, String uName) {

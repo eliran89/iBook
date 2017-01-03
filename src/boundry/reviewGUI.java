@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JButton;
 
 import controller.reviewController;
+import controller.userController;
 
 import java.awt.Color;
 import java.awt.Component;
@@ -39,7 +40,7 @@ public class reviewGUI extends mainPanel {
 			JButton btnMainWindow = new JButton("Main Window");
 			btnMainWindow.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
-					reviewController.GoToMainWindow();
+					userController.GoToMainWindow();
 				}
 			});
 			btnMainWindow.setFont(new Font("AR CENA", Font.BOLD, 14));
@@ -83,16 +84,16 @@ public class reviewGUI extends mainPanel {
 	
 			
 			
-		/*
-			JTable table = new JTable();
+		
+			/*JTable table = new JTable();
 			table.setForeground(Color.WHITE);
 			table.setBackground(Color.WHITE);
-			table.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+			table.setFont(new Font("Tahoma", Font.BOLD, 14));
 			table.setBounds(79, 230, 687, 325);
 			table.setPreferredScrollableViewportSize(new Dimension(17,325));
-			add(table);
+			add(table);*/
 			
-			*/
+			
 			
 			
 		}
@@ -109,13 +110,20 @@ public class reviewGUI extends mainPanel {
 				public Component prepareRenderer(TableCellRenderer r,int data ,int column){
 					Component c = super.prepareRenderer(r,data,column);
 					
+					
 					if(data % 2 == 0)
+					{
+						c.setForeground(Color.BLUE);
 						c.setBackground(Color.WHITE);
+					}
 					else
-						c.setBackground(Color.LIGHT_GRAY);
+					{
+						c.setForeground(Color.WHITE);
+						c.setBackground(Color.BLUE);
+					}
 					if(isCellSelected(data,column))
 					{
-						c.setBackground(Color.GREEN);
+						c.setBackground(Color.RED);
 						row = data;
 					}
 						
@@ -126,13 +134,12 @@ public class reviewGUI extends mainPanel {
 			};
 			table.setForeground(Color.BLUE);
 			table.setBackground(Color.WHITE);
-			table.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+			table.setFont(new Font("Tahoma", Font.BOLD, 14));
 			table.setBounds(79, 230, 687, 325);
 			table.setPreferredScrollableViewportSize(new Dimension(17,325));
 
 			/**Scroll Pane*/
 			JScrollPane pane = new JScrollPane(table);
-			
 			add(table);
 			JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
 			lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));

@@ -4,7 +4,8 @@ package controller;
 
 import javax.swing.JFrame;
 
-import boundry.LoginGUI;
+import boundry.*;
+
 
 
 public class userController {
@@ -19,11 +20,49 @@ public class userController {
 
 }
 
-	public void checkDetails() {
-		// TODO - implement userController.checkDetails
-		throw new UnsupportedOperationException();
+	public static void userSearch() {
+		
+		UserSearchGUI panel;
+		if(loginController.use.getprivilege() == 4)
+			panel = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
+		else
+			panel = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+			
 	}
+	
+	/**goToMainWindow method*/
+	public static void GoToMainWindow()
+	{
+		mainPanel mainP = null;
+		if(loginController.use.getprivilege() == 1)
+			mainP = new InterestedReaderGUI(loginController.use.getUsername(),"Interested Reader");
+		
+		else if(loginController.use.getprivilege() == 2)
+			mainP = new readerGUI(loginController.use.getUsername(),"Reader");
+		
+		else if(loginController.use.getprivilege() == 3)
+			mainP = new editorGUI(loginController.use.getUsername(),"Editor");
+		
+		else if(loginController.use.getprivilege() == 4)
+			mainP = new LWorkerGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			mainP = new librarianGUI(loginController.use.getUsername(),"Librarien");
+		else
+			mainP = new managerGUI(loginController.use.getUsername(),"Manager");
+		loginController.mainG.setContentPane(mainP);
+		loginController.mainG.revalidate();
+	}/**goToMainWindow method END*/
 
+	
+
+	public static void getUserDetails(String item , String search) {
+
+	}
+	
 	public void addBookToOrderList() {
 		// TODO - implement userController.addBookToOrderList
 		throw new UnsupportedOperationException();
@@ -57,10 +96,6 @@ public class userController {
 		throw new UnsupportedOperationException();
 	}
 
-	public void getUserDetails() {
-		// TODO - implement userController.getUserDetails
-		throw new UnsupportedOperationException();
-	}
 
 	public void checkOrderDetails() {
 		// TODO - implement userController.checkOrderDetails
