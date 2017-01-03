@@ -67,6 +67,7 @@ public class UserSearchGUI extends mainPanel{
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSearch.setBounds(540, 181, 107, 23);
 		add(btnSearch);
+
 		
 			
 	}

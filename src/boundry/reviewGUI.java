@@ -141,6 +141,8 @@ public class reviewGUI extends mainPanel {
 			/**Scroll Pane*/
 			JScrollPane pane = new JScrollPane(table);
 			add(table);
+			
+			/***/
 			JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
 			lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblBookName.setForeground(Color.WHITE);
@@ -148,6 +150,7 @@ public class reviewGUI extends mainPanel {
 			lblBookName.setBounds(79, 193, 216, 39);
 			add(lblBookName);
 			
+			/***/
 			JLabel lblReviewName = DefaultComponentFactory.getInstance().createLabel("Review Name");
 			lblReviewName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -155,6 +158,7 @@ public class reviewGUI extends mainPanel {
 			lblReviewName.setBounds(329, 196, 186, 32);
 			add(lblReviewName);
 			
+			/***/
 			JLabel lblReviewer = DefaultComponentFactory.getInstance().createLabel("Reviewer");
 			lblReviewer.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewer.setHorizontalAlignment(SwingConstants.CENTER);

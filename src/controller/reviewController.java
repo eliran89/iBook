@@ -18,7 +18,7 @@ public class reviewController {
 		if(type.equals("Book Name"))
 			info = DBController.getFromDB("select `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
 					+ "from book ,reviews "
-					+ "where book.Title like '%"+item+"%' and book.suspended=0 and book.bookID=reviews.bookID and reviews.visible = 1");
+					+ "where book.Title like '%"+item+"%' and book.suspended=0 and book.bookID=reviews.bookID and reviews.visible = 1 order by book.Title ASC");
 		
 		
 		/**Search by Author Name*/
@@ -26,20 +26,22 @@ public class reviewController {
 			info = DBController.getFromDB("select `book`.`Title`,`reviews`.`title`,`reviews`.`username`"
 			+"from book , reviews, author , bauthor "
 			+"where book.bookID = reviews.bookID and author.authorID = bauthor.authorID and book.bookID = bauthor.bookID and author.authorName like '%"
-			+ item+"%' and book.suspended=0 and reviews.visible =1");
+			+ item+"%' and book.suspended=0 and reviews.visible =1"
+					+ " order by book.Title ASC");
 		
 		/**Search by Keywords*/
 		if(type.equals("Key Word"))
 			info = DBController.getFromDB("select distinct `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
 					+"from reviews , book ,bkey"
-					+ " where reviews.BookID = book.bookID and book.bookID = bkey.bookID and bkey.Word like '%"+item+"%' and reviews.visible =1");
+					+ " where reviews.BookID = book.bookID and book.bookID = bkey.bookID and bkey.Word like '%"+item+"%' and reviews.visible =1"
+							+ " order by book.Title ASC");
 		
 		/**build the basic panel*/
 		reviewGUI panel;
 		
 		/**if his an interested reader add it to the title*/ 
 		if(loginController.use.getprivilege() == 1)
-			panel = new reviewGUI(loginController.use.getUsername(),"InterestedReader");
+			panel = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
 		
 		/**if his a reader add it to the title*/
 		else
@@ -49,6 +51,7 @@ public class reviewController {
 		if(info != null)
 		{
 			reviewGUI.data = new String[info.size()/3][3];
+			
 			int count =0;
 			for(int i = 0 ; i < info.size()/3 ; i++)
 				for(int j = 0 ; j < 3 ; j++){
