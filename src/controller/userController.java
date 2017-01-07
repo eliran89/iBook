@@ -2,6 +2,8 @@ package controller;
 
 
 
+import java.util.ArrayList;
+
 import javax.swing.JFrame;
 
 import boundry.*;
@@ -23,6 +25,7 @@ public class userController {
 	public static void userSearch() {
 		
 		UserSearchGUI panel;
+		//System.out.println(loginController.use.getprivilege());
 		if(loginController.use.getprivilege() == 4)
 			panel = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
 		else
@@ -59,9 +62,87 @@ public class userController {
 
 	
 
-	public static void getUserDetails(String item , String search) {
+	public static void getUserDetails(String item , String search)
+	{
+		UserSearchGUI panel;
+		//System.out.println(loginController.use.getprivilege());
+		//System.out.println("right here!!");
+		if(loginController.use.getprivilege() == 4)
+			panel = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
+		else
+			panel = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+		ArrayList <String> info = null;
+		
+		/**Search by Username*/
+		if(item.equals("Username")){
+			info = DBController.getFromDB("select u.ID, u.username, u.privilege, u.status "
+					+ "from user u "
+					+ "where u.username like '%"+search+"%' order by u.username ASC");
+		//	System.out.println(info.toString());
+		}
+		/**Search by UserID*/
+		if(item.equals("UserID"))
+			info = DBController.getFromDB("select u.ID, u.username, u.privilege, u.status "
+			+"from user u "
+			+"where u.ID = '"+search+"' order by u.username ASC");
+		
+	////////////////////////////	
+		/**build the basic panel*/
+		
+		/**if he is an interested reader add it to the title*/ 
+		if(loginController.use.getprivilege() == 5)
+			panel = new UserSearchGUI(loginController.use.getUsername(),"Interested Reader");
+		
+		/**if he is a reader add it to the title*/
+		else
+			panel = new UserSearchGUI(loginController.use.getUsername(),"Reader");
+		
+		/**if we get results we add the results table*/
+		if(info != null)
+		{
+			UserSearchGUI.data1 = new String[info.size()/3][3];
+			
+			int count =0;
+			for(int i = 0 ; i < info.size()/3 ; i++)
+				for(int j = 0 ; j < 3 ; j++){
+					UserSearchGUI.data1[i][j] = info.get(count);
+					count++;
+				}
+			//System.out.println(UserSearchGUI.data1[0][0]);
+			panel.getUserDetails();
+			
+		}
+//		
+//		/**if there are no results at all we add a lable that says "no results"*/
+//		else
+//			panel.noResults();
+//		loginController.mainG.setContentPane(panel);
+//		loginController.mainG.revalidate();
+//		
+//		
+//	}
+		
 			
 	}
+	
+	public static void displayUser(String bName, String uName) {
+		ArrayList <String> info = null;
+		info = DBController.getFromDB("select reviews.text from reviews , book"
+				+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bName+"'");
+
+		UserSearchGUI account = null;
+		if(loginController.use.getprivilege() == 1)
+			account = new UserSearchGUI(loginController.use.getUsername(),"Interested Reader");
+		else
+			account = new UserSearchGUI(loginController.use.getUsername(),"Reader");
+		account.displayUser(info.get(0));
+		loginController.mainG.setContentPane(account);
+		loginController.mainG.revalidate();
+		
+	}/**displayRiview method END*/
 	
 	public void addBookToOrderList() {
 		// TODO - implement userController.addBookToOrderList

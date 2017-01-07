@@ -41,7 +41,7 @@ public class loginController {
 			usel = DBController.getFromDB(use);
 			while(usel == null);
 			name = use.getUsername();
-			i=Integer.parseInt((usel.get(2)));
+			i=Integer.parseInt((usel.get(3)));
 			use.setprivilege(i);
 			System.out.println(name);
 			

@@ -22,6 +22,7 @@ public class LWorkerGUI extends GWorkerGUI {
 		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUserManagement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				userController.userSearch();
 					
 			}
