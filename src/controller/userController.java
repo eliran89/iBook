@@ -71,23 +71,31 @@ public class userController {
 			panel = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
 		else
 			panel = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
-		loginController.mainG.setContentPane(panel);
-		loginController.mainG.revalidate();
+	
 		
 		ArrayList <String> info = null;
 		
 		/**Search by Username*/
 		if(item.equals("Username")){
-			info = DBController.getFromDB("select u.ID, u.username, u.privilege, u.status "
-					+ "from user u "
-					+ "where u.username like '%"+search+"%' order by u.username ASC");
-		//	System.out.println(info.toString());
+			info = DBController.getFromDB("SELECT i.*, p.description"
+										+" FROM interestedreader i, user u, privilege p"
+										+" WHERE i.username like '%"+search+"%' and i.username = u.username and u.privilege = p.privilege"
+										+" UNION"
+										+" select r.userID, r.firstName, r.lastName, r.username, p.description"
+										+" from reader r, user u, privilege p"
+										+" where r.username like '%"+search+"%' and r.username = u.username and u.privilege = p.privilege");
+			if(info!=null)
+				System.out.println(info.toString());
+
 		}
 		/**Search by UserID*/
 		if(item.equals("UserID"))
-			info = DBController.getFromDB("select u.ID, u.username, u.privilege, u.status "
-			+"from user u "
-			+"where u.ID = '"+search+"' order by u.username ASC");
+			info = DBController.getFromDB("select * "
+			+"from interestedreader i "
+			+"where i.userID = '"+search+"' order by i.username ASC");
+		
+		
+		//System.out.println(info.toString());
 		
 	////////////////////////////	
 		/**build the basic panel*/
@@ -103,30 +111,29 @@ public class userController {
 		/**if we get results we add the results table*/
 		if(info != null)
 		{
-			UserSearchGUI.data1 = new String[info.size()/3][3];
+			UserSearchGUI.data1 = new String[info.size()/5][5];
 			
 			int count =0;
-			for(int i = 0 ; i < info.size()/3 ; i++)
-				for(int j = 0 ; j < 3 ; j++){
+			for(int i = 0 ; i < info.size()/5 ; i++)
+				for(int j = 0 ; j < 5 ; j++){
 					UserSearchGUI.data1[i][j] = info.get(count);
 					count++;
 				}
 			//System.out.println(UserSearchGUI.data1[0][0]);
 			panel.getUserDetails();
-			
 		}
-//		
-//		/**if there are no results at all we add a lable that says "no results"*/
-//		else
-//			panel.noResults();
-//		loginController.mainG.setContentPane(panel);
-//		loginController.mainG.revalidate();
-//		
-//		
-//	}
+
+//		if there are no results at all we add a lable that says "no results"
+		else
+			panel.noResults();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+		
+	}
 		
 			
-	}
+	
 	
 	public static void displayUser(String bName, String uName) {
 		ArrayList <String> info = null;

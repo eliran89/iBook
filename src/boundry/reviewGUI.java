@@ -26,6 +26,7 @@ import java.awt.event.MouseWheelListener;
 import java.awt.event.MouseWheelEvent;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 import javax.swing.JTextPane;
+import javax.swing.border.LineBorder;
 
 public class reviewGUI extends mainPanel {
 	private JTextField textField;
@@ -86,6 +87,7 @@ public class reviewGUI extends mainPanel {
 			
 		
 			/*JTable table = new JTable();
+			table.setBorder(new LineBorder(Color.LIGHT_GRAY));
 			table.setForeground(Color.WHITE);
 			table.setBackground(Color.WHITE);
 			table.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -113,17 +115,17 @@ public class reviewGUI extends mainPanel {
 					
 					if(data % 2 == 0)
 					{
-						c.setForeground(Color.BLUE);
-						c.setBackground(Color.WHITE);
+						c.setForeground(Color.GRAY);
+						c.setBackground(Color.BLACK);
 					}
 					else
 					{
-						c.setForeground(Color.WHITE);
-						c.setBackground(Color.BLUE);
+						c.setForeground(Color.BLACK);
+						c.setBackground(Color.LIGHT_GRAY);
 					}
 					if(isCellSelected(data,column))
 					{
-						c.setBackground(Color.RED);
+						c.setBackground(Color.CYAN);
 						row = data;
 					}
 						
@@ -132,10 +134,11 @@ public class reviewGUI extends mainPanel {
 				}
 				
 			};
-			table.setForeground(Color.BLUE);
-			table.setBackground(Color.WHITE);
-			table.setFont(new Font("Tahoma", Font.BOLD, 14));
+			//table.setForeground(Color.BLUE);
+			table.setBackground(Color.BLACK);
+			table.setFont(new Font("Arial", Font.PLAIN, 12));
 			table.setBounds(79, 230, 687, 325);
+			table.setBorder(new LineBorder(Color.LIGHT_GRAY));
 			table.setPreferredScrollableViewportSize(new Dimension(17,325));
 
 			/**Scroll Pane*/

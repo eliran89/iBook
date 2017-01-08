@@ -9,7 +9,7 @@ import javax.swing.JFrame;
 import boundry.*;
 import simpleChat.ClientConsole;
 import controller.DBController;
-import entity.User;
+import entity.*;
 
 
 
@@ -18,6 +18,8 @@ public class loginController {
 	public static User use;
 	private static ArrayList<String> usel;
 	public static MainWindowGUI mainG = null;
+	public static interestedReader IRDetails = null;
+	public static reader RDetails = null;
 	
 	
 	static public void login(String username , String password) throws SQLException{
@@ -41,7 +43,7 @@ public class loginController {
 			usel = DBController.getFromDB(use);
 			while(usel == null);
 			name = use.getUsername();
-			i=Integer.parseInt((usel.get(3)));
+			i=Integer.parseInt((usel.get(2)));
 			use.setprivilege(i);
 			System.out.println(name);
 			
@@ -69,11 +71,17 @@ public class loginController {
 			{
 				mainPanel panel =new readerGUI(name,"Reader");
 				mainG = new MainWindowGUI(panel);
+				ArrayList<String> usel = DBController.getFromDB("select interestedreader.firstName , interestedreader.lastName , interestedreader.userID "
+												+ "	from interestedreader "
+												+ "where interestedreader.username = '"+use.getUsername()+"'");
+				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
+				
 			}
 			else
 			{
 				mainPanel panel =new InterestedReaderGUI(name,"InterestedReader");
 				mainG = new MainWindowGUI(panel);
+				
 			}
 			mainG.setSize(1000,900);
 			mainG.setVisible(true);

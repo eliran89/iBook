@@ -13,6 +13,7 @@ import java.awt.Component;
 import java.awt.Dimension;
 
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
@@ -28,7 +29,7 @@ import javax.swing.JTextPane;
 
 public class UserSearchGUI extends mainPanel{
 	private JTextField textField;
-	private String[] columnHeader1 = {"ID","Username","Privilege"};
+	private String[] columnHeader1 = {"ID","First Name","Last Name","User Name", "Privilege Level"};
 	public static String[][] data1;
 	private static int row1 = -1;
 	
@@ -55,18 +56,18 @@ public class UserSearchGUI extends mainPanel{
 		lblSearchBy.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSearchBy.setForeground(Color.WHITE);
 		lblSearchBy.setBackground(Color.BLACK);
-		lblSearchBy.setBounds(142, 158, 107, 66);
+		lblSearchBy.setBounds(131, 115, 107, 66);
 		add(lblSearchBy);
 		
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox.addItem("Username");
 		comboBox.addItem("UserID");
-		comboBox.setBounds(269, 182, 93, 22);
+		comboBox.setBounds(274, 137, 93, 22);
 		add(comboBox);
 		
 		textField = new JTextField();
-		textField.setBounds(391, 182, 116, 20);
+		textField.setBounds(398, 139, 116, 20);
 		add(textField);
 		textField.setColumns(10);
 		
@@ -79,10 +80,16 @@ public class UserSearchGUI extends mainPanel{
 			}
 		});
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnSearch.setBounds(540, 181, 107, 23);
+		btnSearch.setBounds(553, 137, 107, 23);
 		add(btnSearch);
-
 		
+		/*JTable table = new JTable();
+		table.setForeground(Color.WHITE);
+		table.setBackground(Color.WHITE);
+		table.setFont(new Font("Arial", Font.PLAIN, 14));
+		table.setBounds(79, 230, 687, 325);
+		table.setPreferredScrollableViewportSize(new Dimension(17,325));
+		add(table);*/
 			
 	}
 	
@@ -104,17 +111,17 @@ public class UserSearchGUI extends mainPanel{
 				
 				if(data1 % 2 == 0)
 				{
-					c.setForeground(Color.BLUE);
-					c.setBackground(Color.WHITE);
+					c.setForeground(Color.GRAY);
+					c.setBackground(Color.BLACK);
 				}
 				else
 				{
-					c.setForeground(Color.WHITE);
-					c.setBackground(Color.BLUE);
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.LIGHT_GRAY);
 				}
 				if(isCellSelected(data1,column))
 				{
-					c.setBackground(Color.RED);
+					c.setBackground(Color.CYAN);
 				//	System.out.println("Im here!!!!");
 					row1 = data1;
 				}
@@ -125,40 +132,52 @@ public class UserSearchGUI extends mainPanel{
 		};
 		table.setForeground(Color.BLUE);
 		table.setBackground(Color.WHITE);
-		table.setFont(new Font("Tahoma", Font.BOLD, 14));
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
 		table.setBounds(79, 230, 687, 325);
+		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		table.setPreferredScrollableViewportSize(new Dimension(17,325));
 		
 		/**Scroll Pane*/
 		JScrollPane pane = new JScrollPane(table);
 		add(table);
 		
-	//////////////////////////////////////	
-
-	///////////////////////////////////////////////	
-		/***/
-		JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
-		lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-		lblBookName.setForeground(Color.WHITE);
-		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookName.setBounds(79, 193, 216, 39);
-		add(lblBookName);
+		JLabel lblUserID = DefaultComponentFactory.getInstance().createTitle("User ID");
+		lblUserID.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUserID.setForeground(Color.WHITE);
+		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserID.setBounds(67, 198, 107, 32);
+		add(lblUserID);
 		
 		/***/
-		JLabel lblReviewName = DefaultComponentFactory.getInstance().createLabel("Review Name");
-		lblReviewName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-		lblReviewName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblReviewName.setForeground(Color.WHITE);
-		lblReviewName.setBounds(329, 196, 186, 32);
-		add(lblReviewName);
+		JLabel lblFirstName = DefaultComponentFactory.getInstance().createLabel("First Name");
+		lblFirstName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblFirstName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFirstName.setForeground(Color.WHITE);
+		lblFirstName.setBounds(205, 198, 107, 32);
+		add(lblFirstName);
 		
 		/***/
-		JLabel lblReviewer = DefaultComponentFactory.getInstance().createLabel("Reviewer");
-		lblReviewer.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-		lblReviewer.setHorizontalAlignment(SwingConstants.CENTER);
-		lblReviewer.setForeground(Color.WHITE);
-		lblReviewer.setBounds(577, 198, 179, 29);
-		add(lblReviewer);
+		JLabel lblLastName = DefaultComponentFactory.getInstance().createLabel("Last Name");
+		lblLastName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblLastName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLastName.setForeground(Color.WHITE);
+		lblLastName.setBounds(342, 200, 107, 29);
+		add(lblLastName);
+		
+		JLabel lblPrivilegeLevel = new JLabel("Privilege Level");
+		lblPrivilegeLevel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPrivilegeLevel.setForeground(Color.WHITE);
+		lblPrivilegeLevel.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblPrivilegeLevel.setBounds(633, 202, 87, 24);
+		add(lblPrivilegeLevel);
+		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUsername.setBounds(480, 202, 87, 24);
+		add(lblUsername);
+		/***/
 		
 		JButton btnDisplayReview = new JButton("Display User");
 		btnDisplayReview.setBounds(374, 596, 131, 23);
@@ -183,7 +202,7 @@ public void noResults()
 	label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
 	label.setHorizontalAlignment(SwingConstants.CENTER);
 	label.setForeground(Color.RED);
-	label.setBounds(292, 188, 177, 36);
+	label.setBounds(299, 242, 177, 36);
 	add(label);
 }
 

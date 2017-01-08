@@ -2,11 +2,12 @@ package entity;
 
 public class reader extends interestedReader {
 
-	reviews publishedBy;
 	private String creditCard;
 	private float debt;
 	private readerType rType;
 
+	
+	
 	public void getReaderType() {
 		// TODO - implement reader.getReaderType
 		throw new UnsupportedOperationException();
