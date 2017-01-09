@@ -74,7 +74,7 @@ public class loginController {
 				ArrayList<String> usel = DBController.getFromDB("select interestedreader.firstName , interestedreader.lastName , interestedreader.userID "
 												+ "	from interestedreader "
 												+ "where interestedreader.username = '"+use.getUsername()+"'");
-				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
+				//IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 				
 			}
 			else
