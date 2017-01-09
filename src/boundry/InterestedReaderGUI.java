@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
+import controller.bookController;
 import controller.reviewController;
 
 import java.awt.event.ActionListener;
@@ -40,6 +41,21 @@ public class InterestedReaderGUI extends mainPanel{
 		imgR = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/reviews.jpg")));
 		imgR.setBounds(374, 184, 211, 105);
 		add(imgR);
+		
+		JButton btnBookSearch = new JButton("Book Search");
+		btnBookSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				bookController.searchBook();
+			}
+		});
+		btnBookSearch.setBounds(120, 321,211, 47);
+		add(btnBookSearch);
+		
+		JLabel imgB;
+		imgB = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/booksearch.jpg")));
+		imgB.setBounds(120, 184, 211, 105);
+		add(imgB);
+		
 
 	}
 }

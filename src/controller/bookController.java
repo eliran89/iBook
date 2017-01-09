@@ -1,4 +1,8 @@
 package controller;
+
+
+import boundry.userBookGUI;
+
 public class bookController {
 
 	public void newOrder() {
@@ -26,10 +30,27 @@ public class bookController {
 		throw new UnsupportedOperationException();
 	}
 
-	public void searchBook() {
-		// TODO - implement bookController.searchBook
-		throw new UnsupportedOperationException();
+	/**Book Search*/
+	public static void searchBook() {
+		
+		userBookGUI panel;
+		if(loginController.use.getprivilege() == 1)
+			panel = new userBookGUI(loginController.use.getUsername(),"Interested Reader");
+		else
+			panel = new userBookGUI(loginController.use.getUsername(),"Reader");
+		
+		panel.displaySearch();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
 	}
+	/**Book Search END*/
+	
+	
+	public static void displayResults(String brief,String title,String langu,String keyWord,String author,String appendix,String scope ){
+		
+		
+	}
+	
 
 	public void chooseBook() {
 		// TODO - implement bookController.chooseBook

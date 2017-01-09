@@ -196,24 +196,26 @@ public class UserSearchGUI extends mainPanel{
 		
 		//scrollBar.addAdjustmentListener(l);
 	}
-public void noResults()
-{
-	JLabel label = new JLabel("<<No Results Found>>");
-	label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
-	label.setHorizontalAlignment(SwingConstants.CENTER);
-	label.setForeground(Color.RED);
-	label.setBounds(299, 242, 177, 36);
-	add(label);
-}
-
-
-public void displayUser(String text) {
-	JTextPane txtpnFds = new JTextPane();
-	txtpnFds.setEditable(false);
-	txtpnFds.setText(text);
-	txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
-	txtpnFds.setBounds(206, 252, 439, 228);
-	add(txtpnFds);
 	
-}
-}
+	
+	public void noResults()
+	{
+		JLabel label = new JLabel("<<No Results Found>>");
+		label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.RED);
+		label.setBounds(299, 242, 177, 36);
+		add(label);
+	}
+	
+	
+	public void displayUser(String text) {
+		JTextPane txtpnFds = new JTextPane();
+		txtpnFds.setEditable(false);
+		txtpnFds.setText(text);
+		txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		txtpnFds.setBounds(206, 252, 439, 228);
+		add(txtpnFds);
+		
+	}
+	}
