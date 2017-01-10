@@ -66,6 +66,7 @@ public class loginController {
 			{
 				mainPanel panel =new editorGUI(name,"Editor");
 				mainG = new MainWindowGUI(panel);
+				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 			}
 			else if(i == 2)
 			{
@@ -74,8 +75,8 @@ public class loginController {
 				ArrayList<String> usel = DBController.getFromDB("select interestedreader.firstName , interestedreader.lastName , interestedreader.userID "
 												+ "	from interestedreader "
 												+ "where interestedreader.username = '"+use.getUsername()+"'");
-				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 				
+				//RDetails = new reader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 			}
 			else
 			{
