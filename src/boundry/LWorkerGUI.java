@@ -2,6 +2,7 @@ package boundry;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 
 import javax.swing.JLabel;
 
@@ -13,6 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.SwingConstants;
 
 public class LWorkerGUI extends GWorkerGUI {
 	public LWorkerGUI( String name , String role) {
@@ -27,13 +29,15 @@ public class LWorkerGUI extends GWorkerGUI {
 					
 			}
 		});
-		btnUserManagement.setBounds(41, 272, 241, 86);
+		btnUserManagement.setBounds(41, 272, 228, 27);
 		add(btnUserManagement);
 		
-		JLabel imgU;
-		imgU = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/UserIcons.jpg")));
-		imgU.setBounds(31, 122, 246, 174);
-		add(imgU);
+		/** adding a user icon**/
+		JLabel userPic = new JLabel("");
+		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
+		userPic.setHorizontalAlignment(SwingConstants.CENTER);
+		userPic.setBounds(83, 108, 163, 153);
+		add(userPic);
 		
 	}
 
@@ -56,5 +60,4 @@ public class LWorkerGUI extends GWorkerGUI {
 		// TODO - implement LWorkerGUI.readerAcountOpening
 		throw new UnsupportedOperationException();
 	}
-
 }
