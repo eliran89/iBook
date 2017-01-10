@@ -47,14 +47,14 @@ public class reviewGUI extends mainPanel {
 			});
 			btnMainWindow.setFont(new Font("AR CENA", Font.BOLD, 14));
 			btnMainWindow.setBackground(Color.GREEN);
-			btnMainWindow.setForeground(Color.WHITE);
+			btnMainWindow.setForeground(Color.BLACK);
 			btnMainWindow.setBounds(26, 38, 122, 23);
 			add(btnMainWindow);
 			
 			JLabel lblSearchBy = new JLabel("Search By : ");
 			lblSearchBy.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
 			lblSearchBy.setHorizontalAlignment(SwingConstants.CENTER);
-			lblSearchBy.setForeground(Color.WHITE);
+			lblSearchBy.setForeground(Color.BLACK);
 			lblSearchBy.setBounds(52, 118, 131, 64);
 			add(lblSearchBy);
 			
@@ -116,8 +116,8 @@ public class reviewGUI extends mainPanel {
 					
 					if(data % 2 == 0)
 					{
-						c.setForeground(Color.GRAY);
-						c.setBackground(Color.BLACK);
+						c.setForeground(Color.BLACK);
+						c.setBackground(Color.WHITE);
 					}
 					else
 					{
@@ -143,7 +143,7 @@ public class reviewGUI extends mainPanel {
 				table.getColumnModel().getColumn(j).setCellRenderer(r);
 			
 			//table.setForeground(Color.BLUE);
-			table.setBackground(Color.BLACK);
+			table.setBackground(Color.WHITE);
 			table.setFont(new Font("Arial", Font.PLAIN, 12));
 			table.setBounds(79, 230, 687, 325);
 			table.setBorder(new LineBorder(Color.LIGHT_GRAY));
@@ -156,7 +156,7 @@ public class reviewGUI extends mainPanel {
 			/***/
 			JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
 			lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-			lblBookName.setForeground(Color.WHITE);
+			lblBookName.setForeground(Color.BLACK);
 			lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblBookName.setBounds(79, 193, 216, 39);
 			add(lblBookName);
@@ -165,7 +165,7 @@ public class reviewGUI extends mainPanel {
 			JLabel lblReviewName = DefaultComponentFactory.getInstance().createLabel("Review Name");
 			lblReviewName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewName.setHorizontalAlignment(SwingConstants.CENTER);
-			lblReviewName.setForeground(Color.WHITE);
+			lblReviewName.setForeground(Color.BLACK);
 			lblReviewName.setBounds(329, 196, 186, 32);
 			add(lblReviewName);
 			
@@ -173,7 +173,7 @@ public class reviewGUI extends mainPanel {
 			JLabel lblReviewer = DefaultComponentFactory.getInstance().createLabel("Reviewer");
 			lblReviewer.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewer.setHorizontalAlignment(SwingConstants.CENTER);
-			lblReviewer.setForeground(Color.WHITE);
+			lblReviewer.setForeground(Color.BLACK);
 			lblReviewer.setBounds(577, 198, 179, 29);
 			add(lblReviewer);
 			

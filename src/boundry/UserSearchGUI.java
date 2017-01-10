@@ -113,8 +113,8 @@ public class UserSearchGUI extends mainPanel{
 				
 				if(data1 % 2 == 0)
 				{
-					c.setForeground(Color.GRAY);
-					c.setBackground(Color.BLACK);
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.WHITE);
 				}
 				else
 				{
