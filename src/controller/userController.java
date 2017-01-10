@@ -96,19 +96,7 @@ public class userController {
 		
 		
 		//System.out.println(info.toString());
-		
-	////////////////////////////	
-		/**build the basic panel*/
-		
-		/**if he is an interested reader add it to the title*/ 
-		if(loginController.use.getprivilege() == 5)
-			panel = new UserSearchGUI(loginController.use.getUsername(),"Interested Reader");
-		
-		/**if he is a reader add it to the title*/
-		else
-			panel = new UserSearchGUI(loginController.use.getUsername(),"Reader");
-		
-		/**if we get results we add the results table*/
+
 		if(info != null)
 		{
 			UserSearchGUI.data1 = new String[info.size()/5][5];

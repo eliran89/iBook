@@ -34,7 +34,7 @@ public class mainPanel extends JPanel {
 		btnLogout.setFont(new Font("AR CENA", Font.BOLD, 13));
 		btnLogout.setBackground(Color.RED);
 		
-		btnLogout.setBounds(26, 11, 73, 16);
+		btnLogout.setBounds(26, 11, 83, 16);
 		add(btnLogout);
 		
 		img = new JLabel(new ImageIcon(LoginGUI.class.getResource("/boundry/ElecBook2.jpg")));
