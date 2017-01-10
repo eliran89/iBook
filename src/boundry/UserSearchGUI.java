@@ -36,6 +36,7 @@ public class UserSearchGUI extends mainPanel{
 	public UserSearchGUI(String name , String role)
 	{
 		super(name,role);
+		btnLogout.setBounds(26, 11, 77, 16);
 		setForeground(Color.WHITE);
 		
 		JButton btnMainWindow = new JButton("Main Window");
@@ -47,7 +48,7 @@ public class UserSearchGUI extends mainPanel{
 		btnMainWindow.setFont(new Font("AR CENA", Font.BOLD, 14));
 		btnMainWindow.setBackground(Color.GREEN);
 		btnMainWindow.setForeground(Color.WHITE);
-		btnMainWindow.setBounds(26, 38, 122, 23);
+		btnMainWindow.setBounds(26, 38, 138, 23);
 		add(btnMainWindow);
 
 		

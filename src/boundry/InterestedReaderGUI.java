@@ -29,7 +29,7 @@ public class InterestedReaderGUI extends mainPanel{
 			}	
 		});	
 		
-		JLabel lblWelcomToIbook = new JLabel("Welcom To IBook");
+		JLabel lblWelcomToIbook = new JLabel("Welcome To IBook");
 		lblWelcomToIbook.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
 		lblWelcomToIbook.setHorizontalAlignment(SwingConstants.CENTER);
 		lblWelcomToIbook.setForeground(Color.WHITE);

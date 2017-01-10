@@ -27,12 +27,12 @@ public class LWorkerGUI extends GWorkerGUI {
 					
 			}
 		});
-		btnUserManagement.setBounds(81, 186, 241, 86);
+		btnUserManagement.setBounds(31, 307, 241, 86);
 		add(btnUserManagement);
 		
 		JLabel imgU;
 		imgU = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/UserIcons.jpg")));
-		imgU.setBounds(132, 96, 122, 86);
+		imgU.setBounds(31, 122, 246, 174);
 		add(imgU);
 		
 	}

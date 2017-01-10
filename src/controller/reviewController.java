@@ -118,9 +118,14 @@ public class reviewController {
 		throw new UnsupportedOperationException();
 	}
 
-	public void editReview() {
-		// TODO - implement reviewController.editReview
-		throw new UnsupportedOperationException();
+	public static void  openMail(){ // opens the table that displays the reviews
+		ArrayList <String> info = null;
+		
+			info = DBController.getFromDB("select `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
+					+ "from book ,reviews "
+				+"where  and book.bookID = reviews.bookID and author.authorID = bauthor.authorID and book.bookID = bauthor.bookID and reviews.visible = 0 "
+				+ "order by book.Title ASC");
+		
 	}
 
 	public boolean checkDetails() {

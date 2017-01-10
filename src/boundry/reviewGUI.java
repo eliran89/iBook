@@ -16,6 +16,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
@@ -134,6 +135,13 @@ public class reviewGUI extends mainPanel {
 				}
 				
 			};
+			
+			DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+			r.setHorizontalAlignment( SwingConstants.CENTER );
+			
+			for (int j = 0; j < columnHeader.length; j++)
+				table.getColumnModel().getColumn(j).setCellRenderer(r);
+			
 			//table.setForeground(Color.BLUE);
 			table.setBackground(Color.BLACK);
 			table.setFont(new Font("Arial", Font.PLAIN, 12));
