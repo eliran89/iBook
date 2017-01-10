@@ -27,7 +27,7 @@ public class LWorkerGUI extends GWorkerGUI {
 					
 			}
 		});
-		btnUserManagement.setBounds(31, 307, 241, 86);
+		btnUserManagement.setBounds(41, 272, 241, 86);
 		add(btnUserManagement);
 		
 		JLabel imgU;
