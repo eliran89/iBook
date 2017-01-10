@@ -90,9 +90,13 @@ public class userController {
 		}
 		/**Search by UserID*/
 		if(item.equals("UserID"))
-			info = DBController.getFromDB("select * "
-			+"from interestedreader i "
-			+"where i.userID = '"+search+"' order by i.username ASC");
+			info = DBController.getFromDB("SELECT i.*, p.description"
+										+" FROM interestedreader i, user u, privilege p"
+										+" WHERE i.userID = '"+search+"' and i.username = u.username and u.privilege = p.privilege"
+										+" UNION"
+										+" select r.userID, r.firstName, r.lastName, r.username, p.description"
+										+" from reader r, user u, privilege p"
+										+" where r.userID = '"+search+"' and r.username = u.username and u.privilege = p.privilege");
 		
 		
 		//System.out.println(info.toString());

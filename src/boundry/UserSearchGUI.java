@@ -39,6 +39,7 @@ public class UserSearchGUI extends mainPanel{
 		btnLogout.setBounds(26, 11, 77, 16);
 		setForeground(Color.WHITE);
 		
+		/* Button for main window */
 		JButton btnMainWindow = new JButton("Main Window");
 		btnMainWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -60,6 +61,7 @@ public class UserSearchGUI extends mainPanel{
 		lblSearchBy.setBounds(131, 115, 107, 66);
 		add(lblSearchBy);
 		
+		/* Definition of comboBox used for search by ID or user name */
 		JComboBox comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox.addItem("Username");
@@ -109,7 +111,6 @@ public class UserSearchGUI extends mainPanel{
 			public Component prepareRenderer(TableCellRenderer r,int data1 ,int column){
 				Component c = super.prepareRenderer(r,data1,column);
 				
-				
 				if(data1 % 2 == 0)
 				{
 					c.setForeground(Color.GRAY);
@@ -123,7 +124,6 @@ public class UserSearchGUI extends mainPanel{
 				if(isCellSelected(data1,column))
 				{
 					c.setBackground(Color.CYAN);
-				//	System.out.println("Im here!!!!");
 					row1 = data1;
 				}
 					
@@ -138,7 +138,7 @@ public class UserSearchGUI extends mainPanel{
 		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		table.setPreferredScrollableViewportSize(new Dimension(17,325));
 		
-		/**Scroll Pane*/
+		/* Scroll Pane */
 		JScrollPane pane = new JScrollPane(table);
 		add(table);
 		
@@ -180,7 +180,9 @@ public class UserSearchGUI extends mainPanel{
 		add(lblUsername);
 		/***/
 		
-		JButton btnDisplayReview = new JButton("Display User");
+		
+		
+		/*JButton btnDisplayReview = new JButton("Display User");
 		btnDisplayReview.setBounds(374, 596, 131, 23);
 		add(btnDisplayReview);
 		btnDisplayReview.addActionListener(new ActionListener() {
@@ -193,7 +195,28 @@ public class UserSearchGUI extends mainPanel{
 				}
 				
 			}
+		});*/
+		
+		
+		JButton btnNewButton = new JButton("Add");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
 		});
+		btnNewButton.setBounds(374, 596, 131, 23);
+		add(btnNewButton);
+	//	79, 230, 687, 325
+		JButton button = new JButton("Edit");
+		button.setBounds(374, 900, 89, 23);
+		add(button);
+		
+		JButton button_1 = new JButton("Remove");
+		button_1.setBounds(329, 900, 89, 23);
+		add(button_1);
+		
+		JButton button_2 = new JButton("Set Payment Arrangement");
+		button_2.setBounds(475, 900, 185, 23);
+		add(button_2);
 		
 		//scrollBar.addAdjustmentListener(l);
 	}

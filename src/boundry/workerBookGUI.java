@@ -3,6 +3,8 @@ package boundry;
 import javax.swing.JPanel;
 
 public class workerBookGUI extends JPanel {
+	public workerBookGUI() {
+	}
 
 	public void addBook() {
 		// TODO - implement workerBookGUI.addBook
