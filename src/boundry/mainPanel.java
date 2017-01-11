@@ -27,7 +27,7 @@ public class mainPanel extends JPanel {
 		this.hello = name;
 		this.role = role;
 		
-		setBackground(Color.BLACK);
+		setBackground(Color.WHITE);
 		setLayout(null);
 		btnCheckBookReviews = null;
 		btnLogout.setForeground(Color.WHITE);
@@ -43,14 +43,14 @@ public class mainPanel extends JPanel {
 		
 		JLabel hello = new JLabel("Hello "+ this.hello);
 		hello.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		hello.setForeground(Color.GREEN);
+		hello.setForeground(Color.BLACK);
 		hello.setBounds(810, 9, 145, 17);
 		add(hello);
 		
 		JLabel wname = new JLabel(role);
 		wname.setFont(new Font("Trebuchet MS", Font.BOLD, 15));
-		wname.setForeground(Color.GREEN);
-		wname.setBounds(109, 9, 145, 17);
+		wname.setForeground(Color.BLACK);
+		wname.setBounds(124, 9, 145, 17);
 		add(wname);
 		
 	}

@@ -14,14 +14,21 @@ import entity.*;
 
 
 public class loginController {
-	
+	/**
+	 * 
+	 */
 	public static User use;
 	private static ArrayList<String> usel;
 	public static MainWindowGUI mainG = null;
 	public static interestedReader IRDetails = null;
 	public static reader RDetails = null;
 	
-	
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @throws SQLException
+	 */
 	static public void login(String username , String password) throws SQLException{
 		Boolean bool;
 		String name = null;
@@ -66,6 +73,7 @@ public class loginController {
 			{
 				mainPanel panel =new editorGUI(name,"Editor");
 				mainG = new MainWindowGUI(panel);
+				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 			}
 			else if(i == 2)
 			{
@@ -74,8 +82,10 @@ public class loginController {
 				ArrayList<String> usel = DBController.getFromDB("select interestedreader.firstName , interestedreader.lastName , interestedreader.userID "
 												+ "	from interestedreader "
 												+ "where interestedreader.username = '"+use.getUsername()+"'");
-				//IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
+
+
 				
+				//RDetails = new reader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 			}
 			else
 			{
