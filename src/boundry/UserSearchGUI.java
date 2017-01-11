@@ -56,7 +56,7 @@ public class UserSearchGUI extends mainPanel{
 		JLabel lblSearchBy = new JLabel("Search By :");
 		lblSearchBy.setFont(new Font("AR CENA", Font.BOLD, 18));
 		lblSearchBy.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSearchBy.setForeground(Color.WHITE);
+		lblSearchBy.setForeground(Color.BLACK);
 		lblSearchBy.setBackground(Color.BLACK);
 		lblSearchBy.setBounds(131, 115, 107, 66);
 		add(lblSearchBy);

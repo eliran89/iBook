@@ -23,6 +23,7 @@ import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextPane;
 
 public class userBookGUI extends mainPanel {
 	private JTextField textTitle;
@@ -37,7 +38,14 @@ public class userBookGUI extends mainPanel {
 	public static String[][] data;
 	private static int row = -1;
 	private JTable table_1;
-	
+	private JTable athorsTable;
+	private JTextField TFLang;
+	private JTable table_2;
+	/**
+	 * 
+	 * @param name
+	 * @param type
+	 */
 	public userBookGUI(String name,String type){
 		super(name,type);
 		
@@ -53,6 +61,8 @@ public class userBookGUI extends mainPanel {
 		btnMainWindow.setBounds(26, 38, 122, 23);
 		add(btnMainWindow);
 		
+		
+		
 		/*table_1 = new JTable();
 		table_1.setBounds(181, 376, 583, 191);
 		add(table_1);*/
@@ -64,7 +74,9 @@ public class userBookGUI extends mainPanel {
 		
 		
 	}
-	
+	/**
+	 * 
+	 */
 	public void displaySearch(){
 		
 		JLabel lblSearchBy = new JLabel("Search By : ");
@@ -177,10 +189,14 @@ public class userBookGUI extends mainPanel {
 		add(btnSearch);
 		
 	}
-	
+	/**
+	 * 
+	 */
 	public void displayResults()
 	{
-		/**Create The Result Table*/
+		/**Create The Result Table
+		 * 
+		 */
 		JTable table = new JTable(data,columnHeader)
 		{
 			
@@ -236,28 +252,28 @@ public class userBookGUI extends mainPanel {
 		lblScope_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblScope_1.setForeground(Color.BLACK);
 		lblScope_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScope_1.setBounds(201, 345, 83, 23);
+		lblScope_1.setBounds(210, 345, 83, 23);
 		add(lblScope_1);
 		
 		JLabel lblSubject = new JLabel("Subject");
 		lblSubject.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSubject.setForeground(Color.BLACK);
 		lblSubject.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblSubject.setBounds(330, 345, 83, 23);
+		lblSubject.setBounds(350, 345, 83, 23);
 		add(lblSubject);
 		
 		JLabel lblBookName = new JLabel("Book Name");
 		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBookName.setForeground(Color.BLACK);
 		lblBookName.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblBookName.setBounds(459, 345, 111, 23);
+		lblBookName.setBounds(470, 345, 111, 23);
 		add(lblBookName);
 		
 		JLabel lblIndex = new JLabel("Index");
 		lblIndex.setHorizontalAlignment(SwingConstants.CENTER);
 		lblIndex.setForeground(Color.BLACK);
 		lblIndex.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblIndex.setBounds(610, 342, 111, 23);
+		lblIndex.setBounds(630, 342, 111, 23);
 		add(lblIndex);
 		
 		JButton btnDisplayBook = new JButton("Display Book");
@@ -296,5 +312,82 @@ public class userBookGUI extends mainPanel {
 	public void displayWindow() {
 		// TODO - implement userBookGUI.displayWindow
 		throw new UnsupportedOperationException();
+	}
+	public void displayBook(){
+		
+		JLabel lblBookTitle = new JLabel("<dynamic>");
+		lblBookTitle.setFont(new Font("Poor Richard", Font.BOLD, 24));
+		lblBookTitle.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBookTitle.setBounds(336, 80, 251, 54);
+		add(lblBookTitle);
+		
+		JLabel lblAthors = new JLabel("Athor(s) : ");
+		lblAthors.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAthors.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblAthors.setBounds(79, 251, 97, 14);
+		add(lblAthors);
+		
+		athorsTable = new JTable();
+		athorsTable.setBorder(new LineBorder(new Color(0, 0, 0)));
+		athorsTable.setBounds(179, 253, 122, 28);
+		add(athorsTable);
+		
+		JLabel lblLanguange = new JLabel("languange : ");
+		lblLanguange.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLanguange.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblLanguange.setBounds(72, 331, 97, 23);
+		add(lblLanguange);
+		
+		TFLang = new JTextField();
+		TFLang.setText("<dynamic>");
+		TFLang.setEditable(false);
+		TFLang.setBounds(179, 334, 122, 20);
+		add(TFLang);
+		TFLang.setColumns(10);
+		
+		JLabel lblBrief = new JLabel("Brief : ");
+		lblBrief.setHorizontalAlignment(SwingConstants.CENTER);
+		lblBrief.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblBrief.setBounds(568, 331, 72, 23);
+		add(lblBrief);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setEditable(false);
+		textPane.setText("<dynamic>");
+		textPane.setBounds(664, 331, 243, 131);
+		add(textPane);
+		
+		JLabel lblAppendix_1 = new JLabel("Appendix : ");
+		lblAppendix_1.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAppendix_1.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblAppendix_1.setBounds(557, 188, 97, 23);
+		add(lblAppendix_1);
+		
+		JTextPane textPane_1 = new JTextPane();
+		textPane_1.setText("<dynamic>");
+		textPane_1.setEditable(false);
+		textPane_1.setBounds(664, 188, 243, 131);
+		add(textPane_1);
+		
+		JLabel lblScopes = new JLabel("Scope(s): ");
+		lblScopes.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScopes.setFont(new Font("Tahoma", Font.BOLD, 14));
+		lblScopes.setBounds(79, 192, 97, 14);
+		add(lblScopes);
+		
+		table_2 = new JTable();
+		table_2.setBorder(new LineBorder(new Color(0, 0, 0)));
+		table_2.setBounds(179, 194, 122, 28);
+		add(table_2);
+		
+		JButton btnOrderTheBook = new JButton("Order The Book");
+		btnOrderTheBook.setBackground(Color.GREEN);
+		btnOrderTheBook.setBounds(679, 534, 122, 23);
+		add(btnOrderTheBook);
+		
+		JButton btnBackToSearch = new JButton("Back To Search");
+		btnBackToSearch.setBackground(Color.RED);
+		btnBackToSearch.setBounds(145, 534, 122, 23);
+		add(btnBackToSearch);
 	}
 }

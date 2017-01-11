@@ -34,6 +34,9 @@ public class bookController {
 	}
 
 	/**Book Search*/
+	/**
+	 * 
+	 */
 	public static void searchBook() {
 		
 		userBookGUI panel;
@@ -48,7 +51,16 @@ public class bookController {
 	}
 	/**Book Search END*/
 	
-	
+	/**
+	 * 
+	 * @param brief
+	 * @param title
+	 * @param langu
+	 * @param keyWord
+	 * @param author
+	 * @param appendix
+	 * @param scope
+	 */
 	public static void displayResults(String brief,String title,String langu,String keyWord,String author,String appendix,String scope ){
 		ArrayList<String> info;
 			info = DBController.getFromDB("select distinct sc.scopeName,bsc.subject,b.Title,b.bookID " 

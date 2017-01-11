@@ -35,7 +35,11 @@ public class reviewGUI extends mainPanel {
 	private String[] columnHeader = {"Book Name","Review Name","Reviewer"};
 	public static String[][] data;
 	private static int row = -1;
-	
+	/**
+	 * 
+	 * @param name
+	 * @param role
+	 */
 	public reviewGUI(String name,String role) {
 		
 			super(hello,role);
@@ -100,6 +104,9 @@ public class reviewGUI extends mainPanel {
 			
 			
 		}
+	/**
+	 * 
+	 */
 		public void getReview()
 		{
 			
@@ -194,6 +201,9 @@ public class reviewGUI extends mainPanel {
 			
 			//scrollBar.addAdjustmentListener(l);
 		}
+		/**
+		 * 
+		 */
 	public void noResults()
 	{
 		JLabel label = new JLabel("<<No Results Found>>");

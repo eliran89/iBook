@@ -9,7 +9,11 @@ import boundry.*;
 
 
 public class reviewController {
-
+/**
+ * 
+ * @param type
+ * @param item
+ */
 	public static void searchReview(String type,String item) {
 		
 		ArrayList <String> info = null;
@@ -71,7 +75,9 @@ public class reviewController {
 		
 	}
 
-
+/**
+ * 
+ */
 	public static void checkReview() {
 		
 		reviewGUI review = null;
@@ -84,7 +90,9 @@ public class reviewController {
 
 	}
 	
-	
+	/**
+	 * 
+	 */
 	public static void GoToMainWindow()
 	{
 		mainPanel mainP = null;
@@ -97,6 +105,11 @@ public class reviewController {
 	}
 	
 	/**displayRiview method*/
+	/**
+	 * 
+	 * @param bName
+	 * @param uName
+	 */
 	public static void displayReview(String bName, String uName) {
 		ArrayList <String> info = null;
 		info = DBController.getFromDB("select reviews.text from reviews , book"
@@ -117,7 +130,9 @@ public class reviewController {
 		// TODO - implement reviewController.removeReview
 		throw new UnsupportedOperationException();
 	}
-
+	/**
+	 * 
+	 */
 	public static void  openMail(){ // opens the table that displays the reviews
 		ArrayList <String> info = null;
 		

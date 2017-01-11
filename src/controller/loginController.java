@@ -14,14 +14,21 @@ import entity.*;
 
 
 public class loginController {
-	
+	/**
+	 * 
+	 */
 	public static User use;
 	private static ArrayList<String> usel;
 	public static MainWindowGUI mainG = null;
 	public static interestedReader IRDetails = null;
 	public static reader RDetails = null;
 	
-	
+	/**
+	 * 
+	 * @param username
+	 * @param password
+	 * @throws SQLException
+	 */
 	static public void login(String username , String password) throws SQLException{
 		Boolean bool;
 		String name = null;
