@@ -107,7 +107,7 @@ public class reviewController {
 			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
 		else
 			review = new reviewGUI(loginController.use.getUsername(),"Reader");
-		review.displayReview(info.get(0));
+		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
 		loginController.mainG.setContentPane(review);
 		loginController.mainG.revalidate();
 		
@@ -118,6 +118,8 @@ public class reviewController {
 		throw new UnsupportedOperationException();
 	}
 
+	
+	
 	public static void  openMail(){ // opens the table that displays the reviews
 		ArrayList <String> info = null;
 		
@@ -125,7 +127,26 @@ public class reviewController {
 					+ "from book ,reviews "
 				+"where  and book.bookID = reviews.bookID and author.authorID = bauthor.authorID and book.bookID = bauthor.bookID and reviews.visible = 0 "
 				+ "order by book.Title ASC");
-		
+			editorGUI review=null;
+			if(loginController.use.getprivilege() == 1)
+				review = new editorGUI(loginController.use.getUsername(),"Interested Reader");
+			if(loginController.use.getprivilege() == 2)
+				review = new editorGUI(loginController.use.getUsername(),"Reader");
+			if(loginController.use.getprivilege() == 3)
+				review = new editorGUI(loginController.use.getUsername(),"Editor");
+			if(loginController.use.getprivilege() == 4)
+				review = new editorGUI(loginController.use.getUsername(),"Library Worker");
+			if(loginController.use.getprivilege() == 5)
+				review = new editorGUI(loginController.use.getUsername(),"Librarian");
+			if(loginController.use.getprivilege() == 6)
+				review = new editorGUI(loginController.use.getUsername(),"Manager");
+			
+			loginController.mainG.setContentPane(review);
+			loginController.mainG.revalidate();
+			
+			
+			
+				
 	}
 
 	public boolean checkDetails() {
