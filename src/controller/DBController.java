@@ -20,7 +20,12 @@ public class DBController {
 	ClientConsole chat;
 	
 	
-	/**Constractor*/
+	 /** Constractor*/
+	/**
+	 * 
+	 * @param host
+	 * @param port
+	 */
 	public DBController(String host , int port)
 	{
 		this.host = host;
@@ -30,7 +35,11 @@ public class DBController {
 	
 	
 	/**getFromDB General*/
-	
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 */
 	static public ArrayList<String> getFromDB(String query){
 		try {
 			rs = null;
@@ -51,6 +60,11 @@ public class DBController {
 	
 	
 	/**getFromDB for User*/
+	/**
+	 * 
+	 * @param use
+	 * @return
+	 */
 	static public ArrayList<String> getFromDB(User use){
 		User res= new User();
 		try {
@@ -85,6 +99,12 @@ public class DBController {
 	
 	
     /**existsInDB for User*/
+	/**
+	 * 
+	 * @param use
+	 * @return
+	 * @throws SQLException
+	 */
 	static public Boolean existsInDB(User use) throws SQLException{
 		Boolean bool;
 		try {
@@ -120,6 +140,12 @@ public class DBController {
 	
 	
 	/**exitsInDB General*/
+	/**
+	 * 
+	 * @param query
+	 * @return
+	 * @throws SQLException
+	 */
 	static public Boolean existsInDB(String query) throws SQLException{
 		Boolean bool;
 		try {
@@ -149,7 +175,32 @@ public class DBController {
 		return bool;
 	}
 	/**END exitsInDB General*/
-	
+	static public void insertToDB(String query) throws SQLException{
+		Boolean bool;
+		try {
+			ClientConsole chat= new ClientConsole(host, port);
+			rs = null;
+			allowToProceed = false;
+			ClientConsole.accept(query);	
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		while(allowToProceed == false);	
+		
+		if( rs == null)
+		{
+			System.out.println("rs is: null");
+			bool = false;
+		}
+		else
+		{
+			bool = true;
+			System.out.println("rs is: "+rs.toString());
+		}
+			
+	}
 	
 
 }

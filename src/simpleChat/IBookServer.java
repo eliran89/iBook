@@ -106,7 +106,14 @@ public class IBookServer extends AbstractServer
 	    }
 	    else
 	    {
+	    	ArrayList<String> result1 = null;
 	    	ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
+	    	try {
+				client.sendToClient(result1);
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
 	    }
 	    
 	  }

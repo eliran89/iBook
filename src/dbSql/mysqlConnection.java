@@ -66,9 +66,6 @@ public class mysqlConnection {
 			
 			else
 			{
-				ArrayList<String> msgL = (ArrayList<String>)obj;
-				msg = "UPDATE worker SET EDept='"+msgL.get(1)+"' WHERE EName='"+msgL.get(0)+"'";
-				System.out.println(msg);
 				stmt.executeUpdate(msg);
 			}
 			return rs;
