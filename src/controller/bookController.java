@@ -1,6 +1,7 @@
 package controller;
 
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import boundry.reviewGUI;
@@ -71,6 +72,7 @@ public class bookController {
 									+" and b.brief like '%"+brief+"%' and b.language like '%"+langu+"%' and b.suspended = 0 and a.authorName like '%"+author+"%' and k.word like '%"+keyWord+"%'"
 									+" and sc.scopeName like '%"+scope+"%'"
 									+" order by sc.scopeName");
+			
 			userBookGUI panel;
 			
 			/**if his an interested reader add it to the title*/ 
@@ -106,6 +108,7 @@ public class bookController {
 			panel.displaySearch();
 			loginController.mainG.setContentPane(panel);
 			loginController.mainG.revalidate();
+			
 			
 	}
 	/**
@@ -152,6 +155,13 @@ public class bookController {
 		/**if his a reader add it to the title*/
 		else
 			panel = new userBookGUI(loginController.use.getUsername(),"Reader");
+		
+		try {
+			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `numOfSearches`=`numOfSearches`+1 WHERE `bookID`='"+bid+"'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		panel.displayBook(book);
 		loginController.mainG.setContentPane(panel);
