@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import boundry.reviewGUI;
 import boundry.userBookGUI;
+import entity.Book;
 
 public class bookController {
 
@@ -69,7 +70,7 @@ public class bookController {
 									+" and b.bookID=bsc.bookID and bsc.scopeName=sc.scopeName and b.Title like '%"+title+"%' and b.appendix like '%"+appendix+"%'"
 									+" and b.brief like '%"+brief+"%' and b.language like '%"+langu+"%' and b.suspended = 0 and a.authorName like '%"+author+"%' and k.word like '%"+keyWord+"%'"
 									+" and sc.scopeName like '%"+scope+"%'"
-									+" group by b.Title");
+									+" order by sc.scopeName");
 			userBookGUI panel;
 			
 			/**if his an interested reader add it to the title*/ 
@@ -86,11 +87,17 @@ public class bookController {
 				userBookGUI.data = new String[info.size()/4][4];
 				
 				int count =0;
-				for(int i = 0 ; i < info.size()/4 ; i++)
+				for(int i = 0 ; i < info.size()/4 ; i++){
 					for(int j = 0 ; j < 4 ; j++){
-						userBookGUI.data[i][j] = info.get(count);
+						
+						if(j == 0 && i > 0 && info.get(count).equals( userBookGUI.data[i-1][j]))
+							userBookGUI.data[i][j] ="";
+						else
+							userBookGUI.data[i][j] = info.get(count);
+						if(j==0 && i>0)
+							System.out.println(userBookGUI.data[i][j]);
 						count++;
-					}
+					}}
 				panel.displayResults();
 				
 			}
@@ -101,11 +108,55 @@ public class bookController {
 			loginController.mainG.revalidate();
 			
 	}
-	
+	/**
+	 * 
+	 * @param bid
+	 */
 
-	public void chooseBook() {
-		// TODO - implement bookController.chooseBook
-		throw new UnsupportedOperationException();
+	public  static  void chooseBook(String bid) {
+		
+		Book book = new Book();
+		
+		userBookGUI panel;
+		
+		ArrayList<String> info=null;
+
+
+		
+		info = DBController.getFromDB("select b.Title,b.language,b.brief,b.appendix,b.cost"
+									+" from book b"
+									+" where b.bookID="+bid);
+		System.out.println(info);
+		
+		book.setTitle(info.get(0));
+		book.setLanguage(info.get(1));
+		book.setBrief(info.get(2));
+		book.setAppendix(info.get(3));
+		float cost = Float.parseFloat(info.get(4));
+		book.setCost(cost);
+		
+		book.setScope( DBController.getFromDB("select s.scopeName"
+				+" from scope s,bscope bs "
+				+ "where s.scopeName = bs.scopeName and bs.bookID = " +bid));
+		
+		book.setAuthors(DBController.getFromDB("select a.authorName"
+									+" from author a, bauthor ba"
+									+" where a.authorID = ba.authorID and ba.bookID = "+bid));
+		
+
+		
+		/**if his an interested reader add it to the title*/ 
+		if(loginController.use.getprivilege() == 1)
+			panel = new userBookGUI(loginController.use.getUsername(),"Interested Reader");
+		
+		/**if his a reader add it to the title*/
+		else
+			panel = new userBookGUI(loginController.use.getUsername(),"Reader");
+		
+		panel.displayBook(book);
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
 	}
 
 	public void editBookinfo() {
