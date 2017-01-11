@@ -29,14 +29,14 @@ public class LWorkerGUI extends GWorkerGUI {
 					
 			}
 		});
-		btnUserManagement.setBounds(41, 272, 228, 27);
+		btnUserManagement.setBounds(48, 344, 228, 27);
 		add(btnUserManagement);
 		
 		/** adding a user icon**/
 		JLabel userPic = new JLabel("");
 		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
 		userPic.setHorizontalAlignment(SwingConstants.CENTER);
-		userPic.setBounds(83, 108, 163, 153);
+		userPic.setBounds(77, 160, 163, 153);
 		add(userPic);
 		
 	}

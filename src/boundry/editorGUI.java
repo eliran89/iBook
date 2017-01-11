@@ -34,7 +34,7 @@ public class editorGUI extends mainPanel {
 		JLabel lblWelcomToIbook = new JLabel("Welcome To IBook");
 		lblWelcomToIbook.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
 		lblWelcomToIbook.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWelcomToIbook.setForeground(Color.WHITE);
+		lblWelcomToIbook.setForeground(Color.BLACK);
 		lblWelcomToIbook.setBackground(Color.BLACK);
 		lblWelcomToIbook.setBounds(201, 63, 491, 67);
 		add(lblWelcomToIbook);
@@ -42,17 +42,18 @@ public class editorGUI extends mainPanel {
 		
 		JLabel imgR;
 		imgR = new JLabel(new ImageIcon(editorGUI.class.getResource("/boundry/mailbox.jpg")));
-		imgR.setBounds(445, 141, 247, 137);
+		imgR.setBounds(569, 179, 247, 137);
 		add(imgR);
 		
 		JButton btnNewButton = new JButton("Mailbox");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reviewController.openMail();
 				
 			}
 		});
-		btnNewButton.setBounds(546, 336, 89, 23);
+		btnNewButton.setBounds(656, 348, 119, 23);
 		add(btnNewButton);
 		
 		/*table = new JTable();

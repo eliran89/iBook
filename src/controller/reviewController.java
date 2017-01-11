@@ -135,11 +135,16 @@ public class reviewController {
 	public static void  openMail(){ // opens the table that displays the reviews
 		ArrayList <String> info = null;
 		
-			info = DBController.getFromDB("select `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
-					+ "from book ,reviews "
-				+"where  and book.bookID = reviews.bookID and author.authorID = bauthor.authorID and book.bookID = bauthor.bookID and reviews.visible = 0 "
-				+ "order by book.Title ASC");
+		
+			info = DBController.getFromDB("select 'book'.'Title','author.authorName','reviews'.'title','reviews'.'username' ,'reviews'.'text'"
+					+ "from book ,reviews,author,bauthor "
+				+"where book.bookID = reviews.bookID  and author.authorID=bauthor.authorID and reviews.visible=1 "
+					+"order by book.Title ASC");
+			
+			
+			/** Checking the privileges for the title of the user screen **/
 			editorGUI review=null;
+			
 			if(loginController.use.getprivilege() == 1)
 				review = new editorGUI(loginController.use.getUsername(),"Interested Reader");
 			if(loginController.use.getprivilege() == 2)
@@ -153,11 +158,25 @@ public class reviewController {
 			if(loginController.use.getprivilege() == 6)
 				review = new editorGUI(loginController.use.getUsername(),"Manager");
 			
-			loginController.mainG.setContentPane(review);
-			loginController.mainG.revalidate();
 			
+			/** Putting in table the data **/
+			if(info != null)
+			{
+				editorGUI.data = new String[info.size()/3][3];
+				
+				int count =0;
+				for(int i = 0 ; i < info.size()/3 ; i++)
+					for(int j = 0 ; j < 3 ; j++){
+						editorGUI.data[i][j] = info.get(count);
+						count++;
+					}
+				review.openMail();
+				
+			}
+			//loginController.mainG.setContentPane(review);
+			//loginController.mainG.revalidate();
 			
-			
+		
 				
 	}
 
