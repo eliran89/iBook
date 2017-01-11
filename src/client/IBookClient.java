@@ -86,7 +86,7 @@ public class IBookClient extends AbstractClient
 	  
 	  DBController.rs = (ArrayList<String>)(msg);
 	  DBController.allowToProceed = true;
-	  System.out.println(DBController.rs.toString() + "\t" + DBController.allowToProceed);
+	  //System.out.println(DBController.rs.toString() + "\t" + DBController.allowToProceed);
   }
 
   /**

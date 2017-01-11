@@ -15,7 +15,9 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellRenderer;
 
 import controller.bookController;
+import controller.loginController;
 import controller.userController;
+import entity.Book;
 
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -24,6 +26,7 @@ import javax.swing.JFrame;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.table.DefaultTableModel;
 
 public class userBookGUI extends mainPanel {
 	private JTextField textTitle;
@@ -40,6 +43,7 @@ public class userBookGUI extends mainPanel {
 	private JTable table_1;
 	private JTable athorsTable;
 	private JTextField TFLang;
+	private JTable scopeTable;
 	private JTable table_2;
 	/**
 	 * 
@@ -60,6 +64,20 @@ public class userBookGUI extends mainPanel {
 		btnMainWindow.setForeground(Color.BLACK);
 		btnMainWindow.setBounds(26, 38, 122, 23);
 		add(btnMainWindow);
+		
+		
+		/*table_2 = new JTable();
+		table_2.setModel(new DefaultTableModel(
+			new Object[][] {
+				{null, null},
+				{null, null},
+			},
+			new String[] {
+				"New column", "New column"
+			}
+		));
+		table_2.setBounds(179, 253, 239, 56);;
+		add(table_2);*/
 		
 		
 		
@@ -197,6 +215,7 @@ public class userBookGUI extends mainPanel {
 		/**Create The Result Table
 		 * 
 		 */
+		
 		JTable table = new JTable(data,columnHeader)
 		{
 			
@@ -222,8 +241,12 @@ public class userBookGUI extends mainPanel {
 					c.setBackground(Color.CYAN);
 					row = data;
 				}
-				
-					
+			
+				if(getValueAt(data, column)=="")
+					if(data % 2 == 0)
+						c.setBackground(Color.LIGHT_GRAY);
+					else
+						c.setBackground(Color.WHITE);
 				
 				return c;
 			}
@@ -232,7 +255,6 @@ public class userBookGUI extends mainPanel {
 		};
 		DefaultTableCellRenderer r = new DefaultTableCellRenderer();
 		r.setHorizontalAlignment( SwingConstants.CENTER );
-		
 		for (int j = 0; j < columnHeader.length; j++)
 			table.getColumnModel().getColumn(j).setCellRenderer(r);
 		
@@ -281,6 +303,7 @@ public class userBookGUI extends mainPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String ID = (String) table.getValueAt(row, 3);
+				bookController.chooseBook(ID);
 			}
 		});
 		btnDisplayBook.setBounds(394, 596, 129, 23);
@@ -313,9 +336,22 @@ public class userBookGUI extends mainPanel {
 		// TODO - implement userBookGUI.displayWindow
 		throw new UnsupportedOperationException();
 	}
-	public void displayBook(){
+	public void displayBook(Book book){
 		
-		JLabel lblBookTitle = new JLabel("<dynamic>");
+		String[] sHeader = {"sName"};
+		String[] aHeader = {"aName"};
+		String[][] tData = new String[1][book.getAuthors().size()];
+		
+		for(int i = 0 ; i<book.getAuthors().size();i++)
+			tData[0][i] = book.getAuthors().get(i);
+		
+		JLabel lblCost = new JLabel("Cost : "+ book.getCost()+"$");
+		lblCost.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCost.setFont(new Font("Ariel", Font.BOLD, 16));
+		lblCost.setBounds(631, 80, 251, 54);
+		add(lblCost);
+		
+		JLabel lblBookTitle = new JLabel(book.getTitle());
 		lblBookTitle.setFont(new Font("Poor Richard", Font.BOLD, 24));
 		lblBookTitle.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBookTitle.setBounds(336, 80, 251, 54);
@@ -327,9 +363,38 @@ public class userBookGUI extends mainPanel {
 		lblAthors.setBounds(79, 251, 97, 14);
 		add(lblAthors);
 		
-		athorsTable = new JTable();
-		athorsTable.setBorder(new LineBorder(new Color(0, 0, 0)));
-		athorsTable.setBounds(179, 253, 122, 28);
+		athorsTable = new JTable(tData,aHeader){
+			public boolean isCellEditable(int data,int columns){
+				return false;
+			}
+			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
+				Component c = super.prepareRenderer(r,data,column);
+		
+				if(isCellSelected(data,column))
+				{
+					c.setBackground(Color.WHITE);
+					row = data;
+				}
+					
+				
+				return c;
+			}
+			
+				
+			
+		};
+		
+		DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+		r.setHorizontalAlignment( SwingConstants.CENTER );
+		for (int j = 0; j < aHeader.length; j++)
+			athorsTable.getColumnModel().getColumn(j).setCellRenderer(r);
+		
+		athorsTable.setBorder(new LineBorder(Color.WHITE));
+		athorsTable.setBounds(179, 253, 122, 34);
+		athorsTable.setPreferredScrollableViewportSize(new Dimension(17,34));
+
+		/**Scroll Pane*/
+		JScrollPane pane = new JScrollPane(athorsTable);
 		add(athorsTable);
 		
 		JLabel lblLanguange = new JLabel("languange : ");
@@ -339,7 +404,7 @@ public class userBookGUI extends mainPanel {
 		add(lblLanguange);
 		
 		TFLang = new JTextField();
-		TFLang.setText("<dynamic>");
+		TFLang.setText(book.getLanguage());
 		TFLang.setEditable(false);
 		TFLang.setBounds(179, 334, 122, 20);
 		add(TFLang);
@@ -353,7 +418,8 @@ public class userBookGUI extends mainPanel {
 		
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
-		textPane.setText("<dynamic>");
+		textPane.setText(book.getBrief());
+		textPane.setEditable(false);
 		textPane.setBounds(664, 331, 243, 131);
 		add(textPane);
 		
@@ -364,7 +430,7 @@ public class userBookGUI extends mainPanel {
 		add(lblAppendix_1);
 		
 		JTextPane textPane_1 = new JTextPane();
-		textPane_1.setText("<dynamic>");
+		textPane_1.setText(book.getAppendix());
 		textPane_1.setEditable(false);
 		textPane_1.setBounds(664, 188, 243, 131);
 		add(textPane_1);
@@ -375,19 +441,55 @@ public class userBookGUI extends mainPanel {
 		lblScopes.setBounds(79, 192, 97, 14);
 		add(lblScopes);
 		
-		table_2 = new JTable();
-		table_2.setBorder(new LineBorder(new Color(0, 0, 0)));
-		table_2.setBounds(179, 194, 122, 28);
-		add(table_2);
+		tData = new String[book.getScope().size()][1];
+		
+		for(int i = 0 ; i<book.getScope().size();i++)
+			tData[i][0] = book.getScope().get(i);
+	//	System.out.println(book.getScope().size() + tData[0][0] + tData[0][1] + book.getScope());
+		scopeTable = new JTable(tData,sHeader){
+			public boolean isCellEditable(int data,int columns){
+				return false;
+			}
+			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
+				Component c = super.prepareRenderer(r,data,column);
+		
+				if(isCellSelected(data,column))
+				{
+					c.setBackground(Color.WHITE);
+					row = data;
+				}
+					
+				
+				return c;
+			}
+		};
+		for (int j = 0; j < sHeader.length; j++)
+			scopeTable.getColumnModel().getColumn(j).setCellRenderer(r);
+		
+		scopeTable.setBorder(new LineBorder(Color.WHITE));
+		scopeTable.setBounds(179, 194, 122, 34);
+		scopeTable.setPreferredScrollableViewportSize(new Dimension(17,34));
+
+		/**Scroll Pane*/
+		JScrollPane pane2 = new JScrollPane(scopeTable);
+		add(scopeTable);
 		
 		JButton btnOrderTheBook = new JButton("Order The Book");
 		btnOrderTheBook.setBackground(Color.GREEN);
-		btnOrderTheBook.setBounds(679, 534, 122, 23);
+		btnOrderTheBook.setBounds(679, 534, 150, 23);
+		if(loginController.use.getprivilege() == 1)
+			btnOrderTheBook.setVisible(false);
 		add(btnOrderTheBook);
 		
 		JButton btnBackToSearch = new JButton("Back To Search");
 		btnBackToSearch.setBackground(Color.RED);
-		btnBackToSearch.setBounds(145, 534, 122, 23);
+		btnBackToSearch.setBounds(145, 534, 150, 23);
+		btnBackToSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				bookController.searchBook();
+			}
+		});
+			
 		add(btnBackToSearch);
 	}
 }

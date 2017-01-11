@@ -21,7 +21,9 @@ public class Book {
 	private float cost;
 	private boolean suspended;
 	
-	
+	/**
+	 * 
+	 */
 	public Book(){
 		authors = null;
 		Scope = null;
@@ -139,12 +141,20 @@ public class Book {
 	public void setBrief(String Brief){
 		this.Brief = Brief;
 	}
-	
+	/**
+	 * 
+	 * @param Appendix
+	 */
 	public void setAppendix(String Appendix){
 		this.Appendix = Appendix;
 	}
-	
-	
+	/**
+	 * 
+	 * @param cost
+	 */
+	public void setCost(float cost){
+		this.cost = cost;
+	}
 	
 	
 	public int getNumberOfSearches() {
