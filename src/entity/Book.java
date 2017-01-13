@@ -41,116 +41,122 @@ public class Book {
 		suspended = false;
 	}
 	/**
-	 * 
-	 * @return
+	 * getAuthors
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getAuthors(){return authors;}
 	/**
-	 * 
-	 * @return
+	 * getScope
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getScope(){return Scope;}
 	/**
-	 * 
-	 * @return
+	 * getKey
+	 * @return ArrayList<String>
 	 */
 	public ArrayList<String> getKey(){return Key;}
-	
+	/**
+	 * getSubject
+	 * @return ArrayList<String>
+	 */
 	public ArrayList<String> getSubject(){return Subject;}
 	
 	/**
-	 * 
-	 * @return
+	 * getBookID
+	 * @return String
 	 */
 	public String getBookID(){return BookId;}
 	/**
-	 * 
-	 * @return
+	 * getTitle
+	 * @return String
 	 */
 	public String getTitle(){return Title;}
 	/**
-	 * 
-	 * @return
+	 * getLanguage
+	 * @return String
 	 */
 	public String getLanguage(){return Language;}
 	/**
-	 * 
-	 * @return
+	 * getBrief
+	 * @return String
 	 */
 	public String getBrief(){return Brief;}
 	/**
-	 * 
-	 * @return
+	 * getAppendix
+	 * @return String
 	 */
 	public String getAppendix(){return Appendix;}
 	/**
-	 * 
-	 * @return
+	 * getCost
+	 * @return float
 	 */
 	public float getCost(){return cost;}
 	/**
-	 * 
-	 * @param authors
+	 * setAuthors
+	 * @param authors ArrayList<String>
 	 */
 	public void setAuthors(ArrayList<String> authors){
 		this.authors = authors;
 	}
 	/**
-	 * 
-	 * @param Scope
+	 * setScope
+	 * @param Scope ArrayList<String>
 	 */
 	public void setScope(ArrayList<String> Scope){
 		this.Scope = Scope;
 	}
-	
+	/**
+	 * setKey
+	 * @param Key ArrayList<String>
+	 */
 	public void setKey(ArrayList<String> Key){
 		this.Key = Key;
 	}
 	/**
-	 * 
-	 * @param Subject
+	 * setSubject
+	 * @param Subject ArrayList<String>
 	 */
 	public void setSubject(ArrayList<String> Subject){
 		this.Subject = Subject;
 	}
 	/**
-	 * 
-	 * @param BookId
+	 * setBookId
+	 * @param BookId String
 	 */
 	public void setBookId(String BookId){
 		this.BookId = BookId;
 	}
 	/**
-	 * 
-	 * @param Title
+	 * setTitle
+	 * @param Title String
 	 */
 	public void setTitle(String Title){
 		this.Title = Title;
 	}
 	/**
-	 * 
-	 * @param Language
+	 *  setLanguage
+	 * @param Language String
 	 */
 	public void setLanguage(String Language){
 		this.Language = Language;
 	}
 	/**
-	 * 
-	 * @param Brief
+	 * setBrief
+	 * @param Brief String
 	 */
 	public void setBrief(String Brief){
 		this.Brief = Brief;
 	}
 	/**
-	 * 
-	 * @param Appendix
+	 * setAppendix
+	 * @param Appendix String
 	 */
 	public void setAppendix(String Appendix){
 		this.Appendix = Appendix;
 	}
 	/**
-	 * 
-	 * @param cost
+	 * setCost
+	 * @param cost float
 	 */
 	public void setCost(float cost){
 		this.cost = cost;
@@ -181,9 +187,13 @@ public class Book {
 		throw new UnsupportedOperationException();
 	}
 
-	public void create() {
-		// TODO - implement Book.create
-		throw new UnsupportedOperationException();
+	public boolean isBookComplete() {
+		boolean bool = true;
+		if(this.Appendix == null ||this.Scope == null || this.Subject == null||this.authors == null||this.Brief == null||this.cost == 0
+				|| this.Key == null ||this.Title == null||this.Language == null)
+			bool = false;
+		return bool;
+		
 	}
 
 	public void addToOrders() {

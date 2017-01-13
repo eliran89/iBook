@@ -23,6 +23,7 @@ public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldScope;
 	private JTextField textFieldKey;
 	private JTextField textFieldAppen;
+	private JTextField textFieldCsot;
 	
 	/**
 	 * workerBookGUI
@@ -31,6 +32,7 @@ public class workerBookGUI extends userBookGUI {
 	 */
 	public workerBookGUI(String name , String type) {
 		super(name,type);
+		
 		
 
 	}
@@ -115,6 +117,17 @@ public class workerBookGUI extends userBookGUI {
 		});
 
 		add(btnAddScope);
+		
+		JLabel lblCost = new JLabel("Cost :");
+		lblCost.setHorizontalAlignment(SwingConstants.CENTER);
+		lblCost.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		lblCost.setBounds(556, 239, 62, 29);
+		add(lblCost);
+		
+		textFieldCsot = new JTextField();
+		textFieldCsot.setColumns(10);
+		textFieldCsot.setBounds(626, 244, 148, 20);
+		add(textFieldCsot);
 		
 		JLabel lblKeyword = new JLabel("Keyword :");
 		lblKeyword.setHorizontalAlignment(SwingConstants.CENTER);
