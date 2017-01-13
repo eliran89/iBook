@@ -10,22 +10,22 @@ import boundry.*;
 
 public class reviewController {
 /**
- * 
- * @param type
- * @param item
+ * searchReview check if there are review according to type and item
+ * @param type String
+ * @param item String
  */
 	public static void searchReview(String type,String item) {
 		
 		ArrayList <String> info = null;
 		
-		/**Search by Book Name*/
+		/*Search by Book Name*/
 		if(type.equals("Book Name"))
 			info = DBController.getFromDB("select `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
 					+ "from book ,reviews "
 					+ "where book.Title like '%"+item+"%' and book.suspended=0 and book.bookID=reviews.bookID and reviews.visible = 1 order by book.Title ASC");
 		
 		
-		/**Search by Author Name*/
+		/*Search by Author Name*/
 		if(type.equals("Author"))
 			info = DBController.getFromDB("select `book`.`Title`,`reviews`.`title`,`reviews`.`username`"
 			+"from book , reviews, author , bauthor "
@@ -33,25 +33,25 @@ public class reviewController {
 			+ item+"%' and book.suspended=0 and reviews.visible =1"
 					+ " order by book.Title ASC");
 		
-		/**Search by Keywords*/
+		/*Search by Keywords*/
 		if(type.equals("Key Word"))
 			info = DBController.getFromDB("select distinct `book`.`Title`,`reviews`.`title`,`reviews`.`username` "
 					+"from reviews , book ,bkey"
 					+ " where reviews.BookID = book.bookID and book.bookID = bkey.bookID and bkey.Word like '%"+item+"%' and reviews.visible =1"
 							+ " order by book.Title ASC");
 		
-		/**build the basic panel*/
+		/*build the basic panel*/
 		reviewGUI panel;
 		
-		/**if his an interested reader add it to the title*/ 
+		/*if his an interested reader add it to the title*/ 
 		if(loginController.use.getprivilege() == 1)
 			panel = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
 		
-		/**if his a reader add it to the title*/
+		/*if his a reader add it to the title*/
 		else
 			panel = new reviewGUI(loginController.use.getUsername(),"Reader");
 		
-		/**if we get results we add the results table*/
+		/*if we get results we add the results table*/
 		if(info != null)
 		{
 			reviewGUI.data = new String[info.size()/3][3];
@@ -66,7 +66,7 @@ public class reviewController {
 			
 		}
 		
-		/**if there are no results at all we add a lable that says "no results"*/
+		/*if there are no results at all we add a lable that says "no results"*/
 		else
 			panel.noResults();
 		loginController.mainG.setContentPane(panel);
@@ -76,7 +76,7 @@ public class reviewController {
 	}
 
 /**
- * 
+ * checkReview 
  */
 	public static void checkReview() {
 		
@@ -91,24 +91,32 @@ public class reviewController {
 	}
 	
 	/**
-	 * 
+	 * GoToMainWindow display  the main window 
 	 */
 	public static void GoToMainWindow()
 	{
 		mainPanel mainP = null;
 		if(loginController.use.getprivilege() == 1)
 			mainP = new InterestedReaderGUI(loginController.use.getUsername(),"Interested Reader");
-		else
+		else if(loginController.use.getprivilege() == 2)
 			mainP = new readerGUI(loginController.use.getUsername(),"Reader");
+		else if(loginController.use.getprivilege() == 3)
+			mainP = new readerGUI(loginController.use.getUsername(),"Editor");
+		else if(loginController.use.getprivilege() == 4)
+			mainP = new readerGUI(loginController.use.getUsername(),"Library Worker");
+		else if(loginController.use.getprivilege() == 5)
+			mainP = new readerGUI(loginController.use.getUsername(),"Librarian");
+		else 
+			mainP = new readerGUI(loginController.use.getUsername(),"Manager");
 		loginController.mainG.setContentPane(mainP);
 		loginController.mainG.revalidate();
 	}
 	
-	/**displayRiview method*/
+
 	/**
-	 * 
-	 * @param bName
-	 * @param uName
+	 * displayRiview display the chose review
+	 * @param bName String
+	 * @param uName String
 	 */
 	public static void displayReview(String bName, String uName) {
 		ArrayList <String> info = null;
@@ -124,7 +132,7 @@ public class reviewController {
 		loginController.mainG.setContentPane(review);
 		loginController.mainG.revalidate();
 		
-	}/**displayRiview method END*/
+	}
 
 	public void removeReview() {
 		// TODO - implement reviewController.removeReview
@@ -142,7 +150,7 @@ public class reviewController {
 					+"order by book.Title ASC");
 			
 			
-			/** Checking the privileges for the title of the user screen **/
+			/* Checking the privileges for the title of the user screen **/
 			editorGUI review=null;
 			
 			if(loginController.use.getprivilege() == 1)
@@ -159,7 +167,7 @@ public class reviewController {
 				review = new editorGUI(loginController.use.getUsername(),"Manager");
 			
 			
-			/** Putting in table the data **/
+			/* Putting in table the data **/
 			if(info != null)
 			{
 				editorGUI.data = new String[info.size()/3][3];

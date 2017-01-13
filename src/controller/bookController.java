@@ -6,18 +6,28 @@ import java.util.ArrayList;
 
 import boundry.reviewGUI;
 import boundry.userBookGUI;
+import boundry.workerBookGUI;
 import entity.Book;
 
 public class bookController {
-
 	public void newOrder() {
 		// TODO - implement bookController.newOrder
 		throw new UnsupportedOperationException();
 	}
 
-	public void addBook() {
-		// TODO - implement bookController.addBook
-		throw new UnsupportedOperationException();
+	public static void addBook() {
+			workerBookGUI panel;
+			if(loginController.use.getprivilege() == 4)
+				panel = new workerBookGUI(loginController.use.getUsername(),"libraryWorker");
+			else if(loginController.use.getprivilege() == 5)
+				panel = new workerBookGUI(loginController.use.getUsername(),"Librarian");
+			else
+				panel = new workerBookGUI(loginController.use.getUsername(),"Manager");
+			
+			panel.addBook();
+			loginController.mainG.setContentPane(panel);
+			loginController.mainG.revalidate();
+			
 	}
 
 	public void removeBook() {
@@ -44,8 +54,23 @@ public class bookController {
 		userBookGUI panel;
 		if(loginController.use.getprivilege() == 1)
 			panel = new userBookGUI(loginController.use.getUsername(),"Interested Reader");
-		else
+		
+		else if(loginController.use.getprivilege() == 2)
 			panel = new userBookGUI(loginController.use.getUsername(),"Reader");
+		
+		else if(loginController.use.getprivilege() == 3)
+			panel = new workerBookGUI(loginController.use.getUsername(),"editor");
+		
+		else if(loginController.use.getprivilege() == 4)
+			panel = new workerBookGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			panel = new workerBookGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			panel = new workerBookGUI(loginController.use.getUsername(),"Manager");
+		
+		
 		
 		panel.displaySearch();
 		loginController.mainG.setContentPane(panel);
@@ -75,15 +100,27 @@ public class bookController {
 			
 			userBookGUI panel;
 			
-			/**if his an interested reader add it to the title*/ 
+			/*if his an interested reader add it to the title*/ 
 			if(loginController.use.getprivilege() == 1)
 				panel = new userBookGUI(loginController.use.getUsername(),"Interested Reader");
 			
-			/**if his a reader add it to the title*/
-			else
+			/*if his a reader add it to the title*/
+			else if(loginController.use.getprivilege() == 2)
 				panel = new userBookGUI(loginController.use.getUsername(),"Reader");
 			
-			/**if we get results we add the results table*/
+			else if(loginController.use.getprivilege() == 3)
+				panel = new workerBookGUI(loginController.use.getUsername(),"editor");
+			
+			else if(loginController.use.getprivilege() == 4)
+				panel = new workerBookGUI(loginController.use.getUsername(),"Library Worker");
+			
+			else if(loginController.use.getprivilege() == 5)
+				panel = new workerBookGUI(loginController.use.getUsername(),"Librarian");
+			
+			else 
+				panel = new workerBookGUI(loginController.use.getUsername(),"Manager");
+			
+			/*if we get results we add the results table*/
 			if(info != null)
 			{
 				userBookGUI.data = new String[info.size()/4][4];
@@ -112,8 +149,8 @@ public class bookController {
 			
 	}
 	/**
-	 * 
-	 * @param bid
+	 * chooseBook display the chosen book
+	 * @param bid String
 	 */
 
 	public  static  void chooseBook(String bid) {
@@ -129,7 +166,6 @@ public class bookController {
 		info = DBController.getFromDB("select b.Title,b.language,b.brief,b.appendix,b.cost"
 									+" from book b"
 									+" where b.bookID="+bid);
-		System.out.println(info);
 		
 		book.setTitle(info.get(0));
 		book.setLanguage(info.get(1));
@@ -142,19 +178,35 @@ public class bookController {
 				+" from scope s,bscope bs "
 				+ "where s.scopeName = bs.scopeName and bs.bookID = " +bid));
 		
+
 		book.setAuthors(DBController.getFromDB("select a.authorName"
 									+" from author a, bauthor ba"
 									+" where a.authorID = ba.authorID and ba.bookID = "+bid));
 		
-
+		if(book.getAuthors().equals(book.getScope()))
+			book.setAuthors(DBController.getFromDB("select a.authorName"
+					+" from author a, bauthor ba"
+					+" where a.authorID = ba.authorID and ba.bookID = "+bid));
 		
-		/**if his an interested reader add it to the title*/ 
+		/*if his an interested reader add it to the title*/ 
 		if(loginController.use.getprivilege() == 1)
 			panel = new userBookGUI(loginController.use.getUsername(),"Interested Reader");
 		
-		/**if his a reader add it to the title*/
-		else
+		/*if his a reader add it to the title*/
+		else if (loginController.use.getprivilege() == 2)
 			panel = new userBookGUI(loginController.use.getUsername(),"Reader");
+		
+		else if(loginController.use.getprivilege() == 3)
+			panel = new workerBookGUI(loginController.use.getUsername(),"editor");
+		
+		else if(loginController.use.getprivilege() == 4)
+			panel = new workerBookGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			panel = new workerBookGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			panel = new workerBookGUI(loginController.use.getUsername(),"Manager");
 		
 		try {
 			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `numOfSearches`=`numOfSearches`+1 WHERE `bookID`='"+bid+"'");

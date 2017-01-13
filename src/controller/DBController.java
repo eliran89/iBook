@@ -11,7 +11,11 @@ import simpleChat.ClientConsole;
 import simpleChatCommon.ChatIF;
 import client.IBookClient;
 import entity.*;
-
+/**
+ * DBController input and output from the DB
+ * @author Admin
+ *
+ */
 public class DBController {
 	static public ArrayList<String> rs = null;
 	static public volatile Boolean allowToProceed = false;
@@ -22,7 +26,7 @@ public class DBController {
 	
 	 /** Constractor*/
 	/**
-	 * 
+	 * Constructor 
 	 * @param host
 	 * @param port
 	 */
@@ -34,11 +38,11 @@ public class DBController {
 	/**END Constractor*/
 	
 	
-	/**getFromDB General*/
+	
 	/**
-	 * 
-	 * @param query
-	 * @return
+	 * getFromDB General get query and return a result
+	 * @param query String 
+	 * @return ArrayList<String>
 	 */
 	static public ArrayList<String> getFromDB(String query){
 		try {
@@ -56,14 +60,14 @@ public class DBController {
 		return rs;
 		
 	}
-	/**END getFromDB General*/
 	
 	
-	/**getFromDB for User*/
+	
+
 	/**
-	 * 
-	 * @param use
-	 * @return
+	 * getFromDB for User when login 
+	 * @param use User
+	 * @return ArrayList<String>
 	 */
 	static public ArrayList<String> getFromDB(User use){
 		User res= new User();
@@ -94,15 +98,16 @@ public class DBController {
 		System.out.println("did not get a user");
 		return null;
 	}
-	/**END getFromDB for User*/
 	
 	
 	
-    /**existsInDB for User*/
+	
+    
 	/**
-	 * 
-	 * @param use
-	 * @return
+	 * existsInDB for User
+	 * check if user exists in DB
+	 * @param use User
+	 * @return Boolean
 	 * @throws SQLException
 	 */
 	static public Boolean existsInDB(User use) throws SQLException{
@@ -136,14 +141,15 @@ public class DBController {
 		
 		return bool;
 	}
-	/**END existsInDB for User*/
+	
 	
 	
 	/**exitsInDB General*/
 	/**
-	 * 
-	 * @param query
-	 * @return
+	 * exitsInDB General
+	 * check if query return answer
+	 * @param query String
+	 * @return Boolean
 	 * @throws SQLException
 	 */
 	static public Boolean existsInDB(String query) throws SQLException{
@@ -174,7 +180,7 @@ public class DBController {
 		
 		return bool;
 	}
-	/**END exitsInDB General*/
+	
 	static public void insertToDB(String query) throws SQLException{
 		Boolean bool;
 		try {
