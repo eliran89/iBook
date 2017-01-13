@@ -1,12 +1,13 @@
 package controller;
 
 
-
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
 
 import boundry.*;
+import entity.*;
 
 
 
@@ -164,16 +165,57 @@ public class userController {
 	}
 
 	/**
-	 * enables to set a new user's privilege
+	 * Enables to set a new user's privilege
 	 */
 	public void setPrivilege() {
 		// TODO - implement userController.setPrivilege
 		throw new UnsupportedOperationException();
 	}
 
-	public void setUserDetails() {
-		// TODO - implement userController.setUserDetails
-		throw new UnsupportedOperationException();
+	
+	/**
+	 * Open an Interested reader account
+	 * @param ID, firstName, lastName, userName, Password
+	 * @throws SQLException 
+	 */
+	public static void setUserDetails(int ID, String fname, String lname, String uname, String pass) throws SQLException {
+		
+		//System.out.println(loginController.use.getprivilege());
+		
+		interestedReader ir = new interestedReader();
+		
+		String idstr = Integer.toString(ID);
+
+		ArrayList<String> idInDB = null;
+		ArrayList<String> unameInDB = null;
+		
+		/**get ID if exists*/
+			idInDB = DBController.getFromDB("select i.userID from interestedreader i where i.userID = '"+idstr+"'");
+			if(idInDB!=null){
+				System.out.println("ID " +idInDB.toString()+ " is already exists !");
+				//TODO add error message window
+			}
+		/**get user name if exists*/
+			else
+			{
+				unameInDB = DBController.getFromDB("select u.username from ibookdb.user u where u.username = '"+uname+"'");
+				if(unameInDB!=null){
+					System.out.println("user name " +unameInDB.toString()+ " is already exists !");
+					//TODO add error message window
+				}	
+				/**getting here means user entered a unique user name and ID as needed*/
+				else{
+					ir.setUserID(ID);
+					ir.setFirstName(fname);
+					ir.setLastName(lname);
+					ir.setUsername(uname);
+					ir.setPassword(pass);
+					
+					DBController.insertToDB("INSERT INTO ibookdb.user (`username`, `password`, `privilege`, `status`) VALUES ('"+ir.getUsername()+"', '"+ir.getpassword()+"', '1', '1')");
+					DBController.insertToDB("INSERT INTO ibookdb.interestedreader (`userID`, `firstName`, `lastName`, `username`) VALUES ('"+ir.getUserID()+"', '"+ir.getFirstName()+"', '"+ir.getLastName()+"', '"+ir.getUsername()+"')");
+
+				}
+			}
 	}
 
 

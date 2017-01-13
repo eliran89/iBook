@@ -58,7 +58,7 @@ public class mysqlConnection {
 			String msg = new String(obj.toString());
 			stmt = conn.createStatement();
 			ResultSet rs = null;
-			if(msg.contains("select"))
+			if(msg.contains("select")||msg.contains("SELECT"))
 			{
 				rs = stmt.executeQuery(msg);
 				

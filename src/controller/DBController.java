@@ -124,7 +124,7 @@ public class DBController {
 		
 		if( rs == null)
 		{
-			System.out.println("rs is: null");
+		//	System.out.println("rs is: null");
 			bool = false;
 		}
 		else

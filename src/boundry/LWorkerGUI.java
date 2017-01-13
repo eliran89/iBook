@@ -29,14 +29,14 @@ public class LWorkerGUI extends GWorkerGUI {
 					
 			}
 		});
-		btnUserManagement.setBounds(48, 344, 228, 27);
+		btnUserManagement.setBounds(49, 344, 228, 27);
 		add(btnUserManagement);
 		
 		/** adding a user icon**/
 		JLabel userPic = new JLabel("");
 		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
 		userPic.setHorizontalAlignment(SwingConstants.CENTER);
-		userPic.setBounds(77, 160, 163, 153);
+		userPic.setBounds(73, 180, 163, 153);
 		add(userPic);
 		
 	}
@@ -56,7 +56,12 @@ public class LWorkerGUI extends GWorkerGUI {
 		throw new UnsupportedOperationException();
 	}
 
-	public void readerAcountOpening() {
+	/**
+	 * Open an Interested reader account
+	 * @param ID, firstName, lastName, userName, Password
+	 */
+	public void interestedReaderAcountOpening() {
+		
 		// TODO - implement LWorkerGUI.readerAcountOpening
 		throw new UnsupportedOperationException();
 	}
