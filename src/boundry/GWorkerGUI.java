@@ -2,13 +2,32 @@ package boundry;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import controller.bookController;
 
 public abstract class GWorkerGUI extends editorGUI {
 	public GWorkerGUI( String name , String role) {
 		super(name,role);
 		
+		JButton btnBookSearch = new JButton("Book Search");
+		btnBookSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				bookController.searchBook();
+			}
+		});
+		btnBookSearch.setBounds(120, 552,211, 47);
+		add(btnBookSearch);
+		
+		JLabel imgB;
+		imgB = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/booksearch.jpg")));
+		imgB.setBounds(120, 422, 211, 105);
+		add(imgB);
 
 	}
 
