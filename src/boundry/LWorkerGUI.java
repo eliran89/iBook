@@ -20,24 +20,6 @@ public class LWorkerGUI extends GWorkerGUI {
 	public LWorkerGUI( String name , String role) {
 		super(name,role);
 		
-		JButton btnUserManagement = new JButton("User details management");
-		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnUserManagement.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-
-				userController.userSearch();
-					
-			}
-		});
-		btnUserManagement.setBounds(48, 344, 228, 27);
-		add(btnUserManagement);
-		
-		/** adding a user icon**/
-		JLabel userPic = new JLabel("");
-		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
-		userPic.setHorizontalAlignment(SwingConstants.CENTER);
-		userPic.setBounds(77, 160, 163, 153);
-		add(userPic);
 		
 	}
 

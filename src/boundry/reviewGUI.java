@@ -76,6 +76,7 @@ public class reviewGUI extends mainPanel {
 			textField.setColumns(10);
 			add(textField);
 			
+			//Search Review //
 			JButton btnSearch = new JButton("Search");
 			btnSearch.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
@@ -104,13 +105,11 @@ public class reviewGUI extends mainPanel {
 			
 			
 		}
-	/**
-	 * 
-	 */
+	
 		public void getReview()
 		{
 			
-			/**Create The Result Table*/
+			/**Create The Result Table**/
 			JTable table = new JTable(data,columnHeader)
 			{
 				

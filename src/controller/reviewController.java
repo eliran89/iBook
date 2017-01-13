@@ -118,8 +118,13 @@ public class reviewController {
 		reviewGUI review = null;
 		if(loginController.use.getprivilege() == 1)
 			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
+		
+		if(loginController.use.getprivilege() == 3)
+			review = new reviewGUI(loginController.use.getUsername(),"Editor");
+		
 		else
 			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		
 		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
 		loginController.mainG.setContentPane(review);
 		loginController.mainG.revalidate();
@@ -132,49 +137,56 @@ public class reviewController {
 	}
 
 
-	public static void  openMail(){ // opens the table that displays the reviews
+	public static void  openMailScreen(){ // opens the table that displays the reviews
 		ArrayList <String> info = null;
 		
 		
-			info = DBController.getFromDB("select 'book'.'Title','author.authorName','reviews'.'title','reviews'.'username' ,'reviews'.'text'"
-					+ "from book ,reviews,author,bauthor "
-				+"where book.bookID = reviews.bookID  and author.authorID=bauthor.authorID and reviews.visible=1 "
+			info = DBController.getFromDB("select book.Title , author.authorName , reviews.title , reviews.username , reviews.text "
+				+"from book , reviews , author , bauthor "
+				+"where book.bookID = reviews.bookID and author.authorID=bauthor.authorID and reviews.visible=1 "
 					+"order by book.Title ASC");
 			
 			
 			/** Checking the privileges for the title of the user screen **/
-			editorGUI review=null;
+			OpenMailGUI review=null;
 			
 			if(loginController.use.getprivilege() == 1)
-				review = new editorGUI(loginController.use.getUsername(),"Interested Reader");
+				review = new OpenMailGUI(loginController.use.getUsername(),"Interested Reader");
 			if(loginController.use.getprivilege() == 2)
-				review = new editorGUI(loginController.use.getUsername(),"Reader");
+				review = new OpenMailGUI(loginController.use.getUsername(),"Reader");
 			if(loginController.use.getprivilege() == 3)
-				review = new editorGUI(loginController.use.getUsername(),"Editor");
+				review = new OpenMailGUI(loginController.use.getUsername(),"Editor");
 			if(loginController.use.getprivilege() == 4)
-				review = new editorGUI(loginController.use.getUsername(),"Library Worker");
+				review = new OpenMailGUI(loginController.use.getUsername(),"Library Worker");
 			if(loginController.use.getprivilege() == 5)
-				review = new editorGUI(loginController.use.getUsername(),"Librarian");
+				review = new OpenMailGUI(loginController.use.getUsername(),"Librarian");
 			if(loginController.use.getprivilege() == 6)
-				review = new editorGUI(loginController.use.getUsername(),"Manager");
+				review = new OpenMailGUI(loginController.use.getUsername(),"Manager");
+				
 			
-			
-			/** Putting in table the data **/
+						
+			/**if we get results we add the results table*/
 			if(info != null)
 			{
-				editorGUI.data = new String[info.size()/3][3];
+				OpenMailGUI.data = new String[info.size()/5][5];
 				
 				int count =0;
-				for(int i = 0 ; i < info.size()/3 ; i++)
-					for(int j = 0 ; j < 3 ; j++){
-						editorGUI.data[i][j] = info.get(count);
+				for(int i = 0 ; i < info.size()/5 ; i++)
+					for(int j = 0 ; j < 5 ; j++){
+						OpenMailGUI.data[i][j] = info.get(count);
 						count++;
-					}
-				review.openMail();
+			}
+				review.getReview();
 				
 			}
-			//loginController.mainG.setContentPane(review);
-			//loginController.mainG.revalidate();
+			
+			/**if there are no results at all we add a lable that says "no results"*/
+			else
+				review.noResults();
+			
+			loginController.mainG.setContentPane(review);
+			loginController.mainG.revalidate();
+			
 			
 		
 				
