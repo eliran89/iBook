@@ -24,9 +24,9 @@ public class loginController {
 	public static reader RDetails = null;
 	
 	/**
-	 * 
-	 * @param username
-	 * @param password
+	 * login 
+	 * @param username String
+	 * @param password String
 	 * @throws SQLException
 	 */
 	static public void login(String username , String password) throws SQLException{

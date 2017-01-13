@@ -20,7 +20,27 @@ public class LWorkerGUI extends GWorkerGUI {
 	public LWorkerGUI( String name , String role) {
 		super(name,role);
 		
+
+		/*JButton btnUserManagement = new JButton("User details management");
+		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnUserManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				userController.userSearch();
+					
+			}
+		});
+		btnUserManagement.setBounds(49, 344, 228, 27);
+		add(btnUserManagement);
 		
+		/** adding a user icon
+		JLabel userPic = new JLabel("");
+		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
+		userPic.setHorizontalAlignment(SwingConstants.CENTER);
+		userPic.setBounds(73, 180, 163, 153);
+		add(userPic);
+
+		**/
 	}
 
 	public void editReaderDetails() {
@@ -38,7 +58,12 @@ public class LWorkerGUI extends GWorkerGUI {
 		throw new UnsupportedOperationException();
 	}
 
-	public void readerAcountOpening() {
+	/**
+	 * Open an Interested reader account
+	 * @param ID, firstName, lastName, userName, Password
+	 */
+	public void interestedReaderAcountOpening() {
+		
 		// TODO - implement LWorkerGUI.readerAcountOpening
 		throw new UnsupportedOperationException();
 	}

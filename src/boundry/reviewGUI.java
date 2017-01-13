@@ -36,9 +36,9 @@ public class reviewGUI extends mainPanel {
 	public static String[][] data;
 	private static int row = -1;
 	/**
-	 * 
-	 * @param name
-	 * @param role
+	 * reviewGUI constructor 
+	 * @param name String
+	 * @param role String
 	 */
 	public reviewGUI(String name,String role) {
 		
@@ -105,7 +105,13 @@ public class reviewGUI extends mainPanel {
 			
 			
 		}
+
 	
+
+	/**
+	 * getReview display search result
+	 */
+
 		public void getReview()
 		{
 			
@@ -155,11 +161,11 @@ public class reviewGUI extends mainPanel {
 			table.setBorder(new LineBorder(Color.LIGHT_GRAY));
 			table.setPreferredScrollableViewportSize(new Dimension(17,325));
 
-			/**Scroll Pane*/
+			/*Scroll Pane*/
 			JScrollPane pane = new JScrollPane(table);
 			add(table);
 			
-			/***/
+			/**/
 			JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
 			lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblBookName.setForeground(Color.BLACK);
@@ -167,7 +173,7 @@ public class reviewGUI extends mainPanel {
 			lblBookName.setBounds(79, 193, 216, 39);
 			add(lblBookName);
 			
-			/***/
+			/**/
 			JLabel lblReviewName = DefaultComponentFactory.getInstance().createLabel("Review Name");
 			lblReviewName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -175,7 +181,7 @@ public class reviewGUI extends mainPanel {
 			lblReviewName.setBounds(329, 196, 186, 32);
 			add(lblReviewName);
 			
-			/***/
+			/**/
 			JLabel lblReviewer = DefaultComponentFactory.getInstance().createLabel("Reviewer");
 			lblReviewer.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -201,7 +207,7 @@ public class reviewGUI extends mainPanel {
 			//scrollBar.addAdjustmentListener(l);
 		}
 		/**
-		 * 
+		 * noResults display a labal "<No Results>"
 		 */
 	public void noResults()
 	{
@@ -213,7 +219,10 @@ public class reviewGUI extends mainPanel {
 		add(label);
 	}
 	
-
+/**
+ *  displayReview display chosen review
+ * @param text String
+ */
 	public void displayReview(String text) {
 		JTextPane txtpnFds = new JTextPane();
 		txtpnFds.setEditable(false);

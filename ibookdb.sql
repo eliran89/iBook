@@ -1,6 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
+CREATE DATABASE  IF NOT EXISTS `ibookdb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `ibookdb`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
--- Host: 127.0.0.1    Database: ibookdb
+-- Host: localhost    Database: ibookdb
 -- ------------------------------------------------------
 -- Server version	5.7.16-log
 
@@ -35,7 +37,7 @@ CREATE TABLE `author` (
 
 LOCK TABLES `author` WRITE;
 /*!40000 ALTER TABLE `author` DISABLE KEYS */;
-INSERT INTO `author` VALUES (23105,' J. D. Salinger'),(23106,'J.K.Rowling');
+INSERT INTO `author` VALUES (1,' J. D. Salinger'),(2,'J.K.Rowling');
 /*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -52,8 +54,8 @@ CREATE TABLE `bauthor` (
   PRIMARY KEY (`authorID`,`bookID`),
   KEY `bookid_idx` (`bookID`),
   KEY `fk_author_bauthor_idx` (`authorID`),
-  CONSTRAINT `fk_author_bauthor` FOREIGN KEY (`authorID`) REFERENCES `author` (`authorID`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `fk_author_book` FOREIGN KEY (`bookID`) REFERENCES `book` (`bookID`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_author_bauthor` FOREIGN KEY (`authorID`) REFERENCES `author` (`authorID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_author_book` FOREIGN KEY (`bookID`) REFERENCES `book` (`bookID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -63,7 +65,7 @@ CREATE TABLE `bauthor` (
 
 LOCK TABLES `bauthor` WRITE;
 /*!40000 ALTER TABLE `bauthor` DISABLE KEYS */;
-INSERT INTO `bauthor` VALUES (23106,34),(23105,35);
+INSERT INTO `bauthor` VALUES (2,34),(1,35);
 /*!40000 ALTER TABLE `bauthor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,6 +140,7 @@ CREATE TABLE `bscope` (
   `bookID` int(11) NOT NULL,
   `scopeName` varchar(45) NOT NULL,
   `rank` int(11) DEFAULT NULL,
+  `subject` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`scopeName`,`bookID`),
   KEY `fk_scope_book_idx` (`bookID`),
   CONSTRAINT `fk_bscope_scope` FOREIGN KEY (`scopeName`) REFERENCES `scope` (`scopeName`) ON DELETE CASCADE ON UPDATE NO ACTION,
@@ -151,34 +154,8 @@ CREATE TABLE `bscope` (
 
 LOCK TABLES `bscope` WRITE;
 /*!40000 ALTER TABLE `bscope` DISABLE KEYS */;
+INSERT INTO `bscope` VALUES (35,'adults',NULL,'Boring'),(35,'Drama',NULL,'Boring'),(34,'Fantasy',NULL,'Kids'),(35,'Fantasy',NULL,'Boring'),(34,'Kids',NULL,'Magic');
 /*!40000 ALTER TABLE `bscope` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `bsubject`
---
-
-DROP TABLE IF EXISTS `bsubject`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `bsubject` (
-  `bookID` int(11) NOT NULL,
-  `subName` varchar(45) NOT NULL,
-  PRIMARY KEY (`bookID`,`subName`),
-  KEY `bookid_idx` (`bookID`),
-  KEY `fk_bsubject_subject_idx` (`subName`),
-  CONSTRAINT `fk_bsubject_book` FOREIGN KEY (`bookID`) REFERENCES `book` (`bookID`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `fk_bsubject_subject` FOREIGN KEY (`subName`) REFERENCES `subject` (`subjectName`) ON DELETE CASCADE ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `bsubject`
---
-
-LOCK TABLES `bsubject` WRITE;
-/*!40000 ALTER TABLE `bsubject` DISABLE KEYS */;
-/*!40000 ALTER TABLE `bsubject` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -393,29 +370,8 @@ CREATE TABLE `scope` (
 
 LOCK TABLES `scope` WRITE;
 /*!40000 ALTER TABLE `scope` DISABLE KEYS */;
+INSERT INTO `scope` VALUES ('Adults',NULL),('Drama',NULL),('Fantasy',NULL),('Kids',NULL);
 /*!40000 ALTER TABLE `scope` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `subject`
---
-
-DROP TABLE IF EXISTS `subject`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `subject` (
-  `subjectName` varchar(45) NOT NULL,
-  PRIMARY KEY (`subjectName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `subject`
---
-
-LOCK TABLES `subject` WRITE;
-/*!40000 ALTER TABLE `subject` DISABLE KEYS */;
-/*!40000 ALTER TABLE `subject` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -455,4 +411,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-10 15:07:33
+-- Dump completed on 2017-01-11 17:41:19

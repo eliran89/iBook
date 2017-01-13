@@ -21,6 +21,7 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,10 +29,15 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 public class UserSearchGUI extends mainPanel{
-	private JTextField textField;
+	private static JTextField textField;
 	private String[] columnHeader1 = {"ID","First Name","Last Name","User Name", "Privilege Level"};
 	public static String[][] data1;
 	private static int row1 = -1;
+	
+	private static JLabel lblSearchBy;
+	private static JComboBox comboBox;
+	private static JButton btnSearch;
+	
 	
 	public UserSearchGUI(String name , String role)
 	{
@@ -53,7 +59,7 @@ public class UserSearchGUI extends mainPanel{
 		add(btnMainWindow);
 
 		
-		JLabel lblSearchBy = new JLabel("Search By :");
+		lblSearchBy = new JLabel("Search By :");
 		lblSearchBy.setFont(new Font("AR CENA", Font.BOLD, 18));
 		lblSearchBy.setHorizontalAlignment(SwingConstants.CENTER);
 		lblSearchBy.setForeground(Color.BLACK);
@@ -62,7 +68,7 @@ public class UserSearchGUI extends mainPanel{
 		add(lblSearchBy);
 		
 		/* Definition of comboBox used for search by ID or user name */
-		JComboBox comboBox = new JComboBox();
+		comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox.addItem("Username");
 		comboBox.addItem("UserID");
@@ -74,7 +80,7 @@ public class UserSearchGUI extends mainPanel{
 		add(textField);
 		textField.setColumns(10);
 		
-		JButton btnSearch = new JButton("Search");
+		btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String item = (String) comboBox.getSelectedItem();
@@ -85,7 +91,7 @@ public class UserSearchGUI extends mainPanel{
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSearch.setBounds(553, 137, 107, 23);
 		add(btnSearch);
-		
+
 		/*JTable table = new JTable();
 		table.setForeground(Color.WHITE);
 		table.setBackground(Color.WHITE);
@@ -197,26 +203,40 @@ public class UserSearchGUI extends mainPanel{
 			}
 		});*/
 		
+		/*Buttons for actions on users like: Add, Edit, Remove, Set Payment Arrangement*/
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				displayAddUserDetails();
+				//userController.setUserDetails();
+			}
+		});
+		btnAdd.setBounds(79, 596, 89, 23);
+		add(btnAdd);
 		
-		JButton btnNewButton = new JButton("Add");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnEdit = new JButton("Edit");
+		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(374, 596, 131, 23);
-		add(btnNewButton);
-	//	79, 230, 687, 325
-		JButton button = new JButton("Edit");
-		button.setBounds(374, 900, 89, 23);
-		add(button);
+		btnEdit.setBounds(246, 596, 89, 23);
+		add(btnEdit);
 		
-		JButton button_1 = new JButton("Remove");
-		button_1.setBounds(329, 900, 89, 23);
-		add(button_1);
+		JButton btnRemove = new JButton("Remove");
+		btnRemove.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnRemove.setBounds(410, 596, 89, 23);
+		add(btnRemove);
 		
-		JButton button_2 = new JButton("Set Payment Arrangement");
-		button_2.setBounds(475, 900, 185, 23);
-		add(button_2);
+		JButton btnPymnt = new JButton("Set Payment Arrangement");
+		btnPymnt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnPymnt.setBounds(581, 596, 185, 23);
+		add(btnPymnt);
 		
 		//scrollBar.addAdjustmentListener(l);
 	}
@@ -242,4 +262,151 @@ public class UserSearchGUI extends mainPanel{
 		add(txtpnFds);
 		
 	}
+	
+	
+	
+	
+	
+	public static void displayAddUserDetails() {
+		UserSearchGUI panelAdd;
+
+		//System.out.println(loginController.use.getprivilege());
+		if(loginController.use.getprivilege() == 4)
+			panelAdd = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
+		else
+			panelAdd = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
+		
+//		System.out.println("Im here!! and its great");
+		
+		/**Frame label */
+		JLabel lblAddingANew = new JLabel("Adding a New Intereseted Reader");
+		lblAddingANew.setHorizontalAlignment(SwingConstants.CENTER);
+		lblAddingANew.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblAddingANew.setBounds(274, 72, 331, 27);
+		panelAdd.add(lblAddingANew);
+		
+		/**ID label and textField */
+		JLabel lblTitle = new JLabel("ID");
+		lblTitle.setToolTipText("Enter new account ID");
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitle.setForeground(Color.BLACK);
+		lblTitle.setBounds(274, 152, 51, 20);
+		panelAdd.add(lblTitle);
+		
+		JTextField textId = new JTextField();
+		textId.setBounds(388, 154, 124, 20);
+		textId.setColumns(10);
+		panelAdd.add(textId);
+		
+		/**first name label and textField */
+		JLabel lblFirstName = new JLabel("First Name");
+		lblFirstName.setToolTipText("Enter new account first name");
+		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFirstName.setForeground(Color.BLACK);
+		lblFirstName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblFirstName.setBounds(274, 202, 104, 20);
+		panelAdd.add(lblFirstName);
+		
+		JTextField textFname = new JTextField();
+		textFname.setColumns(10);
+		textFname.setBounds(388, 204, 124, 20);
+		panelAdd.add(textFname);
+		
+		/**last name label and textField */
+		JLabel lblLastName = new JLabel("Last Name");
+		lblLastName.setToolTipText("Enter new account last name");
+		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLastName.setForeground(Color.BLACK);
+		lblLastName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblLastName.setBounds(274, 250, 104, 20);
+		panelAdd.add(lblLastName);
+		
+		JTextField textLname = new JTextField();
+		textLname.setColumns(10);
+		textLname.setBounds(388, 252, 124, 20);
+		panelAdd.add(textLname);
+		
+		/**user name label and textField */
+		JLabel lblUserName = new JLabel("User Name");
+		lblUserName.setToolTipText("Enter unique account username");
+		lblUserName.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUserName.setForeground(Color.BLACK);
+		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUserName.setBounds(274, 297, 104, 20);
+		panelAdd.add(lblUserName);
+		
+		JTextField textUname = new JTextField();
+		textUname.setColumns(10);
+		textUname.setBounds(388, 299, 124, 20);
+		panelAdd.add(textUname);
+		
+		/**password label and textField */
+		JLabel lblPassword = new JLabel("Password");
+		lblPassword.setToolTipText("Enter 6 chars account password");
+		lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
+		lblPassword.setForeground(Color.BLACK);
+		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblPassword.setBounds(274, 344, 104, 20);
+		panelAdd.add(lblPassword);
+		
+		JTextField textPassword = new JTextField();
+		textPassword.setColumns(10);
+		textPassword.setBounds(388, 346, 124, 20);
+		panelAdd.add(textPassword);
+
+		
+		/**button Add */
+		JButton btnAdd = new JButton("Add");
+		btnAdd.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					userController.setUserDetails(Integer.parseInt(textId.getText()),textFname.getText(),textLname.getText(),textUname.getText(),textPassword.getText());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnAdd.setBounds(516, 441, 89, 23);
+		panelAdd.add(btnAdd);
+		
+		/**button Back */
+		JButton btnBack = new JButton("Back");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+			}
+		});
+		btnBack.setBounds(274, 441, 89, 23);
+		panelAdd.add(btnBack);
+		
+		
+		lblSearchBy.setVisible(false);
+		comboBox.setVisible(false);
+		textField.setVisible(false);
+		btnSearch.setVisible(false);
+		
+		loginController.mainG.setContentPane(panelAdd);
+		loginController.mainG.revalidate();
+		//throw new UnsupportedOperationException();
+	}	
+}
+	
+/*		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String brief = textBrief.getText();
+				String title = textTitle.getText();
+				String langu = textLangu.getText();
+				String keyWord = textKeyWord.getText();
+				String author = textAuthor.getText();
+				String appendix = textAppendix.getText();
+				String scope = textScope.getText();
 	}
+	}*/
+	
