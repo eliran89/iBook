@@ -86,7 +86,7 @@ public class UserSearchGUI extends mainPanel{
 			public void actionPerformed(ActionEvent e) {
 				String item = (String) comboBox.getSelectedItem();
 				String search = (String) textField.getText();
-				userController.getUserDetails(item, search);
+				controller.userController.getUserDetails(item, search);
 			}
 		});
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -231,7 +231,7 @@ public class UserSearchGUI extends mainPanel{
 				String id = new String( table.getValueAt(row1,0).toString());
 				String uName = new String( table.getValueAt(row1,3).toString());
 				try {
-					userController.removeUser(id,uName);
+					controller.userController.removeUser(id,uName);
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
