@@ -2,6 +2,8 @@ package controller;
 
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
@@ -141,12 +143,46 @@ public class userController {
 		loginController.mainG.setContentPane(account);
 		loginController.mainG.revalidate();
 		
-	}/**displayRiview method END*/
+	}/**displayRiview method END
+	 * @param title */
 	
-	public void addBookToOrderList() {
+	
+	/**addBookToOrderList method
+	 * adds a book order for a reader to the database
+	 * @param title
+	 */
+	public static void addBookToOrderList(String title) {
 		// TODO - implement userController.addBookToOrderList
-		throw new UnsupportedOperationException();
-	}
+		
+		ArrayList<String> orderInfo;	//contains info about the order (userid, book id, date)
+		
+		String username = loginController.use.getUsername();	//get username
+		ArrayList<String> info = null;
+		
+		
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-2017");	//date format
+		LocalDateTime now = LocalDateTime.now();	//get order date
+		
+		
+		//System.out.println("starting query");
+		
+		orderInfo = DBController.getFromDB("select reader.userID, book.bookID "
+									  + "from reader, book "
+									  + "where reader.username like '%"+username+"%' "
+									  		+ "AND book.Title like '%"+title+"%' ");
+		
+		System.out.println("order information:");
+		System.out.println("userID = "+orderInfo.get(0)+"\nbookID = "+orderInfo.get(1));
+		
+		String query = "INSERT INTO `ibookdb`.`readerorder` (`userID`, `bookID`, `date`) "
+				+ "VALUES ('"+orderInfo.get(0)+"', '"+orderInfo.get(1)+"', '"+now.toString() +"')";
+		
+		info = DBController.getFromDB(query);	//execute update
+		//throw new UnsupportedOperationException();
+	}/**addBookToOrderList method END
+	 * @param title */
+	
+	
 
 	public void setDetails() {
 		// TODO - implement userController.setDetails
