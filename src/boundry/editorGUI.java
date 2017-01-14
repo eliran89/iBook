@@ -1,12 +1,20 @@
 package boundry;
 import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+import javax.swing.table.TableCellRenderer;
+
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import controller.reviewController;
+import controller.userController;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -14,16 +22,21 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTable;
 
 public class editorGUI extends mainPanel {
-	private JTable table;
+	
+	
 	public editorGUI( String name , String role) {
 		super(name,role);
+		
+		/** main screen buttons and labels  **/
+		
+		
 		btnLogout.setBounds(10, 11, 89, 16);
 		
 		setForeground(Color.WHITE);
 		JLabel lblWelcomToIbook = new JLabel("Welcome To IBook");
 		lblWelcomToIbook.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
 		lblWelcomToIbook.setHorizontalAlignment(SwingConstants.CENTER);
-		lblWelcomToIbook.setForeground(Color.WHITE);
+		lblWelcomToIbook.setForeground(Color.BLACK);
 		lblWelcomToIbook.setBackground(Color.BLACK);
 		lblWelcomToIbook.setBounds(201, 63, 491, 67);
 		add(lblWelcomToIbook);
@@ -31,16 +44,40 @@ public class editorGUI extends mainPanel {
 		
 		JLabel imgR;
 		imgR = new JLabel(new ImageIcon(editorGUI.class.getResource("/boundry/mailbox.jpg")));
-		imgR.setBounds(445, 141, 247, 137);
+		imgR.setBounds(569, 179, 247, 137);
 		add(imgR);
 		
 		JButton btnNewButton = new JButton("Mailbox");
+		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				reviewController.openMail();
+				reviewController.openMailScreen();
+				
 			}
 		});
-		btnNewButton.setBounds(546, 336, 89, 23);
+		
+		
+
+		JButton btnUserManagement = new JButton("User details management");
+		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnUserManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				userController.userSearch();
+					
+			}
+		});
+		btnUserManagement.setBounds(48, 344, 228, 27);
+		add(btnUserManagement);
+		
+		/** adding a user icon**/
+		JLabel userPic = new JLabel("");
+		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
+		userPic.setHorizontalAlignment(SwingConstants.CENTER);
+		userPic.setBounds(77, 160, 163, 153);
+		add(userPic);
+		
+		btnNewButton.setBounds(656, 348, 119, 23);
 		add(btnNewButton);
 		
 		/*table = new JTable();
@@ -59,12 +96,7 @@ public class editorGUI extends mainPanel {
 		throw new UnsupportedOperationException();
 	}
 
-	public void openMail() {
-			
-		table = new JTable();
-		table.setBounds(185, 392, 555, 227);
-		add(table);
-	}
+	
 
 	public void ReviewRemoval() {
 		// TODO - implement editorGUI.ReviewRemoval
