@@ -363,7 +363,7 @@ public class userBookGUI extends mainPanel {
 		String scopes = new String(book.getScope().get(0));
 		
 		
-		JLabel lblCost = new JLabel("Cost : "+ book.getCost()+"$");
+		JLabel lblCost = new JLabel("Cost : $"+ book.getCost());
 		lblCost.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCost.setFont(new Font("Ariel", Font.BOLD, 16));
 		lblCost.setBounds(631, 80, 251, 54);
@@ -375,7 +375,7 @@ public class userBookGUI extends mainPanel {
 		lblBookTitle.setBounds(336, 80, 251, 54);
 		add(lblBookTitle);
 		
-		JLabel lblAthors = new JLabel("Athor(s) : ");
+		JLabel lblAthors = new JLabel("Author(s) : ");
 		lblAthors.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthors.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAthors.setBounds(79, 251, 97, 14);
@@ -455,11 +455,22 @@ public class userBookGUI extends mainPanel {
 		add(TFScope);
 		TFScope.setColumns(10);
 		
+		
 		JButton btnOrderTheBook = new JButton("Order The Book");
 		btnOrderTheBook.setBackground(Color.GREEN);
 		btnOrderTheBook.setBounds(679, 534, 150, 23);
 		if(loginController.use.getprivilege() == 1)
 			btnOrderTheBook.setVisible(false);
+		btnOrderTheBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//TODO - implement book ordering
+				
+				String title = lblBookTitle.getText(); 
+				
+				//System.out.println("title: "+title);
+				userController.addBookToOrderList(title);
+			}
+		});
 		add(btnOrderTheBook);
 		
 		JButton btnBackToSearch = new JButton("Back To Search");
