@@ -14,14 +14,12 @@ import entity.*;
 public class userController {
 
 	static public void logout(){
-    	LoginGUI.err = false;
+		LoginGUI.err = false;
 		LoginGUI log = new LoginGUI();
 			log.setSize(550,320);
 			log.setVisible(true);
 		    log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
-
-}
+	}
 
 	public static void userSearch() {
 		
@@ -219,6 +217,33 @@ public class userController {
 	}
 
 
+	public static void editUserDetails(String id, String fname, String lname, String uname, String pass) throws SQLException {
+
+		ArrayList<String> iReaderUpdate = null;
+		ArrayList<String> userUpdate = null;
+		//TODO add validation tests
+		/**Edit user by user name and id*/
+		iReaderUpdate = DBController.getFromDB("UPDATE ibookdb.interestedreader i set i.firstName='"+fname+"', i.lastName='"+lname+"' where i.userID='"+id+"'");
+		userUpdate = DBController.getFromDB("UPDATE ibookdb.user u set u.password='"+pass+"' where u.username='"+uname+"'");
+	}
+	
+	
+	public static void removeUser(String id, String uname) throws SQLException {
+
+		ArrayList<String> priv = null;
+		priv = DBController.getFromDB("select u.privilege from ibookdb.user u where u.username = '"+uname+"'");
+		/**make sure privilege is less than 3 means remove only reader or interested reader*/
+		if (Integer.parseInt(priv.get(0)) < 3){
+			DBController.insertToDB("delete from ibookdb.interestedreader where userID='"+id+"'");
+			DBController.insertToDB("delete from ibookdb.user where username='"+uname+"'");
+		//TODO Add pop up message: user removal succeeded
+		}
+		else{
+		//TODO Add pop up message: user removal Failed, only Reader or Interested reader removal allowed!
+		}
+	}
+	
+	
 	public void checkOrderDetails() {
 		// TODO - implement userController.checkOrderDetails
 		throw new UnsupportedOperationException();

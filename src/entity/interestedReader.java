@@ -43,6 +43,7 @@ public class interestedReader extends User {
 	public void setUserID(int userID){
 		if ((userID < 11111) || (userID > 99999)){
 			//TODO add a pop up message
+			//UserSearchGUI.displayAddUserDetails();
 			System.out.println("Please enter a legal ID (greater than 11111 and lower than 99999)");
 		//	backToUserSearch();
 			return;

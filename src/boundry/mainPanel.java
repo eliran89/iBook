@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,6 +24,8 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import controller.loginController;
 import controller.userController;
+import java.awt.event.MouseMotionAdapter;
+import java.awt.event.MouseEvent;
 
 public class mainPanel extends JPanel {
 	
@@ -65,144 +68,32 @@ public class mainPanel extends JPanel {
 		add(wname);
 		
 		
-/*		
 		///////////////////to erase!!!//////
 		
-		*//**Create The Result Table*//*
-		JTable table = new JTable();	
-
-		
-		
-	//Eliran's temp check//
-		table.setForeground(Color.BLUE);
-		table.setBackground(Color.WHITE);
-		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.setBounds(79, 230, 687, 325);
-		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		table.setPreferredScrollableViewportSize(new Dimension(17,325));
-		
-		add(table);
-		
-		JLabel lblUserID = DefaultComponentFactory.getInstance().createTitle("User ID");
-		lblUserID.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUserID.setForeground(Color.WHITE);
-		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUserID.setBounds(67, 198, 107, 32);
-		add(lblUserID);
-		
-		*//***//*
-		JLabel lblFirstName = DefaultComponentFactory.getInstance().createLabel("First Name");
-		lblFirstName.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblFirstName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFirstName.setForeground(Color.WHITE);
-		lblFirstName.setBounds(205, 198, 107, 32);
-		add(lblFirstName);
-		
-		*//***//*
-		JLabel lblLastName = DefaultComponentFactory.getInstance().createLabel("Last Name");
-		lblLastName.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblLastName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblLastName.setForeground(Color.WHITE);
-		lblLastName.setBounds(342, 200, 107, 29);
-		add(lblLastName);
-		
-		JLabel lblPrivilegeLevel = new JLabel("Privilege Level");
-		lblPrivilegeLevel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPrivilegeLevel.setForeground(Color.WHITE);
-		lblPrivilegeLevel.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblPrivilegeLevel.setBounds(633, 202, 87, 24);
-		add(lblPrivilegeLevel);
-		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsername.setForeground(Color.WHITE);
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUsername.setBounds(480, 202, 87, 24);
-		add(lblUsername);
-		*//***//*
-		
-		
-		
-		
-		
-		JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnAdd.setBounds(79, 596, 89, 23);
-		add(btnAdd);
-		
-		JButton btnEdit = new JButton("Edit");
-		btnEdit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnEdit.setBounds(246, 596, 89, 23);
-		add(btnEdit);
-		
-		JButton btnRemove = new JButton("Remove");
-		btnRemove.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnRemove.setBounds(410, 596, 89, 23);
-		add(btnRemove);
-		
-		JButton btnPymnt = new JButton("Set Payment Arrangement");
-		btnPymnt.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnPymnt.setBounds(581, 596, 185, 23);
-		add(btnPymnt);
-		
-		*/
-		
-	//	if(loginController.use.getprivilege() == 4)
-//			panelAdd = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
-//		else
-//			panelAdd = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
-		
-/*		JLabel lblAddingANew = new JLabel("Adding a New Intereseted Reader");
+/*
+		*//**Frame label *//*
+		JLabel lblAddingANew = new JLabel("Edit User Details");
 		lblAddingANew.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAddingANew.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		lblAddingANew.setBounds(274, 72, 331, 27);
 		add(lblAddingANew);
 		
+		*//**ID label and textField *//*
 		JLabel lblTitle = new JLabel("ID");
-		lblTitle.setToolTipText("Enter new account ID");
+		lblTitle.setToolTipText("ID field cannot be edited");
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitle.setForeground(Color.BLACK);
 		lblTitle.setBounds(274, 152, 51, 20);
 		add(lblTitle);
 		
-		JTextField textTitle = new JTextField();
-		textTitle.setBounds(388, 154, 124, 20);
-		add(textTitle);
-		textTitle.setColumns(10);
+		JTextField textId = new JTextField();
+		textId.setBounds(388, 154, 124, 20);
+		textId.setColumns(10);
+		textId.setEditable(false);
+		add(textId);
 		
-		JTextField textLangu = new JTextField();
-		textLangu.setColumns(10);
-		textLangu.setBounds(388, 299, 124, 20);
-		add(textLangu);
-		
-		JTextField textAuthor = new JTextField();
-		textAuthor.setColumns(10);
-		textAuthor.setBounds(388, 204, 124, 20);
-		add(textAuthor);
-		
-		JTextField textAppendix = new JTextField();
-		textAppendix.setColumns(10);
-		textAppendix.setBounds(388, 346, 124, 20);
-		add(textAppendix);
-		
-		JTextField textBrief = new JTextField();
-		textBrief.setColumns(10);
-		textBrief.setBounds(388, 252, 124, 20);
-		add(textBrief);
-		
+		*//**first name label and textField *//*
 		JLabel lblFirstName = new JLabel("First Name");
 		lblFirstName.setToolTipText("Enter new account first name");
 		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
@@ -211,6 +102,13 @@ public class mainPanel extends JPanel {
 		lblFirstName.setBounds(274, 202, 104, 20);
 		add(lblFirstName);
 		
+		JTextField textFname = new JTextField();
+		textFname.setColumns(10);
+		textFname.setBounds(388, 204, 124, 20);
+		textFname.setEditable(true);
+		add(textFname);
+		
+		*//**last name label and textField *//*
 		JLabel lblLastName = new JLabel("Last Name");
 		lblLastName.setToolTipText("Enter new account last name");
 		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
@@ -219,14 +117,28 @@ public class mainPanel extends JPanel {
 		lblLastName.setBounds(274, 250, 104, 20);
 		add(lblLastName);
 		
+		JTextField textLname = new JTextField();
+		textLname.setColumns(10);
+		textLname.setBounds(388, 252, 124, 20);
+		textLname.setEditable(true);
+		add(textLname);
+		
+		*//**user name label and textField *//*
 		JLabel lblUserName = new JLabel("User Name");
-		lblUserName.setToolTipText("Enter unique account username");
+		lblUserName.setToolTipText("Username field cannot be edited");
 		lblUserName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUserName.setForeground(Color.BLACK);
 		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblUserName.setBounds(274, 297, 104, 20);
 		add(lblUserName);
 		
+		JTextField textUname = new JTextField();
+		textUname.setColumns(10);
+		textUname.setBounds(388, 299, 124, 20);
+		textUname.setEditable(false);
+		add(textUname);
+		
+		*//**password label and textField *//*
 		JLabel lblPassword = new JLabel("Password");
 		lblPassword.setToolTipText("Enter 6 chars account password");
 		lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
@@ -235,35 +147,41 @@ public class mainPanel extends JPanel {
 		lblPassword.setBounds(274, 344, 104, 20);
 		add(lblPassword);
 		
-		JButton btnAdd = new JButton("Add");
-		btnAdd.addActionListener(new ActionListener() {
+		JTextField textPassword = new JTextField("*****");
+		textPassword.setColumns(10);
+		textPassword.setBounds(388, 346, 124, 20);
+		textPassword.setEditable(true);
+		add(textPassword);
+
+		
+		*//**button Update *//*
+		JButton btnUpdate = new JButton("Update");
+		btnUpdate.setToolTipText("Click here to update account");
+		btnUpdate.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				try {
+					userController.setUserDetails(Integer.parseInt(textId.getText()),textFname.getText(),textLname.getText(),textUname.getText(),textPassword.getText());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});
-		btnAdd.setBounds(516, 441, 89, 23);
-		add(btnAdd);
+		btnUpdate.setBounds(516, 441, 89, 23);
+		add(btnUpdate);
 		
+		*//**button Back *//*
 		JButton btnBack = new JButton("Back");
+		btnBack.setToolTipText("Click here to view all users details");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
+				//userController.userSearch();
+				userController.getUserDetails("Username","");
 			}
 		});
 		btnBack.setBounds(274, 441, 89, 23);
 		add(btnBack);*/
-		
-	
-		//loginController.mainG.setContentPane(panelAdd);
-		//loginController.mainG.revalidate();
-		
-		
-		
-		//till here//////////////////////
-		
-
-		
 	}
 }
