@@ -114,7 +114,7 @@ public class reviewController {
 	
 
 	/**
-	 * displayRiview display the chose review
+	 * displayReview display the chose review
 	 * @param bName String
 	 * @param uName String
 	 */
@@ -139,29 +139,24 @@ public class reviewController {
 		
 	}
 
-	public void removeReview() {
-		// TODO - implement reviewController.removeReview
-		throw new UnsupportedOperationException();
-	}
+	
 
 
 	public static void  openMailScreen(){ // opens the table that displays the reviews
 		ArrayList <String> info = null;
 		
 		
-			info = DBController.getFromDB("select book.Title , author.authorName , reviews.title , reviews.username , reviews.text "
-				+"from book , reviews , author , bauthor "
-				+"where book.bookID = reviews.bookID and author.authorID=bauthor.authorID and reviews.visible=1 "
-					+"order by book.Title ASC");
+			info = DBController.getFromDB("select distinct b.Title , a.authorName , r.title , r.username , r.text "
+				+"from book b, reviews r, author a, bauthor ba "
+				+"where b.bookID = r.bookID and a.authorID=ba.authorID and  ba.bookID = r.bookID and r.visible=1 "
+					+"order by b.Title ASC");
 			
 			
 
 			/** Checking the privileges for the title of the user screen **/
 			OpenMailGUI review=null;
 
-		
-
-			
+					
 			if(loginController.use.getprivilege() == 1)
 				review = new OpenMailGUI(loginController.use.getUsername(),"Interested Reader");
 			if(loginController.use.getprivilege() == 2)
@@ -176,10 +171,6 @@ public class reviewController {
 				review = new OpenMailGUI(loginController.use.getUsername(),"Manager");
 		
 			/**if we get results we add the results table*/
-
-			
-			
-
 			if(info != null)
 			{
 				OpenMailGUI.data = new String[info.size()/5][5];
@@ -200,12 +191,48 @@ public class reviewController {
 			
 			loginController.mainG.setContentPane(review);
 			loginController.mainG.revalidate();
-			
-			
+	}
+	
+	/** Display Mail Reviews in Mailbox**/
+	
+	public static void displayMailReview(String bName, String uName) {
+		ArrayList <String> info = null;
+		info = DBController.getFromDB("select reviews.text from reviews , book"
+				+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bName+"'");
+
+		OpenMailGUI review = null;
+		if(loginController.use.getprivilege() == 1)
+			review = new OpenMailGUI(loginController.use.getUsername(),"Interested Reader");
+		if(loginController.use.getprivilege() == 2)
+			review = new OpenMailGUI(loginController.use.getUsername(),"Reader");
+		if(loginController.use.getprivilege() == 3)
+			review = new OpenMailGUI(loginController.use.getUsername(),"Editor");
+		if(loginController.use.getprivilege() == 4)
+			review = new OpenMailGUI(loginController.use.getUsername(),"Library Worker");
+		if(loginController.use.getprivilege() == 5)
+			review = new OpenMailGUI(loginController.use.getUsername(),"Librarian");
+		if(loginController.use.getprivilege() == 6)
+			review = new OpenMailGUI(loginController.use.getUsername(),"Manager");
+	
 		
-				
+		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
+		
+		
+		//reviewGUI.lblSearchBy.setVisible(false);
+		//reviewGUI.comboBox.setVisible(false);
+		//reviewGUI.textField.setVisible(false);
+	//	reviewGUI.btnSearch.setVisible(false);
+		
+		loginController.mainG.setContentPane(review);
+		loginController.mainG.revalidate();
+		
 	}
 
+	
+	public void removeReview() {
+		// TODO - implement reviewController.removeReview
+		throw new UnsupportedOperationException();
+	}
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails
 		throw new UnsupportedOperationException();

@@ -35,6 +35,8 @@ public class reviewGUI extends mainPanel {
 	private String[] columnHeader = {"Book Name","Review Name","Reviewer"};
 	public static String[][] data;
 	private static int row = -1;
+	
+	public static JLabel lblSearchBy;
 	/**
 	 * reviewGUI constructor 
 	 * @param name String
@@ -55,7 +57,7 @@ public class reviewGUI extends mainPanel {
 			btnMainWindow.setBounds(26, 38, 122, 23);
 			add(btnMainWindow);
 			
-			JLabel lblSearchBy = new JLabel("Search By : ");
+			lblSearchBy = new JLabel("Search By : ");
 			lblSearchBy.setFont(new Font("Tw Cen MT", Font.BOLD, 20));
 			lblSearchBy.setHorizontalAlignment(SwingConstants.CENTER);
 			lblSearchBy.setForeground(Color.BLACK);
