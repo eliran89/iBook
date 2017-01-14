@@ -12,6 +12,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -184,4 +185,19 @@ public class mainPanel extends JPanel {
 		btnBack.setBounds(274, 441, 89, 23);
 		add(btnBack);*/
 	}
+	
+   	public static void infoBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.INFORMATION_MESSAGE);
+    }
+   	
+	public static void warningBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.WARNING_MESSAGE);
+    }
+	
+	public static void errorBox(String infoMessage, String titleBar)
+    {
+        JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.ERROR_MESSAGE);
+    }
 }

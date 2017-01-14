@@ -1,6 +1,6 @@
 package controller;
 
-
+import javax.swing.JOptionPane;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -189,18 +189,16 @@ public class userController {
 		
 		/**get ID if exists*/
 			idInDB = DBController.getFromDB("select i.userID from interestedreader i where i.userID = '"+idstr+"'");
-			if(idInDB!=null){
-				System.out.println("ID " +idInDB.toString()+ " is already exists !");
-				//TODO add error message window
+			if(idInDB != null){
+				//System.out.println("ID " +idInDB.toString()+ " is already exists !");
+				UserSearchGUI.errorBox("ID "+idInDB.toString()+" is already exists!\nPlease pick another one", "Add User");
 			}
 		/**get user name if exists*/
 			else
 			{
 				unameInDB = DBController.getFromDB("select u.username from ibookdb.user u where u.username = '"+uname+"'");
-				if(unameInDB!=null){
-					System.out.println("user name " +unameInDB.toString()+ " is already exists !");
-					//TODO add error message window
-				}	
+				if(unameInDB != null)
+					UserSearchGUI.errorBox("User "+unameInDB.toString()+" is already exists!\nPlease pick another one", "Add User");	
 				/**getting here means user entered a unique user name and ID as needed*/
 				else{
 					ir.setUserID(ID);
@@ -209,9 +207,17 @@ public class userController {
 					ir.setUsername(uname);
 					ir.setPassword(pass);
 					
-					DBController.insertToDB("INSERT INTO ibookdb.user (`username`, `password`, `privilege`, `status`) VALUES ('"+ir.getUsername()+"', '"+ir.getpassword()+"', '1', '1')");
-					DBController.insertToDB("INSERT INTO ibookdb.interestedreader (`userID`, `firstName`, `lastName`, `username`) VALUES ('"+ir.getUserID()+"', '"+ir.getFirstName()+"', '"+ir.getLastName()+"', '"+ir.getUsername()+"')");
+/*					System.out.println("ID: "+ir.getUserID());
+					System.out.println("fName: "+ir.getFirstName());
+					System.out.println("lName: "+ir.getLastName());
+					System.out.println("UN: "+ir.getUsername()); 
+					System.out.println("pass: "+ir.getpassword()); */
 
+					if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
+						DBController.insertToDB("INSERT INTO ibookdb.user (`username`, `password`, `privilege`, `status`) VALUES ('"+ir.getUsername()+"', '"+ir.getpassword()+"', '1', '1')");
+						DBController.insertToDB("INSERT INTO ibookdb.interestedreader (`userID`, `firstName`, `lastName`, `username`) VALUES ('"+ir.getUserID()+"', '"+ir.getFirstName()+"', '"+ir.getLastName()+"', '"+ir.getUsername()+"')");
+						UserSearchGUI.infoBox("User "+uname+" added successfully","Add User");
+						}
 				}
 			}
 	}
@@ -221,10 +227,20 @@ public class userController {
 
 		ArrayList<String> iReaderUpdate = null;
 		ArrayList<String> userUpdate = null;
-		//TODO add validation tests
+		interestedReader ir = new interestedReader();
+		
+		ir.setUserID(Integer.parseInt(id));
+		ir.setFirstName(fname);
+		ir.setLastName(lname);
+		ir.setUsername(uname);
+		ir.setPassword(pass);
+		
 		/**Edit user by user name and id*/
-		iReaderUpdate = DBController.getFromDB("UPDATE ibookdb.interestedreader i set i.firstName='"+fname+"', i.lastName='"+lname+"' where i.userID='"+id+"'");
-		userUpdate = DBController.getFromDB("UPDATE ibookdb.user u set u.password='"+pass+"' where u.username='"+uname+"'");
+		if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
+			iReaderUpdate = DBController.getFromDB("UPDATE ibookdb.interestedreader i set i.firstName='"+fname+"', i.lastName='"+lname+"' where i.userID='"+id+"'");
+			userUpdate = DBController.getFromDB("UPDATE ibookdb.user u set u.password='"+pass+"' where u.username='"+uname+"'");
+			UserSearchGUI.infoBox("Edit user details succeeded!", "Edit User");
+		}
 	}
 	
 	
@@ -236,10 +252,10 @@ public class userController {
 		if (Integer.parseInt(priv.get(0)) < 3){
 			DBController.insertToDB("delete from ibookdb.interestedreader where userID='"+id+"'");
 			DBController.insertToDB("delete from ibookdb.user where username='"+uname+"'");
-		//TODO Add pop up message: user removal succeeded
+			UserSearchGUI.infoBox("User removal succeeded", "User Removal");
 		}
 		else{
-		//TODO Add pop up message: user removal Failed, only Reader or Interested reader removal allowed!
+			UserSearchGUI.errorBox("User removal Failed,\nonly Reader or Interested reader removal allowed!","User Removal");
 		}
 	}
 	

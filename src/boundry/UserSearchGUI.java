@@ -17,6 +17,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -297,7 +298,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**ID label and textField */
 		JLabel lblTitle = new JLabel("ID");
-		lblTitle.setToolTipText("Enter new account ID");
+		lblTitle.setToolTipText("Enter 6-digit ID");
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitle.setForeground(Color.BLACK);
@@ -311,7 +312,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**first name label and textField */
 		JLabel lblFirstName = new JLabel("First Name");
-		lblFirstName.setToolTipText("Enter new account first name");
+		lblFirstName.setToolTipText("No digits or spaces allowed");
 		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblFirstName.setForeground(Color.BLACK);
 		lblFirstName.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -325,7 +326,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**last name label and textField */
 		JLabel lblLastName = new JLabel("Last Name");
-		lblLastName.setToolTipText("Enter new account last name");
+		lblLastName.setToolTipText("No digits or spaces allowed");
 		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblLastName.setForeground(Color.BLACK);
 		lblLastName.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -339,7 +340,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**user name label and textField */
 		JLabel lblUserName = new JLabel("User Name");
-		lblUserName.setToolTipText("Enter unique account username");
+		lblUserName.setToolTipText("Enter unique username. No digits or spaces allowed");
 		lblUserName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUserName.setForeground(Color.BLACK);
 		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -353,7 +354,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**password label and textField */
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setToolTipText("Enter 6 chars account password");
+		lblPassword.setToolTipText("Enter 6-chars account password");
 		lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPassword.setForeground(Color.BLACK);
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -539,5 +540,6 @@ public class UserSearchGUI extends mainPanel{
 		loginController.mainG.setContentPane(panelEdit);
 		loginController.mainG.revalidate();
 	}
+
 }
 	

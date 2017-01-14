@@ -22,9 +22,9 @@ public class interestedReader extends User {
 	
 	public interestedReader(int userID, String firstName , String lastName)
 	{
-		this.userID = userID;
-		this.firstName = firstName;
-		this.lastName = lastName;
+		this.setUserID(userID);
+		this.setFirstName(firstName);
+		this.setLastName(lastName);
 	}
 	
 	public interestedReader(){
@@ -42,9 +42,7 @@ public class interestedReader extends User {
 	/**setters*/
 	public void setUserID(int userID){
 		if ((userID < 11111) || (userID > 99999)){
-			//TODO add a pop up message
-			//UserSearchGUI.displayAddUserDetails();
-			System.out.println("Please enter a legal ID (greater than 11111 and lower than 99999)");
+			UserSearchGUI.errorBox("Please enter a legal ID (greater than 11111 and lower than 99999)","Validate User ID");
 		//	backToUserSearch();
 			return;
 		}
@@ -52,9 +50,8 @@ public class interestedReader extends User {
 	}
 	
 	public void setFirstName(String firstName){
-		if (firstName.matches(".*\\d.*")){
-			//TODO add a pop up message
-			System.out.println("Please enter a legal first name");
+		if ((firstName.matches(".*\\d.*"))||firstName.contains(" ")){
+			UserSearchGUI.errorBox("Please enter a legal first name\nNo digits or spaces allowed!","Validate First Name");
 		//	backToUserSearch();
 			return;
 		}
@@ -62,9 +59,8 @@ public class interestedReader extends User {
 	}
 	
 	public void setLastName(String lastName){
-		if (lastName.matches(".*\\d.*")){
-			//TODO add a pop up message
-			System.out.println("Please enter a legal last name");
+		if ((lastName.matches(".*\\d.*"))||lastName.contains(" ")){
+			UserSearchGUI.errorBox("Please enter a legal last name\nNo digits or spaces allowed!","Validate Last Name");
 		//	backToUserSearch();
 			return;
 		}	
