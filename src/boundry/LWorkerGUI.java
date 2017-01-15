@@ -21,7 +21,7 @@ public class LWorkerGUI extends GWorkerGUI {
 		super(name,role);
 		
 
-		/*JButton btnUserManagement = new JButton("User details management");
+		JButton btnUserManagement = new JButton("User details management");
 		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUserManagement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -30,17 +30,18 @@ public class LWorkerGUI extends GWorkerGUI {
 					
 			}
 		});
-		btnUserManagement.setBounds(49, 344, 228, 27);
+		btnUserManagement.setBounds(138, 344, 228, 27);
 		add(btnUserManagement);
 		
-		/** adding a user icon
+		
+		/** adding a user icon**/
 		JLabel userPic = new JLabel("");
 		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
 		userPic.setHorizontalAlignment(SwingConstants.CENTER);
-		userPic.setBounds(73, 180, 163, 153);
+		userPic.setBounds(171, 165, 163, 153);
 		add(userPic);
-
-		**/
+		
+		
 	}
 
 	public void editReaderDetails() {
