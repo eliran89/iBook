@@ -21,12 +21,12 @@ public abstract class GWorkerGUI extends editorGUI {
 				bookController.searchBook();
 			}
 		});
-		btnBookSearch.setBounds(120, 552,211, 47);
+		btnBookSearch.setBounds(48, 552,211, 47);
 		add(btnBookSearch);
 		
 		JLabel imgB;
 		imgB = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/booksearch.jpg")));
-		imgB.setBounds(120, 422, 211, 105);
+		imgB.setBounds(77, 422, 211, 105);
 		add(imgB);
 
 	}
