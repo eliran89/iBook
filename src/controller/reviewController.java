@@ -101,7 +101,7 @@ public class reviewController {
 		else if(loginController.use.getprivilege() == 2)
 			mainP = new readerGUI(loginController.use.getUsername(),"Reader");
 		else if(loginController.use.getprivilege() == 3)
-			mainP = new readerGUI(loginController.use.getUsername(),"Editor");
+			mainP = new editorGUI(loginController.use.getUsername(),"Editor");
 		else if(loginController.use.getprivilege() == 4)
 			mainP = new readerGUI(loginController.use.getUsername(),"Library Worker");
 		else if(loginController.use.getprivilege() == 5)
@@ -148,7 +148,7 @@ public class reviewController {
 		
 			info = DBController.getFromDB("select distinct b.Title , a.authorName , r.title , r.username , r.text "
 				+"from book b, reviews r, author a, bauthor ba "
-				+"where b.bookID = r.bookID and a.authorID=ba.authorID and  ba.bookID = r.bookID and r.visible=1 "
+				+"where b.bookID = r.bookID and a.authorID=ba.authorID and  ba.bookID = r.bookID and r.visible=0 "
 					+"order by b.Title ASC");
 			
 			
@@ -228,7 +228,45 @@ public class reviewController {
 		
 	}
 
+	/**  Approved reviews to visible=1   **/
+	public static void ApproveReview(String bTitle,String uName) {
+		ArrayList <String> info = null;
+		ArrayList <String> updateVis = null;
+		
+		info = DBController.getFromDB("select  r.BookID "+
+		"from book b, reviews r "+
+		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
+		System.out.println(info);
+		
+		updateVis = DBController.getFromDB("UPDATE reviews r SET visible=1 "
+				+ "WHERE r.BookID=35 and r.username='zachi' and r.visible=0");
+		
+		OpenMailGUI.infoBox("Review was approved!", "book");
+		
+
+
+
+		//info = DBController.getFromDB("select reviews.text from reviews , book"
+		//		+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bName+"'");
+
+		/*reviewGUI review = null;
+		if(loginController.use.getprivilege() == 1)
+			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
+		
+		if(loginController.use.getprivilege() == 3)
+			review = new reviewGUI(loginController.use.getUsername(),"Editor");
+		
+		else
+			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		
+		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
+		loginController.mainG.setContentPane(review);
+		loginController.mainG.revalidate();
+		*/	
+	//	UPDATE `ibookdb`.`reviews` SET `visible`='1' WHERE `reviewid`='1';
+
 	
+	}
 	public void removeReview() {
 		// TODO - implement reviewController.removeReview
 		throw new UnsupportedOperationException();
@@ -244,9 +282,6 @@ public class reviewController {
 	}
 
 
-	public void makeVisible() {
-		// TODO - implement reviewController.makeVisible
-		throw new UnsupportedOperationException();
-	}
+	
 
 }

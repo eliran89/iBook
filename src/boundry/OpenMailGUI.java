@@ -69,6 +69,8 @@ public class OpenMailGUI extends mainPanel {
 		
 		
 		
+		
+		
 	}
 	
 	
@@ -167,35 +169,43 @@ public class OpenMailGUI extends mainPanel {
 		add(ReviewText);
 		
 		
-		// Buttons for Approve, Reject and Edit //
+		// Button for Approve
 		JButton btnApprove = new JButton("Approve");
 		btnApprove.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnApprove.setBounds(500, 700, 131, 23);
+		btnApprove.setBounds(845, 238, 131, 23);
 		add(btnApprove);
 		btnApprove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+				if(row != -1){
+					String bTitle = new String( table.getValueAt(row, 0).toString());
+					String uName= new String( table.getValueAt(row, 3).toString());
+					row = -1;
+					reviewController.ApproveReview(bTitle,uName);
+				}
 			}
 		});
+
 		
+		// Button for Reject //
 		JButton btnReject = new JButton("Reject");
 		btnReject.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnReject.setBounds(1038, 238, 89, 23);
+		btnReject.setBounds(844, 296, 131, 23);
 		add(btnReject);
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		
-		
+		// Button for edit //
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 12));
-		btnEdit.setBounds(1038, 311, 89, 23);
+		btnEdit.setBounds(844, 354, 131, 23);
 		add(btnEdit);
 		btnEdit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
 		
 		// display review button
 		
