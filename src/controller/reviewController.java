@@ -150,8 +150,7 @@ public class reviewController {
 				+"from book b, reviews r, author a, bauthor ba "
 				+"where b.bookID = r.bookID and a.authorID=ba.authorID and  ba.bookID = r.bookID and r.visible=0 "
 					+"order by b.Title ASC");
-			
-			
+				
 
 			/** Checking the privileges for the title of the user screen **/
 			OpenMailGUI review=null;
@@ -232,14 +231,16 @@ public class reviewController {
 	public static void ApproveReview(String bTitle,String uName) {
 		ArrayList <String> info = null;
 		ArrayList <String> updateVis = null;
+		int bookId=0;
 		
 		info = DBController.getFromDB("select  r.BookID "+
 		"from book b, reviews r "+
 		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
-		System.out.println(info);
+		System.out.println(info.get(0));
+		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
 		
 		updateVis = DBController.getFromDB("UPDATE reviews r SET visible=1 "
-				+ "WHERE r.BookID=35 and r.username='zachi' and r.visible=0");
+				+ "WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
 		
 		OpenMailGUI.infoBox("Review was approved!", "book");
 		

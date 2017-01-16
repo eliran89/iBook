@@ -33,7 +33,7 @@ public class LoginGUI extends JFrame {
 	private JPasswordField passwordField;
 	private JLabel img;
 	private JTextField textField_1;
-	static public Boolean err=false;
+	static public boolean err=false;
 	private JPasswordField passwordField_1;
 	public LoginGUI() {
 		super();

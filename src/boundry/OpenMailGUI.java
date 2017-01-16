@@ -180,7 +180,7 @@ public class OpenMailGUI extends mainPanel {
 				if(row != -1){
 					String bTitle = new String( table.getValueAt(row, 0).toString());
 					String uName= new String( table.getValueAt(row, 3).toString());
-					row = -1;
+					//row = -1;
 					reviewController.ApproveReview(bTitle,uName);
 				}
 			}
@@ -243,12 +243,26 @@ public class OpenMailGUI extends mainPanel {
 	 */
 		public void displayReview(String text) {
 			//reviewGUI.lblSearchBy.setVisible(false);
+			//OpenMailGUI panelAdd;
+			
 			JTextPane txtpnFds = new JTextPane();
 			txtpnFds.setEditable(false);
 			txtpnFds.setText(text);
 			txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			txtpnFds.setBounds(206, 252, 439, 228);
 			add(txtpnFds);
+			
+			/** Button 'back' **/
+			/**button Back */
+			JButton btnBack = new JButton("Back");
+			btnBack.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					reviewController.openMailScreen();
+				}
+			});
+			btnBack.setBounds(374, 596, 131, 23);
+			add(btnBack);
 			
 		}
 }
