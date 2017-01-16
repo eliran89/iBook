@@ -58,7 +58,10 @@ public class bookController {
 		
 		info =DBController.getFromDB("select max(book.bookID) from book");
 		bNewID = Integer.parseInt(info.get(0))+1;
-		DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`, `numOfSearches`, `numOfOrders`, `absoluteRank`, `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"', '0', '0', '0', '"+book.getCost()+"', 0);");
+		if(book.isSuspended())
+			DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`, `numOfSearches`, `numOfOrders`, `absoluteRank`, `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"', '0', '0', '0', '"+book.getCost()+"', 1);");
+		else
+			DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`, `numOfSearches`, `numOfOrders`, `absoluteRank`, `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"', '0', '0', '0', '"+book.getCost()+"', 0);");
 		temp = book.getAuthors();
 		for(int i = 0;i < temp.size();i++){
 			
@@ -148,13 +151,24 @@ public class bookController {
 	 */
 	public static void displayResults(String brief,String title,String langu,String keyWord,String author,String appendix,String scope ){
 		ArrayList<String> info;
-			info = DBController.getFromDB("select distinct sc.scopeName,bsc.subject,b.Title,b.bookID " 
-									+" from book b,author a,bauthor ba,keyword k,bkey bk,scope sc,bscope bsc"
-									+" where b.bookID=ba.bookID and ba.authorID = a.authorID and b.bookID= bk.bookID and bk.Word=k.word "
-									+" and b.bookID=bsc.bookID and bsc.scopeName=sc.scopeName and b.Title like '%"+title+"%' and b.appendix like '%"+appendix+"%'"
-									+" and b.brief like '%"+brief+"%' and b.language like '%"+langu+"%' and b.suspended = 0 and a.authorName like '%"+author+"%' and k.word like '%"+keyWord+"%'"
-									+" and sc.scopeName like '%"+scope+"%'"
-									+" order by sc.scopeName");
+		
+			if(loginController.use.getprivilege() == 6)
+				info = DBController.getFromDB("select distinct sc.scopeName,bsc.subject,b.Title,b.bookID " 
+						+" from book b,author a,bauthor ba,keyword k,bkey bk,scope sc,bscope bsc"
+						+" where b.bookID=ba.bookID and ba.authorID = a.authorID and b.bookID= bk.bookID and bk.Word=k.word "
+						+" and b.bookID=bsc.bookID and bsc.scopeName=sc.scopeName and b.Title like '%"+title+"%' and b.appendix like '%"+appendix+"%'"
+						+" and b.brief like '%"+brief+"%' and b.language like '%"+langu+"%' and a.authorName like '%"+author+"%' and k.word like '%"+keyWord+"%'"
+						+" and sc.scopeName like '%"+scope+"%'"
+						+" order by sc.scopeName");
+			
+			else
+				info = DBController.getFromDB("select distinct sc.scopeName,bsc.subject,b.Title,b.bookID " 
+						+" from book b,author a,bauthor ba,keyword k,bkey bk,scope sc,bscope bsc"
+						+" where b.bookID=ba.bookID and ba.authorID = a.authorID and b.bookID= bk.bookID and bk.Word=k.word "
+						+" and b.bookID=bsc.bookID and bsc.scopeName=sc.scopeName and b.Title like '%"+title+"%' and b.appendix like '%"+appendix+"%'"
+						+" and b.brief like '%"+brief+"%' and b.language like '%"+langu+"%' and b.suspended = 0 and a.authorName like '%"+author+"%' and k.word like '%"+keyWord+"%'"
+						+" and sc.scopeName like '%"+scope+"%'"
+						+" order by sc.scopeName");
 			
 			userBookGUI panel;
 			
@@ -221,7 +235,7 @@ public class bookController {
 
 
 		book.setBookId(bid);
-		info = DBController.getFromDB("select b.Title,b.language,b.brief,b.appendix,b.cost"
+		info = DBController.getFromDB("select b.Title,b.language,b.brief,b.appendix,b.cost,b.suspended"
 									+" from book b"
 									+" where b.bookID="+bid);
 		
@@ -231,6 +245,12 @@ public class bookController {
 		book.setAppendix(info.get(3));
 		float cost = Float.parseFloat(info.get(4));
 		book.setCost(cost);
+		System.out.println(info);
+		int sus = Integer.parseInt(info.get(5));
+		if(sus == 0)
+			book.unlock();
+		else
+			book.lock();
 		
 		book.setSubject(DBController.getFromDB("select bscope.subject from bscope where bscope.bookID = '"+bid+"'"));
 		

@@ -18,7 +18,7 @@ import entity.*;
  */
 public class DBController {
 	static public ArrayList<String> rs = null;
-	static public volatile Boolean allowToProceed = false;
+	static public volatile boolean allowToProceed = false;
 	static private String host;
 	static private int port;
 	ClientConsole chat;
@@ -110,8 +110,8 @@ public class DBController {
 	 * @return Boolean
 	 * @throws SQLException
 	 */
-	static synchronized public Boolean existsInDB(User use) throws SQLException{
-		Boolean bool;
+	static synchronized public boolean existsInDB(User use) throws SQLException{
+		boolean bool;
 		try {
 			ClientConsole chat= new ClientConsole(host, port);
 			rs = null;
@@ -152,8 +152,8 @@ public class DBController {
 	 * @return Boolean
 	 * @throws SQLException
 	 */
-	static synchronized public Boolean existsInDB(String query) throws SQLException{
-		Boolean bool;
+	static synchronized public boolean existsInDB(String query) throws SQLException{
+		boolean bool;
 		try {
 			ClientConsole chat= new ClientConsole(host, port);
 			rs = null;
@@ -182,7 +182,7 @@ public class DBController {
 	}
 	
 	static synchronized public void insertToDB(String query) throws SQLException{
-		Boolean bool;
+		boolean bool;
 		try {
 			ClientConsole chat= new ClientConsole(host, port);
 			rs = null;

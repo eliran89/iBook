@@ -176,10 +176,9 @@ public class Book {
 		// TODO - implement Book.getAbsRank
 		throw new UnsupportedOperationException();
 	}
-
-	public void isSuspended() {
-		// TODO - implement Book.isSuspended
-		throw new UnsupportedOperationException();
+	
+	public boolean isSuspended() {
+	return suspended;
 	}
 
 	public void destroy() {
@@ -206,10 +205,17 @@ public class Book {
 		// TODO - implement Book.addTosearches
 		throw new UnsupportedOperationException();
 	}
-
+	/**
+	 * lock - change suspend to true
+	 */
 	public void lock() {
-		// TODO - implement Book.lock
-		throw new UnsupportedOperationException();
+		suspended =true;
+	}
+	/**
+	 * unlock - change suspend to false
+	 */
+	public void unlock() {
+		suspended = false;
 	}
 
 }
