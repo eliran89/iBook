@@ -22,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
 import javax.swing.JSeparator;
+import javax.swing.JCheckBox;
 
 public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldTitle;
@@ -52,7 +53,9 @@ public class workerBookGUI extends userBookGUI {
 	 */
 	public workerBookGUI(String name , String type) {
 		super(name,type);
+
 		
+
 
 		/*copy to readerGUI. add "panel." before add methods
 		JLabel lblPurchaseDetails = new JLabel("Purchase Details");
@@ -60,6 +63,9 @@ public class workerBookGUI extends userBookGUI {
 		lblPurchaseDetails.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblPurchaseDetails.setBounds(307, 148, 148, 50);
 		add(lblPurchaseDetails);
+=======
+			
+>>>>>>> branch 'master' of https://github.com/eliran89/iBook.git
 		
 		JLabel lblTitle_1 = new JLabel("Title:");
 		lblTitle_1.setHorizontalAlignment(SwingConstants.LEFT);
@@ -430,6 +436,16 @@ public class workerBookGUI extends userBookGUI {
 	 */
 	public void editBook(Book book) {
 		
+		
+		JCheckBox chckbxSuspended = new JCheckBox("Suspended");
+		chckbxSuspended.setFont(new Font("Tahoma", Font.BOLD, 12));
+		chckbxSuspended.setBackground(Color.WHITE);
+		chckbxSuspended.setBounds(39, 86, 200, 50);
+		if(book.isSuspended())
+			chckbxSuspended.setSelected(true);
+		if(loginController.use.getprivilege() == 6)
+			add(chckbxSuspended);
+		
 		JTextPane textPane = new JTextPane();
 		textPane.setText(book.getBrief());
 		textPane.setBounds(664, 331, 243, 131);
@@ -489,6 +505,10 @@ public class workerBookGUI extends userBookGUI {
 				book.setLanguage(textFieldLanguEdit.getText());
 				book.setBrief(textPane.getText());
 				book.setAppendix(textPane_1.getText());
+				if(chckbxSuspended.isSelected())
+					book.lock();
+				else
+					book.unlock();
 				bookController.editBookinfo(book);
 				
 				
@@ -522,6 +542,10 @@ public class workerBookGUI extends userBookGUI {
 				book.setLanguage(textFieldLanguEdit.getText());
 				book.setBrief(textPane.getText());
 				book.setAppendix(textPane_1.getText());
+				if(chckbxSuspended.isSelected())
+					book.lock();
+				else
+					book.unlock();
 				bookController.editBookinfo(book);
 			}
 		});
@@ -602,6 +626,10 @@ public class workerBookGUI extends userBookGUI {
 								book.setLanguage(textFieldLanguEdit.getText());
 								book.setBrief(textPane.getText());
 								book.setAppendix(textPane_1.getText());
+								if(chckbxSuspended.isSelected())
+									book.lock();
+								else
+									book.unlock();
 								bookController.editBookinfo(book);
 							}
 						} catch (SQLException e) {
@@ -650,6 +678,10 @@ public class workerBookGUI extends userBookGUI {
 				book.setLanguage(textFieldLanguEdit.getText());
 				book.setBrief(textPane.getText());
 				book.setAppendix(textPane_1.getText());
+				if(chckbxSuspended.isSelected())
+					book.lock();
+				else
+					book.unlock();
 				bookController.editBookinfo(book);
 				
 			}
@@ -675,18 +707,18 @@ public class workerBookGUI extends userBookGUI {
 		JLabel lblKeywords = new JLabel("Keyword(s) : ");
 		lblKeywords.setHorizontalAlignment(SwingConstants.CENTER);
 		lblKeywords.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblKeywords.setBounds(72, 543, 97, 14);
+		lblKeywords.setBounds(72, 513, 97, 14);
 		add(lblKeywords);
 		
 		JComboBox comboBoxKey = new JComboBox();
-		comboBoxKey.setBounds(176, 537, 150, 20);
+		comboBoxKey.setBounds(176, 507, 150, 20);
 		ArrayList<String> keys = book.getKey();
 		for(int i =0 ; i < keys.size() ; i++)
 			comboBoxKey.addItem(keys.get(i));
 		add(comboBoxKey);
 		
 		JButton btnRemoveKey = new JButton("Remove");
-		btnRemoveKey.setBounds(364, 532, 89, 23);
+		btnRemoveKey.setBounds(364, 502, 89, 23);
 			
 		btnRemoveKey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -703,6 +735,10 @@ public class workerBookGUI extends userBookGUI {
 				book.setLanguage(textFieldLanguEdit.getText());
 				book.setBrief(textPane.getText());
 				book.setAppendix(textPane_1.getText());
+				if(chckbxSuspended.isSelected())
+					book.lock();
+				else
+					book.unlock();
 				bookController.editBookinfo(book);
 				
 			}
@@ -711,11 +747,11 @@ public class workerBookGUI extends userBookGUI {
 		
 		textFieldKeyEdit = new JTextField();
 		textFieldKeyEdit.setColumns(10);
-		textFieldKeyEdit.setBounds(176, 573, 150, 20);
+		textFieldKeyEdit.setBounds(176, 543, 150, 20);
 		add(textFieldKeyEdit);
 		
 		JButton btnAddKey = new JButton("Add");
-		btnAddKey.setBounds(364, 572, 89, 23);
+		btnAddKey.setBounds(364, 542, 89, 23);
 		btnAddKey.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				ArrayList<String> keys = book.getKey();
@@ -733,6 +769,10 @@ public class workerBookGUI extends userBookGUI {
 					book.setLanguage(textFieldLanguEdit.getText());
 					book.setBrief(textPane.getText());
 					book.setAppendix(textPane_1.getText());
+					if(chckbxSuspended.isSelected())
+						book.lock();
+					else
+						book.unlock();
 					bookController.editBookinfo(book);
 				}
 					
@@ -745,7 +785,7 @@ public class workerBookGUI extends userBookGUI {
 		add(btnAddKey);
 
 		JButton btnSaveBook = new JButton("Save Book");
-		btnSaveBook.setBounds(823, 572, 98, 23);
+		btnSaveBook.setBounds(827, 602, 98, 23);
 		btnSaveBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				book.setTitle(TFTitle.getText());
@@ -753,6 +793,10 @@ public class workerBookGUI extends userBookGUI {
 				book.setLanguage(textFieldLanguEdit.getText());
 				book.setBrief(textPane.getText());
 				book.setAppendix(textPane_1.getText());
+				if(chckbxSuspended.isSelected())
+					book.lock();
+				else
+					book.unlock();
 				if(!book.isBookComplete())
 					errorBox("Book is not complete and will not be saved until","Book");
 				else
@@ -768,6 +812,15 @@ public class workerBookGUI extends userBookGUI {
 			}
 		});
 		add(btnSaveBook);
+		
+		JButton btnBackToSearch_1 = new JButton("Back To Search");
+		btnBackToSearch_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				bookController.searchBook();
+			}
+		});
+		btnBackToSearch_1.setBounds(48, 596, 124, 23);
+		add(btnBackToSearch_1);
 		
 	}
 	public void displayWindow() {

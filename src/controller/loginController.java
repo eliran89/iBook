@@ -30,7 +30,7 @@ public class loginController {
 	 * @throws SQLException
 	 */
 	static public void login(String username , String password) throws SQLException{
-		Boolean bool;
+		boolean bool;
 		String name = null;
 		usel = null;
 		use = new User(username,password);
