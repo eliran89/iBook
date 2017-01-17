@@ -17,8 +17,6 @@ public abstract class GWorkerGUI extends editorGUI {
 		
 		JButton btnBookSearch = new JButton("Book Search");
 		btnBookSearch.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnBookSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
-
 		btnBookSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				bookController.searchBook();
@@ -26,7 +24,6 @@ public abstract class GWorkerGUI extends editorGUI {
 		});
 
 		btnBookSearch.setBounds(138, 552,228, 27);
-		btnBookSearch.setBounds(137, 554,211, 47);
 		add(btnBookSearch);
 		
 		JLabel imgB;
