@@ -382,12 +382,18 @@ public class workerBookGUI extends userBookGUI {
 				int costi;
 				try{
 					costi = Integer.parseInt(cost);
-				}catch(Exception e){costi = -1;
-					errorBox("cost must be at least 0","cost");
+				}catch(Exception e){
+					costi = -1;
+					errorBox("cost must be a number at least 0","cost");
 				}
 				
-				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0 || costi < 0)
+				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0)
 					toContinue = false;
+				if(costi > 0)
+				{
+					errorBox("cost must be a number at least 0","cost");
+					toContinue = false;
+				}
 				
 				if(!toContinue)
 					errorBox("All fields must be filled","Error");
@@ -791,12 +797,15 @@ public class workerBookGUI extends userBookGUI {
 					book.unlock();
 				try{
 					book.setCost(Float.parseFloat(textFieldCostEdit.getText()));
-				}catch(Exception e){
-					errorBox("cost must be a number more then 0","Cost");
+				}catch(Exception e){;
 					book.setCost(-1);
 				}
-				if(!book.isBookComplete())
-					errorBox("Book is not complete and will not be saved until","Book");
+				if(!book.isBookComplete()){
+					if(book.getCost() < 0)
+						errorBox("cost must be a number more then 0","Cost");
+					else
+						errorBox("Book is not complete and will not be saved until","Book");
+				}
 				else
 				{
 					try {
