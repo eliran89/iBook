@@ -1,10 +1,8 @@
-CREATE DATABASE  IF NOT EXISTS `ibookdb` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ibookdb`;
--- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ibookdb
 -- ------------------------------------------------------
--- Server version	5.7.16-log
+-- Server version	5.7.17-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -125,7 +123,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (34,'Harry Poter','English','a book','a book',0,1,2,40,'\0'),(35,'The Catcher in the Rye','english','no','no',0,1,1,35,'\0');
+INSERT INTO `book` VALUES (34,'Harry Poter','English','a book','a book',4,1,2,40,'\0'),(35,'The Catcher in the Rye','english','no','no',30,1,1,35,'\0');
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -156,6 +154,33 @@ LOCK TABLES `bscope` WRITE;
 /*!40000 ALTER TABLE `bscope` DISABLE KEYS */;
 INSERT INTO `bscope` VALUES (35,'adults',NULL,'Boring'),(35,'Drama',NULL,'Boring'),(34,'Fantasy',NULL,'Kids'),(35,'Fantasy',NULL,'Boring'),(34,'Kids',NULL,'Magic');
 /*!40000 ALTER TABLE `bscope` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `bsubject`
+--
+
+DROP TABLE IF EXISTS `bsubject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `bsubject` (
+  `bookID` int(11) NOT NULL,
+  `subName` varchar(45) NOT NULL,
+  PRIMARY KEY (`bookID`,`subName`),
+  KEY `bookid_idx` (`bookID`),
+  KEY `fk_bsubject_subject_idx` (`subName`),
+  CONSTRAINT `fk_bsubject_book` FOREIGN KEY (`bookID`) REFERENCES `book` (`bookID`) ON DELETE CASCADE ON UPDATE NO ACTION,
+  CONSTRAINT `fk_bsubject_subject` FOREIGN KEY (`subName`) REFERENCES `subject` (`subjectName`) ON DELETE CASCADE ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `bsubject`
+--
+
+LOCK TABLES `bsubject` WRITE;
+/*!40000 ALTER TABLE `bsubject` DISABLE KEYS */;
+/*!40000 ALTER TABLE `bsubject` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -270,7 +295,7 @@ DROP TABLE IF EXISTS `reader`;
 CREATE TABLE `reader` (
   `userID` int(11) NOT NULL,
   `creditCard` varchar(45) NOT NULL,
-  `debt` int(11) NOT NULL,
+  `debt` float NOT NULL,
   `rType` varchar(45) NOT NULL,
   `firstName` varchar(45) NOT NULL,
   `lastName` varchar(45) NOT NULL,
@@ -315,6 +340,7 @@ CREATE TABLE `readerorder` (
 
 LOCK TABLES `readerorder` WRITE;
 /*!40000 ALTER TABLE `readerorder` DISABLE KEYS */;
+INSERT INTO `readerorder` VALUES (13,35,'2017-01-14 16:54:32');
 /*!40000 ALTER TABLE `readerorder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -375,6 +401,28 @@ INSERT INTO `scope` VALUES ('Adults',NULL),('Drama',NULL),('Fantasy',NULL),('Kid
 UNLOCK TABLES;
 
 --
+-- Table structure for table `subject`
+--
+
+DROP TABLE IF EXISTS `subject`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `subject` (
+  `subjectName` varchar(45) NOT NULL,
+  PRIMARY KEY (`subjectName`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `subject`
+--
+
+LOCK TABLES `subject` WRITE;
+/*!40000 ALTER TABLE `subject` DISABLE KEYS */;
+/*!40000 ALTER TABLE `subject` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `user`
 --
 
@@ -411,4 +459,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-11 17:41:19
+-- Dump completed on 2017-01-17 15:34:55

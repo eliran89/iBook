@@ -322,6 +322,7 @@ public class userBookGUI extends mainPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String ID = (String) table.getValueAt(row, 3);
+				readerGUI.displayPurchase();
 				bookController.chooseBook(ID);
 			}
 		});

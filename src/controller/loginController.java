@@ -73,16 +73,20 @@ public class loginController {
 			{
 				mainPanel panel =new editorGUI(name,"Editor");
 				mainG = new MainWindowGUI(panel);
-				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
+				
 			}
 			else if(i == 2)
 			{
 				mainPanel panel =new readerGUI(name,"Reader");
-				mainG = new MainWindowGUI(panel);
-				ArrayList<String> usel = DBController.getFromDB("select interestedreader.firstName , interestedreader.lastName , interestedreader.userID "
-												+ "	from interestedreader "
-												+ "where interestedreader.username = '"+use.getUsername()+"'");
+				mainG = new MainWindowGUI(panel); 
+				ArrayList<String> usel = DBController.getFromDB("select reader.userID , reader.firstname , reader.lastname, "
+						+ "reader.debt, reader.creditCard, reader.rType "
+						+ "	from reader "
+						+ "where reader.username = '"+use.getUsername()+"'");
 
+				/*RDetails = new reader(Integer.parseInt((usel.get(0))) , usel.get(1) , usel.get(2),Float.parseFloat(usel.get(3)),
+						usel.get(4),Enum.valueOf(readerType,usel.get(5)));*/
+				
 
 				
 				//RDetails = new reader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
@@ -91,6 +95,11 @@ public class loginController {
 			{
 				mainPanel panel =new InterestedReaderGUI(name,"InterestedReader");
 				mainG = new MainWindowGUI(panel);
+				ArrayList<String> usel = DBController.getFromDB("select interestedreader.firstName , interestedreader.lastName , interestedreader.userID "
+						+ "	from interestedreader "
+						+ "where interestedreader.username = '"+use.getUsername()+"'");
+
+				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 				
 			}
 			mainG.setSize(1000,900);

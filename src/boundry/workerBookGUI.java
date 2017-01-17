@@ -55,8 +55,57 @@ public class workerBookGUI extends userBookGUI {
 		super(name,type);
 
 		
+
+
+		/*copy to readerGUI. add "panel." before add methods
+		JLabel lblPurchaseDetails = new JLabel("Purchase Details");
+		lblPurchaseDetails.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPurchaseDetails.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+		lblPurchaseDetails.setBounds(307, 148, 148, 50);
+		add(lblPurchaseDetails);
+=======
 			
+>>>>>>> branch 'master' of https://github.com/eliran89/iBook.git
 		
+		JLabel lblTitle_1 = new JLabel("Title:");
+		lblTitle_1.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitle_1.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		lblTitle_1.setBounds(26, 258, 106, 50);
+		add(lblTitle_1);
+		
+		JLabel lblLanguage = new JLabel("Language:");
+		lblLanguage.setHorizontalAlignment(SwingConstants.LEFT);
+		lblLanguage.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		lblLanguage.setBounds(26, 319, 106, 50);
+		add(lblLanguage);
+		
+		JLabel lblFormat = new JLabel("Format:");
+		lblFormat.setHorizontalAlignment(SwingConstants.LEFT);
+		lblFormat.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		lblFormat.setBounds(26, 380, 96, 50);
+		add(lblFormat);
+		
+		JButton btnConfirmPurchase = new JButton("Confirm Purchase");
+		btnConfirmPurchase.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		btnConfirmPurchase.setBounds(235, 480, 154, 50);
+		add(btnConfirmPurchase);
+		
+		JButton btnCancel = new JButton("Cancel");
+		btnCancel.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		btnCancel.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnCancel.setBounds(463, 481, 126, 50);
+		add(btnCancel);
+		
+		JLabel lblTotalSum = new JLabel("Total Sum: ");
+		lblTotalSum.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTotalSum.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 12));
+		lblTotalSum.setBounds(359, 258, 96, 50);
+		add(lblTotalSum);
+		
+	*/	
 	}
 	/**
 	 * addBook - display the window of the book add  

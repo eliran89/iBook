@@ -19,7 +19,12 @@ public class interestedReader extends User {
 		loginController.mainG.setContentPane(panelInException);
 		loginController.mainG.revalidate();
 	}*/
-	
+	/**
+	 * interestedReader - constructor
+	 * @param userID int
+	 * @param firstName String
+	 * @param lastName String
+	 */
 	public interestedReader(int userID, String firstName , String lastName)
 	{
 		this.setUserID(userID);
