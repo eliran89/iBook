@@ -379,9 +379,14 @@ public class workerBookGUI extends userBookGUI {
 						keywords.add(keyword);
 					textFieldKey.setText("");
 				}
-					
-					
-				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0)
+				int costi;
+				try{
+					costi = Integer.parseInt(cost);
+				}catch(Exception e){costi = -1;
+					errorBox("cost must be at least 0","cost");
+				}
+				
+				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0 || costi < 0)
 					toContinue = false;
 				
 				if(!toContinue)
@@ -777,7 +782,6 @@ public class workerBookGUI extends userBookGUI {
 		btnSaveBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				book.setTitle(TFTitle.getText());
-				book.setCost(Float.parseFloat(textFieldCostEdit.getText()));
 				book.setLanguage(textFieldLanguEdit.getText());
 				book.setBrief(textPane.getText());
 				book.setAppendix(textPane_1.getText());
@@ -785,6 +789,12 @@ public class workerBookGUI extends userBookGUI {
 					book.lock();
 				else
 					book.unlock();
+				try{
+					book.setCost(Float.parseFloat(textFieldCostEdit.getText()));
+				}catch(Exception e){
+					errorBox("cost must be a number more then 0","Cost");
+					book.setCost(-1);
+				}
 				if(!book.isBookComplete())
 					errorBox("Book is not complete and will not be saved until","Book");
 				else

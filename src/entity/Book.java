@@ -188,7 +188,7 @@ public class Book {
 
 	public boolean isBookComplete() {
 		boolean bool = true;
-		if(this.Appendix == null ||this.Scope == null || this.Subject == null||this.authors == null||this.Brief == null || this.cost == 0
+		if(this.Appendix == null ||this.Scope == null || this.Subject == null||this.authors == null||this.Brief == null || this.cost < 0
 				|| this.Key == null ||this.Title == null||this.Language == null || this.Appendix.equals("") || this.Brief.equals("") || this.Title.equals("") ||this.Language.equals("")
 				|| this.Scope.size() == 0 || this.Subject.size() == 0 || this.authors.size() == 0 || this.Key.size() == 0)
 			bool = false;
