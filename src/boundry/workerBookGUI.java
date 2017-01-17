@@ -170,35 +170,28 @@ public class workerBookGUI extends userBookGUI {
 				if(scope.equals("") || subject.equals(""))
 					warningBox("Must fill a scope and subject name","textFieldScope");
 				else{
-					try {
-						if(!bookController.verifyScope(scope))
-							warningBox("Scope does not exists","textFieldScope");
-						else{	
-								boolean bool = true;
-								for(int i = 0;i< scopes.size();i++)
-									if(scopes.get(i).equals(scope))
-									{
-										scopes.add(i, scope);
-										subjects.add(i, subject);
-										bool = false;
-										textFieldSubject.setText("");
-										textFieldScope.setText("");
-									}
-								if(bool)
+							boolean bool = true;
+							for(int i = 0;i< scopes.size();i++)
+								if(scopes.get(i).equals(scope))
 								{
-									scopes.add(scope);
-									subjects.add(subject);
+									scopes.add(i, scope);
+									subjects.add(i, subject);
+									bool = false;
 									textFieldSubject.setText("");
 									textFieldScope.setText("");
-									
 								}
-								else
-									warningBox("You already added this scope, the first one were erased","textFieldScope");
+							if(bool)
+							{
+								scopes.add(scope);
+								subjects.add(subject);
+								textFieldSubject.setText("");
+								textFieldScope.setText("");
+					
+							}
+							else
+								warningBox("You already added this scope, the first one were erased","textFieldScope");
 								
-						}
-					} catch (SQLException e) {
-						e.printStackTrace();
-					}
+						
 					
 				}
 				
@@ -447,9 +440,11 @@ public class workerBookGUI extends userBookGUI {
 				int i=0;
 				while(i<authors.size() && !author.equalsIgnoreCase(authors.get(i)))
 					i++;
-				
+				/**
+				 * 
+				 */
 				authors.remove(i);
-				infoBox("Are you sure you want to remove the author?","Authors");
+				infoBox("Author Removed Successfully","Author removal");
 				book.setAuthors(authors);
 				book.setTitle(TFTitle.getText());
 				book.setCost(Float.parseFloat(textFieldCostEdit.getText()));
@@ -564,10 +559,6 @@ public class workerBookGUI extends userBookGUI {
 					while(i < scopes.size() && !scope.equalsIgnoreCase(scopes.get(i)))
 						i++;
 					if(i == scopes.size()){
-						try {
-							if(!bookController.verifyScope(scope))
-								errorBox("Scope does not exists","Scopes");
-							else{
 								scopes.add(scope);
 								subjects.add(subject);
 								book.setScope(scopes);
@@ -582,10 +573,7 @@ public class workerBookGUI extends userBookGUI {
 								else
 									book.unlock();
 								bookController.editBookinfo(book);
-							}
-						} catch (SQLException e) {
-							e.printStackTrace();
-						}
+							
 						
 					}
 					else
@@ -753,12 +741,12 @@ public class workerBookGUI extends userBookGUI {
 				else
 				{
 					try {
-						bookController.removeBook(book.getBookID());
-						bookController.addBook(book);
-						infoBox("Book Updated","Succsses");
+						bookController.changeBookInfo(book);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+					infoBox("Book Updated","Succsses");
+					bookController.searchBook();
 				}
 			}
 		});

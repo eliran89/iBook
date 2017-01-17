@@ -82,14 +82,22 @@ public class bookController {
 		
 		temp = book.getScope();
 		ArrayList<String> temp2 = book.getSubject();
+		for(int i =0 ; i < temp.size() ; i++)
+			if(!verifyScope(temp.get(i)))
+			{
+				DBController.insertToDB("INSERT INTO `ibookdb`.`scope` (`scopeName`) VALUES ('"+temp.get(i)+"');");
+				aNewID++;
+			}
 		for(int i =0 ; i<temp.size() ; i++)
 			DBController.insertToDB("INSERT INTO `ibookdb`.`bscope` (`bookID`, `scopeName`, `rank`, `subject`) VALUES ('"+bNewID+"', '"+temp.get(i)+"', '0', '"+temp2.get(i)+"');");
 			
 	}
 	/**
 	 * removeBook - get a book id and remove it from DB
+	 * the method gets an instance of String(witch is the book ID and erase the book from the database
 	 * @param bid String
 	 * @throws SQLException
+	 * if the book ID is not a number or not exists in the data base it gets an exception
 	 */
 	public static void removeBook(String bid) throws SQLException {
 		DBController.insertToDB("DELETE FROM `ibookdb`.`book` WHERE `bookID`='"+bid+"';");
@@ -371,5 +379,147 @@ public class bookController {
 	public synchronized static boolean verifyKeyword(String key) throws SQLException{
 		return DBController.existsInDB("select keyword.word from keyword where keyword.word = '"+key+"'");
 	}
-	
+	/**
+	 * changeBookInfo - 
+	 * The method gets a Book instance and compare every detail of the book in the database 
+	 * (for example if a certain author exists and if he is already connected to the book
+	 * if he's not the method connects him
+	 * @param book Book
+	 * @throws SQLException 
+	 * 
+	 */
+	public static void changeBookInfo(Book book) throws SQLException{
+		ArrayList<String> info =null;
+		ArrayList<String> temp;
+		info = DBController.getFromDB("select max(author.authorID) from author");
+		int aNewID = Integer.parseInt(info.get(0)) + 1;
+		int bNewID;
+		temp = book.getAuthors();
+		for(int i =0 ; i < temp.size() ; i++)
+			try {
+				if(!verifyAuthor(temp.get(i))) //check if all the authors in the list exists in the DB if not it adds a new one
+				{
+					DBController.insertToDB("INSERT INTO `ibookdb`.`author` (`authorID`, `authorName`) VALUES ('"+aNewID+"', '"+temp.get(i)+"');");
+					aNewID++;
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+
+		info = DBController.getFromDB("select bauthor.authorID from bauthor where bauthor.bookID = '"+book.getBookID()+"'");//get the book authors in order to erase them 
+		for(int i = 0 ; i<info.size();i++)
+			try {
+				DBController.insertToDB("DELETE FROM `ibookdb`.`bauthor` WHERE `authorID`='"+info.get(i)+"' and`bookID`='"+book.getBookID() +"';");//delete the author
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		bNewID = Integer.parseInt(book.getBookID());
+		temp = book.getAuthors(); // gets the new authors list
+		for(int i = 0;i < temp.size();i++){
+			
+			int aID; //Variable that saves the author ID
+			int laID=0;
+			info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
+			aID = Integer.parseInt(info.get(0)); // gets the current authors ID
+			if(aID == laID){
+				info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
+				aID = Integer.parseInt(info.get(i));
+			}
+			try { //insert a new list of authors to the book
+					DBController.insertToDB("INSERT INTO `ibookdb`.`bauthor` (`authorID`, `bookID`) VALUES ('"+aID+"', '"+bNewID+"');");
+			} catch (SQLException e) {
+			}
+			laID = aID;
+		}
+		/*authors updated*/
+		
+		temp = book.getKey();
+		for( int i =0;i<temp.size();i++)
+				if(!verifyKeyword(temp.get(i)))  //check if the keyword exists in the DB if not it adds a new one
+					DBController.insertToDB("INSERT INTO `ibookdb`.`keyword` (`word`) VALUES ('"+temp.get(i)+"');");
+
+		
+		info = DBController.getFromDB("select bkey.Word from bkey where bkey.bookID = '"+bNewID+"'"); //get the list of the book old keywords in order to erase them
+		for(int i = 0; i< info.size();i++)
+			DBController.insertToDB("DELETE FROM `ibookdb`.`bkey` WHERE `bookID`='"+bNewID+"' and`Word`='"+info.get(i)+"';");//delete every keyword in the list
+		
+		  //the new keywords list
+		for(int i =0 ; i<temp.size() ; i++)//insert the new list of keywords to the DB
+					DBController.insertToDB("INSERT INTO `ibookdb`.`bkey` (`bookID`, `Word`) VALUES ('"+bNewID+"', '"+temp.get(i)+"');");
+		/*keyword updated*/
+		
+		temp = book.getScope(); //gets the new scope list
+		ArrayList<String> temp2 = book.getSubject();
+		for(int i =0 ; i < temp.size() ; i++) //if scope does not exists in the DB add a new one
+				if(!verifyScope(temp.get(i)))
+					DBController.insertToDB("INSERT INTO `ibookdb`.`scope` (`scopeName`) VALUES ('"+temp.get(i)+"');");
+	//
+		info = DBController.getFromDB("select bscope.scopeName from bscope where bscope.bookID = '"+bNewID+"'");//get the book's old scope list
+		
+		for(int i = 0;i<info.size();i++)//delete all the scopes from the old scope list
+			DBController.insertToDB("DELETE FROM `ibookdb`.`bscope` WHERE `scopeName`='"+info.get(i)+"' and`bookID`='"+bNewID+"';");
+		
+		for(int i =0 ; i<temp.size() ; i++) //insert all the new scope list to the DB
+					DBController.insertToDB("INSERT INTO `ibookdb`.`bscope` (`bookID`, `scopeName`, `rank`, `subject`) VALUES ('"+bNewID+"', '"+temp.get(i)+"', '0', '"+temp2.get(i)+"');");
+
+		
+		
+		
+		if(book.isSuspended())  // if the book is suspended put 1 in the suspended field in the DB
+		{
+			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `Title`='', `language`='', `brief`='', `appendix`='', `cost`='-1', `suspended`='0' WHERE `bookID`='"+bNewID+"';");
+			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `Title`='"+book.getTitle()+"', `language`='"+book.getLanguage()+"', `brief`='"+book.getBrief()+"', `appendix`='"+book.getAppendix()+"', `cost`='"+book.getCost()+"', `suspended`='1'  WHERE `bookID`='"+bNewID+"';");
+		}
+		else{  // if the book is not suspended put 0 in the suspended field in the DB
+			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `Title`='', `language`='', `brief`='', `appendix`='', `cost`='-1', `suspended`='1' WHERE `bookID`='"+bNewID+"';");
+			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `Title`='"+book.getTitle()+"', `language`='"+book.getLanguage()+"', `brief`='"+book.getBrief()+"', `appendix`='"+book.getAppendix()+"', `cost`='"+book.getCost()+"', `suspended`='0'  WHERE `bookID`='"+bNewID+"';");
+		}
+		
+		/*
+		temp = book.getAuthors();
+		for(int i = 0;i < temp.size();i++){
+			
+			int aID; //Variable that saves the author ID
+			int laID=0;
+			info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
+			aID = Integer.parseInt(info.get(0)); // gets the current authors ID
+			if(aID == laID){
+				info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
+				aID = Integer.parseInt(info.get(i));
+			}
+			try {
+				if(!DBController.existsInDB("select bauthor.bookID from bauthor  where bauthor.bookID = '"+bNewID+"' and bauthor.authorID = '"+aID+"'"))
+					DBController.insertToDB("INSERT INTO `ibookdb`.`bauthor` (`authorID`, `bookID`) VALUES ('"+aID+"', '"+bNewID+"');");
+			} catch (SQLException e) {
+			}
+			laID = aID;
+		}
+		temp = book.getKey();
+		for(int i =0 ; i<temp.size() ; i++)
+			try {
+				if(!DBController.existsInDB("select bkey. bookID from bkey where bkey.bookID = '"+bNewID+"' and bkey.Word ='"+temp.get(i)+"'"));
+					DBController.insertToDB("INSERT INTO `ibookdb`.`bkey` (`bookID`, `Word`) VALUES ('"+bNewID+"', '"+temp.get(i)+"');");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		
+		temp = book.getScope();
+		ArrayList<String> temp2 = book.getSubject();
+		for(int i =0 ; i < temp.size() ; i++)
+			try {
+				if(!verifyScope(temp.get(i)))
+					DBController.insertToDB("INSERT INTO `ibookdb`.`scope` (`scopeName`) VALUES ('"+temp.get(i)+"');");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		for(int i =0 ; i<temp.size() ; i++)
+			try {
+				if(!DBController.existsInDB("select bscope.bookID from bscope where bscope.bookID = '"+bNewID+"' and bscope.scopeName = '"+temp.get(i)+"'"));
+					DBController.insertToDB("INSERT INTO `ibookdb`.`bscope` (`bookID`, `scopeName`, `rank`, `subject`) VALUES ('"+bNewID+"', '"+temp.get(i)+"', '0', '"+temp2.get(i)+"');");
+			} catch (SQLException e) {
+				e.printStackTrace();
+
+			}
+	*/	
+	}
 }

@@ -13,6 +13,8 @@ import javax.swing.table.TableCellRenderer;
 
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
+import controller.bookController;
+import controller.loginController;
 import controller.reviewController;
 import controller.userController;
 
@@ -49,7 +51,7 @@ public class editorGUI extends mainPanel {
 		
 		JButton btnMailBox = new JButton("Mail Box");
 		btnMailBox.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnMailBox.setBounds(629, 330, 126, 23);
+		btnMailBox.setBounds(585, 330, 211, 23);
 		btnMailBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reviewController.openMailScreen();
@@ -58,6 +60,40 @@ public class editorGUI extends mainPanel {
 		});
 		add(btnMailBox);
 		
+		
+		JButton btnCheckBookReviews = new JButton("Check Book Reviews");
+		btnCheckBookReviews.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnCheckBookReviews.setBounds(585, 552, 211, 23);
+		add(btnCheckBookReviews);
+		btnCheckBookReviews.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+				reviewController.checkReview();
+			}	
+		});	
+		
+		
+		JLabel imgRe;
+		imgRe = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/reviews.jpg")));
+		imgRe.setBounds(585, 437, 211, 105);
+		add(imgRe);
+		
+		JButton btnBookSearch = new JButton("Book Search");
+		btnBookSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				bookController.searchBook();
+			}
+		});
+		btnBookSearch.setBounds(120, 321,211, 23);
+		btnBookSearch.setFont(new Font("Tahoma", Font.BOLD, 15));
+		if(loginController.use.getprivilege() == 3)
+			add(btnBookSearch);
+		
+		JLabel imgB;
+		imgB = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/booksearch.jpg")));
+		imgB.setBounds(120, 184, 211, 105);
+		if(loginController.use.getprivilege() == 3)
+			add(imgB);
 		
 /**
 		JButton btnUserManagement = new JButton("User details management");

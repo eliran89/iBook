@@ -103,11 +103,11 @@ public class reviewController {
 		else if(loginController.use.getprivilege() == 3)
 			mainP = new editorGUI(loginController.use.getUsername(),"Editor");
 		else if(loginController.use.getprivilege() == 4)
-			mainP = new readerGUI(loginController.use.getUsername(),"Library Worker");
+			mainP = new LWorkerGUI(loginController.use.getUsername(),"Library Worker");
 		else if(loginController.use.getprivilege() == 5)
-			mainP = new readerGUI(loginController.use.getUsername(),"Librarian");
+			mainP = new librarianGUI(loginController.use.getUsername(),"Librarian");
 		else 
-			mainP = new readerGUI(loginController.use.getUsername(),"Manager");
+			mainP = new managerGUI(loginController.use.getUsername(),"Manager");
 		loginController.mainG.setContentPane(mainP);
 		loginController.mainG.revalidate();
 	}
