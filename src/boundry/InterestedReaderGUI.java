@@ -15,6 +15,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class InterestedReaderGUI extends mainPanel{
+	/**
+	 * InterestedReaderGUI - constructor
+	 * @param name String
+	 * @param role String
+	 */
 	public InterestedReaderGUI( String name , String role) {
 		super(name,role);
 		setForeground(Color.WHITE);

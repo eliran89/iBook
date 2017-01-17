@@ -44,7 +44,7 @@ public class DBController {
 	 * @param query String 
 	 * @return ArrayList<String>
 	 */
-	static public ArrayList<String> getFromDB(String query){
+	static synchronized public ArrayList<String> getFromDB(String query){
 		try {
 			rs = null;
 			allowToProceed = false;
@@ -69,7 +69,7 @@ public class DBController {
 	 * @param use User
 	 * @return ArrayList<String>
 	 */
-	static public ArrayList<String> getFromDB(User use){
+	static synchronized public ArrayList<String> getFromDB(User use){
 		User res= new User();
 		try {
 			rs = null;
@@ -110,7 +110,7 @@ public class DBController {
 	 * @return Boolean
 	 * @throws SQLException
 	 */
-	static public Boolean existsInDB(User use) throws SQLException{
+	static synchronized public Boolean existsInDB(User use) throws SQLException{
 		Boolean bool;
 		try {
 			ClientConsole chat= new ClientConsole(host, port);
@@ -152,7 +152,7 @@ public class DBController {
 	 * @return Boolean
 	 * @throws SQLException
 	 */
-	static public Boolean existsInDB(String query) throws SQLException{
+	static synchronized public Boolean existsInDB(String query) throws SQLException{
 		Boolean bool;
 		try {
 			ClientConsole chat= new ClientConsole(host, port);
@@ -181,7 +181,7 @@ public class DBController {
 		return bool;
 	}
 	
-	static public void insertToDB(String query) throws SQLException{
+	static synchronized public void insertToDB(String query) throws SQLException{
 		Boolean bool;
 		try {
 			ClientConsole chat= new ClientConsole(host, port);

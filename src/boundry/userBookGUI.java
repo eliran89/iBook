@@ -24,6 +24,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.table.DefaultTableModel;
@@ -65,7 +66,12 @@ public class userBookGUI extends mainPanel {
 		btnMainWindow.setBounds(26, 38, 122, 23);
 		add(btnMainWindow);
 		
-
+		
+		
+		/*if(loginController.use.getprivilege() != 2)
+			btnOrderTheBook.setVisible(false);*/
+		
+		
 		
 		/*table_2 = new JTable();
 		table_2.setModel(new DefaultTableModel(
@@ -220,14 +226,14 @@ public class userBookGUI extends mainPanel {
 		
 	}
 	/**
-	 * displayResults display the search results
+	 * displayResults - display the search results
 	 */
 	public void displayResults()
 	{
 		/**Create The Result Table
 		 * 
 		 */
-		
+		JButton btnRemoveBook = new JButton("Remove Book");;
 		JTable table = new JTable(data,columnHeader)
 		{
 			
@@ -250,6 +256,7 @@ public class userBookGUI extends mainPanel {
 				}
 				if(isCellSelected(data,column))
 				{
+					btnRemoveBook.setEnabled(true);
 					c.setBackground(Color.CYAN);
 					row = data;
 				}
@@ -322,8 +329,23 @@ public class userBookGUI extends mainPanel {
 		btnDisplayBook.setBounds(394, 596, 129, 23);
 		add(btnDisplayBook);
 		
-		
-			
+		btnRemoveBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				String bid = (String) table.getValueAt(row, 3);
+				try {
+					infoBox("Book Removed","Successes");
+					bookController.removeBook(bid);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+			}
+		});
+		btnRemoveBook.setBounds(195, 596, 129, 23);
+		add(btnRemoveBook);
+		btnRemoveBook.setEnabled(false);
+		if(loginController.use.getprivilege() < 4)
+			btnRemoveBook.setVisible(false);
 		
 	}
 	/**
@@ -390,7 +412,8 @@ public class userBookGUI extends mainPanel {
 		for(int i = 1 ; i<book.getAuthors().size();i++)
 		{
 			authors += ",";
-			TFauthor.resize((i+1)*122, 25);
+			if(i<3)
+				TFauthor.resize((i+1)*122, 25);
 			authors += book.getAuthors().get(i);
 		}
 		TFauthor.setText(authors);
@@ -449,7 +472,8 @@ public class userBookGUI extends mainPanel {
 		for(int i = 1 ; i<book.getScope().size();i++)
 		{
 			scopes += ",";
-			TFScope.resize((i+1)*70, 25);
+			if(i<4)
+				TFScope.resize((i+1)*70, 25);
 			scopes += book.getScope().get(i);
 		}
 		TFScope.setText(scopes);
@@ -460,7 +484,7 @@ public class userBookGUI extends mainPanel {
 		JButton btnOrderTheBook = new JButton("Order The Book");
 		btnOrderTheBook.setBackground(Color.GREEN);
 		btnOrderTheBook.setBounds(679, 534, 150, 23);
-		if(loginController.use.getprivilege() == 1)
+		if(loginController.use.getprivilege() != 2)
 			btnOrderTheBook.setVisible(false);
 		btnOrderTheBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -484,5 +508,17 @@ public class userBookGUI extends mainPanel {
 		});
 			
 		add(btnBackToSearch);
+		
+		JButton btnEditTheBook = new JButton("Edit Book Information");
+		btnEditTheBook.setBackground(Color.GREEN);
+		btnEditTheBook.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bookController.editBookinfo(book);
+			}
+		});
+		btnEditTheBook.setBounds(679, 534, 155, 23);
+		add(btnEditTheBook);
+		if(loginController.use.getprivilege() < 4)
+			btnEditTheBook.setVisible(false);
 	}
 }

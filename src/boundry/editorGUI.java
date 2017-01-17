@@ -44,20 +44,22 @@ public class editorGUI extends mainPanel {
 		
 		JLabel imgR;
 		imgR = new JLabel(new ImageIcon(editorGUI.class.getResource("/boundry/mailbox.jpg")));
-		imgR.setBounds(569, 179, 247, 137);
+		imgR.setBounds(560, 122, 247, 162);
 		add(imgR);
 		
-		JButton btnNewButton = new JButton("Mailbox");
-		btnNewButton.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnMailBox = new JButton("Mail Box");
+		btnMailBox.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnMailBox.setBounds(629, 330, 126, 23);
+		btnMailBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reviewController.openMailScreen();
 				
 			}
 		});
+		add(btnMailBox);
 		
 		
-
+/**
 		JButton btnUserManagement = new JButton("User details management");
 		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUserManagement.addActionListener(new ActionListener() {
@@ -70,15 +72,15 @@ public class editorGUI extends mainPanel {
 		btnUserManagement.setBounds(48, 344, 228, 27);
 		add(btnUserManagement);
 		
-		/** adding a user icon**/
+		/** adding a user icon**//**
 		JLabel userPic = new JLabel("");
 		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
 		userPic.setHorizontalAlignment(SwingConstants.CENTER);
 		userPic.setBounds(77, 160, 163, 153);
 		add(userPic);
 		
-		btnNewButton.setBounds(656, 348, 119, 23);
-		add(btnNewButton);
+				**/
+		
 		
 		/*table = new JTable();
 		table.setBounds(185, 392, 555, 227);
