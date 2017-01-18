@@ -39,6 +39,8 @@ public class UserSearchGUI extends mainPanel{
 	private static JComboBox comboBox;
 	private static JButton btnSearch;
 	
+	JTable table;
+	
 	
 	public UserSearchGUI(String name , String role)
 	{
@@ -91,7 +93,10 @@ public class UserSearchGUI extends mainPanel{
 		});
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSearch.setBounds(553, 137, 107, 23);
-		add(btnSearch);
+		if(loginController.use.getprivilege() < 6)//only library worker and librarian will be able to use this button
+			add(btnSearch);
+		
+		
 
 		/*JTable table = new JTable();
 		table.setForeground(Color.WHITE);
@@ -102,12 +107,26 @@ public class UserSearchGUI extends mainPanel{
 		add(table);*/
 			
 	}
-	
-
+	/**
+	 * searchForManager- the manager results need to be different for the others
+	 */
+	public void searchForManager(){
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = (String) comboBox.getSelectedItem();
+				String search = (String) textField.getText();
+				controller.userController.UserSearchForReports(item, search);
+			}
+		});
+		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnSearch.setBounds(553, 137, 107, 23);
+		add(btnSearch);
+	}
 	public void getUserDetails()
 	{
 		/**Create The Result Table after performing a user search*/
-		JTable table = new JTable(data1,columnHeader1)
+		table = new JTable(data1,columnHeader1)
 		{
 			
 			public boolean isCellEditable(int data1,int columns){
@@ -210,7 +229,8 @@ public class UserSearchGUI extends mainPanel{
 			}
 		});
 		btnAdd.setBounds(79, 596, 89, 23);
-		add(btnAdd);
+		if(loginController.use.getprivilege() < 6)
+			add(btnAdd);
 		
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.addActionListener(new ActionListener() {
@@ -223,7 +243,8 @@ public class UserSearchGUI extends mainPanel{
 			}
 		});
 		btnEdit.setBounds(246, 596, 89, 23);
-		add(btnEdit);
+		if(loginController.use.getprivilege() < 6)
+			add(btnEdit);
 		
 		JButton btnRemove = new JButton("Remove");
 		btnRemove.addActionListener(new ActionListener() {
@@ -239,7 +260,8 @@ public class UserSearchGUI extends mainPanel{
 			}
 		});
 		btnRemove.setBounds(410, 596, 89, 23);
-		add(btnRemove);
+		if(loginController.use.getprivilege() < 6)
+			add(btnRemove);
 		
 		JButton btnPymnt = new JButton("Set Payment Arrangement");
 		btnPymnt.addActionListener(new ActionListener() {
@@ -247,9 +269,38 @@ public class UserSearchGUI extends mainPanel{
 			}
 		});
 		btnPymnt.setBounds(581, 596, 185, 23);
-		add(btnPymnt);
+		if(loginController.use.getprivilege() < 6)
+			add(btnPymnt);
+	
+		
 		
 		//scrollBar.addAdjustmentListener(l);
+		
+	}
+	/**
+	 * managerReportButtons - the manager cant see and not allowed to use the buttons the others
+	 * can so he has his own buttons and needs to be displayed only for reports
+	 */
+	public void managerReportButtons(){
+		
+		JButton btnChooseUser = new JButton("Watch Order List");
+		btnChooseUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				userController.showAllUserReport();
+			}
+		});
+		btnChooseUser.setBounds(581, 596, 185, 23);
+		add(btnChooseUser);
+		
+		JButton btnWatchUserOrder = new JButton("Watch User Order List");
+		btnWatchUserOrder.setBounds(79, 596, 185, 23);
+		btnWatchUserOrder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String username = table.getValueAt(row1, 3).toString();
+				userController.showUserReport(username);
+			}
+		});
+		add(btnWatchUserOrder);
 	}
 	
 	
