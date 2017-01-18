@@ -265,6 +265,22 @@ public class OpenMailGUI extends mainPanel {
 			add(txtpnFds);
 			
 			
+			JButton btnApprove = new JButton("Approve");
+			btnApprove.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btnApprove.setBounds(845, 238, 131, 23);
+			add(btnApprove);
+			btnApprove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					if(row != -1){
+						String bTitle = new String( table.getValueAt(row, 0).toString());
+						String uName= new String( table.getValueAt(row, 3).toString());
+						//row = -1;
+						reviewController.ApproveReview(bTitle,uName);
+					}
+				}
+			});
+
 			//  button Back 
 			JButton btnBack = new JButton("Back");
 			btnBack.addActionListener(new ActionListener() {

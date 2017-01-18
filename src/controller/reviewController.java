@@ -272,6 +272,25 @@ public class reviewController {
 		
 		
 	}
+	
+	public static void editReview(String bTitle,String uName) {
+	
+		ArrayList <String> info = null;
+		ArrayList <String> deleteReview = null;
+		int bookId=0;
+		
+		info = DBController.getFromDB("select  r.BookID "+
+		"from book b, reviews r "+
+		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
+		System.out.println(info.get(0));
+		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
+		
+		
+		reviewController.openMailScreen();
+	
+	
+	
+	}
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails
 		throw new UnsupportedOperationException();
