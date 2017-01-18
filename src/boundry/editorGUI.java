@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.border.BevelBorder;
 
 public class editorGUI extends mainPanel {
 	
@@ -95,33 +96,7 @@ public class editorGUI extends mainPanel {
 		if(loginController.use.getprivilege() == 3)
 			add(imgB);
 		
-/**
-		JButton btnUserManagement = new JButton("User details management");
-		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnUserManagement.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 
-				userController.userSearch();
-					
-			}
-		});
-		btnUserManagement.setBounds(48, 344, 228, 27);
-		add(btnUserManagement);
-		
-		/** adding a user icon**//**
-		JLabel userPic = new JLabel("");
-		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
-		userPic.setHorizontalAlignment(SwingConstants.CENTER);
-		userPic.setBounds(77, 160, 163, 153);
-		add(userPic);
-		
-				**/
-		
-		
-		/*table = new JTable();
-		table.setBounds(185, 392, 555, 227);
-		add(table);*/
-	
 	}
 
 	public void checkReview() {
