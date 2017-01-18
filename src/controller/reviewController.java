@@ -245,32 +245,13 @@ public class reviewController {
 		OpenMailGUI.infoBox("Review was approved!", "book");
 		
 
-
-
-		//info = DBController.getFromDB("select reviews.text from reviews , book"
-		//		+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bName+"'");
-
-		/*reviewGUI review = null;
-		if(loginController.use.getprivilege() == 1)
-			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
-		
-		if(loginController.use.getprivilege() == 3)
-			review = new reviewGUI(loginController.use.getUsername(),"Editor");
-		
-		else
-			review = new reviewGUI(loginController.use.getUsername(),"Reader");
-		
-		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
-		loginController.mainG.setContentPane(review);
-		loginController.mainG.revalidate();
-		*/	
-	//	UPDATE `ibookdb`.`reviews` SET `visible`='1' WHERE `reviewid`='1';
-
 	
 	}
+	// removed review the 'rejected button' pressed
+
 	public void removeReview() {
-		// TODO - implement reviewController.removeReview
-		throw new UnsupportedOperationException();
+		
+		
 	}
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails
