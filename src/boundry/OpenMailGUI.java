@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.ListSelectionModel;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
 
 public class OpenMailGUI extends mainPanel {
 	private JTable table;
@@ -41,6 +42,8 @@ public class OpenMailGUI extends mainPanel {
 	
 	public OpenMailGUI(String name , String role){
 		super(name,role);
+		
+		
 		btnLogout.setBounds(26, 11, 77, 16);
 		setForeground(Color.WHITE);
 		
@@ -194,6 +197,12 @@ public class OpenMailGUI extends mainPanel {
 		add(btnReject);
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(row != -1){
+					String bTitle = new String( table.getValueAt(row, 0).toString());
+					String uName= new String( table.getValueAt(row, 3).toString());
+					reviewController.removeReview(bTitle,uName);
+				}
+				
 			}
 		});
 		
@@ -247,13 +256,16 @@ public class OpenMailGUI extends mainPanel {
 			
 			JTextPane txtpnFds = new JTextPane();
 			txtpnFds.setEditable(false);
+			
 			txtpnFds.setText(text);
 			txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			txtpnFds.setBounds(206, 252, 439, 228);
+			//txtpnFds.setBorder(new LineBorder(new Color(0, 0, 0), 3));
+			txtpnFds.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 			add(txtpnFds);
 			
-			/** Button 'back' **/
-			/**button Back */
+			
+			//  button Back 
 			JButton btnBack = new JButton("Back");
 			btnBack.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {

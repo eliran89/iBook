@@ -242,14 +242,33 @@ public class reviewController {
 		updateVis = DBController.getFromDB("UPDATE reviews r SET visible=1 "
 				+ "WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
 		
-		OpenMailGUI.infoBox("Review was approved!", "book");
+		
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was approved!", "book");
+		// return to the review's table screen
+		reviewController.openMailScreen();
 		
 
 	
 	}
 	// removed review the 'rejected button' pressed
 
-	public void removeReview() {
+	public static void removeReview(String bTitle,String uName) {
+		ArrayList <String> info = null;
+		ArrayList <String> deleteReview = null;
+		int bookId=0;
+		
+		info = DBController.getFromDB("select  r.BookID "+
+		"from book b, reviews r "+
+		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
+		System.out.println(info.get(0));
+		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
+		
+		deleteReview = DBController.getFromDB("DELETE FROM reviews"
+				+" WHERE reviews.BookID="+bookId+" and reviews.username='"+uName+"' and reviews.visible=0");
+		
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was deleted", "book");
+		reviewController.openMailScreen();
+		
 		
 		
 	}
