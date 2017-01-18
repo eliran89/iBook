@@ -3,7 +3,9 @@ package entity;
 public enum readerType {
 	;
 
-	private int oneByOne;
-	private int periodic;
+	private int ONEBYONE = 1;
+	private int PERIODIC = 2;
+	
+	
 
 }

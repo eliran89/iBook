@@ -176,10 +176,9 @@ public class Book {
 		// TODO - implement Book.getAbsRank
 		throw new UnsupportedOperationException();
 	}
-
-	public void isSuspended() {
-		// TODO - implement Book.isSuspended
-		throw new UnsupportedOperationException();
+	
+	public boolean isSuspended() {
+	return suspended;
 	}
 
 	public void destroy() {
@@ -189,7 +188,7 @@ public class Book {
 
 	public boolean isBookComplete() {
 		boolean bool = true;
-		if(this.Appendix == null ||this.Scope == null || this.Subject == null||this.authors == null||this.Brief == null || this.cost == 0
+		if(this.Appendix == null ||this.Scope == null || this.Subject == null||this.authors == null||this.Brief == null || this.cost < 0
 				|| this.Key == null ||this.Title == null||this.Language == null || this.Appendix.equals("") || this.Brief.equals("") || this.Title.equals("") ||this.Language.equals("")
 				|| this.Scope.size() == 0 || this.Subject.size() == 0 || this.authors.size() == 0 || this.Key.size() == 0)
 			bool = false;
@@ -206,10 +205,17 @@ public class Book {
 		// TODO - implement Book.addTosearches
 		throw new UnsupportedOperationException();
 	}
-
+	/**
+	 * lock - change suspend to true
+	 */
 	public void lock() {
-		// TODO - implement Book.lock
-		throw new UnsupportedOperationException();
+		suspended =true;
+	}
+	/**
+	 * unlock - change suspend to false
+	 */
+	public void unlock() {
+		suspended = false;
 	}
 
 }

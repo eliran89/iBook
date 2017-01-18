@@ -16,17 +16,19 @@ public abstract class GWorkerGUI extends editorGUI {
 		super(name,role);
 		
 		JButton btnBookSearch = new JButton("Book Search");
-		btnBookSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnBookSearch.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBookSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				bookController.searchBook();
 			}
 		});
-		btnBookSearch.setBounds(137, 554,211, 47);
+
+		btnBookSearch.setBounds(138, 552,228, 27);
 		add(btnBookSearch);
 		
 		JLabel imgB;
 		imgB = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/booksearch.jpg")));
+		imgB.setBounds(171, 422, 211, 105);
 		imgB.setBounds(137, 418, 211, 105);
 		add(imgB);
 

@@ -22,7 +22,6 @@ public class InterestedReaderGUI extends mainPanel{
 	 */
 	public InterestedReaderGUI( String name , String role) {
 		super(name,role);
-		setForeground(Color.WHITE);
 		
 		JButton btnCheckBookReviews = new JButton("Check Book Reviews");
 		btnCheckBookReviews.setBounds(374, 321, 211, 47);

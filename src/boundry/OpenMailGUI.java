@@ -128,7 +128,7 @@ public class OpenMailGUI extends mainPanel {
 		JScrollPane pane = new JScrollPane(table);
 		add(table);
 		
-		/** Titles for the columns**/
+		/** Titles for the columns**/ 
 		JLabel lblTitle = DefaultComponentFactory.getInstance().createTitle("Title");
 		lblTitle.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 		lblTitle.setForeground(Color.BLACK);

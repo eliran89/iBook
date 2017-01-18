@@ -20,6 +20,7 @@ import controller.userController;
 import entity.Book;
 
 import javax.swing.JTextField;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
@@ -65,7 +66,6 @@ public class userBookGUI extends mainPanel {
 		btnMainWindow.setForeground(Color.BLACK);
 		btnMainWindow.setBounds(26, 38, 122, 23);
 		add(btnMainWindow);
-		
 		
 		
 		/*if(loginController.use.getprivilege() != 2)
@@ -322,6 +322,7 @@ public class userBookGUI extends mainPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String ID = (String) table.getValueAt(row, 3);
+				readerGUI.displayPurchase();
 				bookController.chooseBook(ID);
 			}
 		});
@@ -519,5 +520,12 @@ public class userBookGUI extends mainPanel {
 		add(btnEditTheBook);
 		if(loginController.use.getprivilege() < 4)
 			btnEditTheBook.setVisible(false);
+		
+		JLabel imgS;
+		imgS = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/suspended.jpg")));
+		imgS.setBounds(361, 11, 211, 79);
+		add(imgS);
+		if(!book.isSuspended())
+			imgS.setVisible(false);
 	}
 }
