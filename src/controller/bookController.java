@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import boundry.mainPanel;
+import boundry.readerGUI;
 import boundry.reviewGUI;
 import boundry.userBookGUI;
 import boundry.workerBookGUI;
@@ -522,22 +523,37 @@ public class bookController {
 			}
 	*/	
 	}
+	
+	
 	/**
 	 * findUsersOrders - method.
-	 * The method finds all the books ordered by a reader 
+	 * The method finds all the books ordered by a reader.
+	 * (NOT DONE YET)
 	 * @param user - String, a username
 	 */
 
 	public static void findUsersOrders(String user) {
-		// TODO Auto-generated method stub
 		
 		ArrayList<String> orders = new ArrayList<String>();
 		
 		orders = DBController.getFromDB("select b.Title, ro.date "
 						+"from book b, reader r, readerorder ro "
-						+"where r.username like '%" +user+"'% " 
+						+"where r.username like '%" +user+"' and " 
 						+	   "r.userID = ro.userID and "
-						+	   "b.bookID = ro.bookID");
+						+	   "b.bookID = ro.bookID ");
+		
+		if(!(orders.isEmpty())){
+			
+			readerGUI.data = new String[orders.size()/3][3];
+			int count =0;
+			for(int i = 0 ; i < orders.size()/3 ; i++)
+				for(int j = 0 ; j < 3 ; j++){
+					readerGUI.data[i][j] = orders.get(count);
+					count++;
+				}
+		}
+		
+		//readerGUI.ordersPanel.add()
 		
 		System.out.println(orders.toString());
 	}
