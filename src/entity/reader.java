@@ -11,7 +11,7 @@ public class reader extends interestedReader {
 
 	/**
 	 * reader - general constructor.
-	 * creates a new instance of a reader
+	 * Creates a new instance of a reader
 	 */
 	public reader(){
 		super();
@@ -23,8 +23,8 @@ public class reader extends interestedReader {
 	
 	/**
 	 * reader - constructor.
-	 * creates a new instance of a reader with following information:
-	 * @param userID - int
+	 * Creates a new instance of a reader with following information:
+	 * @param userID - integer
 	 * @param firstname - String
 	 * @param lastname - String
 	 * @param debt - float
@@ -61,29 +61,21 @@ public class reader extends interestedReader {
 	
 	/**
 	 *setCreditCard - setter.
-	 *Sets credit card number for a reader. Any attempt to set an illegal credit card number,
-	 *will trigger an error message
+	 *Sets credit card number for a reader. In case of an illegal input (credit card string with letters i.e)
+	 *an exception will be triggered and an error message will pop
 	 * @param credit - String
 	 */
 	public void setCreditCard(String credit){
 		
 		
 		try{
-			int x = Integer.parseInt(credit);
-			this.creditCard = credit;
+			int x = Integer.parseInt(credit);	//try to parse to integer
+			this.creditCard = credit;	//if parsed succeeded set credit
 		}
-		catch (Exception e){
+		catch (Exception e){	//if failed, trigger an exception
 			UserSearchGUI.errorBox("Illegal credit card number!", "Illegal Card Error!");
 			return;
 		}
-		
-		
-		/*if(credit.equals(null) || credit.contains(".*\\d.*")|| credit.contains(" ")){
-			UserSearchGUI.errorBox("Illegal credit card number!", "Illegal Card Error!");
-			return;
-		}
-		
-		this.creditCard = credit;*/
 	}
 
 	/**
@@ -106,7 +98,8 @@ public class reader extends interestedReader {
 	 * will trigger an error message
 	 * @param rType - ENUM
 	 */
-	public void setrType(readerType rType){
+	public void setrType(readerType rType){	
+		//need checking!!!!
 	
 		if(!rType.equals("ONEBYONE") || !rType.equals("PERIODIC")){
 			UserSearchGUI.errorBox("Illegal payment method!", "Illegal Payment Method!");

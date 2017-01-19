@@ -206,7 +206,7 @@ public class OpenMailGUI extends mainPanel {
 			}
 		});
 		
-		// Button for edit //
+		/*// Button for edit //
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnEdit.setBounds(844, 354, 131, 23);
@@ -215,7 +215,7 @@ public class OpenMailGUI extends mainPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
+		*/
 		// display review button
 		
 		JButton btnDisplayReview = new JButton("Display Review");
@@ -252,19 +252,19 @@ public class OpenMailGUI extends mainPanel {
 	 */
 		public void displayReview(String text) {
 			//reviewGUI.lblSearchBy.setVisible(false);
-			//OpenMailGUI panelAdd;
+		//	OpenMailGUI panelAdd= new OpenMailGUI(loginController.use.getUsername(),"Editor");
 			
 			JTextPane txtpnFds = new JTextPane();
-			txtpnFds.setEditable(false);
-			
+			txtpnFds.setEditable(true);
 			txtpnFds.setText(text);
 			txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			txtpnFds.setBounds(206, 252, 439, 228);
-			//txtpnFds.setBorder(new LineBorder(new Color(0, 0, 0), 3));
 			txtpnFds.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 			add(txtpnFds);
 			
+			//System.out.println("text is="+txtpnFds.getText());
 			
+			/// button Approve
 			JButton btnApprove = new JButton("Approve");
 			btnApprove.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnApprove.setBounds(845, 238, 131, 23);
@@ -281,6 +281,41 @@ public class OpenMailGUI extends mainPanel {
 				}
 			});
 
+			
+			// Button for Reject //
+			JButton btnReject = new JButton("Reject");
+			btnReject.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btnReject.setBounds(844, 296, 131, 23);
+			add(btnReject);
+			btnReject.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(row != -1){
+						String bTitle = new String( table.getValueAt(row, 0).toString());
+						String uName= new String( table.getValueAt(row, 3).toString());
+						reviewController.removeReview(bTitle,uName);
+					}
+					
+				}
+				
+			});
+			
+			// Button for edit //
+			JButton btnEdit = new JButton("Edit");
+			btnEdit.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btnEdit.setBounds(844, 354, 131, 23);
+			add(btnEdit);
+			btnEdit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(row != -1){
+					
+						String bTitle = new String( table.getValueAt(row, 0).toString());
+						String uName= new String( table.getValueAt(row, 3).toString());
+						reviewController.editReview(bTitle,uName,txtpnFds.getText());
+					}
+					
+				}
+			});
+			
 			//  button Back 
 			JButton btnBack = new JButton("Back");
 			btnBack.addActionListener(new ActionListener() {
@@ -289,6 +324,7 @@ public class OpenMailGUI extends mainPanel {
 					reviewController.openMailScreen();
 				}
 			});
+			btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnBack.setBounds(374, 596, 131, 23);
 			add(btnBack);
 			

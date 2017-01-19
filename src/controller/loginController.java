@@ -84,8 +84,8 @@ public class loginController {
 						+ "	from reader "
 						+ "where reader.username = '"+use.getUsername()+"'");
 
-				/*RDetails = new reader(Integer.parseInt((usel.get(0))) , usel.get(1) , usel.get(2),Float.parseFloat(usel.get(3)),
-						usel.get(4),Enum.valueOf(readerType,usel.get(5)));*/
+				RDetails = new reader(Integer.parseInt((usel.get(0))) , usel.get(1) , usel.get(2),Float.parseFloat(usel.get(3)),
+						usel.get(4),readerType.getTypeFromString(usel.get(5)));
 				
 
 				
