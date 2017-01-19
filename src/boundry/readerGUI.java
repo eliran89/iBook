@@ -17,6 +17,7 @@ import javax.swing.table.TableCellRenderer;
 import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 import controller.DBController;
+import controller.bookController;
 import controller.loginController;
 import controller.userController;
 
@@ -60,6 +61,7 @@ public class readerGUI extends InterestedReaderGUI {
 		btnViewOrders.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = loginController.use.getUsername();
+				bookController.findUsersOrders(user);
 				readerGUI.showOrders(user);
 			}
 		});
