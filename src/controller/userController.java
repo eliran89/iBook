@@ -1,7 +1,9 @@
 package controller;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
+import java.awt.Color;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -11,6 +13,14 @@ import javax.swing.JFrame;
 
 import boundry.*;
 import entity.*;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
 
 
 
@@ -480,13 +490,34 @@ public class userController {
 		loginController.mainG.setContentPane(panel);
 		loginController.mainG.revalidate();
 	}
-	public static void displaySearchReport(){
+	/**
+	 * 
+	 * @param bid
+	 */
+	public static void displaySearchReport(String bid){
+		ArrayList<String> info = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
+		int bookCnt = Integer.parseInt(info.get(0));
+		info = DBController.getFromDB("select  book.numOfSearches cnt from book order by cnt;");
+		
+		JFrame frame;
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(null);
 		
 	}
-	public static void displayOrdersReportByScope(){
+	public static void displaySearchReportByScope(String scope , String bid){
+		//select  book.numOfSearches cnt from book order by cnt;
+		//select book.numOfSearches cnt from book,bscope where   bscope.scopeName = 'Fantasy' and bscope.bookID = book.bookID
+		ArrayList<String> info = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
+		int bookCnt = Integer.parseInt(info.get(0));
+		
 		
 	}
 	public static void displayOrdersReport(){
+		
+		//DefaultCategoryDataset set = new DefaultCategoryDataset();
+		
 		
 	}
 	

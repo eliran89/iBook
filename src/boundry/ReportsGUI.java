@@ -583,7 +583,12 @@ public class ReportsGUI extends mainPanel {
 		btnBySearches.setBounds(180, 421, 211, 27);
 		btnBySearches.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				String scopeName = (String) comboBoxScope.getSelectedItem();
+				if(scopeName.equals("All Scopes"))
+					userController.displaySearchReport(ID);
+				else
+					
+					userController.displaySearchReportByScope(scopeName,ID);
 				
 			}
 		});
