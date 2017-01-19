@@ -15,7 +15,7 @@ public abstract class GWorkerGUI extends editorGUI {
 	public GWorkerGUI( String name , String role) {
 		super(name,role);
 		
-		JButton btnBookSearch = new JButton("Book Search");
+		JButton btnBookSearch = new JButton("Book Management");
 		btnBookSearch.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBookSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {

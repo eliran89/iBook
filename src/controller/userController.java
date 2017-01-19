@@ -474,5 +474,20 @@ public class userController {
 		
 		
 	}
-
+	public static void displayBookSearchForReports(){
+		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"manager");
+		panel.displayBookSearchForReports();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+	}
+	public static void displaySearchReport(){
+		
+	}
+	public static void displayOrdersReportByScope(){
+		
+	}
+	public static void displayOrdersReport(){
+		
+	}
+	
 }

@@ -67,7 +67,10 @@ public class userBookGUI extends mainPanel {
 		btnMainWindow.setBounds(26, 38, 122, 23);
 		add(btnMainWindow);
 		
+
 		
+
+
 		/*if(loginController.use.getprivilege() != 2)
 			btnOrderTheBook.setVisible(false);*/
 		
@@ -223,6 +226,16 @@ public class userBookGUI extends mainPanel {
 		add(btnAddNewBook);
 		if(loginController.use.getprivilege() < 3)
 			btnAddNewBook.setVisible(false);
+		
+		JButton btnScopesEdit = new JButton("Scopes Edit");
+		btnScopesEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				bookController.scopeEdit();
+			}
+		});
+		btnScopesEdit.setBounds(580, 287, 129, 23);
+		if(loginController.use.getprivilege() == 5)
+			add(btnScopesEdit);
 		
 	}
 	/**

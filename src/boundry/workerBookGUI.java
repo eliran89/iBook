@@ -46,6 +46,7 @@ public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldSubjectEdit;
 	private JTextField textFieldKeyEdit;
 	private JComboBox comboBoxAuthor;
+	private JTextField textField;
 	/**
 	 * workerBookGUI
 	 * @param name String
@@ -54,7 +55,7 @@ public class workerBookGUI extends userBookGUI {
 	public workerBookGUI(String name , String type) {
 		super(name,type);
 
-		
+
 
 
 		/*copy to readerGUI. add "panel." before add methods
@@ -830,12 +831,76 @@ public class workerBookGUI extends userBookGUI {
 		add(btnBackToSearch_1);
 		
 	}
-	public void displayWindow() {
-		// TODO - implement workerBookGUI.displayWindow
-		throw new UnsupportedOperationException();
+	/**
+	 * get a list of scopes, displays them and 
+	 * a text field for new names
+	 * @param scopes - the list of the scopes
+	 */
+	public void editScope(ArrayList<String> scopes) {
+		JComboBox comboBoxScope = new JComboBox();
+		comboBoxScope.setBounds(225, 198, 173, 20);
+		for(int i = 0;i<scopes.size();i++)
+			comboBoxScope.addItem(scopes.get(i));
+		add(comboBoxScope);
+		
+		JLabel lblScopeName = new JLabel("Scope Name :");
+		lblScopeName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblScopeName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblScopeName.setEnabled(true);
+		lblScopeName.setBounds(122, 201, 101, 17);
+		add(lblScopeName);
+		
+		JLabel lblChangeTo = new JLabel("Change To :");
+		lblChangeTo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChangeTo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblChangeTo.setEnabled(true);
+		lblChangeTo.setBounds(422, 201, 101, 17);
+		add(lblChangeTo);
+		
+		textField = new JTextField();
+		textField.setBounds(533, 198, 142, 20);
+		add(textField);
+		textField.setColumns(10);
+		
+		JButton btnEdit = new JButton("Edit");
+		btnEdit.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String from = (String) comboBoxScope.getSelectedItem();
+				String to = textField.getText();
+				if(from.equalsIgnoreCase(to) || to.equals(""))
+				{
+					warningBox("name remained the same","Scope");
+					bookController.scopeEdit();
+				}
+				else
+					bookController.updateScope(from, to);
+			}
+		});
+		btnEdit.setBounds(716, 197, 89, 23);
+		add(btnEdit);
+		
+		
+		JButton btnBackToSearch_1 = new JButton("Back To Search");
+		btnBackToSearch_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				bookController.searchBook();
+			}
+		});
+		btnBackToSearch_1.setBounds(48, 596, 124, 23);
+		add(btnBackToSearch_1);
+		
+		
+
+
 	}
 
-	public void searchBook() {
+	public void noScope() {
+		JLabel label = new JLabel("<<No Scopes To Show>>");
+		label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.RED);
+		label.setBounds(360, 370, 239, 36);
+		add(label);
 			
 	}
 

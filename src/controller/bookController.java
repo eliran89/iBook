@@ -4,6 +4,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import boundry.ReportsGUI;
 import boundry.mainPanel;
 import boundry.reviewGUI;
 import boundry.userBookGUI;
@@ -343,10 +344,33 @@ public class bookController {
 		// TODO - implement bookController.setAbsRank
 		throw new UnsupportedOperationException();
 	}
+	/**
+	 * display the scope edit panel
+	 */
+	public static void scopeEdit() {
+		workerBookGUI panel = new workerBookGUI(loginController.use.getUsername(),"Librarian");
+		ArrayList<String> info = DBController.getFromDB("select scope.scopeName from scope");
+		if(info != null)
+			panel.editScope(info);
+		else
+			panel.noScope();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
 
-	public void setScopeRank() {
-		// TODO - implement bookController.setScopeRank
-		throw new UnsupportedOperationException();
+	}
+	/**
+	 * updateScope get 2 strings and change a scope name in DB
+	 * @param from - the name of the scope that is being changed
+	 * @param to - the new name for the scope
+	 */
+	public static void updateScope(String from,String to){
+		try {
+			DBController.insertToDB("UPDATE `ibookdb`.`scope` SET `scopeName`='"+to+"' WHERE `scopeName`='"+from+"';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		scopeEdit();
+		
 	}
 	/**
 	 * verifyAuthor - Check the existence of an author
@@ -521,5 +545,60 @@ public class bookController {
 
 			}
 	*/	
+	}
+	public static void displayResultsForReports(String brief,String title,String langu,String keyWord,String author,String appendix,String scope){
+		
+		ArrayList<String> info;
+		
+		info = DBController.getFromDB("select distinct sc.scopeName,bsc.subject,b.Title,b.bookID " 
+				+" from book b,author a,bauthor ba,keyword k,bkey bk,scope sc,bscope bsc"
+				+" where b.bookID=ba.bookID and ba.authorID = a.authorID and b.bookID= bk.bookID and bk.Word=k.word "
+				+" and b.bookID=bsc.bookID and bsc.scopeName=sc.scopeName and b.Title like '%"+title+"%' and b.appendix like '%"+appendix+"%'"
+				+" and b.brief like '%"+brief+"%' and b.language like '%"+langu+"%' and a.authorName like '%"+author+"%' and k.word like '%"+keyWord+"%'"
+				+" and sc.scopeName like '%"+scope+"%'"
+				+" order by sc.scopeName");
+		ReportsGUI panel;
+		panel = new ReportsGUI(loginController.use.getUsername(),"Manager");
+		
+		if(info != null)
+		{
+			ReportsGUI.data2 = new String[info.size()/4][4];
+			
+			int count =0;
+			for(int i = 0 ; i < info.size()/4 ; i++){
+				for(int j = 0 ; j < 4 ; j++){
+					
+					if(j == 0 && i > 0 && info.get(count).equals( ReportsGUI.data2[i-1][j]))
+						ReportsGUI.data2[i][j] ="";
+					else
+						ReportsGUI.data2[i][j] = info.get(count);
+					if(j==0 && i>0)
+						System.out.println(ReportsGUI.data2[i][j]);
+					count++;
+				}}
+			panel.displayBookSearchResults();
+			
+		}
+		else
+			panel.noBookResults();
+		panel.displayBookSearchForReports();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+	}
+	/**
+	 * cooseBookForReports - get book name and id and display the panel where the 
+	 * manager choose what kind of report he wants
+	 * @param bookName - a string contains the book name
+	 * @param ID - a string contains the book ID
+	 */
+	public static void cooseBookForReports(String bookName,String ID){
+		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");
+		ArrayList<String> info =DBController.getFromDB("select scope.scopeName from scope,bscope where bscope.bookID = '"+ID+"' and scope.scopeName = bscope.scopeName");
+		
+		panel.chooseBy(bookName, ID,info);
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
 	}
 }
