@@ -30,8 +30,13 @@ public class userController {
 		//System.out.println(loginController.use.getprivilege());
 		if(loginController.use.getprivilege() == 4)
 			panel = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
-		else
+		else if(loginController.use.getprivilege() == 5)
 			panel = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
+		else 
+		{
+			panel = new UserSearchGUI(loginController.use.getUsername(),"Manager");
+			panel.searchForManager();
+		}
 		loginController.mainG.setContentPane(panel);
 		loginController.mainG.revalidate();
 		
@@ -78,28 +83,27 @@ public class userController {
 		ArrayList <String> info = null;
 		
 		/**Search by Username*/
-		if(item.equals("Username")){
-			info = DBController.getFromDB("SELECT i.*, p.description"
+		if(item.equals("Username") ){
+				info = DBController.getFromDB("SELECT i.*, p.description"
 										+" FROM interestedreader i, user u, privilege p"
 										+" WHERE i.username like '%"+search+"%' and i.username = u.username and u.privilege = p.privilege"
 										+" UNION"
 										+" select r.userID, r.firstName, r.lastName, r.username, p.description"
 										+" from reader r, user u, privilege p"
 										+" where r.username like '%"+search+"%' and r.username = u.username and u.privilege = p.privilege");
-			if(info!=null)
-				System.out.println(info.toString());
+		if(info!=null)
+			System.out.println(info.toString());
 
 		}
 		/**Search by UserID*/
 		if(item.equals("UserID"))
-			info = DBController.getFromDB("SELECT i.*, p.description"
+				info = DBController.getFromDB("SELECT i.*, p.description"
 										+" FROM interestedreader i, user u, privilege p"
 										+" WHERE i.userID = '"+search+"' and i.username = u.username and u.privilege = p.privilege"
 										+" UNION"
 										+" select r.userID, r.firstName, r.lastName, r.username, p.description"
 										+" from reader r, user u, privilege p"
 										+" where r.userID = '"+search+"' and r.username = u.username and u.privilege = p.privilege");
-		
 		
 		//System.out.println(info.toString());
 
@@ -125,7 +129,52 @@ public class userController {
 		
 		
 	}
+	/**
+	 * UserSearchForReports - get all the readers information and insert the information to the panel's array and display the panel
+	 * @param item String - the kind of search the worker wants to make by
+	 * @param search String - the name of the user the worker wants to search or hi's ID
+	 */
+	public static void UserSearchForReports(String item , String search){
+		UserSearchGUI panel;
+		ArrayList <String> info = null;
+		panel = new UserSearchGUI(loginController.use.getUsername(),"Manager");
+		if(item.equals("Username") ){
+			info = DBController.getFromDB(" select r.userID, r.firstName, r.lastName, r.username, p.description"
+										+" from reader r, user u, privilege p"
+										+" where r.username like '%"+search+"%' and r.username = u.username and u.privilege = p.privilege");
+		}
+		if(item.equals("UserID"))
+			info = DBController.getFromDB(	" select r.userID, r.firstName, r.lastName, r.username, p.description"
+											+" from reader r, user u, privilege p"
+											+" where r.userID = '"+search+"' and r.username = u.username and u.privilege = p.privilege");
+
+		if(info != null)
+		{
+			UserSearchGUI.data1 = new String[info.size()/5][5];
+			
+			int count =0;
+			for(int i = 0 ; i < info.size()/5 ; i++)
+				for(int j = 0 ; j < 5 ; j++){
+					UserSearchGUI.data1[i][j] = info.get(count);
+					count++;
+				}
+			//System.out.println(UserSearchGUI.data1[0][0]);
+			panel.getUserDetails();
+			panel.searchForManager();
+			panel.managerReportButtons();
+		}
+
+//		if there are no results at all we add a lable that says "no results"
+		else
+		{
+			panel.searchForManager();
+			panel.noResults();
+		}
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+									
 		
+	}
 			
 	
 	
@@ -324,6 +373,106 @@ public class userController {
 	public void legalDate() {
 		// TODO - implement userController.legalDate
 		throw new UnsupportedOperationException();
+	}
+	/**
+	 * showReportsMain - open the main reports panel
+	 */
+	public static void showReportsMain(){
+		ReportsGUI panel;
+		panel = new ReportsGUI(loginController.use.getUsername(),"Manager");
+		panel.displayReportsMain();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+	}
+	/**
+	 * showAllUserReport - the method gets from the DB all the purchases that
+	 * was been made and open a panel with the results table
+	 */
+	public static void showAllUserReport(){
+		ArrayList<String> info;
+		
+		info = DBController.getFromDB("select   reader.username , book.Title ,readerorder.date"
+									+" from readerorder , reader,book"
+									+" where reader.userID = readerorder.userID and  readerorder.bookID = book.bookID"
+									+" order by username");
+		/*build the basic panel*/
+		ReportsGUI panel;
+	
+		panel = new ReportsGUI(loginController.use.getUsername(),"Manager");
+		
+		
+		/*if we get results we add the results table*/
+		if(info != null)
+		{
+			ReportsGUI.data1 = new String[info.size()/3][3];
+			
+			int count =0;
+			for(int i = 0 ; i < info.size()/3 ; i++)
+				for(int j = 0 ; j < 3 ; j++){
+					ReportsGUI.data1[i][j] = info.get(count);
+					count++;
+				}
+			ReportsGUI.columnHeader1 = new String[3];
+			ReportsGUI.columnHeader1[0] = "username";
+			ReportsGUI.columnHeader1[1] = "bookName";
+			ReportsGUI.columnHeader1[2] = "date";
+			panel.allUsrers();
+			panel.displayUsersReport();
+			
+		}
+		
+		/*if there are no results at all we add a lable that says "no results"*/
+		else
+			panel.noReaders();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+	}
+	/**
+	 * showUserReport - gets a username and get from the DB information about his purchases 
+	 * and open a panel with a results table
+	 * @param username String - 
+	 * the user we want the report to be about
+	 */
+	public static void showUserReport(String username){
+		ArrayList<String> info;
+		
+		info = DBController.getFromDB("select  book.Title ,readerorder.date"
+									+" from readerorder , reader,book"
+									+" where reader.userID = readerorder.userID and  readerorder.bookID = book.bookID and reader.username = '"+username+"'"
+									+" order by username");
+		/*build the basic panel*/
+		ReportsGUI panel;
+	
+		panel = new ReportsGUI(loginController.use.getUsername(),"Manager");
+		
+		
+		/*if we get results we add the results table*/
+		if(info != null)
+		{
+			ReportsGUI.data1 = new String[info.size()/2][2];
+			
+			int count =0;
+			for(int i = 0 ; i < info.size()/2 ; i++)
+				for(int j = 0 ; j < 2 ; j++){
+					ReportsGUI.data1[i][j] = info.get(count);
+					count++;
+				}
+			ReportsGUI.columnHeader1 = new String[2];
+			ReportsGUI.columnHeader1[0] = "bookName";
+			ReportsGUI.columnHeader1[1] = "date";
+			panel.displayUsersReport();
+			panel.singleUser(username);
+			
+		}
+		
+		/*if there are no results at all we add a lable that says "no results"*/
+		else
+			panel.noReaders();
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+		
 	}
 
 }

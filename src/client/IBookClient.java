@@ -70,23 +70,9 @@ public class IBookClient extends AbstractClient
    */
   public void handleMessageFromServer(Object msg) 
   {
-	  //ResultSet rs =(ResultSet)msg;
-	// dbc.setRs(rs);
-	// DBController.allowToProceed=true;
-	/*try{
-		rs.next();
-		String result1 = rs.getString(1)+" \t " +rs.getString(2)+"\t"+rs.getString(3);
-	  System.out.println(msg.toString());
-		clientUI.display(msg);
-      
-	 }catch (SQLException e) {e.printStackTrace();}
-	
-	  //clientUI.display(msg);*/
-	//  if(msg != null)
-	  
-	  DBController.rs = (ArrayList<String>)(msg);
+	  if(msg instanceof ArrayList)
+	  	DBController.rs = (ArrayList<String>)(msg);
 	  DBController.allowToProceed = true;
-	  //System.out.println(DBController.rs.toString() + "\t" + DBController.allowToProceed);
   }
 
   /**
