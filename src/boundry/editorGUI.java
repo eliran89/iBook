@@ -22,6 +22,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTable;
+import javax.swing.border.BevelBorder;
 
 public class editorGUI extends mainPanel {
 	
@@ -51,7 +52,7 @@ public class editorGUI extends mainPanel {
 		
 		JButton btnMailBox = new JButton("Mail Box");
 		btnMailBox.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnMailBox.setBounds(585, 330, 211, 23);
+		btnMailBox.setBounds(585, 330, 211, 27);
 		btnMailBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				reviewController.openMailScreen();
@@ -63,7 +64,7 @@ public class editorGUI extends mainPanel {
 		
 		JButton btnCheckBookReviews = new JButton("Check Book Reviews");
 		btnCheckBookReviews.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnCheckBookReviews.setBounds(585, 552, 211, 23);
+		btnCheckBookReviews.setBounds(585, 553, 211, 27);//138, 552
 		add(btnCheckBookReviews);
 		btnCheckBookReviews.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -75,7 +76,7 @@ public class editorGUI extends mainPanel {
 		
 		JLabel imgRe;
 		imgRe = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/reviews.jpg")));
-		imgRe.setBounds(585, 437, 211, 105);
+		imgRe.setBounds(585, 431, 211, 105);
 		add(imgRe);
 		
 		JButton btnBookSearch = new JButton("Book Search");
@@ -95,33 +96,7 @@ public class editorGUI extends mainPanel {
 		if(loginController.use.getprivilege() == 3)
 			add(imgB);
 		
-/**
-		JButton btnUserManagement = new JButton("User details management");
-		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
-		btnUserManagement.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
 
-				userController.userSearch();
-					
-			}
-		});
-		btnUserManagement.setBounds(48, 344, 228, 27);
-		add(btnUserManagement);
-		
-		/** adding a user icon**//**
-		JLabel userPic = new JLabel("");
-		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
-		userPic.setHorizontalAlignment(SwingConstants.CENTER);
-		userPic.setBounds(77, 160, 163, 153);
-		add(userPic);
-		
-				**/
-		
-		
-		/*table = new JTable();
-		table.setBounds(185, 392, 555, 227);
-		add(table);*/
-	
 	}
 
 	public void checkReview() {

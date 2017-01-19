@@ -40,9 +40,9 @@ public class DBController {
 	
 	
 	/**
-	 * getFromDB General get query and return a result
-	 * @param query String 
-	 * @return ArrayList<String>
+	 * getFromDB General - get query and return a result 
+	 * @param query String - the query that sent to the DB
+	 * @return ArrayList<String> - contains the query result from the DB
 	 */
 	static synchronized public ArrayList<String> getFromDB(String query){
 		try {
@@ -65,9 +65,9 @@ public class DBController {
 	
 
 	/**
-	 * getFromDB for User when login 
-	 * @param use User
-	 * @return ArrayList<String>
+	 * getFromDB for User when login - get a User instance and pull his information from the DB
+	 * @param use User - contains a user information
+	 * @return ArrayList<String> - contains the query result from the DB
 	 */
 	static synchronized public ArrayList<String> getFromDB(User use){
 		User res= new User();
@@ -104,10 +104,10 @@ public class DBController {
 	
     
 	/**
-	 * existsInDB for User
+	 * existsInDB for User get a User instance and check if they exists in the DB the DB
 	 * check if user exists in DB
-	 * @param use User
-	 * @return Boolean
+	 * @param use User - contains the user information
+	 * @return boolean - if it exits true else false
 	 * @throws SQLException
 	 */
 	static synchronized public boolean existsInDB(User use) throws SQLException{
@@ -118,7 +118,7 @@ public class DBController {
 			allowToProceed = false;
 
 			ClientConsole.accept("select * from user where username = '"+ use.getUsername()+"' and"
-					+ " password = '"+use.getpassword()+"'");
+					+ " password = '"+use.getpassword()+"' and user.status =1 ");
 			
 
 		} catch (Exception e) {
@@ -197,7 +197,7 @@ public class DBController {
 		
 		if( rs == null)
 		{
-			System.out.println("rs is: null");
+			//System.out.println("rs is: null");
 			bool = false;
 		}
 		else

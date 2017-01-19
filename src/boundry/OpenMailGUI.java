@@ -31,6 +31,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.border.BevelBorder;
 import javax.swing.ListSelectionModel;
 import javax.swing.JPanel;
+import javax.swing.border.EtchedBorder;
 
 public class OpenMailGUI extends mainPanel {
 	private JTable table;
@@ -41,6 +42,8 @@ public class OpenMailGUI extends mainPanel {
 	
 	public OpenMailGUI(String name , String role){
 		super(name,role);
+		
+		
 		btnLogout.setBounds(26, 11, 77, 16);
 		setForeground(Color.WHITE);
 		
@@ -194,10 +197,16 @@ public class OpenMailGUI extends mainPanel {
 		add(btnReject);
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(row != -1){
+					String bTitle = new String( table.getValueAt(row, 0).toString());
+					String uName= new String( table.getValueAt(row, 3).toString());
+					reviewController.removeReview(bTitle,uName);
+				}
+				
 			}
 		});
 		
-		// Button for edit //
+		/*// Button for edit //
 		JButton btnEdit = new JButton("Edit");
 		btnEdit.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnEdit.setBounds(844, 354, 131, 23);
@@ -206,7 +215,7 @@ public class OpenMailGUI extends mainPanel {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		
+		*/
 		// display review button
 		
 		JButton btnDisplayReview = new JButton("Display Review");
@@ -243,17 +252,71 @@ public class OpenMailGUI extends mainPanel {
 	 */
 		public void displayReview(String text) {
 			//reviewGUI.lblSearchBy.setVisible(false);
-			//OpenMailGUI panelAdd;
+		//	OpenMailGUI panelAdd= new OpenMailGUI(loginController.use.getUsername(),"Editor");
 			
 			JTextPane txtpnFds = new JTextPane();
-			txtpnFds.setEditable(false);
+			txtpnFds.setEditable(true);
 			txtpnFds.setText(text);
 			txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
 			txtpnFds.setBounds(206, 252, 439, 228);
+			txtpnFds.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 			add(txtpnFds);
 			
-			/** Button 'back' **/
-			/**button Back */
+			//System.out.println("text is="+txtpnFds.getText());
+			
+			/// button Approve
+			JButton btnApprove = new JButton("Approve");
+			btnApprove.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btnApprove.setBounds(845, 238, 131, 23);
+			add(btnApprove);
+			btnApprove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					
+					if(row != -1){
+						String bTitle = new String( table.getValueAt(row, 0).toString());
+						String uName= new String( table.getValueAt(row, 3).toString());
+						//row = -1;
+						reviewController.ApproveReview(bTitle,uName);
+					}
+				}
+			});
+
+			
+			// Button for Reject //
+			JButton btnReject = new JButton("Reject");
+			btnReject.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btnReject.setBounds(844, 296, 131, 23);
+			add(btnReject);
+			btnReject.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(row != -1){
+						String bTitle = new String( table.getValueAt(row, 0).toString());
+						String uName= new String( table.getValueAt(row, 3).toString());
+						reviewController.removeReview(bTitle,uName);
+					}
+					
+				}
+				
+			});
+			
+			// Button for edit //
+			JButton btnEdit = new JButton("Edit");
+			btnEdit.setFont(new Font("Tahoma", Font.BOLD, 12));
+			btnEdit.setBounds(844, 354, 131, 23);
+			add(btnEdit);
+			btnEdit.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(row != -1){
+					
+						String bTitle = new String( table.getValueAt(row, 0).toString());
+						String uName= new String( table.getValueAt(row, 3).toString());
+						reviewController.editReview(bTitle,uName,txtpnFds.getText());
+					}
+					
+				}
+			});
+			
+			//  button Back 
 			JButton btnBack = new JButton("Back");
 			btnBack.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
@@ -261,6 +324,7 @@ public class OpenMailGUI extends mainPanel {
 					reviewController.openMailScreen();
 				}
 			});
+			btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnBack.setBounds(374, 596, 131, 23);
 			add(btnBack);
 			

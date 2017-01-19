@@ -28,7 +28,7 @@ import ocsf.server.*;
  * @author Paul Holden
  * @version July 2000
  */
-public class IBookServer extends AbstractServer 
+public  class IBookServer extends AbstractServer 
 {
   //Class variables *************************************************
   
@@ -45,7 +45,7 @@ public class IBookServer extends AbstractServer
   /**
    * Constructs an instance of the echo server.
    *
-   * @param port The port number to connect on.
+   * @param port int The port number to connect on.
    */
   public IBookServer(int port) 
   {
@@ -62,14 +62,11 @@ public class IBookServer extends AbstractServer
    * @param msg The message received from the client.
    * @param client The connection from which the message originated.
    */
-  public void handleMessageFromClient
+  public synchronized void handleMessageFromClient
   (Object msg, ConnectionToClient client)
   {
-	  
-	  	//ResultSet queryAns;
-	   // System.out.println("Message received: " + msg + " from " + client);
-	    String query = msg.toString();
-	    if(query.contains("select"))
+	   String   query = msg.toString();
+	   if(query.contains("select") || query.contains("SELECT"))
 	    {
 	    	ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
 		    ArrayList<String> result1 = null;
@@ -103,8 +100,8 @@ public class IBookServer extends AbstractServer
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-	    }
-	    else
+	    }  
+	    else if(query.contains("insert") || query.contains("delete") || query.contains("update") || query.contains("INSERT") || query.contains("DELETE") || query.contains("UPDATE"))
 	    {
 	    	ArrayList<String> result1 = null;
 	    	ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
@@ -115,7 +112,37 @@ public class IBookServer extends AbstractServer
 				e.printStackTrace();
 			}
 	    }
-	    
+	   /* else
+	    {
+	    	File file = new File("M:\\test.xml");
+	        // Get the size of the file
+	    	 InputStream in;
+			try {
+				in = new FileInputStream(file);
+
+	    	 OutputStream out = null;
+	    	try {
+	    		
+	            out = new FileOutputStream("M:\\test2.xml");
+	        } catch (FileNotFoundException ex) {
+	            System.out.println("File not found. ");
+	        }
+
+	        byte[] bytes = new byte[16*1024];
+
+	        int count;
+				while ((count = in.read(bytes)) > 0) {
+				    out.write(bytes, 0, count);
+				}
+
+
+			in.close();
+	        out.close();
+	    }	catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	    }*/
 	  }
   
   

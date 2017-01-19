@@ -242,35 +242,59 @@ public class reviewController {
 		updateVis = DBController.getFromDB("UPDATE reviews r SET visible=1 "
 				+ "WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
 		
-		OpenMailGUI.infoBox("Review was approved!", "book");
+		// message for approval
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was approved", "Approval confirmation");
+		// return to the review's table screen
+		reviewController.openMailScreen();
 		
-
-
-
-		//info = DBController.getFromDB("select reviews.text from reviews , book"
-		//		+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bName+"'");
-
-		/*reviewGUI review = null;
-		if(loginController.use.getprivilege() == 1)
-			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
-		
-		if(loginController.use.getprivilege() == 3)
-			review = new reviewGUI(loginController.use.getUsername(),"Editor");
-		
-		else
-			review = new reviewGUI(loginController.use.getUsername(),"Reader");
-		
-		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
-		loginController.mainG.setContentPane(review);
-		loginController.mainG.revalidate();
-		*/	
-	//	UPDATE `ibookdb`.`reviews` SET `visible`='1' WHERE `reviewid`='1';
 
 	
 	}
-	public void removeReview() {
-		// TODO - implement reviewController.removeReview
-		throw new UnsupportedOperationException();
+	// removed review the 'rejected button' pressed
+
+	public static void removeReview(String bTitle,String uName) {
+		ArrayList <String> info = null;
+		ArrayList <String> deleteReview = null;
+		int bookId=0;
+		
+		info = DBController.getFromDB("select  r.BookID "+
+		"from book b, reviews r "+
+		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
+		System.out.println(info.get(0));
+		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
+		
+		deleteReview = DBController.getFromDB("DELETE FROM reviews"
+				+" WHERE reviews.BookID="+bookId+" and reviews.username='"+uName+"' and reviews.visible=0");
+		// Message for rejected
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was deleted", "Reject confirmation");
+		reviewController.openMailScreen();
+		
+		
+		
+	}
+	
+	public static void editReview(String bTitle,String uName,String text) {
+	
+		ArrayList <String> info = null;
+		ArrayList <String> editDisplayReview = null;
+		int bookId=0;
+		
+		
+		info = DBController.getFromDB("select  r.BookID "+
+		"from book b, reviews r "+
+		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
+		System.out.println(info.get(0));
+		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
+		
+		// Edit review text
+		editDisplayReview = DBController.getFromDB("UPDATE ibook.reviews r SET r.text='"+text+
+				"' WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
+		System.out.println(editDisplayReview.get(0));
+		
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was edited successfully", "Edit Confirmation");
+		//reviewController.openMailScreen();
+	
+	
 	}
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails

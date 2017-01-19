@@ -2,14 +2,35 @@ package boundry;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
+
+import controller.bookController;
+import controller.userController;
 
 public class managerGUI extends GWorkerGUI {
 	public managerGUI( String name , String role) {
 		
 		super(name,role);
+		JButton btnRaports = new JButton("Raports");
+		btnRaports.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnRaports.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				userController.showReportsMain();
+			}
+		});
+
+		btnRaports.setBounds(396, 551,155, 27);
+		add(btnRaports);
 		
+		JLabel imgReports;
+		imgReports = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/reports.png")));
+		imgReports.setBounds(407, 412, 128, 128);
+		add(imgReports);
 
 	}
 
