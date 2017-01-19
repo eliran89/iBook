@@ -22,6 +22,7 @@ import entity.Book;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 
 import java.awt.event.ActionListener;
@@ -322,7 +323,7 @@ public class userBookGUI extends mainPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				
 				String ID = (String) table.getValueAt(row, 3);
-				readerGUI.displayPurchase();
+				//readerGUI.displayPurchase();
 				bookController.chooseBook(ID);
 			}
 		});
@@ -480,6 +481,23 @@ public class userBookGUI extends mainPanel {
 		add(TFScope);
 		TFScope.setColumns(10);
 		
+		JLabel lblChooseFormatTo = new JLabel("Choose format to Download:");
+		lblChooseFormatTo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblChooseFormatTo.setFont(new Font("Tahoma", Font.BOLD , 14));
+		lblChooseFormatTo.setBounds(269, 404, 228, 23);
+		add(lblChooseFormatTo);
+		
+		JComboBox formatBox = new JComboBox();	//a combo box which will allow the reader to choose a format to download
+		formatBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
+		formatBox.addItem("PDF");	//PDF format
+		formatBox.addItem("fb2");	//fb2 format
+		formatBox.addItem("DOC");	//doc format
+		formatBox.setBounds(589, 407, 89, 20);
+		
+		if(loginController.use.getprivilege() == 2)
+			add(formatBox);
+		
+		
 		
 		JButton btnOrderTheBook = new JButton("Order The Book");
 		btnOrderTheBook.setBackground(Color.GREEN);
@@ -490,10 +508,25 @@ public class userBookGUI extends mainPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				//TODO - implement book ordering
 				
-				String title = lblBookTitle.getText(); 
+				String username = loginController.use.getUsername();
+				String title = lblBookTitle.getText();
+				String format = formatBox.getSelectedItem().toString();	//save the requested format to download
+				System.out.println(format);
 				
-				//System.out.println("title: "+title);
-				userController.addBookToOrderList(title);
+				
+				/*mainPanel orders = new mainPanel(username, role);
+				
+				JLabel lblBookName = new JLabel(title);
+				lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
+				lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
+				lblBookName.setBounds(421, 197, 144, 23);
+				orders.add(lblBookName);
+				
+				loginController.mainG.setContentPane(orders);
+				loginController.mainG.revalidate();*/
+				
+				
+				//userController.addBookToOrderList(title);
 			}
 		});
 		add(btnOrderTheBook);

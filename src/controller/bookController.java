@@ -522,4 +522,23 @@ public class bookController {
 			}
 	*/	
 	}
+	/**
+	 * findUsersOrders - method.
+	 * The method finds all the books ordered by a reader 
+	 * @param user - String, a username
+	 */
+
+	public static void findUsersOrders(String user) {
+		// TODO Auto-generated method stub
+		
+		ArrayList<String> orders = new ArrayList<String>();
+		
+		orders = DBController.getFromDB("select b.Title, ro.date "
+						+"from book b, reader r, readerorder ro "
+						+"where r.username like '%" +user+"'% " 
+						+	   "r.userID = ro.userID and "
+						+	   "b.bookID = ro.bookID");
+		
+		System.out.println(orders.toString());
+	}
 }
