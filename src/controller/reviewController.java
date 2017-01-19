@@ -242,8 +242,8 @@ public class reviewController {
 		updateVis = DBController.getFromDB("UPDATE reviews r SET visible=1 "
 				+ "WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
 		
-		
-		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was approved!", "book");
+		// message for approval
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was approved", "Approval confirmation");
 		// return to the review's table screen
 		reviewController.openMailScreen();
 		
@@ -265,19 +265,20 @@ public class reviewController {
 		
 		deleteReview = DBController.getFromDB("DELETE FROM reviews"
 				+" WHERE reviews.BookID="+bookId+" and reviews.username='"+uName+"' and reviews.visible=0");
-		
-		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was deleted", "book");
+		// Message for rejected
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was deleted", "Reject confirmation");
 		reviewController.openMailScreen();
 		
 		
 		
 	}
 	
-	public static void editReview(String bTitle,String uName) {
+	public static void editReview(String bTitle,String uName,String text) {
 	
 		ArrayList <String> info = null;
-		ArrayList <String> deleteReview = null;
+		ArrayList <String> editDisplayReview = null;
 		int bookId=0;
+		
 		
 		info = DBController.getFromDB("select  r.BookID "+
 		"from book b, reviews r "+
@@ -285,9 +286,13 @@ public class reviewController {
 		System.out.println(info.get(0));
 		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
 		
+		// Edit review text
+		editDisplayReview = DBController.getFromDB("UPDATE ibook.reviews r SET r.text='"+text+
+				"' WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
+		System.out.println(editDisplayReview.get(0));
 		
-		reviewController.openMailScreen();
-	
+		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was edited successfully", "Edit Confirmation");
+		//reviewController.openMailScreen();
 	
 	
 	}
