@@ -33,7 +33,7 @@ public class editorGUI extends mainPanel {
 		/** main screen buttons and labels  **/
 		
 		
-		btnLogout.setBounds(10, 11, 89, 16);
+		//btnLogout.setBounds(10, 11, 89, 16);
 		
 		setForeground(Color.WHITE);
 		JLabel lblWelcomToIbook = new JLabel("Welcome To IBook");

@@ -3,6 +3,14 @@ package controller;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
+
 import java.awt.Color;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
@@ -13,14 +21,7 @@ import javax.swing.JFrame;
 
 import boundry.*;
 import entity.*;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.ChartFrame;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.ChartFactory;
-import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
+
 
 
 
@@ -494,27 +495,76 @@ public class userController {
 	 * 
 	 * @param bid
 	 */
-	public static void displaySearchReport(String bid){
-		ArrayList<String> info = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
-		int bookCnt = Integer.parseInt(info.get(0));
+	public static void displaySearchReport(String bid,String bName){
+		ArrayList<String> specBook = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
+		ArrayList<String> info;
+		int bookCnt = Integer.parseInt(specBook.get(0));
 		info = DBController.getFromDB("select  book.numOfSearches cnt from book order by cnt;");
+		if(info.equals(specBook))
+			info = DBController.getFromDB("select  book.numOfSearches cnt from book order by cnt;");
 		
-		JFrame frame;
 		
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
-		panel.setLayout(null);
+		  String median = "median";
+	      String highest = "Highest";
+	      String lowest = "Lowest";
+	      String type = "Book Type";
+	      int low =Integer.parseInt(info.get(0));
+	      int high =Integer.parseInt(info.get(info.size()-1));
+	      int med = Integer.parseInt(info.get(info.size()/2));
+
+	      final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+
+
+	      dataset.addValue( low , lowest , type );
+
+	      dataset.addValue( med , median , type );
+
+	      dataset.addValue(high  ,highest  , type );
+	      
+	      dataset.addValue( bookCnt , bName , type );
+	              
+	      //int width = 640; /* Width of the image */
+	     // int height = 480; /* Height of the image */ 
+		/* double[] data = new double[info.size()];
+		 System.out.println("info is: "+info);
+	        for(int p = 0; p < info.size();p++)
+	             data[p] = Integer.parseInt(info.get(p));
+
+
+	        int number = data.length;
+	        HistogramDataset dataset = new HistogramDataset();
+	        dataset.setType(HistogramType.FREQUENCY);
+	        dataset.addSeries("Hist",data,200); // Number of bins is 50
+	        String xAxis = "Frequency";
+	        String yAxis = "Mass Error (Da)";
+	        PlotOrientation orientation = PlotOrientation.VERTICAL;
+
+	        boolean show = false;
+	        boolean toolTips = false;
+	        boolean urls = false;
+	        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Book", "Number Of Searches",dataset, orientation, show, toolTips, urls);
+	                
+
+	        chart.setBackgroundPaint(Color.white);*/
+
+	      JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
+	    	                   	    	                     	    	                 	    	                	    	                  	    	        
+	        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+	        frame.setVisible(true);
+	        frame.setSize(700, 600);
+	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 	}
-	public static void displaySearchReportByScope(String scope , String bid){
-		//select  book.numOfSearches cnt from book order by cnt;
-		//select book.numOfSearches cnt from book,bscope where   bscope.scopeName = 'Fantasy' and bscope.bookID = book.bookID
+	public static void displayOrderRankByScope(String scope , String bid){
 		ArrayList<String> info = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
 		int bookCnt = Integer.parseInt(info.get(0));
 		
 		
 	}
-	public static void displayOrdersReport(){
+	public static void displayOrderRank( String bid){
+		
+	}
+	public static void displayOrdersReport(String bid){
 		
 		//DefaultCategoryDataset set = new DefaultCategoryDataset();
 		

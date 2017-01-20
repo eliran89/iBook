@@ -60,7 +60,19 @@ public class ReportsGUI extends mainPanel {
 		add(btnMainWindow);
 		
 		
-			
+		JButton btnChoose = new JButton("Choose");
+		btnChoose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnChoose.setBounds(527, 500, 89, 23);
+		add(btnChoose);
+		
+		JLabel label = new JLabel("<dynamic>");
+		label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBounds(656, 500, 138, 23);
+		add(label);
 
 		/*JTable table = new JTable();
 		table.setForeground(Color.BLUE);
@@ -482,64 +494,6 @@ public class ReportsGUI extends mainPanel {
 	 */
 	public void chooseBy(String bookName, String ID , ArrayList<String> scopes){
 		
-		JComboBox comboBoxScope = new JComboBox();
-		comboBoxScope.setBounds(185, 470, 204, 23);
-		add(comboBoxScope);
-		comboBoxScope.addItem("All Scopes");
-		for(int i = 0 ; i < scopes.size() ; i++)
-			comboBoxScope.addItem(scopes.get(i));
-		
-		JLabel lblBy = new JLabel("By :");
-		lblBy.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblBy.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblBy.setBounds(118, 468, 46, 23);
-		add(lblBy);
-		
-		JLabel lblDate_2 = new JLabel("Date :");
-		lblDate_2.setHorizontalAlignment(SwingConstants.TRAILING);
-		lblDate_2.setFont(new Font("Tahoma", Font.BOLD, 15));
-		lblDate_2.setBounds(508, 468, 46, 23);
-		add(lblDate_2);
-		
-		textFieldDay = new JTextField();
-		textFieldDay.setBounds(564, 471, 29, 20);
-		add(textFieldDay);
-		textFieldDay.setColumns(10);
-		
-		textFieldYear = new JTextField();
-		textFieldYear.setColumns(10);
-		textFieldYear.setBounds(603, 471, 29, 20);
-		add(textFieldYear);
-		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(642, 471, 54, 20);
-		add(textField_2);
-		
-		JLabel label = new JLabel("-");
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBounds(583, 474, 29, 14);
-		add(label);
-		
-		JLabel label_1 = new JLabel("-");
-		label_1.setHorizontalAlignment(SwingConstants.CENTER);
-		label_1.setBounds(622, 474, 29, 14);
-		add(label_1);
-		
-		JLabel lblMm = new JLabel("MM");
-		lblMm.setHorizontalAlignment(SwingConstants.CENTER);
-		lblMm.setBounds(603, 455, 29, 14);
-		add(lblMm);
-		
-		JLabel lblDd = new JLabel("DD");
-		lblDd.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDd.setBounds(564, 455, 29, 14);
-		add(lblDd);
-		
-		JLabel lblYear = new JLabel("Year");
-		lblYear.setHorizontalAlignment(SwingConstants.CENTER);
-		lblYear.setBounds(651, 455, 29, 14);
-		add(lblYear);
 		
 		JLabel imgOrders;
 		imgOrders = new JLabel(new ImageIcon(editorGUI.class.getResource("/boundry/orders.png")));
@@ -578,22 +532,48 @@ public class ReportsGUI extends mainPanel {
 		imgSearches.setBounds(169, 258, 247, 162);
 		add(imgSearches);
 		
+		JComboBox comboBoxScope = new JComboBox();
+		comboBoxScope.setBounds(297, 500, 204, 23);
+		add(comboBoxScope);
+		comboBoxScope.addItem("All Scopes");
+		for(int i = 0 ; i < scopes.size() ; i++)
+			comboBoxScope.addItem(scopes.get(i));
+		
 		JButton btnBySearches = new JButton("By Searches");
 		btnBySearches.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnBySearches.setBounds(180, 421, 211, 27);
 		btnBySearches.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String scopeName = (String) comboBoxScope.getSelectedItem();
-				if(scopeName.equals("All Scopes"))
-					userController.displaySearchReport(ID);
-				else
-					
-					userController.displaySearchReportByScope(scopeName,ID);
+					userController.displaySearchReport(ID,bookName);
 				
 			}
 		});
-		add(btnByOrders);
+
+		
+		
+		JLabel lblBy = new JLabel("Rank By :");
+		lblBy.setFont(new Font("Tahoma", Font.BOLD, 15));
+		lblBy.setHorizontalAlignment(SwingConstants.TRAILING);
+		lblBy.setBounds(193, 498, 83, 23);
+		add(lblBy);
+		
+		JButton btnChoose = new JButton("Choose");
+		btnChoose.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+			}
+		});
+		btnChoose.setBounds(527, 500, 89, 23);
+		add(btnChoose);
+		
 		add(btnBySearches);
 		
+	}
+	public void displayRank(String rank){
+		
+		JLabel label = new JLabel("Rank is: "+rank);
+		label.setFont(new Font("Tahoma", Font.BOLD, 14));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setBounds(656, 500, 138, 23);
+		add(label);
 	}
 }

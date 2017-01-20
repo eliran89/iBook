@@ -297,11 +297,15 @@ public class userBookGUI extends mainPanel {
 		table.setBounds(181, 376, 583, 191);
 		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		table.setPreferredScrollableViewportSize(new Dimension(17,191));
+		table.setFillsViewportHeight(true);
 		
 		
 		/*Scroll Pane*/
 		JScrollPane pane = new JScrollPane(table);
-		add(table);
+		pane.setVisible(true);
+		pane.setBounds(764, 376, 17, 191); 
+		add(pane);
+		//add(table);
 		
 		JLabel lblScope_1 = new JLabel("Scope");
 		lblScope_1.setFont(new Font("Tahoma", Font.BOLD, 16));

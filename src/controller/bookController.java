@@ -61,9 +61,9 @@ public class bookController {
 		info =DBController.getFromDB("select max(book.bookID) from book");
 		bNewID = Integer.parseInt(info.get(0))+1;
 		if(book.isSuspended())
-			DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`, `numOfSearches`, `numOfOrders`, `absoluteRank`, `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"', '0', '0', '0', '"+book.getCost()+"', 1);");
+			DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`, `numOfOrders`,  `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"', '0',  '"+book.getCost()+"', 1);");
 		else
-			DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`, `numOfSearches`, `numOfOrders`, `absoluteRank`, `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"', '0', '0', '0', '"+book.getCost()+"', 0);");
+			DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`,  `numOfOrders`,  `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"',  '0',  '"+book.getCost()+"', 0);");
 		temp = book.getAuthors();
 		for(int i = 0;i < temp.size();i++){
 			
@@ -307,7 +307,7 @@ public class bookController {
 			panel = new workerBookGUI(loginController.use.getUsername(),"Manager");
 		
 		try {
-			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `numOfSearches`=`numOfSearches`+1 WHERE `bookID`='"+bid+"'");
+			DBController.insertToDB("INSERT INTO `ibookdb`.`searches`(`bookID`,`date`)VALUES("+bid+",now());");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

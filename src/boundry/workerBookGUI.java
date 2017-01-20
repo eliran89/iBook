@@ -342,7 +342,7 @@ public class workerBookGUI extends userBookGUI {
 				
 				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0)
 					toContinue = false;
-				if(costi > 0)
+				if(costi < 0)
 				{
 					errorBox("cost must be a number at least 0","cost");
 					toContinue = false;
