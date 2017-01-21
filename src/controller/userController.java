@@ -389,7 +389,7 @@ public class userController {
 		ArrayList<String> unameInDB = null;
 		
 		/**get ID if exists*/
-			idInDB = DBController.getFromDB("select i.userID from interestedreader i where i.userID = '"+idstr+"'");
+			idInDB = DBController.getFromDB("select i.userID from interestedreader i where i.userID = '"+ID+"'");
 			if(idInDB != null){
 				//System.out.println("ID " +idInDB.toString()+ " is already exists !");
 				UserSearchGUI.errorBox("ID "+idInDB.toString()+" is already exists!\nPlease pick another one", "Add User");
@@ -397,7 +397,7 @@ public class userController {
 		/**get user name if exists*/
 			else
 			{
-				unameInDB = DBController.getFromDB("select u.username from ibookdb.user u where u.username = '"+uname+"'");
+				unameInDB = DBController.getFromDB("select u.username from ibookdb.user u where u.username = '"+uName+"'");
 				if(unameInDB != null)
 					UserSearchGUI.errorBox("User "+unameInDB.toString()+" is already exists!\nPlease pick another one", "Add User");	
 				/**getting here means user entered a unique user name and ID as needed*/
@@ -422,7 +422,6 @@ public class userController {
 				}
 			}
 	}
-	
 	
 	public void checkOrderDetails() {
 		// TODO - implement userController.checkOrderDetails
