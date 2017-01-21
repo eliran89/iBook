@@ -158,13 +158,15 @@ public class UserSearchGUI extends mainPanel{
 		table.setForeground(Color.BLUE);
 		table.setBackground(Color.WHITE);
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.setBounds(79, 230, 687, 325);
+		//table.setBounds(79, 230, 687, 325);
 		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		table.setPreferredScrollableViewportSize(new Dimension(17,325));
+		table.setPreferredScrollableViewportSize(new Dimension(687,325));
+		table.setFillsViewportHeight(true);
 		
 		/* Scroll Pane */
 		JScrollPane pane = new JScrollPane(table);
-		add(table);
+		pane.setBounds(79, 230, 687, 325);
+		add(pane);
 		
 		JLabel lblUserID = DefaultComponentFactory.getInstance().createTitle("User ID");
 		lblUserID.setFont(new Font("Tahoma", Font.BOLD, 12));
