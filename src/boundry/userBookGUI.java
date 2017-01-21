@@ -18,6 +18,7 @@ import controller.bookController;
 import controller.loginController;
 import controller.userController;
 import entity.Book;
+import javafx.scene.layout.Pane;
 
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
@@ -29,6 +30,7 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class userBookGUI extends mainPanel {
@@ -294,20 +296,18 @@ public class userBookGUI extends mainPanel {
 		//table.setForeground(Color.BLUE);
 		table.setBackground(Color.WHITE);
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.setBounds(181, 376, 583, 191);
 		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		table.setPreferredScrollableViewportSize(new Dimension(17,191));
+		table.setPreferredScrollableViewportSize(new Dimension(583,191));
 		table.setFillsViewportHeight(true);
 		
 		
 		/*Scroll Pane*/
-		JScrollPane pane = new JScrollPane(table);
-		pane.setVisible(true);
-		pane.setBounds(764, 376, 17, 191); 
+		JScrollPane pane = new JScrollPane(table);//add table to scroll bar
+		pane.setBounds(181, 376, 583, 191);//set table dimention
 		add(pane);
-		//add(table);
 		
-		JLabel lblScope_1 = new JLabel("Scope");
+		
+		/*JLabel lblScope_1 = new JLabel("Scope");
 		lblScope_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblScope_1.setForeground(Color.BLACK);
 		lblScope_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -333,7 +333,7 @@ public class userBookGUI extends mainPanel {
 		lblIndex.setForeground(Color.BLACK);
 		lblIndex.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblIndex.setBounds(630, 342, 111, 23);
-		add(lblIndex);
+		add(lblIndex);*/
 		
 		JButton btnDisplayBook = new JButton("Display Book");
 		btnDisplayBook.addActionListener(new ActionListener() {

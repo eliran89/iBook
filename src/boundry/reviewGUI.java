@@ -159,16 +159,16 @@ public class reviewGUI extends mainPanel {
 			//table.setForeground(Color.BLUE);
 			table.setBackground(Color.WHITE);
 			table.setFont(new Font("Arial", Font.PLAIN, 12));
-			table.setBounds(79, 230, 687, 325);
 			table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-			table.setPreferredScrollableViewportSize(new Dimension(17,325));
+			table.setPreferredScrollableViewportSize(new Dimension(687,325));
 
 			/*Scroll Pane*/
 			JScrollPane pane = new JScrollPane(table);
-			add(table);
+			pane.setBounds(79, 230, 687, 325);
+			add(pane);
 			
 			/**/
-			JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
+			/*JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
 			lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblBookName.setForeground(Color.BLACK);
 			lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
@@ -176,20 +176,20 @@ public class reviewGUI extends mainPanel {
 			add(lblBookName);
 			
 			/**/
-			JLabel lblReviewName = DefaultComponentFactory.getInstance().createLabel("Review Name");
+			/*JLabel lblReviewName = DefaultComponentFactory.getInstance().createLabel("Review Name");
 			lblReviewName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblReviewName.setForeground(Color.BLACK);
 			lblReviewName.setBounds(329, 196, 186, 32);
 			add(lblReviewName);
 			
-			/**/
+			
 			JLabel lblReviewer = DefaultComponentFactory.getInstance().createLabel("Reviewer");
 			lblReviewer.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblReviewer.setHorizontalAlignment(SwingConstants.CENTER);
 			lblReviewer.setForeground(Color.BLACK);
 			lblReviewer.setBounds(577, 198, 179, 29);
-			add(lblReviewer);
+			add(lblReviewer);*/
 			
 			JButton btnDisplayReview = new JButton("Display Review");
 			btnDisplayReview.setBounds(374, 596, 131, 23);
