@@ -60,7 +60,7 @@ public class ReportsGUI extends mainPanel {
 		add(btnMainWindow);
 		
 		
-		JButton btnChoose = new JButton("Choose");
+		/*JButton btnChoose = new JButton("Choose");
 		btnChoose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -72,7 +72,7 @@ public class ReportsGUI extends mainPanel {
 		label.setFont(new Font("Tahoma", Font.BOLD, 14));
 		label.setHorizontalAlignment(SwingConstants.CENTER);
 		label.setBounds(656, 500, 138, 23);
-		add(label);
+		add(label);*/
 
 		/*JTable table = new JTable();
 		table.setForeground(Color.BLUE);
@@ -173,13 +173,13 @@ public class ReportsGUI extends mainPanel {
 		table.setForeground(Color.BLUE);
 		table.setBackground(Color.WHITE);
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.setBounds(79, 230, 687, 325);
 		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		table.setPreferredScrollableViewportSize(new Dimension(17,325));
+		table.setPreferredScrollableViewportSize(new Dimension(687,325));
 		
 		/* Scroll Pane */
 		JScrollPane pane = new JScrollPane(table);
-		add(table);
+		pane.setBounds(79, 230, 687, 325);
+		add(pane);
 		
 		JButton btnBackToSearch = new JButton("Back To Search");
 		btnBackToSearch.addActionListener(new ActionListener() {
@@ -190,55 +190,7 @@ public class ReportsGUI extends mainPanel {
 		btnBackToSearch.setBounds(330, 583, 154, 23);
 		add(btnBackToSearch);
 	}
-	/**
-	 * singleUser - if the manager wants to see a certain user's orders
-	 * this method is opened with a certain labels
-	 * @param username String
-	 */
-	public void singleUser(String username){
-		JLabel lblBookName = new JLabel("Book Name");
-		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookName.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblBookName.setBounds(185, 196, 101, 23);
-		add(lblBookName);
-		
-		JLabel lblDate = new JLabel("Date");
-		lblDate.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDate.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblDate.setBounds(534, 196, 101, 23);
-		add(lblDate);
-		
-		JLabel lblsOrderList = new JLabel(username+"'s Order List");
-		lblsOrderList.setHorizontalAlignment(SwingConstants.CENTER);
-		lblsOrderList.setForeground(Color.RED);
-		lblsOrderList.setFont(new Font("Segoe UI Symbol", Font.BOLD, 14));
-		lblsOrderList.setBounds(300, 160, 229, 23);
-		add(lblsOrderList);
-	}
-	/**
-	 * allUsrers - if the manager wants to see all the orders in the DB
-	 * it opens this method that shows a special labels
-	 */
-	public void allUsrers(){
-		
-		JLabel lblBookName_1 = new JLabel("Book Name");
-		lblBookName_1.setFont(new Font("Segoe UI Black", Font.BOLD, 14));
-		lblBookName_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookName_1.setBounds(377, 196, 109, 23);
-		add(lblBookName_1);
-		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsername.setFont(new Font("Segoe UI Black", Font.BOLD, 14));
-		lblUsername.setBounds(144, 196, 109, 23);
-		add(lblUsername);
-		
-		JLabel lblDate_1 = new JLabel("Date");
-		lblDate_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDate_1.setFont(new Font("Segoe UI Black", Font.BOLD, 14));
-		lblDate_1.setBounds(580, 196, 109, 23);
-		add(lblDate_1);
-	}
+
 	/**
 	 * noReadersif there are no orders in the DataBase
 	 * display a lable with "no orders"
@@ -424,16 +376,16 @@ public class ReportsGUI extends mainPanel {
 		//table.setForeground(Color.BLUE);
 		table.setBackground(Color.WHITE);
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.setBounds(181, 376, 583, 191);
 		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		table.setPreferredScrollableViewportSize(new Dimension(17,191));
+		table.setPreferredScrollableViewportSize(new Dimension(583,191));
 		
 		
 		/*Scroll Pane*/
 		JScrollPane pane = new JScrollPane(table);
-		add(table);
+		pane.setBounds(181, 376, 583, 191);
+		add(pane);
 		
-		JLabel lblScope_1 = new JLabel("Scope");
+		/*JLabel lblScope_1 = new JLabel("Scope");
 		lblScope_1.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblScope_1.setForeground(Color.BLACK);
 		lblScope_1.setHorizontalAlignment(SwingConstants.CENTER);
@@ -459,7 +411,7 @@ public class ReportsGUI extends mainPanel {
 		lblIndex.setForeground(Color.BLACK);
 		lblIndex.setFont(new Font("Tahoma", Font.BOLD, 16));
 		lblIndex.setBounds(630, 342, 111, 23);
-		add(lblIndex);
+		add(lblIndex);*/
 		
 
 		JButton btnDisplayBookStatistics = new JButton("Display Book Statistics");
@@ -560,6 +512,12 @@ public class ReportsGUI extends mainPanel {
 		JButton btnChoose = new JButton("Choose");
 		btnChoose.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				String scope = (String)comboBoxScope.getSelectedItem();
+				if(scope.equals("All Scopes"))
+					userController.displayOrderRank(ID ,scopes,bookName);
+				else
+					userController.displayOrderRankByScope(scope, ID, bookName, scopes);
+					
 			}
 		});
 		btnChoose.setBounds(527, 500, 89, 23);

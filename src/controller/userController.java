@@ -520,7 +520,6 @@ public class userController {
 			ReportsGUI.columnHeader1[0] = "username";
 			ReportsGUI.columnHeader1[1] = "bookName";
 			ReportsGUI.columnHeader1[2] = "date";
-			panel.allUsrers();
 			panel.displayUsersReport();
 			
 		}
@@ -565,7 +564,6 @@ public class userController {
 			ReportsGUI.columnHeader1[0] = "bookName";
 			ReportsGUI.columnHeader1[1] = "date";
 			panel.displayUsersReport();
-			panel.singleUser(username);
 			
 		}
 		
@@ -588,73 +586,101 @@ public class userController {
 	 * @param bid
 	 */
 	public static void displaySearchReport(String bid,String bName){
-		ArrayList<String> specBook = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
-		ArrayList<String> info;
-		int bookCnt = Integer.parseInt(specBook.get(0));
-		info = DBController.getFromDB("select  book.numOfSearches cnt from book order by cnt;");
-		if(info.equals(specBook))
-			info = DBController.getFromDB("select  book.numOfSearches cnt from book order by cnt;");
+		ArrayList<String> info = DBController.getFromDB("select searches.date from searches where searches.bookID = "+bid);
 		
-		
-		  String median = "median";
-	      String highest = "Highest";
-	      String lowest = "Lowest";
-	      String type = "Book Type";
-	      int low =Integer.parseInt(info.get(0));
-	      int high =Integer.parseInt(info.get(info.size()-1));
-	      int med = Integer.parseInt(info.get(info.size()/2));
-
-	      final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
-
-
-	      dataset.addValue( low , lowest , type );
-
-	      dataset.addValue( med , median , type );
-
-	      dataset.addValue(high  ,highest  , type );
-	      
-	      dataset.addValue( bookCnt , bName , type );
-	              
-	      //int width = 640; /* Width of the image */
-	     // int height = 480; /* Height of the image */ 
-		/* double[] data = new double[info.size()];
+		 
+	      int width = 640; /* Width of the image */
+	      int height = 480; /* Height of the image */
+	      double[] data;
+	      int size;
+	      if(info != null) 
+	    	  size = info.size();
+	      else
+	    	  size = 0;
+	      data = new double[size];
 		 System.out.println("info is: "+info);
-	        for(int p = 0; p < info.size();p++)
-	             data[p] = Integer.parseInt(info.get(p));
-
-
-	        int number = data.length;
-	        HistogramDataset dataset = new HistogramDataset();
-	        dataset.setType(HistogramType.FREQUENCY);
-	        dataset.addSeries("Hist",data,200); // Number of bins is 50
-	        String xAxis = "Frequency";
-	        String yAxis = "Mass Error (Da)";
-	        PlotOrientation orientation = PlotOrientation.VERTICAL;
-
-	        boolean show = false;
-	        boolean toolTips = false;
-	        boolean urls = false;
-	        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Book", "Number Of Searches",dataset, orientation, show, toolTips, urls);
-	                
-
-	        chart.setBackgroundPaint(Color.white);*/
-
-	      JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
-	    	                   	    	                     	    	                 	    	                	    	                  	    	        
-	        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
-	        frame.setVisible(true);
-	        frame.setSize(700, 600);
+	        for(int p = 0; p < size;p++){
+	        	String date = info.get(p).substring(2, 4)+"."+info.get(p).substring(5, 7);
+	        	System.out.println(date);
+	        	
+	             data[p] = Float.parseFloat(date);
+	             System.out.println(data[p]);
+	        }
+	        if(info != null){
+		        int number = data.length;
+		        HistogramDataset dataset = new HistogramDataset();
+		        dataset.setType(HistogramType.FREQUENCY);
+		        dataset.addSeries("Book",data,40); // Number of bins is 50
+		        PlotOrientation orientation = PlotOrientation.VERTICAL;
+	
+		        boolean show = false;
+		        boolean toolTips = false;
+		        boolean urls = false;
+		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Year.Month", "Number Of Searches",dataset, orientation, show, toolTips, urls);
+		                
+	
+		        chart.setBackgroundPaint(Color.white);
+	
+		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
+		    	                   	    	                     	    	                 	    	                	    	                  	    	        
+		        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+		        frame.setVisible(true);
+		        frame.setSize(700, 600);
+	        }
+	        else
+	        	mainPanel.infoBox("No searches", "Report");
 	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 	}
-	public static void displayOrderRankByScope(String scope , String bid){
-		ArrayList<String> info = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
-		int bookCnt = Integer.parseInt(info.get(0));
+	public static void displayOrderRankByScope(String scope , String bid , String bookName,ArrayList<String> scopes){
+		ArrayList<String> info = DBController.getFromDB("select count(readerorder.userID) cnt,book.bookID"
+														+" from book,readerorder ,bscope where readerorder.bookID = book.bookID and book.bookID = bscope.bookID and bscope.scopeName = '"+scope+"' "
+														+" group by book.bookID"
+														+" order by cnt");
+		int rank = 1;
+		if(info != null){
+			int i = info.size()-2;
+			while(i>0 && !bid.equals(info.get(i+1)))
+			{
+				System.out.println("i is : "+i);
+				if(i>0 && Integer.parseInt(info.get(i))>Integer.parseInt(info.get(i-2)))
+				rank++;
+				i-=2;
+			}
+			if(i == 0)
+				rank ++;
+		}
+		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");	
+		panel.chooseBy(bookName, bid, scopes);
+		panel.displayRank(Integer.toString(rank));
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
 		
 		
 	}
-	public static void displayOrderRank( String bid){
-		
+	public static void displayOrderRank( String bid , ArrayList<String> scopes,String bookName){
+		ArrayList<String> info = DBController.getFromDB("select count(readerorder.userID) cnt,book.bookID"
+														+" from book,readerorder where readerorder.bookID = book.bookID"
+														+" group by book.bookID"
+														+" order by cnt");
+		int rank = 1;
+		if(info != null){
+			int i = info.size()-2;
+			while(i>0 && !bid.equals(info.get(i+1)))
+			{
+				System.out.println("i is : "+i);
+				if(i>0 && Integer.parseInt(info.get(i))>Integer.parseInt(info.get(i-2)))
+					rank++;
+				i-=2;
+			}
+		if(i == 0)
+			rank ++;
+		}
+		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");	
+		panel.chooseBy(bookName, bid, scopes);
+		panel.displayRank(Integer.toString(rank));
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
 	}
 	public static void displayOrdersReport(String bid){
 		
