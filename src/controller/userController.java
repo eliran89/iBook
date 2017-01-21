@@ -355,6 +355,74 @@ public class userController {
 		}
 	}
 	
+	public static int getUserPrivilege(String uname){
+		ArrayList<String> priv;
+		int privInt;
+		
+		priv = DBController.getFromDB("select u.privilege from ibookdb.user u where u.username = '"+uname+"'");
+		privInt = Integer.parseInt(priv.get(0));
+		
+		return privInt;		
+	}
+	
+	public static String getReaderArrangement(String ID, String uname){
+		ArrayList<String> rType;
+		
+		if (getUserPrivilege(uname) == 2){
+			rType = DBController.getFromDB("select r.rType from ibookdb.reader r where r.userID = '"+ID+"'");
+			System.out.println(rType.get(0));
+			if (rType.get(0).equals("periodic"))
+				return "Periodic";
+			if (rType.get(0).equals("onebyone"))
+				return "One-by-One";
+		}
+		return "NONE";
+	}
+	
+	public static void setNewPaymentArrangement(String ID, String uName, String creditNum, String expDate, String cvv,String perType, String periodNum) throws SQLException {
+
+		interestedReader ir = new interestedReader();
+		reader r = new reader();
+	//	String idstr = Integer.toString(ID);
+
+		ArrayList<String> idInDB = null;
+		ArrayList<String> unameInDB = null;
+		
+		/**get ID if exists*/
+			idInDB = DBController.getFromDB("select i.userID from interestedreader i where i.userID = '"+idstr+"'");
+			if(idInDB != null){
+				//System.out.println("ID " +idInDB.toString()+ " is already exists !");
+				UserSearchGUI.errorBox("ID "+idInDB.toString()+" is already exists!\nPlease pick another one", "Add User");
+			}
+		/**get user name if exists*/
+			else
+			{
+				unameInDB = DBController.getFromDB("select u.username from ibookdb.user u where u.username = '"+uname+"'");
+				if(unameInDB != null)
+					UserSearchGUI.errorBox("User "+unameInDB.toString()+" is already exists!\nPlease pick another one", "Add User");	
+				/**getting here means user entered a unique user name and ID as needed*/
+				else{
+					ir.setUserID(ID);
+					ir.setFirstName(fname);
+					ir.setLastName(lname);
+					ir.setUsername(uname);
+					ir.setPassword(pass);
+					
+/*					System.out.println("ID: "+ir.getUserID());
+					System.out.println("fName: "+ir.getFirstName());
+					System.out.println("lName: "+ir.getLastName());
+					System.out.println("UN: "+ir.getUsername()); 
+					System.out.println("pass: "+ir.getpassword()); */
+
+					if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
+						DBController.insertToDB("INSERT INTO ibookdb.user (`username`, `password`, `privilege`, `status`) VALUES ('"+ir.getUsername()+"', '"+ir.getpassword()+"', '1', '1')");
+						DBController.insertToDB("INSERT INTO ibookdb.interestedreader (`userID`, `firstName`, `lastName`, `username`) VALUES ('"+ir.getUserID()+"', '"+ir.getFirstName()+"', '"+ir.getLastName()+"', '"+ir.getUsername()+"')");
+						UserSearchGUI.infoBox("User "+uname+" added successfully","Add User");
+						}
+				}
+			}
+	}
+	
 	
 	public void checkOrderDetails() {
 		// TODO - implement userController.checkOrderDetails

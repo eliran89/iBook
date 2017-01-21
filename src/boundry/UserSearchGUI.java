@@ -268,6 +268,12 @@ public class UserSearchGUI extends mainPanel{
 		JButton btnPymnt = new JButton("Set Payment Arrangement");
 		btnPymnt.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String id = new String( table.getValueAt(row1,0).toString());
+				String fName = new String( table.getValueAt(row1,1).toString());
+				String lName = new String( table.getValueAt(row1,2).toString());
+				String uName = new String( table.getValueAt(row1,3).toString());
+				String priv = new String( table.getValueAt(row1,4).toString());
+				displaySetPayment(id,fName,lName,uName,priv);
 			}
 		});
 		btnPymnt.setBounds(581, 596, 185, 23);
@@ -585,6 +591,7 @@ public class UserSearchGUI extends mainPanel{
 		btnBack.setBounds(274, 441, 89, 23);
 		panelEdit.add(btnBack);
 		
+		//Hiding unnecessary components
 		lblSearchBy.setVisible(false);
 		comboBox.setVisible(false);
 		textField.setVisible(false);
@@ -592,6 +599,291 @@ public class UserSearchGUI extends mainPanel{
 		
 		loginController.mainG.setContentPane(panelEdit);
 		loginController.mainG.revalidate();
+	}
+	
+	public static void displaySetPayment(String id, String fName, String lName, String uName, String priv) {
+		UserSearchGUI panelSetPayment;
+
+		//System.out.println(loginController.use.getprivilege());
+		if(loginController.use.getprivilege() == 4)
+			panelSetPayment = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
+		else
+			panelSetPayment = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
+		
+//		System.out.println("Im here!! and its great");
+		
+		/**Frame label */
+		JLabel lblSetPayment = new JLabel("Set Payment Arrangement");
+		lblSetPayment.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSetPayment.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblSetPayment.setBounds(274, 72, 331, 27);
+		panelSetPayment.add(lblSetPayment);
+		
+		/**ID label and textField */
+		JLabel lblID = new JLabel("ID");
+		//lblTitle.setToolTipText("ID field cannot be edited");
+		lblID.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblID.setHorizontalAlignment(SwingConstants.LEFT);
+		lblID.setForeground(Color.BLACK);
+		lblID.setBounds(274, 152, 51, 20);
+		panelSetPayment.add(lblID);
+		
+		JTextField textId = new JTextField(id);
+		textId.setBounds(481, 152, 124, 20);
+		textId.setColumns(10);
+		textId.setEditable(false);
+		panelSetPayment.add(textId);
+		
+		/**user name label and textField */
+		JLabel lblUserName = new JLabel("User Name");
+		lblUserName.setToolTipText("Username field cannot be edited");
+		lblUserName.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUserName.setForeground(Color.BLACK);
+		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUserName.setBounds(274, 201, 104, 20);
+		panelSetPayment.add(lblUserName);
+		
+		JTextField textUname = new JTextField(uName);
+		textUname.setColumns(10);
+		textUname.setBounds(481, 201, 124, 20);
+		textUname.setEditable(false);
+		panelSetPayment.add(textUname);
+		
+		/**Current Payment Arrangement label and textField */
+		JLabel lblCurrPayment = new JLabel("Current Payment Arrangement");
+		//lblLastName.setToolTipText("Enter new account last name");
+		lblCurrPayment.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCurrPayment.setForeground(Color.BLACK);
+		lblCurrPayment.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCurrPayment.setBounds(274, 250, 197, 20);
+		panelSetPayment.add(lblCurrPayment);
+		
+		String arngmnt = userController.getReaderArrangement(id, uName);
+		JTextField textCurrPmnt = new JTextField(arngmnt);
+		textCurrPmnt.setColumns(10);
+		textCurrPmnt.setBounds(481, 250, 124, 20);
+		textCurrPmnt.setEditable(true);
+		panelSetPayment.add(textCurrPmnt);
+		
+		/**New Payment Arrangement label */
+		JLabel lblNewPayment = new JLabel("New Payment Arrangement");
+		//lblFirstName.setToolTipText("Enter new account first name");
+		lblNewPayment.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNewPayment.setForeground(Color.BLACK);
+		lblNewPayment.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewPayment.setBounds(274, 297, 197, 20);
+		panelSetPayment.add(lblNewPayment);
+		
+		/**Periodic or One-byOne Payment Arrangement comboBox */
+		JComboBox comboBoxPayment = new JComboBox();
+		comboBoxPayment.setBounds(481, 297, 124, 20);
+		comboBoxPayment.addItem("Periodic");
+		comboBoxPayment.addItem("One-by-One");
+		panelSetPayment.add(comboBoxPayment);
+		
+		/**button Set */
+		JButton btnSet = new JButton("Set");
+		btnSet.setToolTipText("Click here to set payment arrangement");
+		btnSet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String currPaynt = arngmnt;	
+				String newPayment = (String) comboBoxPayment.getSelectedItem();
+				
+				if (!(currPaynt.equals(newPayment))){
+				//means there is a conflict between two payment arrangements or there is no agreement
+					System.out.println("currPaynt :"+currPaynt+" newPayment: "+newPayment);
+					if (!(currPaynt.equals("NONE"))){
+					//this is a case of conflict agreements
+						warningBox("There is a conflict between payment arrangements!\nNew arrangement will be set", "Conflict Arrangements");
+					}
+					setNewPaymentArrangement(id,fName,lName,uName,priv);
+					
+				}
+				
+
+			}
+		});
+		btnSet.setBounds(516, 441, 89, 23);
+		panelSetPayment.add(btnSet);
+		
+		/**button Back */
+		JButton btnBack = new JButton("Back");
+		btnBack.setToolTipText("Click here to view all users details");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//userController.userSearch();
+				userController.getUserDetails("Username","");
+			}
+		});
+		btnBack.setBounds(274, 441, 89, 23);
+		panelSetPayment.add(btnBack);
+		
+		//Hiding unnecessary components
+		lblSearchBy.setVisible(false);
+		comboBox.setVisible(false);
+		textField.setVisible(false);
+		btnSearch.setVisible(false);
+		
+		loginController.mainG.setContentPane(panelSetPayment);
+		loginController.mainG.revalidate();
+	}
+	
+	public static void setNewPaymentArrangement(String id, String fName, String lName, String uName, String priv) {
+		UserSearchGUI panelSetNewPayment;
+
+		//System.out.println(loginController.use.getprivilege());
+		if(loginController.use.getprivilege() == 4)
+			panelSetNewPayment = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
+		else
+			panelSetNewPayment = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
+		
+		
+		/**Frame label */
+		JLabel lblSetPayment = new JLabel("Set a New Payment Arrangement");
+		lblSetPayment.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSetPayment.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblSetPayment.setBounds(274, 72, 331, 27);
+		panelSetNewPayment.add(lblSetPayment);
+		
+		/**ID label and textField */
+		JLabel lblTitle = new JLabel("ID");
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitle.setForeground(Color.BLACK);
+		lblTitle.setBounds(274, 152, 51, 20);
+		panelSetNewPayment.add(lblTitle);
+		
+		JTextField textId = new JTextField(id);
+		textId.setBounds(481, 152, 124, 20);
+		textId.setColumns(10);
+		textId.setEditable(false);
+		panelSetNewPayment.add(textId);
+		
+		/**user name label and textField */
+		JLabel lblUserName = new JLabel("User Name");
+		lblUserName.setHorizontalAlignment(SwingConstants.LEFT);
+		lblUserName.setForeground(Color.BLACK);
+		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblUserName.setBounds(274, 201, 104, 20);
+		panelSetNewPayment.add(lblUserName);
+		
+		JTextField textUname = new JTextField(uName);
+		textUname.setColumns(10);
+		textUname.setBounds(481, 201, 124, 20);
+		textUname.setEditable(false);
+		panelSetNewPayment.add(textUname);
+		
+		/**credit card label and textField */
+		JLabel lblCreditNum = new JLabel("Credit Card");
+		lblCreditNum.setToolTipText("8-digits credit card number");
+		lblCreditNum.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCreditNum.setForeground(Color.BLACK);
+		lblCreditNum.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCreditNum.setBounds(274, 250, 197, 20);
+		panelSetNewPayment.add(lblCreditNum);
+		
+		JTextField textCreditNum = new JTextField("Credit_Card_Number");
+		textCreditNum.setColumns(10);
+		textCreditNum.setBounds(481, 250, 124, 20);
+		textCreditNum.setEditable(true);
+		panelSetNewPayment.add(textCreditNum);
+		
+		/**Valid to label and textField */
+		JLabel lblExpDate = new JLabel("Valid To");
+		lblExpDate.setHorizontalAlignment(SwingConstants.LEFT);
+		lblExpDate.setForeground(Color.BLACK);
+		lblExpDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblExpDate.setBounds(274, 297, 197, 20);
+		panelSetNewPayment.add(lblExpDate);
+		
+		JTextField textExpDate = new JTextField("mm/yyyy");
+		textExpDate.setHorizontalAlignment(SwingConstants.CENTER);
+		textExpDate.setColumns(10);
+		textExpDate.setBounds(481, 297, 56, 20);
+		textExpDate.setEditable(true);
+		panelSetNewPayment.add(textExpDate);
+		
+		/**CVV label and textField */
+		JLabel lblCVV = new JLabel("CVV");
+		lblCVV.setToolTipText("3-digits number at the back of credit card");
+		lblCVV.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCVV.setForeground(Color.BLACK);
+		lblCVV.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCVV.setBounds(274, 344, 104, 20);
+		panelSetNewPayment.add(lblCVV);
+		
+		JTextField textCVV = new JTextField();
+		textCVV.setHorizontalAlignment(SwingConstants.CENTER);
+		textCVV.setColumns(10);
+		textCVV.setBounds(481, 344, 27, 20);
+		textCVV.setEditable(true);
+		panelSetNewPayment.add(textCVV);
+		
+		/**number of periods arrangement label and textField */
+		JLabel lblNumberOfPeriod = new JLabel("Number of Years/Months");
+		lblNumberOfPeriod.setToolTipText("up to 2 digits number is allowed");
+		lblNumberOfPeriod.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNumberOfPeriod.setForeground(Color.BLACK);
+		lblNumberOfPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNumberOfPeriod.setBounds(274, 390, 197, 20);
+		panelSetNewPayment.add(lblNumberOfPeriod);
+		
+		JTextField txtNumOfPeriod;
+		txtNumOfPeriod = new JTextField();
+		txtNumOfPeriod.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNumOfPeriod.setEditable(true);
+		txtNumOfPeriod.setColumns(10);
+		txtNumOfPeriod.setBounds(481, 390, 27, 20);
+		panelSetNewPayment.add(txtNumOfPeriod);
+		
+		/**Years/Months period comboBox */
+		JComboBox comboBoxYearMonth = new JComboBox();
+		comboBoxYearMonth.setBounds(516, 390, 89, 20);
+		comboBoxYearMonth.addItem("Months");
+		comboBoxYearMonth.addItem("Years");
+		panelSetNewPayment.add(comboBoxYearMonth);
+
+		
+		/**button Set */
+		JButton btnSet = new JButton("Set");
+		btnSet.setToolTipText("Click here to set a new payment arrangement");
+		btnSet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+					userController.setNewPaymentArrangement(textId.getText(),textUname.getText(),textCreditNum.getText(),textExpDate.getText(),textCVV.getText(),comboBoxYearMonth.getSelectedItem().toString(),txtNumOfPeriod.getText());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnSet.setBounds(516, 441, 89, 23);
+		panelSetNewPayment.add(btnSet);
+		
+		/**button Back */
+		JButton btnBack = new JButton("Back");
+		btnBack.setToolTipText("Click here to view all users details");
+		btnBack.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				//userController.userSearch();
+				userController.getUserDetails("Username","");
+			}
+		});
+		btnBack.setBounds(274, 441, 89, 23);
+		panelSetNewPayment.add(btnBack);
+		
+
+		//Hiding unnecessary components
+		lblSearchBy.setVisible(false);
+		comboBox.setVisible(false);
+		textField.setVisible(false);
+		btnSearch.setVisible(false);
+		
+		loginController.mainG.setContentPane(panelSetNewPayment);
+		loginController.mainG.revalidate();
+	
 	}
 
 }
