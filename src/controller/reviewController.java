@@ -118,10 +118,10 @@ public class reviewController {
 	 * @param bName String
 	 * @param uName String
 	 */
-	public static void displayReview(String bName, String uName) {
+	public static void displayReview(String bTitle, String uName) {
 		ArrayList <String> info = null;
 		info = DBController.getFromDB("select reviews.text from reviews , book"
-				+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bName+"'");
+				+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bTitle+"'");
 
 		reviewGUI review = null;
 		if(loginController.use.getprivilege() == 1)
@@ -194,10 +194,10 @@ public class reviewController {
 	
 	/** Display Mail Reviews in Mailbox**/
 	
-	public static void displayMailReview(String bName, String uName) {
+	public static void displayMailReview(String bTitle, String uName) {
 		ArrayList <String> info = null;
 		info = DBController.getFromDB("select reviews.text from reviews , book"
-				+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bName+"'");
+				+ " where reviews.BookID = book.bookID and reviews.username = '"+uName+"' and book.Title = '"+bTitle+"'");
 
 		OpenMailGUI review = null;
 		if(loginController.use.getprivilege() == 1)
@@ -214,7 +214,7 @@ public class reviewController {
 			review = new OpenMailGUI(loginController.use.getUsername(),"Manager");
 	
 		
-		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
+		review.displayReview(info.get(0),bTitle,uName); // returns the first cell in the arraylist which is the text of the review
 		
 		
 		//reviewGUI.lblSearchBy.setVisible(false);
@@ -283,13 +283,18 @@ public class reviewController {
 		info = DBController.getFromDB("select  r.BookID "+
 		"from book b, reviews r "+
 		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
-		System.out.println(info.get(0));
+		//System.out.println(info.get(0));
 		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
-		
+		System.out.println("user: "+uName+", book title: "+bTitle);
+		System.out.println("Text: "+text);
+		System.out.println(bookId);
 		// Edit review text
-		editDisplayReview = DBController.getFromDB("UPDATE ibook.reviews r SET r.text='"+text+
+		
+		System.out.println("UPDATE reviews r SET r.text='"+text+
 				"' WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
-		System.out.println(editDisplayReview.get(0));
+		editDisplayReview = DBController.getFromDB("UPDATE reviews r SET r.text='"+text+
+				"' WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
+		
 		
 		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was edited successfully", "Edit Confirmation");
 		//reviewController.openMailScreen();
