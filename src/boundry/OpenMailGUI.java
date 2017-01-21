@@ -47,7 +47,7 @@ public class OpenMailGUI extends mainPanel {
 		super(name,role);
 		
 		
-		btnLogout.setBounds(26, 11, 77, 16);
+		//btnLogout.setBounds(26, 11, 77, 16);
 		setForeground(Color.WHITE);
 		
 		/* Button for main window */
@@ -138,12 +138,9 @@ public class OpenMailGUI extends mainPanel {
 		
 		
 		
-		/*
-		String bTitle = new String( table.getValueAt(row, 0).toString());
-		String uName= new String( table.getValueAt(row, 3).toString());
-		*/
-		/** Buttons only allowed only for editor! **/
-		if(loginController.use.getprivilege() == 3){					
+	
+		/** Buttons privileges**/
+		if(loginController.use.getprivilege() == 3 || loginController.use.getprivilege() == 4 || loginController.use.getprivilege() == 5  ){					
 		
 			
 		/** Button for Approve **/
@@ -220,8 +217,8 @@ public class OpenMailGUI extends mainPanel {
 			
 			JTextPane txtpnFds = new JTextPane();
 			
-			/** editable text only allowed for editor! **/
-			if(loginController.use.getprivilege() == 3) txtpnFds.setEditable(true);
+			/** editable text privileges **/
+			if(loginController.use.getprivilege() == 3 || loginController.use.getprivilege() == 4 || loginController.use.getprivilege() == 5  ) txtpnFds.setEditable(true);
 			else txtpnFds.setEditable(false);
 			
 			txtpnFds.setText(text);
