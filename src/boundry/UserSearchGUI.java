@@ -346,8 +346,6 @@ public class UserSearchGUI extends mainPanel{
 		else
 			panelAdd = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
 		
-//		System.out.println("Im here!! and its great");
-		
 		/**Frame label */
 		JLabel lblAddingANew = new JLabel("Adding a New Intereseted Reader");
 		lblAddingANew.setHorizontalAlignment(SwingConstants.CENTER);
@@ -469,14 +467,11 @@ public class UserSearchGUI extends mainPanel{
 
 	public static void displayEditUserDetails(String id, String fName, String lName, String uName) {
 		UserSearchGUI panelEdit;
-		//System.out.println("I'm on action!");
-		//System.out.println(loginController.use.getprivilege());
+
 		if(loginController.use.getprivilege() == 4)
 			panelEdit = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
 		else
 			panelEdit = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
-		
-	//	System.out.println("Im here!! and its great");
 		
 		/**Frame label */
 		JLabel lblAddingANew = new JLabel("Edit User Details");
