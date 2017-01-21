@@ -339,7 +339,7 @@ public class ReportsGUI extends mainPanel {
 			}
 			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
 				Component c = super.prepareRenderer(r,data,column);
-				
+				boolean bool =true;
 				
 				if(data % 2 == 0)
 				{
@@ -356,12 +356,11 @@ public class ReportsGUI extends mainPanel {
 					c.setBackground(Color.CYAN);
 					row1 = data;
 				}
-			
-				if(getValueAt(data, column)=="")
+				/*if(getValueAt(data, column)=="")
 					if(data % 2 == 0)
 						c.setBackground(Color.LIGHT_GRAY);
 					else
-						c.setBackground(Color.WHITE);
+						c.setBackground(Color.WHITE);*/
 				
 				return c;
 			}
@@ -466,7 +465,7 @@ public class ReportsGUI extends mainPanel {
 		btnByOrders.setBounds(554, 417, 211, 27);
 		btnByOrders.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				userController.displayOrdersReport(ID);
 				
 			}
 		});

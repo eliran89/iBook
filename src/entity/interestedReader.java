@@ -45,13 +45,13 @@ public class interestedReader extends User {
 	/**getters END*/
 	
 	/**setters*/
-	public void setUserID(int userID){
-		if ((userID < 11111) || (userID > 99999)){
+	public void setUserID(int iD){
+		if ((iD < 11111) || (iD > 99999)){
 			UserSearchGUI.errorBox("Please enter a legal ID (greater than 11111 and lower than 99999)","Validate User ID");
 		//	backToUserSearch();
 			return;
 		}
-		this.userID = userID;
+		this.userID = iD;
 	}
 	
 	public void setFirstName(String firstName){

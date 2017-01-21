@@ -211,7 +211,7 @@ public class bookController {
 				for(int i = 0 ; i < info.size()/4 ; i++){
 					for(int j = 0 ; j < 4 ; j++){
 						
-						if(j == 0 && i > 0 && info.get(count).equals( userBookGUI.data[i-1][j]))
+						if(j == 0 && i > 0 && count > 0 && info.get(count).equals(info.get(count-4)))
 							userBookGUI.data[i][j] ="";
 						else
 							userBookGUI.data[i][j] = info.get(count);
@@ -570,7 +570,7 @@ public class bookController {
 			for(int i = 0 ; i < info.size()/4 ; i++){
 				for(int j = 0 ; j < 4 ; j++){
 					
-					if(j == 0 && i > 0 && info.get(count).equals( ReportsGUI.data2[i-1][j]))
+					if(j == 0 && i > 0 && count > 0 && info.get(count).equals(info.get(count-4)))
 						ReportsGUI.data2[i][j] ="";
 					else
 						ReportsGUI.data2[i][j] = info.get(count);
