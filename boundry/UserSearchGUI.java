@@ -746,14 +746,14 @@ public class UserSearchGUI extends mainPanel{
 		panelSetNewPayment.add(lblSetPayment);
 		
 		/**ID label and textField */
-		JLabel lblID = new JLabel("ID");
-		lblID.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblID.setHorizontalAlignment(SwingConstants.LEFT);
-		lblID.setForeground(Color.BLACK);
-		lblID.setBounds(274, 152, 51, 20);
-		panelSetNewPayment.add(lblID);
+		JLabel lblTitle = new JLabel("ID");
+		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
+		lblTitle.setForeground(Color.BLACK);
+		lblTitle.setBounds(274, 152, 51, 20);
+		panelSetNewPayment.add(lblTitle);
 		
-		JTextField textId = new JTextField("id");
+		JTextField textId = new JTextField(id);
 		textId.setBounds(481, 152, 124, 20);
 		textId.setColumns(10);
 		textId.setEditable(false);
@@ -767,7 +767,7 @@ public class UserSearchGUI extends mainPanel{
 		lblUserName.setBounds(274, 201, 104, 20);
 		panelSetNewPayment.add(lblUserName);
 		
-		JTextField textUname = new JTextField("uName");
+		JTextField textUname = new JTextField(uName);
 		textUname.setColumns(10);
 		textUname.setBounds(481, 201, 124, 20);
 		textUname.setEditable(false);
@@ -796,26 +796,12 @@ public class UserSearchGUI extends mainPanel{
 		lblExpDate.setBounds(274, 297, 197, 20);
 		panelSetNewPayment.add(lblExpDate);
 		
-		JTextField textExpMonth = new JTextField("mm");
-		textExpMonth.setHorizontalAlignment(SwingConstants.CENTER);
-		textExpMonth.setColumns(10);
-		textExpMonth.setBounds(481, 297, 27, 20);
-		textExpMonth.setEditable(true);
-		panelSetNewPayment.add(textExpMonth);
-		
-		JLabel slash = new JLabel("/");
-		slash.setHorizontalAlignment(SwingConstants.LEFT);
-		slash.setForeground(Color.BLACK);
-		slash.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		slash.setBounds(509, 297, 11, 20);
-		panelSetNewPayment.add(slash);
-		
-		JTextField textExpYear = new JTextField("yyyy");
-		textExpYear.setHorizontalAlignment(SwingConstants.CENTER);
-		textExpYear.setEditable(true);
-		textExpYear.setColumns(10);
-		textExpYear.setBounds(517, 297, 35, 20);
-		panelSetNewPayment.add(textExpYear);
+		JTextField textExpDate = new JTextField("mm/yyyy");
+		textExpDate.setHorizontalAlignment(SwingConstants.CENTER);
+		textExpDate.setColumns(10);
+		textExpDate.setBounds(481, 297, 56, 20);
+		textExpDate.setEditable(true);
+		panelSetNewPayment.add(textExpDate);
 		
 		/**CVV label and textField */
 		JLabel lblCVV = new JLabel("CVV");
@@ -860,35 +846,19 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**button Set */
 		JButton btnSet = new JButton("Set");
+		btnSet.setToolTipText("Click here to set a new payment arrangement");
 		btnSet.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				//String id = new String (textId.getText());
-				//String uName = new String (textUname.getText());
-				String creditNum = new String (textCreditNum.getText());
-				String expMonth = new String (textExpMonth.getText());
-				String expYear = new String (textExpYear.getText());
-				String cvv = new String (textCVV.getText());
-				String perType = new String (comboBoxYearMonth.getSelectedItem().toString());
-				String periodNum = new String (txtNumOfPeriod.getText());
+			public void actionPerformed(ActionEvent e) {
 				
-				int creditNumInt = Integer.parseInt(creditNum);
-				int expMonthInt = Integer.parseInt(expMonth);
-				int expYearInt = Integer.parseInt(expYear);
-				int cvvInt = Integer.parseInt(cvv);
-				
-				boolean validate = userController.validateCreditCard(creditNumInt, expMonthInt, expYearInt, cvvInt);
-				if (validate)
-					try {
-						userController.setNewPaymentArrangement(id, uName, creditNum, expYear, expMonth, cvv, perType, periodNum);
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				
+				try {
+					userController.setNewPaymentArrangement(textId.getText(),textUname.getText(),textCreditNum.getText(),textExpDate.getText(),textCVV.getText(),comboBoxYearMonth.getSelectedItem().toString(),txtNumOfPeriod.getText());
+				} catch (SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});
-		btnSet.setToolTipText("Click here to set a new payment arrangement");
 		btnSet.setBounds(516, 441, 89, 23);
 		panelSetNewPayment.add(btnSet);
 		
@@ -898,12 +868,11 @@ public class UserSearchGUI extends mainPanel{
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//userController.userSearch();
-				displaySetPayment(id, fName, lName, uName, priv);
+				userController.getUserDetails("Username","");
 			}
 		});
 		btnBack.setBounds(274, 441, 89, 23);
 		panelSetNewPayment.add(btnBack);
-		
 		
 
 		//Hiding unnecessary components
@@ -916,7 +885,6 @@ public class UserSearchGUI extends mainPanel{
 		loginController.mainG.revalidate();
 	
 	}
-
 
 }
 	
