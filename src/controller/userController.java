@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 
@@ -379,7 +380,31 @@ public class userController {
 		return "NONE";
 	}
 	
-	public static void setNewPaymentArrangement(String ID, String uName, String creditNum, String expDate, String cvv,String perType, String periodNum) throws SQLException {
+	public static boolean validateCreditCard(int creditNumInt, int expMonthInt, int expYearInt, int cvvInt){
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH);
+		
+		if ((creditNumInt < 10000000) || (creditNumInt>99999999)){
+				mainPanel.errorBox("Please enter a valid credit card number\nValid number contains 8 digits", "Credit Card Error");
+				return false;
+		}
+		if((expMonthInt > 12) || (expMonthInt < 1)){
+			mainPanel.errorBox("Please enter a valid month value", "Credit Card Error");
+			return false;
+		}
+		if (((expMonthInt < month) && (expYearInt == year))||(expYearInt < year)){
+			mainPanel.errorBox("Your credit is out dated\nPlease enter a valid one", "Credit Card Error");
+			return false;
+		}
+		if ((cvvInt>999) || (cvvInt<100)){
+			mainPanel.errorBox("CVV value invalid\nPlease enter a 3-digit number", "Credit Card Error");
+			return false;
+		}
+		mainPanel.infoBox("Your credit card checked and confirmed!", "Credit Card Validated");
+		return true;
+	}
+	
+	public static void setNewPaymentArrangement(String ID, String uName, String creditNum, String expYear, String expMonth, String cvv,String perType, String periodNum) throws SQLException {
 
 		interestedReader ir = new interestedReader();
 		reader r = new reader();
