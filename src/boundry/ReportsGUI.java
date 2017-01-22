@@ -26,7 +26,7 @@ import controller.userController;
 import javax.swing.JComboBox;
 
 public class ReportsGUI extends mainPanel {
-	
+	boolean bool =true;
 	public static String[] columnHeader1;// = {"username","bookName","date"};// = {"bookName","date"};
 	public static String[][] data1;
 	public static String[] columnHeader2 = {"Scope","Subject","Book Name","Book ID"};
@@ -331,6 +331,7 @@ public class ReportsGUI extends mainPanel {
 		
 	}
 	public void displayBookSearchResults(){
+		
 		JTable table = new JTable(data2,columnHeader2)
 		{
 			
@@ -339,7 +340,7 @@ public class ReportsGUI extends mainPanel {
 			}
 			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
 				Component c = super.prepareRenderer(r,data,column);
-				boolean bool =true;
+				
 				
 				if(data % 2 == 0)
 				{
@@ -351,6 +352,7 @@ public class ReportsGUI extends mainPanel {
 					c.setForeground(Color.BLACK);
 					c.setBackground(Color.LIGHT_GRAY);
 				}
+					
 				if(isCellSelected(data,column))
 				{
 					c.setBackground(Color.CYAN);
@@ -384,33 +386,7 @@ public class ReportsGUI extends mainPanel {
 		pane.setBounds(181, 376, 583, 191);
 		add(pane);
 		
-		/*JLabel lblScope_1 = new JLabel("Scope");
-		lblScope_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblScope_1.setForeground(Color.BLACK);
-		lblScope_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScope_1.setBounds(210, 345, 83, 23);
-		add(lblScope_1);
 		
-		JLabel lblSubject = new JLabel("Subject");
-		lblSubject.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSubject.setForeground(Color.BLACK);
-		lblSubject.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblSubject.setBounds(350, 345, 83, 23);
-		add(lblSubject);
-		
-		JLabel lblBookName = new JLabel("Book Name");
-		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookName.setForeground(Color.BLACK);
-		lblBookName.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblBookName.setBounds(470, 345, 111, 23);
-		add(lblBookName);
-		
-		JLabel lblIndex = new JLabel("Index");
-		lblIndex.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIndex.setForeground(Color.BLACK);
-		lblIndex.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblIndex.setBounds(630, 342, 111, 23);
-		add(lblIndex);*/
 		
 
 		JButton btnDisplayBookStatistics = new JButton("Display Book Statistics");
