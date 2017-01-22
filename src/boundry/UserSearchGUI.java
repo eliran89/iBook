@@ -683,19 +683,19 @@ public class UserSearchGUI extends mainPanel{
 			public void actionPerformed(ActionEvent e) {
 				String currPaynt = arngmnt;	
 				String newPayment = (String) comboBoxPayment.getSelectedItem();
-				
+		
 				if (!(currPaynt.equals(newPayment))){
 				//means there is a conflict between two payment arrangements or there is no agreement
 					System.out.println("currPaynt :"+currPaynt+" newPayment: "+newPayment);
 					if (!(currPaynt.equals("NONE"))){
 					//this is a case of conflict agreements
-						warningBox("There is a conflict between payment arrangements!\nNew arrangement will be set", "Conflict Arrangements");
+						int dialogResult = mainPanel.confirmBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?");
+						if(dialogResult == JOptionPane.YES_OPTION){
+							setNewPaymentArrangement(id,fName,lName,uName,priv);
+						}
 					}
-					setNewPaymentArrangement(id,fName,lName,uName,priv);
 					
 				}
-				
-
 			}
 		});
 		btnSet.setBounds(516, 441, 89, 23);
@@ -748,7 +748,7 @@ public class UserSearchGUI extends mainPanel{
 		lblID.setBounds(274, 152, 51, 20);
 		panelSetNewPayment.add(lblID);
 		
-		JTextField textId = new JTextField("id");
+		JTextField textId = new JTextField(id);
 		textId.setBounds(481, 152, 124, 20);
 		textId.setColumns(10);
 		textId.setEditable(false);
@@ -762,7 +762,7 @@ public class UserSearchGUI extends mainPanel{
 		lblUserName.setBounds(274, 201, 104, 20);
 		panelSetNewPayment.add(lblUserName);
 		
-		JTextField textUname = new JTextField("uName");
+		JTextField textUname = new JTextField(uName);
 		textUname.setColumns(10);
 		textUname.setBounds(481, 201, 124, 20);
 		textUname.setEditable(false);
@@ -777,7 +777,7 @@ public class UserSearchGUI extends mainPanel{
 		lblCreditNum.setBounds(274, 250, 197, 20);
 		panelSetNewPayment.add(lblCreditNum);
 		
-		JTextField textCreditNum = new JTextField("Credit_Card_Number");
+		JTextField textCreditNum = new JTextField();
 		textCreditNum.setColumns(10);
 		textCreditNum.setBounds(481, 250, 124, 20);
 		textCreditNum.setEditable(true);
