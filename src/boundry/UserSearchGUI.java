@@ -865,13 +865,9 @@ public class UserSearchGUI extends mainPanel{
 				String cvv = new String (textCVV.getText());
 				String perType = new String (comboBoxYearMonth.getSelectedItem().toString());
 				String periodNum = new String (txtNumOfPeriod.getText());
+
 				
-				int creditNumInt = Integer.parseInt(creditNum);
-				int expMonthInt = Integer.parseInt(expMonth);
-				int expYearInt = Integer.parseInt(expYear);
-				int cvvInt = Integer.parseInt(cvv);
-				
-				boolean validate = userController.validateCreditCard(creditNumInt, expMonthInt, expYearInt, cvvInt);
+				boolean validate = userController.validateCreditCard(creditNum, expMonth, expYear, cvv, periodNum);
 				if (validate)
 					try {
 						userController.setNewPaymentArrangement(id, uName, creditNum, expYear, expMonth, cvv, perType, periodNum);
