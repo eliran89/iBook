@@ -252,4 +252,8 @@ public class mainPanel extends JPanel {
     {
         JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.ERROR_MESSAGE);
     }
+	
+	public static int confirmBox(String infoMessage){
+		return JOptionPane.showConfirmDialog (null, infoMessage);
+	}
 }
