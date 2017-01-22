@@ -231,7 +231,7 @@ public class bookController {
 			
 	}
 	/**
-	 * chooseBook display the chosen book's details
+	 * chooseBook display the chosen book
 	 * @param bid a String instance for the book id
 	 */
 

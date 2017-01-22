@@ -47,6 +47,9 @@ public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldKeyEdit;
 	private JComboBox comboBoxAuthor;
 	private JTextField textField;
+	private JTextField textFieldPdf;
+	private JTextField textFieldDocx;
+	private JTextField textFieldFb;
 	/**
 	 * workerBookGUI
 	 * @param name String
@@ -56,7 +59,10 @@ public class workerBookGUI extends userBookGUI {
 		super(name,type);
 
 
-
+		
+		
+		
+		
 
 		
 	}
@@ -260,6 +266,36 @@ public class workerBookGUI extends userBookGUI {
 		textFieldAppen.setBounds(634, 313, 264, 131);
 		add(textFieldAppen);
 		
+		/*textFieldPdf = new JTextField();
+		textFieldPdf.setBounds(675, 482, 117, 20);
+		add(textFieldPdf);
+		textFieldPdf.setColumns(10);
+		
+		JLabel lblPdf = new JLabel("PDF Location :");
+		lblPdf.setHorizontalAlignment(SwingConstants.CENTER);
+		lblPdf.setBounds(592, 485, 83, 14);
+		add(lblPdf);
+		
+		textFieldDocx = new JTextField();
+		textFieldDocx.setColumns(10);
+		textFieldDocx.setBounds(465, 482, 117, 20);
+		add(textFieldDocx);
+		
+		JLabel lblDocxLocation = new JLabel("Docx Location :");
+		lblDocxLocation.setHorizontalAlignment(SwingConstants.CENTER);
+		lblDocxLocation.setBounds(382, 485, 83, 14);
+		add(lblDocxLocation);
+		
+		textFieldFb = new JTextField();
+		textFieldFb.setColumns(10);
+		textFieldFb.setBounds(255, 482, 117, 20);
+		add(textFieldFb);
+		
+		JLabel lblFbLocation = new JLabel("FB2 Location :");
+		lblFbLocation.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFbLocation.setBounds(172, 485, 83, 14);
+		add(lblFbLocation);*/
+		
 		JButton btnNewButton = new JButton("Add Book");
 		btnNewButton.setBounds(476, 535, 120, 42);
 		btnNewButton.addActionListener(new ActionListener() {
@@ -272,8 +308,12 @@ public class workerBookGUI extends userBookGUI {
 				String brief = textFieldBrief.getText();
 				String scope = textFieldScope.getText();
 				String subject = textFieldSubject.getText();
+				String pdf = textFieldPdf.getText();
+				String docx = textFieldDocx.getText();
 				
 				try {
+					if(pdf.equals("") || docx.equals(""))
+						
 					if( !scope.equals("") && !subject.equals("") && bookController.verifyScope(scope))
 					{	
 						boolean bool = true;
@@ -384,6 +424,8 @@ public class workerBookGUI extends userBookGUI {
 		});
 			
 		add(btnBackToSearch);
+		
+		
 		
 	}
 	/**

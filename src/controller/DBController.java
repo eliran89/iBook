@@ -2,14 +2,17 @@ package controller;
 
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import com.mysql.jdbc.ResultSet;
 
+import boundry.mainPanel;
 import simpleChat.ClientConsole;
 import simpleChatCommon.ChatIF;
 import client.IBookClient;
@@ -29,7 +32,8 @@ public class DBController {
 	
 	 /** Constractor*/
 	/**
-	 * Constructor 
+	 * Constructor get the connection details from the user 
+	 * and put them in static variables
 	 * @param host
 	 * @param port
 	 */
@@ -210,6 +214,14 @@ public class DBController {
 		}
 			
 	}
+	/**
+	 * getFile - get book information and get the relevant file from the server
+	 * and write the file to c drive 
+	 * @param bid book ID - will be the book name in the server
+	 * @param format - the type of the file (also part of the file name)
+	 * @param bookName - will be the file name in the client
+	 * @throws SQLException
+	 */
 	static synchronized public void getFile(String bid,String format,String bookName) throws SQLException{
 		
 		String file = bid+"."+format;
@@ -224,7 +236,8 @@ public class DBController {
 		}
 
 		while(allowToProceed == false);	
-		File f = new File("C:/Users/Admin/Desktop/"+bookName+"."+format);
+		boolean success = (new File("C:/iBook Files")).mkdir();
+		File f = new File("C:/iBook Files/"+bookName+"."+format);
 		  try {
 			FileOutputStream output = new FileOutputStream(f);
 			try {
@@ -239,5 +252,30 @@ public class DBController {
 			e.printStackTrace();
 		}
 	  }
-	
+	static synchronized public void sendFile(String location){
+		try {
+			InputStream inputStream = new FileInputStream(new File(location));
+			byte[] buffer = new byte[1024];
+			try {
+				ArrayList<byte[]> buffers = new ArrayList<byte[]>();
+				while(inputStream.read(buffer)>0)
+					buffers.add(buffer.clone());
+				byte[][] buff = new byte[buffers.size()][1024];
+				for(int i = 0 ;i<buffers.size();i++)
+					buff[i]=buffers.get(i);
+				inputStream.close();
+				ClientConsole chat= new ClientConsole(host, port);
+				rs = null;
+				allowToProceed = false;
+				ClientConsole.accept(buff);	
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			mainPanel.errorBox("File Not Found", "File");
+			bookController.addBook();
+		}
+		while(allowToProceed == false);	
+		
+	}
 }

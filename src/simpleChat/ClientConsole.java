@@ -1,6 +1,8 @@
 package simpleChat;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 // This file contains material supporting section 3.7 of the textbook:
 // "Object Oriented Software Engineering" and is issued under the open-source
@@ -70,7 +72,7 @@ public class ClientConsole implements ChatIF
    * This method waits for input from the console.  Once it is 
    * received, it sends it to the client's message handler.
    */
-  public static void accept(String message) 
+  public static void accept(Object message) 
   {
     try
     {
@@ -125,11 +127,20 @@ public class ClientConsole implements ChatIF
     int port = 0;  //The port number
     try
     {
+    	/*BufferedReader fromConsole = 
+    	        new BufferedReader(new InputStreamReader(System.in));
+    	System.out.println("Enter ip addess");
+    	try {
+			host = fromConsole.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}*/
       host = args[0];
     }
     catch(ArrayIndexOutOfBoundsException e)
     {
       host = "localhost";
+     // System.out.println("exception");
     }
     
 
