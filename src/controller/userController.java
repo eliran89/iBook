@@ -426,46 +426,38 @@ public class userController {
 		return true;
 	}
 	
-	public static void setNewPaymentArrangement(String ID, String uName, String creditNum, String expYear, String expMonth, String cvv,String perType, String periodNum) throws SQLException {
+	public static void setNewPaymentArrangement(String id, String uName, String creditNum, String expYear, String expMonth, String cvv,String perType, String periodNum, String newPayment) throws SQLException {
 
-	//	String idstr = Integer.toString(ID);
-
-		ArrayList<String> idInDB = null;
-		ArrayList<String> unameInDB = null;
+		ArrayList<String> idIsReader = null;	//if exist means user defined as a reader
+		ArrayList<String> idIsPeriodic = null;	//if exist means user defined as a periodic reader
+		ArrayList<String> firstLastName = null;
 		
-		/**get ID if exists*/
-			idInDB = DBController.getFromDB("select i.userID from interestedreader i where i.userID = '"+ID+"'");
-			if(idInDB != null){
-				//System.out.println("ID " +idInDB.toString()+ " is already exists !");
-				UserSearchGUI.errorBox("ID "+idInDB.toString()+" is already exists!\nPlease pick another one", "Add User");
+		/**get first and last name*/
+		firstLastName = DBController.getFromDB("select ir.firstName, ir.lastName from interestedreader ir where ir.userID = '"+id+"'");
+		String firstName = firstLastName.get(0);
+		String lastName = firstLastName.get(1);
+		
+		/**get ID if exists in reader table*/
+		idIsReader = DBController.getFromDB("select r.userID from reader r where r.userID = '"+id+"'");
+			if(idIsReader.get(0) == null){
+				UserSearchGUI.infoBox("ID "+idIsReader.toString()+" is NOT a reader!", "My check");
+				DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPayment+"', '"+firstName+"', '"+lastName+"', '"+uName+"')");
+				DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"'");	//updating into reader privilege level
 			}
-		/**get user name if exists*/
-			else
-			{
-				unameInDB = DBController.getFromDB("select u.username from ibookdb.user u where u.username = '"+uName+"'");
-				if(unameInDB != null)
-					UserSearchGUI.errorBox("User "+unameInDB.toString()+" is already exists!\nPlease pick another one", "Add User");	
-				/**getting here means user entered a unique user name and ID as needed*/
-				else{
-					ir.setUserID(Integer.parseInt(ID));
-					/*ir.setFirstName(fname);
-					ir.setLastName(lname);
-					ir.setUsername(uName);
-					ir.setPassword(pass);
-					
-/*					System.out.println("ID: "+ir.getUserID());
-					System.out.println("fName: "+ir.getFirstName());
-					System.out.println("lName: "+ir.getLastName());
-					System.out.println("UN: "+ir.getUsername()); 
-					System.out.println("pass: "+ir.getpassword()); */
-
-					if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
-						DBController.insertToDB("INSERT INTO ibookdb.user (`username`, `password`, `privilege`, `status`) VALUES ('"+ir.getUsername()+"', '"+ir.getpassword()+"', '1', '1')");
-						DBController.insertToDB("INSERT INTO ibookdb.interestedreader (`userID`, `firstName`, `lastName`, `username`) VALUES ('"+ir.getUserID()+"', '"+ir.getFirstName()+"', '"+ir.getLastName()+"', '"+ir.getUsername()+"')");
-						UserSearchGUI.infoBox("User "+uName+" added successfully","Add User");
-						}
-				}
+			if (newPayment.equals("Periodic")){
+				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
+				if(idIsPeriodic.get(0) == null)		//means user is NOT defined as periodic reader in DB
+					if (perType.equals("Months"))
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perType+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
+					else
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perType+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
+				else								//means user defined as periodic and we're about to extend his arrangement
+					if (perType.equals("Months"))	//means we're about to extend in 'month' periods
+						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' MONTH) WHERE `userID`='"+id+"'");
+					else							//means we're about to extend in 'year' periods
+						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' YEAR) WHERE `userID`='"+id+"'");
 			}
+	
 	}
 	
 	public void checkOrderDetails() {
