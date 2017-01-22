@@ -112,37 +112,26 @@ public  class IBookServer extends AbstractServer
 				e.printStackTrace();
 			}
 	    }
-	   /* else
-	    {
-	    	File file = new File("M:\\test.xml");
-	        // Get the size of the file
-	    	 InputStream in;
-			try {
-				in = new FileInputStream(file);
-
-	    	 OutputStream out = null;
+	    else{
 	    	try {
-	    		
-	            out = new FileOutputStream("M:\\test2.xml");
-	        } catch (FileNotFoundException ex) {
-	            System.out.println("File not found. ");
-	        }
-
-	        byte[] bytes = new byte[16*1024];
-
-	        int count;
-				while ((count = in.read(bytes)) > 0) {
-				    out.write(bytes, 0, count);
+				InputStream inputStream = new FileInputStream(new File("C:/files/" + query));
+				byte[] buffer = new byte[1024];
+				try {
+					ArrayList<byte[]> buffers = new ArrayList<byte[]>();
+					while(inputStream.read(buffer)>0)
+						buffers.add(buffer.clone());
+					byte[][] buff = new byte[buffers.size()][1024];
+					for(int i = 0 ;i<buffers.size();i++)
+						buff[i]=buffers.get(i);
+					inputStream.close();
+					client.sendToClient(buff);
+				} catch (IOException e) {
+					e.printStackTrace();
 				}
-
-
-			in.close();
-	        out.close();
-	    }	catch (IOException e) {
-
-			e.printStackTrace();
-		}
-	    }*/
+			} catch (FileNotFoundException e) {
+				e.printStackTrace();
+			}
+	    }
 	  }
   
   

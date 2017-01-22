@@ -427,10 +427,10 @@ public class userController {
 					UserSearchGUI.errorBox("User "+unameInDB.toString()+" is already exists!\nPlease pick another one", "Add User");	
 				/**getting here means user entered a unique user name and ID as needed*/
 				else{
-					ir.setUserID(ID);
-					ir.setFirstName(fname);
+					ir.setUserID(Integer.parseInt(ID));
+					/*ir.setFirstName(fname);
 					ir.setLastName(lname);
-					ir.setUsername(uname);
+					ir.setUsername(uName);
 					ir.setPassword(pass);
 					
 /*					System.out.println("ID: "+ir.getUserID());
@@ -442,7 +442,7 @@ public class userController {
 					if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
 						DBController.insertToDB("INSERT INTO ibookdb.user (`username`, `password`, `privilege`, `status`) VALUES ('"+ir.getUsername()+"', '"+ir.getpassword()+"', '1', '1')");
 						DBController.insertToDB("INSERT INTO ibookdb.interestedreader (`userID`, `firstName`, `lastName`, `username`) VALUES ('"+ir.getUserID()+"', '"+ir.getFirstName()+"', '"+ir.getLastName()+"', '"+ir.getUsername()+"')");
-						UserSearchGUI.infoBox("User "+uname+" added successfully","Add User");
+						UserSearchGUI.infoBox("User "+uName+" added successfully","Add User");
 						}
 				}
 			}
@@ -587,36 +587,42 @@ public class userController {
 	 */
 	public static void displaySearchReport(String bid,String bName){
 		ArrayList<String> info = DBController.getFromDB("select searches.date from searches where searches.bookID = "+bid);
-		
-		 
-	      int width = 640; /* Width of the image */
-	      int height = 480; /* Height of the image */
+		ArrayList<String> nows = DBController.getFromDB("select now()");
+		if(info == null  || nows.equals(info))
+			nows = DBController.getFromDB("select now()");
+		 String now = nows.get(0).substring(0,7);
+		 System.out.println("now is: "+now);
+		 ArrayList<String> dataT = new  ArrayList<String>();
 	      double[] data;
 	      int size;
 	      if(info != null) 
 	    	  size = info.size();
 	      else
 	    	  size = 0;
-	      data = new double[size];
-		 System.out.println("info is: "+info);
 	        for(int p = 0; p < size;p++){
-	        	String date = info.get(p).substring(2, 4)+"."+info.get(p).substring(5, 7);
-	        	System.out.println(date);
-	        	
-	             data[p] = Float.parseFloat(date);
-	             System.out.println(data[p]);
+	        	String date = info.get(p);//+"."+info.get(p).substring(5, 7);
+	        	if (date.contains(now))
+	        	{
+	        		date = date.substring(8, 10);
+	        		System.out.println(date);
+	        		dataT.add(date);
+	        	}
+	             
 	        }
 	        if(info != null){
-		        int number = data.length;
+	        	data = new double[dataT.size()];
+	        	for(int i = 0;i < dataT.size();i++)
+	        		data[i] = Double.parseDouble(dataT.get(i));
+	        
 		        HistogramDataset dataset = new HistogramDataset();
 		        dataset.setType(HistogramType.FREQUENCY);
-		        dataset.addSeries("Book",data,40); // Number of bins is 50
+		        dataset.addSeries("Book",data,30); // Number of bins is 50
 		        PlotOrientation orientation = PlotOrientation.VERTICAL;
 	
 		        boolean show = false;
 		        boolean toolTips = false;
 		        boolean urls = false;
-		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Year.Month", "Number Of Searches",dataset, orientation, show, toolTips, urls);
+		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
 		                
 	
 		        chart.setBackgroundPaint(Color.white);
@@ -684,7 +690,56 @@ public class userController {
 	}
 	public static void displayOrdersReport(String bid){
 		
-		//DefaultCategoryDataset set = new DefaultCategoryDataset();
+		ArrayList<String> info = DBController.getFromDB("select readerorder.date from readerorder where readerorder.bookID = "+bid+"");
+		ArrayList<String> nows = DBController.getFromDB("select now()");
+		if(info == null  || nows.equals(info))
+			nows = DBController.getFromDB("select now()");
+		 String now = nows.get(0).substring(0,7);
+		 System.out.println("now is: "+now);
+		 ArrayList<String> dataT = new  ArrayList<String>();
+	      double[] data;
+	      int size;
+	      if(info != null) 
+	    	  size = info.size();
+	      else
+	    	  size = 0;
+	        for(int p = 0; p < size;p++){
+	        	String date = info.get(p);//+"."+info.get(p).substring(5, 7);
+	        	if (date.contains(now))
+	        	{
+	        		date = date.substring(8, 10);
+	        		System.out.println(date);
+	        		dataT.add(date);
+	        	}
+	             
+	        }
+	        if(info != null){
+	        	data = new double[dataT.size()];
+	        	for(int i = 0;i < dataT.size();i++)
+	        		data[i] = Double.parseDouble(dataT.get(i));
+	        
+		        HistogramDataset dataset = new HistogramDataset();
+		        dataset.setType(HistogramType.FREQUENCY);
+		        dataset.addSeries("Book",data,30); // Number of bins is 50
+		        PlotOrientation orientation = PlotOrientation.VERTICAL;
+	
+		        boolean show = false;
+		        boolean toolTips = false;
+		        boolean urls = false;
+		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
+		                
+	
+		        chart.setBackgroundPaint(Color.white);
+	
+		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
+		    	                   	    	                     	    	                 	    	                	    	                  	    	        
+		        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+		        frame.setVisible(true);
+		        frame.setSize(700, 600);
+	        }
+	        else
+	        	mainPanel.infoBox("No Orders", "Report");
+	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 		
 	}

@@ -72,6 +72,11 @@ public class IBookClient extends AbstractClient
   {
 	  if(msg instanceof ArrayList)
 	  	DBController.rs = (ArrayList<String>)(msg);
+	  
+	  
+	  else if(msg instanceof byte[][])
+		  DBController.buffers = (byte[][]) msg;
+		  
 	  DBController.allowToProceed = true;
   }
 
