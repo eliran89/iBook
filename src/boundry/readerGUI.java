@@ -32,7 +32,7 @@ import javax.swing.ImageIcon;
 public class readerGUI extends InterestedReaderGUI {
 	
 	
-	private static String[] columnHeader = {"Title","Date"};
+	private static String[] columnHeader = {"Book Name","Date"};
 	public static String[][] data;
 	private static int row = -1;
 	public static int n = 0;
@@ -147,22 +147,23 @@ public class readerGUI extends InterestedReaderGUI {
 
 			/*Scroll Pane*/
 			JScrollPane pane = new JScrollPane(ordersTable);
-			showOrdersPanel.add(ordersTable);
+			pane.setBounds(79, 230, 687, 325);
+			showOrdersPanel.add(pane);
 			
-			JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
+		/*	JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
 			lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblBookName.setForeground(Color.BLACK);
 			lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
 			lblBookName.setBounds(79, 193, 216, 39);
 			showOrdersPanel.add(lblBookName);
 			
-			/**/
+			
 			JLabel lblDate = DefaultComponentFactory.getInstance().createLabel("Date Ordered");
 			lblDate.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
 			lblDate.setHorizontalAlignment(SwingConstants.CENTER);
 			lblDate.setForeground(Color.BLACK);
 			lblDate.setBounds(329, 196, 186, 32);
-			showOrdersPanel.add(lblDate);
+			showOrdersPanel.add(lblDate);*/
 		
 		
 		loginController.mainG.setContentPane(showOrdersPanel);

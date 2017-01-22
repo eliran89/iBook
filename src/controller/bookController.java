@@ -646,6 +646,13 @@ public class bookController {
 		System.out.println(orders.toString());
 
 	}
+	/**
+	 * get a book information and pass it to DBController to download the wanted file
+	 * @param bid
+	 * @param format
+	 * @param bookName
+	 * @throws SQLException
+	 */
 	public static void downloadBook(String bid,String format,String bookName) throws SQLException{
 		DBController.getFile(bid,format,bookName);
 	}
