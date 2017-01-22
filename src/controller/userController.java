@@ -403,7 +403,7 @@ public class userController {
 		mainPanel.infoBox("Your credit card checked and confirmed!", "Credit Card Validated");
 		return true;
 	}
-	
+	/**/
 	public static void setNewPaymentArrangement(String ID, String uName, String creditNum, String expYear, String expMonth, String cvv,String perType, String periodNum) throws SQLException {
 
 		interestedReader ir = new interestedReader();
