@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import boundry.OpenMailGUI;
 import boundry.ReportsGUI;
 import boundry.mainPanel;
+import boundry.orderListGUI;
 import boundry.readerGUI;
 import boundry.reviewGUI;
 import boundry.userBookGUI;
@@ -626,7 +627,7 @@ public class bookController {
 	 */
 
 
-	public static void findUsersOrders(String user) {
+/*	public static void findUsersOrders(String user) {
 		
 		ArrayList<String> orders = new ArrayList<String>();
 		
@@ -647,11 +648,10 @@ public class bookController {
 				}
 		}
 		
-		//readerGUI.ordersPanel.add()
 		
 		System.out.println(orders.toString());
 
-	}
+	}*/
 	/**
 	 * get a book information and pass it to DBController to download the wanted file
 	 * @param bid
@@ -664,23 +664,27 @@ public class bookController {
 		DBController.getFile(bid,format,bookName);
 	}
 
-/** Display orders table  **/
+/**
+ * displayUserOrders - get a username , get his orders from the datatbase 
+ * and display a window with the results table or a lable "no results"
+ * @param uName - the username
+ */
 public static void displayUserOrders(String uName) {
 	
-	readerGUI reader= new readerGUI(loginController.use.getUsername(),"Reader");
+	orderListGUI reader= new orderListGUI(loginController.use.getUsername(),"Reader");
 	ArrayList<String> orders = new ArrayList<String>();
 	
-	orders = DBController.getFromDB("SELECT  b.Title , ro.date FROM readerorder ro , reader re , book b "+
+	orders = DBController.getFromDB("SELECT  b.bookID ,b.Title , ro.date FROM readerorder ro , reader re , book b "+
 			"WHERE re.username='"+uName+"' and ro.bookID=b.bookID and ro.userID=re.userID"); 
 
 	
 	if(!(orders.isEmpty())){
 		
-		readerGUI.data = new String[orders.size()/2][2];
+		orderListGUI.data = new String[orders.size()/3][3];
 		int count =0;
-		for(int i = 0 ; i < orders.size()/2 ; i++)
-			for(int j = 0 ; j < 2 ; j++){
-				readerGUI.data[i][j] = orders.get(count);
+		for(int i = 0 ; i < orders.size()/3 ; i++)
+			for(int j = 0 ; j < 3 ; j++){
+				orderListGUI.data[i][j] = orders.get(count);
 				count++;
 			}
 		reader.showOrders();
@@ -695,6 +699,85 @@ public static void displayUserOrders(String uName) {
 	loginController.mainG.setContentPane(reader);
 	loginController.mainG.revalidate();
 	System.out.println(orders.toString());
-}
+	}
+	public static void displayMakeAReview(String uName){
+		
+		orderListGUI order= new orderListGUI(loginController.use.getUsername(),"Reader");
+		ArrayList<String> orders = new ArrayList<String>();
+		
+		orders = DBController.getFromDB("SELECT b.bookID, b.Title , ro.date FROM readerorder ro , reader re , book b "+
+				"WHERE re.username='"+uName+"' and ro.bookID=b.bookID and ro.userID=re.userID"); 
 
+		
+		if(orders != null){
+			
+			orderListGUI.data = new String[orders.size()/3][3];
+			int count =0;
+			for(int i = 0 ; i < orders.size()/3 ; i++)
+				for(int j = 0 ; j < 3 ; j++){
+					orderListGUI.data[i][j] = orders.get(count);
+					count++;
+				}
+			order.showOrders();
+			order.makeReview();
+			loginController.mainG.setContentPane(order);
+			loginController.mainG.revalidate();
+		}
+		/**if there are no results at all we add a lable that says "no results"*/
+		
+		else{
+			mainPanel.errorBox("No books in order list ", "No books");
+			readerGUI raeder = new readerGUI(loginController.use.getUsername(),"Reader");
+			loginController.mainG.setContentPane(raeder);
+			loginController.mainG.revalidate();
+		}
+		
+		
+		//System.out.println(orders.toString());
+	}
+	/**
+	 * displayWriteReview - get a book id and a book name and display a window
+	 * for writing a review about that book
+	 * @param bid - book ID
+	 * @param bName - book name
+	 * @throws SQLException
+	 */
+	public static void displayWriteReview(String bid , String bName) throws SQLException{
+		orderListGUI order = new orderListGUI(loginController.use.getUsername(),"Reader");
+		
+		boolean bool = DBController.existsInDB("select r.username , r.BookID"
+												+" from reviews r where r.username = '"+loginController.use.getUsername()+"' and r.BookID = '"+bid+"'");
+		if(bool)
+		{
+			mainPanel.errorBox("A review about this book has already been made by you","Error");
+			order.showOrders();
+			order.makeReview();
+		}
+		else
+			order.writeReview(bName, bid);
+		loginController.mainG.setContentPane(order);
+		loginController.mainG.revalidate();
+		
+	}
+	/**
+	 * get a book id a review title and the review itself and adding it to the reviews table 
+	 * in the database
+	 * @param bid - book ID
+	 * @param text - the review text
+	 * @param title - the review title
+	 * @throws SQLException
+	 */
+	public static void sendTheReview(String bid , String text,String title) throws SQLException{
+		// info= max review id+1 for new review
+		ArrayList<String> info = DBController.getFromDB("select max(reviews.reviewid)+1 from reviews");
+		DBController.insertToDB("INSERT INTO `ibookdb`.`reviews` (`reviewid`, `BookID`, `title`, `username`, `visible`, `text`) "
+													+ " VALUES ('"+info.get(0)+"', '"+bid+"', '"+title+"', '"+loginController.use.getUsername()+"', '0', '"+text+"');");
+		
+		orderListGUI order = new orderListGUI(loginController.use.getUsername(),"Reader");
+		order.showOrders();
+		order.makeReview();
+		loginController.mainG.setContentPane(order);
+		loginController.mainG.revalidate();
+		
+	}
 }
