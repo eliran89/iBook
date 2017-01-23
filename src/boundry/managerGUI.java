@@ -34,18 +34,9 @@ public class managerGUI extends GWorkerGUI {
 
 	}
 
-	public void suspendBook() {
-		// TODO - implement managerGUI.suspendBook
-		throw new UnsupportedOperationException();
-	}
 
 	public void changePrivilages() {
 		// TODO - implement managerGUI.changePrivilages
-		throw new UnsupportedOperationException();
-	}
-
-	public void changeUserDetails() {
-		// TODO - implement managerGUI.changeUserDetails
 		throw new UnsupportedOperationException();
 	}
 

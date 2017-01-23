@@ -24,7 +24,10 @@ public class loginController {
 	public static reader RDetails = null;
 	
 	/**
-	 * login 
+	 * login get a username and a password and check if 
+	 * there is a matching user in the database,
+	 * if there is not such user it displays an error message.
+	 * else it saves the user details in User entity and display the main window(according to the privilege)
 	 * @param username String
 	 * @param password String
 	 * @throws SQLException

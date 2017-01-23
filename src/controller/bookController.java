@@ -150,7 +150,9 @@ public class bookController {
 	/**Book Search END*/
 	
 	/**
-	 * displayResults - display a results table
+	 * displayResults - get a book information and searching books
+	 * in the database that matches the search
+	 *  
 	 * @param brief String
 	 * @param title String
 	 * @param langu String 
@@ -547,14 +549,16 @@ public class bookController {
 	*/	
 	}
 	/**
-	 * 
-	 * @param brief
-	 * @param title
-	 * @param langu
-	 * @param keyWord
-	 * @param author
-	 * @param appendix
-	 * @param scope
+	 * displayResultsForReports - get a book information and searching books
+	 * in the database that matches the search
+	 *  
+	 * @param brief String
+	 * @param title String
+	 * @param langu String 
+	 * @param keyWord String 
+	 * @param author String 
+	 * @param appendix String 
+	 * @param scope String 
 	 */
 	public static void displayResultsForReports(String brief,String title,String langu,String keyWord,String author,String appendix,String scope){
 		

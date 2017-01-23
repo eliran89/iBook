@@ -55,7 +55,9 @@ public class userController {
 			
 	}
 	
-	/**goToMainWindow method*/
+	/**
+	 * GoToMainWindow - display the main window(according to the level)
+	 */
 	public static void GoToMainWindow()
 	{
 		mainPanel mainP = null;
