@@ -333,9 +333,7 @@ public class UserSearchGUI extends mainPanel{
 		
 	}
 	
-	
-	
-	
+
 	
 	public static void displayAddUserDetails() {
 		UserSearchGUI panelAdd;
@@ -605,8 +603,6 @@ public class UserSearchGUI extends mainPanel{
 		else
 			panelSetPayment = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
 		
-//		System.out.println("Im here!! and its great");
-		
 		/**Frame label */
 		JLabel lblSetPayment = new JLabel("Set Payment Arrangement");
 		lblSetPayment.setHorizontalAlignment(SwingConstants.CENTER);
@@ -653,11 +649,11 @@ public class UserSearchGUI extends mainPanel{
 		lblCurrPayment.setBounds(274, 250, 197, 20);
 		panelSetPayment.add(lblCurrPayment);
 		
-		String arngmnt = userController.getReaderArrangement(id, uName);
+		String arngmnt = (String) userController.getReaderArrangement(id, uName);
 		JTextField textCurrPmnt = new JTextField(arngmnt);
 		textCurrPmnt.setColumns(10);
 		textCurrPmnt.setBounds(481, 250, 124, 20);
-		textCurrPmnt.setEditable(true);
+		textCurrPmnt.setEditable(false);
 		panelSetPayment.add(textCurrPmnt);
 		
 		/**New Payment Arrangement label */
@@ -681,20 +677,21 @@ public class UserSearchGUI extends mainPanel{
 		btnSet.setToolTipText("Click here to set payment arrangement");
 		btnSet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String currPaynt = arngmnt;	
-				String newPayment = (String) comboBoxPayment.getSelectedItem();
+				String newPayment = (String) comboBoxPayment.getSelectedItem();	//value for new payment arrangement
 		
-				if (!(currPaynt.equals(newPayment))){
+				if (!(arngmnt.equals(newPayment))){
 				//means there is a conflict between two payment arrangements or there is no agreement
-					System.out.println("currPaynt :"+currPaynt+" newPayment: "+newPayment);
-					if (!(currPaynt.equals("NONE"))){
+					//System.out.println("currPaynt :"+arngmnt+" newPayment: "+newPayment);
+					if (!(arngmnt.equals("NONE"))){
 					//this is a case of conflict agreements
 						int dialogResult = mainPanel.confirmBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?");
 						if(dialogResult == JOptionPane.YES_OPTION){
-							setNewPaymentArrangement(id,fName,lName,uName,priv);
+							setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment);
 						}
 					}
-					
+					else{
+						setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment);
+					}
 				}
 			}
 		});
@@ -723,7 +720,7 @@ public class UserSearchGUI extends mainPanel{
 		loginController.mainG.revalidate();
 	}
 	
-	public static void setNewPaymentArrangement(String id, String fName, String lName, String uName, String priv) {
+	public static void setNewPaymentArrangement(String id, String fName, String lName, String uName, String priv, String newPayment) {
 		UserSearchGUI panelSetNewPayment;
 
 		//System.out.println(loginController.use.getprivilege());
@@ -866,11 +863,10 @@ public class UserSearchGUI extends mainPanel{
 				String perType = new String (comboBoxYearMonth.getSelectedItem().toString());
 				String periodNum = new String (txtNumOfPeriod.getText());
 
-				
 				boolean validate = userController.validateCreditCard(creditNum, expMonth, expYear, cvv, periodNum);
 				if (validate)
 					try {
-						userController.setNewPaymentArrangement(id, uName, creditNum, expYear, expMonth, cvv, perType, periodNum);
+						userController.setNewPaymentArrangement(id, uName, creditNum, expYear, expMonth, cvv, perType, periodNum, newPayment);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -886,13 +882,13 @@ public class UserSearchGUI extends mainPanel{
 		/**button Back */
 		JButton btnBack = new JButton("Back");
 		btnBack.setToolTipText("Click here to view all users details");
+		btnBack.setBounds(274, 441, 89, 23);
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//userController.userSearch();
 				displaySetPayment(id, fName, lName, uName, priv);
 			}
 		});
-		btnBack.setBounds(274, 441, 89, 23);
 		panelSetNewPayment.add(btnBack);
 		
 		
