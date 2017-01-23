@@ -31,7 +31,7 @@ import javax.swing.ImageIcon;
 
 public class readerGUI extends InterestedReaderGUI {
 	
-	
+	private JTable ordersTable;
 	private static String[] columnHeader = {"Title","Date"};
 	public static String[][] data;
 	private static int row = -1;
@@ -39,14 +39,19 @@ public class readerGUI extends InterestedReaderGUI {
 	
 	public readerGUI( String name , String role) {
 		super(name,role);
+		
+		
+		setForeground(Color.WHITE);
 		img.setBounds(10, 521, 964, 357);
 		
 		
+		
+		/** write a review button **/
 		JButton btnNewButton = new JButton("Write a new review");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				String username = loginController.use.getUsername();
-				makeReview(username);
+				bookController.displayUserOrders(username);
 			}
 		});
 		btnNewButton.setBounds(644, 320, 185, 47);
@@ -56,7 +61,7 @@ public class readerGUI extends InterestedReaderGUI {
 		lblNewLabel.setIcon(new ImageIcon(readerGUI.class.getResource("/boundry/write-ballpoint-ballpen-icon.png")));
 		lblNewLabel.setBounds(666, 184, 128, 100);
 		add(lblNewLabel);
-		
+		/*
 		JButton btnViewOrders = new JButton("View orders");
 		btnViewOrders.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -67,20 +72,17 @@ public class readerGUI extends InterestedReaderGUI {
 		});
 		btnViewOrders.setBounds(417, 447, 120, 23);
 		add(btnViewOrders);
-		
+		*/
 	
 	}
 	
 	
-	/**
-	 * showOrders - method. 
-	 * The method will open a window showing the books ordered by the user.
-	 * @param user - String. A username
-	 */
-	protected static void showOrders(String user) {
-		// TODO Auto-generated method stub
+     /** Show order test **/
+	public  void showOrders() {
+	
 		
-		mainPanel showOrdersPanel = new mainPanel(user, role);
+		
+		mainPanel showOrdersPanel = new mainPanel(loginController.use.getUsername(), role);
 		
 		JButton btnMainWindow = new JButton("Main Window");
 		btnMainWindow.addActionListener(new ActionListener() {
@@ -94,6 +96,13 @@ public class readerGUI extends InterestedReaderGUI {
 		btnMainWindow.setBounds(26, 38, 138, 23);
 		showOrdersPanel.add(btnMainWindow);
 		
+		
+		//JButton btnMainWindow = new JButton("Main Window");
+		btnMainWindow.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				userController.GoToMainWindow();
+			}
+		});
 		JLabel lblOrdersList = new JLabel("Orders List");
 		lblOrdersList.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
 		lblOrdersList.setHorizontalAlignment(SwingConstants.CENTER);
@@ -144,7 +153,6 @@ public class readerGUI extends InterestedReaderGUI {
 			ordersTable.setBorder(new LineBorder(Color.LIGHT_GRAY));
 			ordersTable.setPreferredScrollableViewportSize(new Dimension(17,325));
 			
-
 			/*Scroll Pane*/
 			JScrollPane pane = new JScrollPane(ordersTable);
 			showOrdersPanel.add(ordersTable);
@@ -167,7 +175,7 @@ public class readerGUI extends InterestedReaderGUI {
 		
 		loginController.mainG.setContentPane(showOrdersPanel);
 		loginController.mainG.revalidate();
-
+        
 		
 	}
 
@@ -189,24 +197,16 @@ public class readerGUI extends InterestedReaderGUI {
 				userController.GoToMainWindow();
 			}
 		});
-		btnMainWindow.setFont(new Font("AR CENA", Font.BOLD, 14));
-		btnMainWindow.setBackground(Color.GREEN);
-		btnMainWindow.setForeground(Color.WHITE);
-		btnMainWindow.setBounds(26, 38, 138, 23);
-		ordersPanel.add(btnMainWindow);
 		
-		JLabel lblOrdersList = new JLabel("Orders List");
-		lblOrdersList.setHorizontalAlignment(SwingConstants.CENTER);
-		lblOrdersList.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 14));
-		lblOrdersList.setBounds(413, 106, 138, 36);
-		ordersPanel.add(lblOrdersList);
+		JLabel orderLabel = new JLabel("Order List");
+		orderLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		orderLabel.setForeground(Color.BLACK);
+		orderLabel.setFont(new Font("Sitka Subheading", Font.BOLD, 40));
+		orderLabel.setBackground(Color.BLACK);
+		orderLabel.setBounds(350, 94, 306, 56);
+		ordersPanel.add(orderLabel);
 		
-		JLabel lblHereWillBe = new JLabel("Here will be placed a table with the reader's orders from which he/she will be able to choose a book to review");
-		lblHereWillBe.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 16));
-		lblHereWillBe.setHorizontalAlignment(SwingConstants.CENTER);
-		lblHereWillBe.setBounds(47, 292, 928, 98);
-		ordersPanel.add(lblHereWillBe);
-		
+		/** Button for writing review**/
 		JButton btnReviewBook = new JButton("Review Book");
 		btnReviewBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -214,10 +214,59 @@ public class readerGUI extends InterestedReaderGUI {
 				//TODO - implement a review writing screen
 			}
 		});
-		btnReviewBook.setBounds(415, 555, 111, 23);
+		btnReviewBook.setBounds(450, 555, 111, 23);
 		ordersPanel.add(btnReviewBook);
 		
+		/** Orders Table  **/
+		JTable table = new JTable(data,columnHeader)
+		{
+			
+			public boolean isCellEditable(int data,int columns){
+				return false;
+			}
+			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
+				Component c = super.prepareRenderer(r,data,column);
+				
+				
+				if(data % 2 == 0)
+				{
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.WHITE);
+				}
+				else
+				{
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.LIGHT_GRAY);
+				}
+				if(isCellSelected(data,column))
+				{
+					c.setBackground(Color.CYAN);
+					row = data;
+				}
+				
+				
+				return c;
+			}
+			
+		};
 		
+		DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+		r.setHorizontalAlignment( SwingConstants.CENTER );
+		
+		for (int j = 0; j < columnHeader.length; j++)
+			table.getColumnModel().getColumn(j).setCellRenderer(r);
+		
+		
+		table.setBackground(Color.WHITE);
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
+		
+		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		table.setPreferredScrollableViewportSize(new Dimension(687,325));
+		
+		/**Scroll Pane*/
+		JScrollPane pane = new JScrollPane(table);
+		pane.setBounds(100, 230, 687, 325);
+		ordersPanel.add(pane);
 		
 		
 		loginController.mainG.setContentPane(ordersPanel);
@@ -234,29 +283,24 @@ public class readerGUI extends InterestedReaderGUI {
 	 * @param username - String
 	 */
 	
-	public static void displayUserOrders(String username){
+	public static void displayUserOrders(int userId){
 		
 		ArrayList<String> info;
-		String q = "SELECT * "
-				 + "FROM readerorder ro , SELECT A.userID FROM reader WHERE reader.username like %'"+username+"' "
-				 + "WHERE a.userID = ro.userID";
+		info =  DBController.getFromDB("SELECT  b.Title   , ro.date	FROM readerorder ro , reader r , book b "
+				+"WHERE ro.userID="+userId+" and ro.bookID=b.bookID and ro.userID=r.userID ");
 		
-		info = DBController.getFromDB(q);
 	}
 
-	public void bookSearch() {
-		// TODO - implement readerGUI.bookSearch
-		throw new UnsupportedOperationException();
-	}
-
-	public void displayResults() {
-		// TODO - implement readerGUI.displayResults
-		throw new UnsupportedOperationException();
-	}
-
-	public void chooseBook() {
-		// TODO - implement readerGUI.chooseBook
-		throw new UnsupportedOperationException();
+	
+	/** No orders results**/
+	public void noResults()
+	{
+		JLabel label = new JLabel("<<No Results Found>>");
+		label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 13));
+		label.setHorizontalAlignment(SwingConstants.CENTER);
+		label.setForeground(Color.RED);
+		label.setBounds(292, 188, 177, 36);
+		add(label);
 	}
 	
 	

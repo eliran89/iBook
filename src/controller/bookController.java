@@ -4,6 +4,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import boundry.OpenMailGUI;
 import boundry.ReportsGUI;
 import boundry.mainPanel;
 import boundry.readerGUI;
@@ -620,33 +621,42 @@ public class bookController {
 	 * @param user - String, a username
 	 */
 
-	public static void findUsersOrders(String user) {
-		
-		ArrayList<String> orders = new ArrayList<String>();
-		
-		orders = DBController.getFromDB("select b.Title, ro.date "
-						+"from book b, reader r, readerorder ro "
-						+"where r.username like '%" +user+"' and " 
-						+	   "r.userID = ro.userID and "
-						+	   "b.bookID = ro.bookID ");
-		
-		if(!(orders.isEmpty())){
-			
-			readerGUI.data = new String[orders.size()/3][3];
-			int count =0;
-			for(int i = 0 ; i < orders.size()/3 ; i++)
-				for(int j = 0 ; j < 3 ; j++){
-					readerGUI.data[i][j] = orders.get(count);
-					count++;
-				}
-		}
-		
-		//readerGUI.ordersPanel.add()
-		
-		System.out.println(orders.toString());
-
-	}
+	
 	public static void downloadBook(String bid,String format,String bookName) throws SQLException{
 		DBController.getFile(bid,format,bookName);
 	}
+
+/** Display orders table  **/
+public static void displayUserOrders(String uName) {
+	
+	readerGUI reader= new readerGUI(loginController.use.getUsername(),"Reader");
+	ArrayList<String> orders = new ArrayList<String>();
+	
+	orders = DBController.getFromDB("SELECT  b.Title , ro.date FROM readerorder ro , reader re , book b "+
+			"WHERE re.username='"+uName+"' and ro.bookID=b.bookID and ro.userID=re.userID"); 
+
+	
+	if(!(orders.isEmpty())){
+		
+		readerGUI.data = new String[orders.size()/2][2];
+		int count =0;
+		for(int i = 0 ; i < orders.size()/2 ; i++)
+			for(int j = 0 ; j < 2 ; j++){
+				readerGUI.data[i][j] = orders.get(count);
+				count++;
+			}
+		reader.showOrders();
+	}
+	
+	
+	/**if there are no results at all we add a lable that says "no results"*/
+	
+	else
+		reader.noResults();
+	
+	loginController.mainG.setContentPane(reader);
+	loginController.mainG.revalidate();
+	System.out.println(orders.toString());
+}
+
 }

@@ -9,11 +9,7 @@ import boundry.*;
 
 
 public class reviewController {
-/**
- * searchReview check if there are review according to type and item
- * @param type String
- * @param item String
- */
+
 	public static void searchReview(String type,String item) {
 		
 		ArrayList <String> info = null;
@@ -301,6 +297,9 @@ public class reviewController {
 	
 	
 	}
+	
+	
+	
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails
 		throw new UnsupportedOperationException();
