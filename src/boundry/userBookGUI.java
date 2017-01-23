@@ -514,7 +514,8 @@ public class userBookGUI extends mainPanel {
 		lblChooseFormatTo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChooseFormatTo.setFont(new Font("Tahoma", Font.BOLD , 14));
 		lblChooseFormatTo.setBounds(269, 404, 228, 23);
-		add(lblChooseFormatTo);
+		if(loginController.use.getprivilege()==2);
+			add(lblChooseFormatTo);
 		
 		JComboBox formatBox = new JComboBox();	//a combo box which will allow the reader to choose a format to download
 		formatBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
@@ -542,6 +543,7 @@ public class userBookGUI extends mainPanel {
 				String format = formatBox.getSelectedItem().toString();	//save the requested format to download
 				System.out.println(format);
 				try {
+					userController.addBookToOrderList(title, username);
 					bookController.downloadBook(book.getBookID(),format,title);
 				} catch (SQLException e) {
 					e.printStackTrace();

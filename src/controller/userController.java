@@ -209,37 +209,54 @@ public class userController {
 	/**addBookToOrderList method
 	 * adds a book order for a reader to the database
 	 * @param title
+	 * @param username 
+	 * @throws SQLException 
 	 */
-	public static void addBookToOrderList(String title) {
-		// TODO - implement userController.addBookToOrderList
+	public static void addBookToOrderList(String title, String username) throws SQLException {
+
+		ArrayList<String> readerDetails = new ArrayList<String>();
+		ArrayList<String> bookID = new ArrayList<String>();
 		
-			// TODO - implement userController.addBookToOrderList
-			
-			ArrayList<String> orderInfo;	//contains info about the order (userid, book id, date)
-			
-			String username = loginController.use.getUsername();	//get username
-			ArrayList<String> info = null;
-			
-			
-			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-2017");	//date format
-			LocalDateTime now = LocalDateTime.now();	//get order date
-			
-			
-			//System.out.println("starting query");
-			
-			orderInfo = DBController.getFromDB("select reader.userID, book.bookID "
-										  + "from reader, book "
-										  + "where reader.username like '%"+username+"%' "
-										  		+ "AND book.Title like '%"+title+"%' ");
-			
-			System.out.println("order information:");
-			System.out.println("userID = "+orderInfo.get(0)+"\nbookID = "+orderInfo.get(1));
-			
+		bookID = DBController.getFromDB("select b.bookID "
+				+ "from book b "
+				+ "where b.Title = '"+title+"' ");
+		
+		readerDetails = DBController.getFromDB("select r.userID, r.rType "
+									+ "from reader r "
+									+ "where r.username = '"+username+"' ");
+		
+		if(bookID.get(0).equals(readerDetails.get(0))) 
+			readerDetails = DBController.getFromDB("select r.userID "
+					+ "from reader r "
+					+ "where r.username = '"+username+"' ");
+		
+		String q = "select ro.userID, ro.bookID "
+				+ "from readerorder ro "
+				+ "where ro.userID = '"+readerDetails.get(0)+ "' and "
+						+ "ro.bookID = '"+bookID.get(0)+"' ";
+		
+		
+		
+		boolean rs = DBController.existsInDB(q);
+		
+		System.out.println(rs);
+		
+		//if book already been purchased show pop up message
+		if(rs){
+			mainPanel.errorBox("Book has already been purchased!", "Book Already Purchased Error");
+			return;
+		}
+
+			ArrayList<String> now = DBController.getFromDB("SELECT NOW() ");	//get date
 			String query = "INSERT INTO `ibookdb`.`readerorder` (`userID`, `bookID`, `date`) "
-					+ "VALUES ('"+orderInfo.get(0)+"', '"+orderInfo.get(1)+"', '"+now.toString() +"')";
-			
-			info = DBController.getFromDB(query);	//execute update
-			//throw new UnsupportedOperationException();
+					+ "VALUES ('"+readerDetails.get(0)+"', '"+bookID.get(0)+"', '"+now.get(0)+"')";	//insert to orders
+		
+			ArrayList<String> info = DBController.getFromDB(query);	//execute update
+		
+			if(readerDetails.get(1).equalsIgnoreCase("onebyone")){
+				//TODO - implement debt adding  
+			}
+			mainPanel.infoBox("The Book "+title+" has been sent to you!", "Book Ordered Message");	//show message
 		}/**addBookToOrderList method END
 		 * @param title */
 	
