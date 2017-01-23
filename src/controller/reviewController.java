@@ -51,8 +51,21 @@ public class reviewController {
 			panel = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
 		
 		/*if his a reader add it to the title*/
-		else
+		else if(loginController.use.getprivilege() == 2)
 			panel = new reviewGUI(loginController.use.getUsername(),"Reader");
+		
+	
+		else if(loginController.use.getprivilege() == 3)
+			panel = new reviewGUI(loginController.use.getUsername(),"Editor");
+		
+		else if(loginController.use.getprivilege() == 4)
+			panel = new reviewGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			panel = new reviewGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			panel = new reviewGUI(loginController.use.getUsername(),"Manager");
 		
 		/*if we get results we add the results table*/
 		if(info != null)
@@ -84,10 +97,25 @@ public class reviewController {
 	public static void checkReview() {
 		
 		reviewGUI review = null;
+		
 		if(loginController.use.getprivilege() == 1)
 			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
-		else
+		
+		else if(loginController.use.getprivilege() == 2)
 			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		else if(loginController.use.getprivilege() == 3)
+			review = new reviewGUI(loginController.use.getUsername(),"Editor");
+		
+		else if(loginController.use.getprivilege() == 4)
+			review = new reviewGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			review = new reviewGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			review = new reviewGUI(loginController.use.getUsername(),"Manager");
+		
+	
 		loginController.mainG.setContentPane(review);
 		loginController.mainG.revalidate();
 
@@ -101,16 +129,21 @@ public class reviewController {
 		mainPanel mainP = null;
 		if(loginController.use.getprivilege() == 1)
 			mainP = new InterestedReaderGUI(loginController.use.getUsername(),"Interested Reader");
+		
 		else if(loginController.use.getprivilege() == 2)
 			mainP = new readerGUI(loginController.use.getUsername(),"Reader");
 		else if(loginController.use.getprivilege() == 3)
 			mainP = new editorGUI(loginController.use.getUsername(),"Editor");
+		
 		else if(loginController.use.getprivilege() == 4)
 			mainP = new LWorkerGUI(loginController.use.getUsername(),"Library Worker");
+		
 		else if(loginController.use.getprivilege() == 5)
 			mainP = new librarianGUI(loginController.use.getUsername(),"Librarian");
+		
 		else 
 			mainP = new managerGUI(loginController.use.getUsername(),"Manager");
+		
 		loginController.mainG.setContentPane(mainP);
 		loginController.mainG.revalidate();
 	}
@@ -130,11 +163,20 @@ public class reviewController {
 		if(loginController.use.getprivilege() == 1)
 			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
 		
-		if(loginController.use.getprivilege() == 3)
+		else if(loginController.use.getprivilege() == 2)
+			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		
+		else if(loginController.use.getprivilege() == 3)
 			review = new reviewGUI(loginController.use.getUsername(),"Editor");
 		
-		else
-			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		else if(loginController.use.getprivilege() == 4)
+			review = new reviewGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			review = new reviewGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			review = new reviewGUI(loginController.use.getUsername(),"Manager");
 		
 		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
 		loginController.mainG.setContentPane(review);
