@@ -211,7 +211,7 @@ public class bookController {
 				for(int i = 0 ; i < info.size()/4 ; i++){
 					for(int j = 0 ; j < 4 ; j++){
 						
-						if(j == 0 && i > 0 && info.get(count).equals( userBookGUI.data[i-1][j]))
+						if(j == 0 && i > 0 && count > 0 && info.get(count).equals(info.get(count-4)))
 							userBookGUI.data[i][j] ="";
 						else
 							userBookGUI.data[i][j] = info.get(count);
@@ -231,8 +231,8 @@ public class bookController {
 			
 	}
 	/**
-	 * chooseBook display the chosen book
-	 * @param bid String
+	 * chooseBook display the chosen book's details
+	 * @param bid a String instance for the book id
 	 */
 
 	public synchronized static  void chooseBook(String bid) {
@@ -305,13 +305,12 @@ public class bookController {
 		
 		else 
 			panel = new workerBookGUI(loginController.use.getUsername(),"Manager");
-		
-		try {
-			DBController.insertToDB("INSERT INTO `ibookdb`.`searches`(`bookID`,`date`)VALUES("+bid+",now());");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(loginController.use.getprivilege() > 3)
+			try {
+				DBController.insertToDB("INSERT INTO `ibookdb`.`searches`(`bookID`,`date`)VALUES("+bid+",now());");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		
 		panel.displayBook(book);
 		loginController.mainG.setContentPane(panel);
@@ -547,7 +546,16 @@ public class bookController {
 			}
 	*/	
 	}
-
+	/**
+	 * 
+	 * @param brief
+	 * @param title
+	 * @param langu
+	 * @param keyWord
+	 * @param author
+	 * @param appendix
+	 * @param scope
+	 */
 	public static void displayResultsForReports(String brief,String title,String langu,String keyWord,String author,String appendix,String scope){
 		
 		ArrayList<String> info;
@@ -570,7 +578,7 @@ public class bookController {
 			for(int i = 0 ; i < info.size()/4 ; i++){
 				for(int j = 0 ; j < 4 ; j++){
 					
-					if(j == 0 && i > 0 && info.get(count).equals( ReportsGUI.data2[i-1][j]))
+					if(j == 0 && i > 0 && count > 0 && info.get(count).equals(info.get(count-4)))
 						ReportsGUI.data2[i][j] ="";
 					else
 						ReportsGUI.data2[i][j] = info.get(count);
@@ -637,5 +645,8 @@ public class bookController {
 		
 		System.out.println(orders.toString());
 
+	}
+	public static void downloadBook(String bid,String format,String bookName) throws SQLException{
+		DBController.getFile(bid,format,bookName);
 	}
 }

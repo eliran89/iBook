@@ -1,6 +1,9 @@
 package controller;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -22,7 +25,7 @@ public class DBController {
 	static private String host;
 	static private int port;
 	ClientConsole chat;
-	
+	static public byte[][] buffers;
 	
 	 /** Constractor*/
 	/**
@@ -207,6 +210,34 @@ public class DBController {
 		}
 			
 	}
-	
+	static synchronized public void getFile(String bid,String format,String bookName) throws SQLException{
+		
+		String file = bid+"."+format;
+		try {
+			ClientConsole chat= new ClientConsole(host, port);
+			rs = null;
+			allowToProceed = false;
+			ClientConsole.accept(file);	
 
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		while(allowToProceed == false);	
+		File f = new File("C:/Users/Admin/Desktop/"+bookName+"."+format);
+		  try {
+			FileOutputStream output = new FileOutputStream(f);
+			try {
+				//while (input.read(buffer) > 0)
+				for(int i = 0;i < buffers.length;i++)
+					output.write(buffers[i]);
+			output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	  }
+	
 }

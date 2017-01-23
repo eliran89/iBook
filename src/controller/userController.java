@@ -16,6 +16,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JFrame;
 
@@ -355,6 +356,109 @@ public class userController {
 		}
 	}
 	
+	public static int getUserPrivilege(String uname){
+		ArrayList<String> priv;
+		int privInt;
+		
+		priv = DBController.getFromDB("select u.privilege from ibookdb.user u where u.username = '"+uname+"'");
+		privInt = Integer.parseInt(priv.get(0));
+		
+		return privInt;		
+	}
+	
+	public static String getReaderArrangement(String ID, String uname){
+		ArrayList<String> rType;
+		
+		if (getUserPrivilege(uname) == 2){
+			rType = DBController.getFromDB("select r.rType from ibookdb.reader r where r.userID = '"+ID+"'");
+			System.out.println(rType.get(0));
+			if (rType.get(0).equals("periodic"))
+				return "Periodic";
+			if (rType.get(0).equals("onebyone"))
+				return "One-by-One";
+		}
+		return "NONE";
+	}
+	
+	public static boolean validateCreditCard(String creditNum, String expMonth, String expYear, String cvv, String periodNum){
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH);
+		
+		int creditNumInt;
+		int expMonthInt;
+		int expYearInt;
+		int cvvInt;
+		int periodNumInt;
+		
+		try{
+			creditNumInt = Integer.parseInt(creditNum);
+			expMonthInt = Integer.parseInt(expMonth);
+			expYearInt = Integer.parseInt(expYear);
+			cvvInt = Integer.parseInt(cvv);
+			periodNumInt = Integer.parseInt(periodNum);
+		}
+		catch (NumberFormatException e){	//it's not a number!!
+			mainPanel.errorBox("Please enter valid numbers\nChars and symbols are not allowed", "Credit Card Error");
+			return false;
+		}
+		
+		if (!((creditNumInt >= 10000000) && (creditNumInt <= 99999999))){
+				mainPanel.errorBox("Please enter a valid credit card number\nValid number contains 8 digits", "Credit Card Error");
+				return false;
+		}
+		if (!((expMonthInt <= 12) && (expMonthInt > 0))){
+			mainPanel.errorBox("Please enter a valid month value", "Credit Card Error");
+			return false;
+		}
+		if (!((expYearInt <= year+100) && (expYearInt >= 2017))){
+			mainPanel.errorBox("Please enter a valid year value", "Credit Card Error");
+			return false;
+		}
+		if (((expMonthInt < month) && (expYearInt == year))||(expYearInt < year)){
+			mainPanel.errorBox("Your credit is out dated\nPlease enter a valid one", "Credit Card Error");
+			return false;
+		}
+		if (!((cvvInt <= 999) && (cvvInt >= 100))){
+			mainPanel.errorBox("CVV value invalid\nPlease enter a 3-digit number", "Credit Card Error");
+			return false;
+		}
+		mainPanel.infoBox("Your credit card checked and confirmed!", "Credit Card Validated");
+		return true;
+	}
+	
+	public static void setNewPaymentArrangement(String id, String uName, String creditNum, String expYear, String expMonth, String cvv,String perType, String periodNum, String newPayment) throws SQLException {
+
+		ArrayList<String> idIsReader = null;	//if exist means user defined as a reader
+		ArrayList<String> idIsPeriodic = null;	//if exist means user defined as a periodic reader
+		ArrayList<String> firstLastName = null;
+		
+		/**get first and last name*/
+		firstLastName = DBController.getFromDB("select ir.firstName, ir.lastName from interestedreader ir where ir.userID = '"+id+"'");
+		String firstName = firstLastName.get(0);
+		String lastName = firstLastName.get(1);
+		
+		/**get ID if exists in reader table*/
+		idIsReader = DBController.getFromDB("select r.userID from reader r where r.userID = '"+id+"'");
+			if(idIsReader.get(0) == null){
+				UserSearchGUI.infoBox("ID "+idIsReader.toString()+" is NOT a reader!", "My check");
+				DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPayment+"', '"+firstName+"', '"+lastName+"', '"+uName+"')");
+				DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"'");	//updating into reader privilege level
+			}
+			if (newPayment.equals("Periodic")){
+				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
+				if(idIsPeriodic.get(0) == null)		//means user is NOT defined as periodic reader in DB
+					if (perType.equals("Months"))
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perType+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
+					else
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perType+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
+				else								//means user defined as periodic and we're about to extend his arrangement
+					if (perType.equals("Months"))	//means we're about to extend in 'month' periods
+						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' MONTH) WHERE `userID`='"+id+"'");
+					else							//means we're about to extend in 'year' periods
+						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' YEAR) WHERE `userID`='"+id+"'");
+			}
+	
+	}
 	
 	public void checkOrderDetails() {
 		// TODO - implement userController.checkOrderDetails
@@ -428,7 +532,6 @@ public class userController {
 			ReportsGUI.columnHeader1[0] = "username";
 			ReportsGUI.columnHeader1[1] = "bookName";
 			ReportsGUI.columnHeader1[2] = "date";
-			panel.allUsrers();
 			panel.displayUsersReport();
 			
 		}
@@ -473,7 +576,6 @@ public class userController {
 			ReportsGUI.columnHeader1[0] = "bookName";
 			ReportsGUI.columnHeader1[1] = "date";
 			panel.displayUsersReport();
-			panel.singleUser(username);
 			
 		}
 		
@@ -496,77 +598,160 @@ public class userController {
 	 * @param bid
 	 */
 	public static void displaySearchReport(String bid,String bName){
-		ArrayList<String> specBook = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
-		ArrayList<String> info;
-		int bookCnt = Integer.parseInt(specBook.get(0));
-		info = DBController.getFromDB("select  book.numOfSearches cnt from book order by cnt;");
-		if(info.equals(specBook))
-			info = DBController.getFromDB("select  book.numOfSearches cnt from book order by cnt;");
-		
-		
-		  String median = "median";
-	      String highest = "Highest";
-	      String lowest = "Lowest";
-	      String type = "Book Type";
-	      int low =Integer.parseInt(info.get(0));
-	      int high =Integer.parseInt(info.get(info.size()-1));
-	      int med = Integer.parseInt(info.get(info.size()/2));
-
-	      final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
-
-
-	      dataset.addValue( low , lowest , type );
-
-	      dataset.addValue( med , median , type );
-
-	      dataset.addValue(high  ,highest  , type );
-	      
-	      dataset.addValue( bookCnt , bName , type );
-	              
-	      //int width = 640; /* Width of the image */
-	     // int height = 480; /* Height of the image */ 
-		/* double[] data = new double[info.size()];
-		 System.out.println("info is: "+info);
-	        for(int p = 0; p < info.size();p++)
-	             data[p] = Integer.parseInt(info.get(p));
-
-
-	        int number = data.length;
-	        HistogramDataset dataset = new HistogramDataset();
-	        dataset.setType(HistogramType.FREQUENCY);
-	        dataset.addSeries("Hist",data,200); // Number of bins is 50
-	        String xAxis = "Frequency";
-	        String yAxis = "Mass Error (Da)";
-	        PlotOrientation orientation = PlotOrientation.VERTICAL;
-
-	        boolean show = false;
-	        boolean toolTips = false;
-	        boolean urls = false;
-	        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Book", "Number Of Searches",dataset, orientation, show, toolTips, urls);
-	                
-
-	        chart.setBackgroundPaint(Color.white);*/
-
-	      JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
-	    	                   	    	                     	    	                 	    	                	    	                  	    	        
-	        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
-	        frame.setVisible(true);
-	        frame.setSize(700, 600);
+		ArrayList<String> info = DBController.getFromDB("select searches.date from searches where searches.bookID = "+bid);
+		ArrayList<String> nows = DBController.getFromDB("select now()");
+		if(info == null  || nows.equals(info))
+			nows = DBController.getFromDB("select now()");
+		 String now = nows.get(0).substring(0,7);
+		 System.out.println("now is: "+now);
+		 ArrayList<String> dataT = new  ArrayList<String>();
+	      double[] data;
+	      int size;
+	      if(info != null) 
+	    	  size = info.size();
+	      else
+	    	  size = 0;
+	        for(int p = 0; p < size;p++){
+	        	String date = info.get(p);//+"."+info.get(p).substring(5, 7);
+	        	if (date.contains(now))
+	        	{
+	        		date = date.substring(8, 10);
+	        		System.out.println(date);
+	        		dataT.add(date);
+	        	}
+	             
+	        }
+	        if(info != null){
+	        	data = new double[dataT.size()];
+	        	for(int i = 0;i < dataT.size();i++)
+	        		data[i] = Double.parseDouble(dataT.get(i));
+	        
+		        HistogramDataset dataset = new HistogramDataset();
+		        dataset.setType(HistogramType.FREQUENCY);
+		        dataset.addSeries("Book",data,30); // Number of bins is 50
+		        PlotOrientation orientation = PlotOrientation.VERTICAL;
+	
+		        boolean show = false;
+		        boolean toolTips = false;
+		        boolean urls = false;
+		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
+		                
+	
+		        chart.setBackgroundPaint(Color.white);
+	
+		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
+		    	                   	    	                     	    	                 	    	                	    	                  	    	        
+		        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+		        frame.setVisible(true);
+		        frame.setSize(700, 600);
+	        }
+	        else
+	        	mainPanel.infoBox("No searches", "Report");
 	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 	}
-	public static void displayOrderRankByScope(String scope , String bid){
-		ArrayList<String> info = DBController.getFromDB("select book.numOfSearches cnt from book where bookID = '"+bid+"'");
-		int bookCnt = Integer.parseInt(info.get(0));
+	public static void displayOrderRankByScope(String scope , String bid , String bookName,ArrayList<String> scopes){
+		ArrayList<String> info = DBController.getFromDB("select count(readerorder.userID) cnt,book.bookID"
+														+" from book,readerorder ,bscope where readerorder.bookID = book.bookID and book.bookID = bscope.bookID and bscope.scopeName = '"+scope+"' "
+														+" group by book.bookID"
+														+" order by cnt");
+		int rank = 1;
+		if(info != null){
+			int i = info.size()-2;
+			while(i>0 && !bid.equals(info.get(i+1)))
+			{
+				System.out.println("i is : "+i);
+				if(i>0 && Integer.parseInt(info.get(i))>Integer.parseInt(info.get(i-2)))
+				rank++;
+				i-=2;
+			}
+			if(i == 0)
+				rank ++;
+		}
+		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");	
+		panel.chooseBy(bookName, bid, scopes);
+		panel.displayRank(Integer.toString(rank));
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
 		
 		
 	}
-	public static void displayOrderRank( String bid){
-		
+	public static void displayOrderRank( String bid , ArrayList<String> scopes,String bookName){
+		ArrayList<String> info = DBController.getFromDB("select count(readerorder.userID) cnt,book.bookID"
+														+" from book,readerorder where readerorder.bookID = book.bookID"
+														+" group by book.bookID"
+														+" order by cnt");
+		int rank = 1;
+		if(info != null){
+			int i = info.size()-2;
+			while(i>0 && !bid.equals(info.get(i+1)))
+			{
+				System.out.println("i is : "+i);
+				if(i>0 && Integer.parseInt(info.get(i))>Integer.parseInt(info.get(i-2)))
+					rank++;
+				i-=2;
+			}
+		if(i == 0)
+			rank ++;
+		}
+		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");	
+		panel.chooseBy(bookName, bid, scopes);
+		panel.displayRank(Integer.toString(rank));
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
 	}
 	public static void displayOrdersReport(String bid){
 		
-		//DefaultCategoryDataset set = new DefaultCategoryDataset();
+		ArrayList<String> info = DBController.getFromDB("select readerorder.date from readerorder where readerorder.bookID = "+bid+"");
+		ArrayList<String> nows = DBController.getFromDB("select now()");
+		if(info == null  || nows.equals(info))
+			nows = DBController.getFromDB("select now()");
+		 String now = nows.get(0).substring(0,7);
+		 System.out.println("now is: "+now);
+		 ArrayList<String> dataT = new  ArrayList<String>();
+	      double[] data;
+	      int size;
+	      if(info != null) 
+	    	  size = info.size();
+	      else
+	    	  size = 0;
+	        for(int p = 0; p < size;p++){
+	        	String date = info.get(p);//+"."+info.get(p).substring(5, 7);
+	        	if (date.contains(now))
+	        	{
+	        		date = date.substring(8, 10);
+	        		System.out.println(date);
+	        		dataT.add(date);
+	        	}
+	             
+	        }
+	        if(info != null){
+	        	data = new double[dataT.size()];
+	        	for(int i = 0;i < dataT.size();i++)
+	        		data[i] = Double.parseDouble(dataT.get(i));
+	        
+		        HistogramDataset dataset = new HistogramDataset();
+		        dataset.setType(HistogramType.FREQUENCY);
+		        dataset.addSeries("Book",data,30); // Number of bins is 50
+		        PlotOrientation orientation = PlotOrientation.VERTICAL;
+	
+		        boolean show = false;
+		        boolean toolTips = false;
+		        boolean urls = false;
+		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
+		                
+	
+		        chart.setBackgroundPaint(Color.white);
+	
+		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
+		    	                   	    	                     	    	                 	    	                	    	                  	    	        
+		        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+		        frame.setVisible(true);
+		        frame.setSize(700, 600);
+	        }
+	        else
+	        	mainPanel.infoBox("No Orders", "Report");
+	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 		
 	}

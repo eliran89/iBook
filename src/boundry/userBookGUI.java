@@ -34,6 +34,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
 
 public class userBookGUI extends mainPanel {
+	boolean bool =true;
 	private JTextField textTitle;
 	private JTextField textLangu;
 	private JTextField textKeyWord;
@@ -50,6 +51,7 @@ public class userBookGUI extends mainPanel {
 	private JTextField TFLang;
 	private JTable scopeTable;
 	private JTable table_2;
+	private JTable tableScopes;
 	/**
 	 * userBookGUI Constructor
 	 * @param name String
@@ -71,8 +73,13 @@ public class userBookGUI extends mainPanel {
 		add(btnMainWindow);
 		
 
+	/*	JTextField TFScope= new JTextField();
+		//TFScope.setText(book.getLanguage());
+		TFScope.setEditable(false);
+		TFScope.setBounds(179, 194, 70, 20);
+		add(TFScope);*/
 		
-
+		
 
 		/*if(loginController.use.getprivilege() != 2)
 			btnOrderTheBook.setVisible(false);*/
@@ -256,6 +263,7 @@ public class userBookGUI extends mainPanel {
 			public boolean isCellEditable(int data,int columns){
 				return false;
 			}
+			
 			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
 				Component c = super.prepareRenderer(r,data,column);
 				
@@ -276,13 +284,7 @@ public class userBookGUI extends mainPanel {
 					c.setBackground(Color.CYAN);
 					row = data;
 				}
-			
-				if(getValueAt(data, column)=="")
-					if(data % 2 == 0)
-						c.setBackground(Color.LIGHT_GRAY);
-					else
-						c.setBackground(Color.WHITE);
-				
+				bool = true;
 				return c;
 			}
 			
@@ -307,33 +309,6 @@ public class userBookGUI extends mainPanel {
 		add(pane);
 		
 		
-		/*JLabel lblScope_1 = new JLabel("Scope");
-		lblScope_1.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblScope_1.setForeground(Color.BLACK);
-		lblScope_1.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScope_1.setBounds(210, 345, 83, 23);
-		add(lblScope_1);
-		
-		JLabel lblSubject = new JLabel("Subject");
-		lblSubject.setHorizontalAlignment(SwingConstants.CENTER);
-		lblSubject.setForeground(Color.BLACK);
-		lblSubject.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblSubject.setBounds(350, 345, 83, 23);
-		add(lblSubject);
-		
-		JLabel lblBookName = new JLabel("Book Name");
-		lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
-		lblBookName.setForeground(Color.BLACK);
-		lblBookName.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblBookName.setBounds(470, 345, 111, 23);
-		add(lblBookName);
-		
-		JLabel lblIndex = new JLabel("Index");
-		lblIndex.setHorizontalAlignment(SwingConstants.CENTER);
-		lblIndex.setForeground(Color.BLACK);
-		lblIndex.setFont(new Font("Tahoma", Font.BOLD, 16));
-		lblIndex.setBounds(630, 342, 111, 23);
-		add(lblIndex);*/
 		
 		JButton btnDisplayBook = new JButton("Display Book");
 		btnDisplayBook.addActionListener(new ActionListener() {
@@ -482,8 +457,45 @@ public class userBookGUI extends mainPanel {
 		lblScopes.setBounds(79, 192, 97, 14);
 		add(lblScopes);
 		
+		String[] headerScope = {"Scopes"};
+		String[][] dataScopes = new String[1][book.getScope().size()];
+		tableScopes = new JTable(dataScopes,headerScope){
+			public boolean isCellEditable(int data,int columns){
+				return false;
+			}
+			
+			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
+				Component c = super.prepareRenderer(r,data,column);
+				
+				
+				if(data % 2 == 0)
+				{
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.WHITE);
+				}
+				else
+				{
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.LIGHT_GRAY);
+				}
+				bool = true;
+				return c;
+			}
+		};
+		tableScopes.setPreferredScrollableViewportSize(new Dimension(179,194));
+		tableScopes.setFillsViewportHeight(true);
 		
-		JTextField TFScope= new JTextField();
+		DefaultTableCellRenderer r = new DefaultTableCellRenderer();
+		r.setHorizontalAlignment( SwingConstants.CENTER );
+		for (int j = 0; j < headerScope.length; j++)
+			tableScopes.getColumnModel().getColumn(j).setCellRenderer(r);
+		tableScopes.setBounds(179, 194, 106, 51);
+		JScrollPane pane = new JScrollPane(tableScopes);//add table to scroll bar
+		pane.setBounds(181, 376, 583, 191);//set table dimention
+		add(pane);
+		add(tableScopes);
+		
+		/*JTextField TFScope= new JTextField();
 		TFScope.setText(book.getLanguage());
 		TFScope.setEditable(false);
 		TFScope.setBounds(179, 194, 70, 20);
@@ -496,7 +508,7 @@ public class userBookGUI extends mainPanel {
 		}
 		TFScope.setText(scopes);
 		add(TFScope);
-		TFScope.setColumns(10);
+		TFScope.setColumns(10);*/
 		
 		JLabel lblChooseFormatTo = new JLabel("Choose format to Download:");
 		lblChooseFormatTo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -506,9 +518,9 @@ public class userBookGUI extends mainPanel {
 		
 		JComboBox formatBox = new JComboBox();	//a combo box which will allow the reader to choose a format to download
 		formatBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
-		formatBox.addItem("PDF");	//PDF format
+		formatBox.addItem("pdf");	//PDF format
 		formatBox.addItem("fb2");	//fb2 format
-		formatBox.addItem("DOC");	//doc format
+		formatBox.addItem("docx");	//doc format
 		formatBox.setBounds(589, 407, 89, 20);
 		
 		if(loginController.use.getprivilege() == 2)
@@ -529,7 +541,11 @@ public class userBookGUI extends mainPanel {
 				String title = lblBookTitle.getText();
 				String format = formatBox.getSelectedItem().toString();	//save the requested format to download
 				System.out.println(format);
-				
+				try {
+					bookController.downloadBook(book.getBookID(),format,title);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 				
 				/*mainPanel orders = new mainPanel(username, role);
 				
@@ -578,6 +594,4 @@ public class userBookGUI extends mainPanel {
 		if(!book.isSuspended())
 			imgS.setVisible(false);
 	}
-	
-
 }

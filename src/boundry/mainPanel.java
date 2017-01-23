@@ -1,6 +1,7 @@
 package boundry;
 
 import java.awt.Color;
+
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -10,6 +11,7 @@ import java.sql.SQLException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -20,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
+import java.util.Calendar;
 
 
 
@@ -71,107 +74,154 @@ public class mainPanel extends JPanel {
 		
 		///////////////////to erase!!!//////
 		
-/*
-		*//**Frame label *//*
-		JLabel lblAddingANew = new JLabel("Edit User Details");
-		lblAddingANew.setHorizontalAlignment(SwingConstants.CENTER);
-		lblAddingANew.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblAddingANew.setBounds(274, 72, 331, 27);
-		add(lblAddingANew);
+/*		*//**Frame label *//*
+		JLabel lblSetPayment = new JLabel("Set a New Payment Arrangement");
+		lblSetPayment.setHorizontalAlignment(SwingConstants.CENTER);
+		lblSetPayment.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblSetPayment.setBounds(274, 72, 331, 27);
+		add(lblSetPayment);
 		
 		*//**ID label and textField *//*
-		JLabel lblTitle = new JLabel("ID");
-		lblTitle.setToolTipText("ID field cannot be edited");
-		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
-		lblTitle.setForeground(Color.BLACK);
-		lblTitle.setBounds(274, 152, 51, 20);
-		add(lblTitle);
+		JLabel lblID = new JLabel("ID");
+		lblID.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblID.setHorizontalAlignment(SwingConstants.LEFT);
+		lblID.setForeground(Color.BLACK);
+		lblID.setBounds(274, 152, 51, 20);
+		add(lblID);
 		
-		JTextField textId = new JTextField();
-		textId.setBounds(388, 154, 124, 20);
+		JTextField textId = new JTextField("id");
+		textId.setBounds(481, 152, 124, 20);
 		textId.setColumns(10);
 		textId.setEditable(false);
 		add(textId);
 		
-		*//**first name label and textField *//*
-		JLabel lblFirstName = new JLabel("First Name");
-		lblFirstName.setToolTipText("Enter new account first name");
-		lblFirstName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblFirstName.setForeground(Color.BLACK);
-		lblFirstName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblFirstName.setBounds(274, 202, 104, 20);
-		add(lblFirstName);
-		
-		JTextField textFname = new JTextField();
-		textFname.setColumns(10);
-		textFname.setBounds(388, 204, 124, 20);
-		textFname.setEditable(true);
-		add(textFname);
-		
-		*//**last name label and textField *//*
-		JLabel lblLastName = new JLabel("Last Name");
-		lblLastName.setToolTipText("Enter new account last name");
-		lblLastName.setHorizontalAlignment(SwingConstants.LEFT);
-		lblLastName.setForeground(Color.BLACK);
-		lblLastName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblLastName.setBounds(274, 250, 104, 20);
-		add(lblLastName);
-		
-		JTextField textLname = new JTextField();
-		textLname.setColumns(10);
-		textLname.setBounds(388, 252, 124, 20);
-		textLname.setEditable(true);
-		add(textLname);
-		
 		*//**user name label and textField *//*
 		JLabel lblUserName = new JLabel("User Name");
-		lblUserName.setToolTipText("Username field cannot be edited");
 		lblUserName.setHorizontalAlignment(SwingConstants.LEFT);
 		lblUserName.setForeground(Color.BLACK);
 		lblUserName.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblUserName.setBounds(274, 297, 104, 20);
+		lblUserName.setBounds(274, 201, 104, 20);
 		add(lblUserName);
 		
-		JTextField textUname = new JTextField();
+		JTextField textUname = new JTextField("uName");
 		textUname.setColumns(10);
-		textUname.setBounds(388, 299, 124, 20);
+		textUname.setBounds(481, 201, 124, 20);
 		textUname.setEditable(false);
 		add(textUname);
 		
-		*//**password label and textField *//*
-		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setToolTipText("Enter 6 chars account password");
-		lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
-		lblPassword.setForeground(Color.BLACK);
-		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblPassword.setBounds(274, 344, 104, 20);
-		add(lblPassword);
+		*//**credit card label and textField *//*
+		JLabel lblCreditNum = new JLabel("Credit Card");
+		lblCreditNum.setToolTipText("8-digits credit card number");
+		lblCreditNum.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCreditNum.setForeground(Color.BLACK);
+		lblCreditNum.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCreditNum.setBounds(274, 250, 197, 20);
+		add(lblCreditNum);
 		
-		JTextField textPassword = new JTextField("*****");
-		textPassword.setColumns(10);
-		textPassword.setBounds(388, 346, 124, 20);
-		textPassword.setEditable(true);
-		add(textPassword);
+		JTextField textCreditNum = new JTextField("Credit_Card_Number");
+		textCreditNum.setColumns(10);
+		textCreditNum.setBounds(481, 250, 124, 20);
+		textCreditNum.setEditable(true);
+		add(textCreditNum);
+		
+		*//**Valid to label and textField *//*
+		JLabel lblExpDate = new JLabel("Valid To");
+		lblExpDate.setHorizontalAlignment(SwingConstants.LEFT);
+		lblExpDate.setForeground(Color.BLACK);
+		lblExpDate.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblExpDate.setBounds(274, 297, 197, 20);
+		add(lblExpDate);
+		
+		JTextField textExpMonth = new JTextField("mm");
+		textExpMonth.setHorizontalAlignment(SwingConstants.CENTER);
+		textExpMonth.setColumns(10);
+		textExpMonth.setBounds(481, 297, 27, 20);
+		textExpMonth.setEditable(true);
+		add(textExpMonth);
+		
+		JLabel slash = new JLabel("/");
+		slash.setHorizontalAlignment(SwingConstants.LEFT);
+		slash.setForeground(Color.BLACK);
+		slash.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		slash.setBounds(509, 297, 11, 20);
+		add(slash);
+		
+		JTextField textExpYear = new JTextField("yyyy");
+		textExpYear.setHorizontalAlignment(SwingConstants.CENTER);
+		textExpYear.setEditable(true);
+		textExpYear.setColumns(10);
+		textExpYear.setBounds(517, 297, 35, 20);
+		add(textExpYear);
+		
+		*//**CVV label and textField *//*
+		JLabel lblCVV = new JLabel("CVV");
+		lblCVV.setToolTipText("3-digits number at the back of credit card");
+		lblCVV.setHorizontalAlignment(SwingConstants.LEFT);
+		lblCVV.setForeground(Color.BLACK);
+		lblCVV.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblCVV.setBounds(274, 344, 104, 20);
+		add(lblCVV);
+		
+		JTextField textCVV = new JTextField();
+		textCVV.setHorizontalAlignment(SwingConstants.CENTER);
+		textCVV.setColumns(10);
+		textCVV.setBounds(481, 344, 27, 20);
+		textCVV.setEditable(true);
+		add(textCVV);
+		
+		*//**number of periods arrangement label and textField *//*
+		JLabel lblNumberOfPeriod = new JLabel("Number of Years/Months");
+		lblNumberOfPeriod.setToolTipText("up to 2 digits number is allowed");
+		lblNumberOfPeriod.setHorizontalAlignment(SwingConstants.LEFT);
+		lblNumberOfPeriod.setForeground(Color.BLACK);
+		lblNumberOfPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNumberOfPeriod.setBounds(274, 390, 197, 20);
+		add(lblNumberOfPeriod);
+		
+		JTextField txtNumOfPeriod;
+		txtNumOfPeriod = new JTextField();
+		txtNumOfPeriod.setHorizontalAlignment(SwingConstants.CENTER);
+		txtNumOfPeriod.setEditable(true);
+		txtNumOfPeriod.setColumns(10);
+		txtNumOfPeriod.setBounds(481, 390, 27, 20);
+		add(txtNumOfPeriod);
+		
+		*//**Years/Months period comboBox *//*
+		JComboBox comboBoxYearMonth = new JComboBox();
+		comboBoxYearMonth.setBounds(516, 390, 89, 20);
+		comboBoxYearMonth.addItem("Months");
+		comboBoxYearMonth.addItem("Years");
+		add(comboBoxYearMonth);
 
 		
-		*//**button Update *//*
-		JButton btnUpdate = new JButton("Update");
-		btnUpdate.setToolTipText("Click here to update account");
-		btnUpdate.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		*//**button Set *//*
+		JButton btnSet = new JButton("Set");
+		btnSet.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				//String id = new String (textId.getText());
+				//String uName = new String (textUname.getText());
+				String creditNum = new String (textCreditNum.getText());
+				String expMonth = new String (textExpMonth.getText());
+				String expYear = new String (textExpYear.getText());
+				String cvv = new String (textCVV.getText());
 				
-				try {
-					userController.setUserDetails(Integer.parseInt(textId.getText()),textFname.getText(),textLname.getText(),textUname.getText(),textPassword.getText());
-				} catch (SQLException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				int creditNumInt = Integer.parseInt(creditNum);
+				int expMonthInt = Integer.parseInt(expMonth);
+				int expYearInt = Integer.parseInt(expYear);
+				int cvvInt = Integer.parseInt(cvv);
+				
+				boolean validate = userController.validateCreditCard(creditNumInt, expMonthInt, expYearInt, cvvInt);
+				if (validate)
+					userController.setNewPaymentArrangement(ID, uName, creditNum, expDate, cvv, perType, periodNum);
+				else
+					displaySetPayment(id, fName, lName, uName, priv);
+				
 				
 			}
 		});
-		btnUpdate.setBounds(516, 441, 89, 23);
-		add(btnUpdate);
+		btnSet.setToolTipText("Click here to set a new payment arrangement");
+		btnSet.setBounds(516, 441, 89, 23);
+		add(btnSet);
 		
 		*//**button Back *//*
 		JButton btnBack = new JButton("Back");
@@ -179,11 +229,13 @@ public class mainPanel extends JPanel {
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				//userController.userSearch();
-				userController.getUserDetails("Username","");
+				displaySetPayment(id, fName, lName, uName, priv);
 			}
 		});
 		btnBack.setBounds(274, 441, 89, 23);
-		add(btnBack);*/
+		add(btnBack);
+		*/	
+
 	}
 	
    	public static void infoBox(String infoMessage, String titleBar)
@@ -200,4 +252,8 @@ public class mainPanel extends JPanel {
     {
         JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.ERROR_MESSAGE);
     }
+	
+	public static int confirmBox(String infoMessage){
+		return JOptionPane.showConfirmDialog (null, infoMessage);
+	}
 }
