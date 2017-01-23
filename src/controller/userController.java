@@ -257,8 +257,12 @@ public class userController {
 				//TODO - implement debt adding  
 			}
 			mainPanel.infoBox("The Book "+title+" has been sent to you!", "Book Ordered Message");	//show message
-		}/**addBookToOrderList method END
-		 * @param title */
+			
+			
+			
+		}
+	
+	
 	
 
 	public void setDetails() {
