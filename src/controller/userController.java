@@ -55,7 +55,9 @@ public class userController {
 			
 	}
 	
-	/**goToMainWindow method*/
+	/**
+	 * GoToMainWindow - display the main window(according to the level)
+	 */
 	public static void GoToMainWindow()
 	{
 		mainPanel mainP = null;
@@ -206,24 +208,31 @@ public class userController {
 		
 	}/**displayRiview method END*/
 	
-	/**addBookToOrderList method
-	 * adds a book order for a reader to the database
-	 * @param title
-	 * @param username 
+	
+	/**
+	 * adds a book order for a reader to the database.
+	 * The method checks whether a reader had already purchased a book using SQL queries that are being sent to the database
+	 * and updates it in case a reader hadn't already purchased the book he is trying to purchase.
+	 * In addition, the method checks what payment agreement a user has, and if it's a "pay per view" kind of payment agreement,
+	 * the method adds the cost of the book to his debt
+	 * @param title - String. The title of the book
+	 * @param username  - String. Username
+	 * @param bookCost - float. The cost of the desired book
 	 * @throws SQLException 
 	 */
-	public static void addBookToOrderList(String title, String username) throws SQLException {
+	public static void addBookToOrderList(String title, String username, float bookCost) throws SQLException {
 
 		ArrayList<String> readerDetails = new ArrayList<String>();
 		ArrayList<String> bookID = new ArrayList<String>();
 		
 		bookID = DBController.getFromDB("select b.bookID "
 				+ "from book b "
-				+ "where b.Title = '"+title+"' ");
+				+ "where b.Title = '"+title+"' ");	//get bookID
 		
-		readerDetails = DBController.getFromDB("select r.userID, r.rType "
+		
+		readerDetails = DBController.getFromDB("select r.userID "
 									+ "from reader r "
-									+ "where r.username = '"+username+"' ");
+									+ "where r.username = '"+username+"' ");	//get userID
 		
 		if(bookID.get(0).equals(readerDetails.get(0))) 
 			readerDetails = DBController.getFromDB("select r.userID "
@@ -233,38 +242,44 @@ public class userController {
 		String q = "select ro.userID, ro.bookID "
 				+ "from readerorder ro "
 				+ "where ro.userID = '"+readerDetails.get(0)+ "' and "
-						+ "ro.bookID = '"+bookID.get(0)+"' ";
+						+ "ro.bookID = '"+bookID.get(0)+"' ";	//check orders
 		
 		
 		
-		boolean rs = DBController.existsInDB(q);
+		boolean rs = DBController.existsInDB(q);	//indicates whether a reader had already ordered the book he/she is trying to order
 		
-		System.out.println(rs);
+		//System.out.println(rs);
 		
 		//if book already been purchased show pop up message
 		if(rs){
-			mainPanel.errorBox("Book has already been purchased!", "Book Already Purchased Error");
+			mainPanel.errorBox("Book has already been purchased!", "Book Already Purchased Error");	//failure message
 			return;
 		}
 
 			ArrayList<String> now = DBController.getFromDB("SELECT NOW() ");	//get date
+			
 			String query = "INSERT INTO `ibookdb`.`readerorder` (`userID`, `bookID`, `date`) "
 					+ "VALUES ('"+readerDetails.get(0)+"', '"+bookID.get(0)+"', '"+now.get(0)+"')";	//insert to orders
 		
 			ArrayList<String> info = DBController.getFromDB(query);	//execute update
 		
-			if(readerDetails.get(1).equalsIgnoreCase("onebyone")){
-				//TODO - implement debt adding  
+			/*check payment*/
+			String rt = loginController.RDetails.getReaderType().toString();	//get reader type
+			
+			if(rt.equalsIgnoreCase("onebyone")){	//if one by one
+				
+				ArrayList<String>debtCalc = DBController.getFromDB("update `ibookdb`.`reader` set `reader`.`debt` = "
+						+ ""+(loginController.RDetails.getDebt() + bookCost)+
+						" where `reader`.`userID` = '"+readerDetails.get(0)+ "' ");	//insert debt
+				
+				loginController.RDetails.setDebt(loginController.RDetails.addToDebt(bookCost));	//set new debt
+				//System.out.println("debt is: "+loginController.RDetails.getDebt());
 			}
-			mainPanel.infoBox("The Book "+title+" has been sent to you!", "Book Ordered Message");	//show message
 			
-			
-			
+			mainPanel.infoBox("The Book "+title+" has been sent to you!", "Book Ordered Message");	//show success message
 		}
 	
 	
-	
-
 	public void setDetails() {
 		// TODO - implement userController.setDetails
 		throw new UnsupportedOperationException();

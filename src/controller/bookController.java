@@ -4,6 +4,7 @@ package controller;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import boundry.OpenMailGUI;
 import boundry.ReportsGUI;
 import boundry.mainPanel;
 import boundry.readerGUI;
@@ -150,7 +151,9 @@ public class bookController {
 	/**Book Search END*/
 	
 	/**
-	 * displayResults - display a results table
+	 * displayResults - get a book information and searching books
+	 * in the database that matches the search
+	 *  
 	 * @param brief String
 	 * @param title String
 	 * @param langu String 
@@ -231,7 +234,7 @@ public class bookController {
 			
 	}
 	/**
-	 * chooseBook display the chosen book's details
+	 * chooseBook display the chosen book
 	 * @param bid a String instance for the book id
 	 */
 
@@ -547,14 +550,16 @@ public class bookController {
 	*/	
 	}
 	/**
-	 * 
-	 * @param brief
-	 * @param title
-	 * @param langu
-	 * @param keyWord
-	 * @param author
-	 * @param appendix
-	 * @param scope
+	 * displayResultsForReports - get a book information and searching books
+	 * in the database that matches the search
+	 *  
+	 * @param brief String
+	 * @param title String
+	 * @param langu String 
+	 * @param keyWord String 
+	 * @param author String 
+	 * @param appendix String 
+	 * @param scope String 
 	 */
 	public static void displayResultsForReports(String brief,String title,String langu,String keyWord,String author,String appendix,String scope){
 		
@@ -620,6 +625,7 @@ public class bookController {
 	 * @param user - String, a username
 	 */
 
+
 	public static void findUsersOrders(String user) {
 		
 		ArrayList<String> orders = new ArrayList<String>();
@@ -646,7 +652,49 @@ public class bookController {
 		System.out.println(orders.toString());
 
 	}
+	/**
+	 * get a book information and pass it to DBController to download the wanted file
+	 * @param bid
+	 * @param format
+	 * @param bookName
+	 * @throws SQLException
+	 */
+
 	public static void downloadBook(String bid,String format,String bookName) throws SQLException{
 		DBController.getFile(bid,format,bookName);
 	}
+
+/** Display orders table  **/
+public static void displayUserOrders(String uName) {
+	
+	readerGUI reader= new readerGUI(loginController.use.getUsername(),"Reader");
+	ArrayList<String> orders = new ArrayList<String>();
+	
+	orders = DBController.getFromDB("SELECT  b.Title , ro.date FROM readerorder ro , reader re , book b "+
+			"WHERE re.username='"+uName+"' and ro.bookID=b.bookID and ro.userID=re.userID"); 
+
+	
+	if(!(orders.isEmpty())){
+		
+		readerGUI.data = new String[orders.size()/2][2];
+		int count =0;
+		for(int i = 0 ; i < orders.size()/2 ; i++)
+			for(int j = 0 ; j < 2 ; j++){
+				readerGUI.data[i][j] = orders.get(count);
+				count++;
+			}
+		reader.showOrders();
+	}
+	
+	
+	/**if there are no results at all we add a lable that says "no results"*/
+	
+	else
+		reader.noResults();
+	
+	loginController.mainG.setContentPane(reader);
+	loginController.mainG.revalidate();
+	System.out.println(orders.toString());
+}
+
 }

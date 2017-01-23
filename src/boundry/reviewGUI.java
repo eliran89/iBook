@@ -94,14 +94,7 @@ public class reviewGUI extends mainPanel {
 			
 			
 		
-			/*JTable table = new JTable();
-			table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-			table.setForeground(Color.WHITE);
-			table.setBackground(Color.WHITE);
-			table.setFont(new Font("Tahoma", Font.BOLD, 14));
-			table.setBounds(79, 230, 687, 325);
-			table.setPreferredScrollableViewportSize(new Dimension(17,325));
-			add(table);*/
+		
 			
 			
 			

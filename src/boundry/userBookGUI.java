@@ -391,27 +391,39 @@ public class userBookGUI extends mainPanel {
 		lblBookTitle.setBounds(336, 80, 251, 54);
 		add(lblBookTitle);
 		
-		JLabel lblAthors = new JLabel("Author(s) : ");
+		/*JLabel lblAthors = new JLabel("Author(s) : ");
 		lblAthors.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAthors.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAthors.setBounds(79, 251, 97, 14);
-		add(lblAthors);
+		add(lblAthors);*/
 		
+		String[] headerAuthors = {"Authors"};
+		String[][] dataAuthors = new String[book.getAuthors().size()][1];
+		for(int i = 0 ; i<book.getAuthors().size();i++)
+			dataAuthors[i][0] = book.getAuthors().get(i);
+		JTable tableAuthors = new JTable(dataAuthors,headerAuthors){
+			public boolean isCellEditable(int data,int columns){
+				return false;
+			}
+			
+			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
+				Component c = super.prepareRenderer(r,data,column);
+				
+				return c;
+			}
+		};
+		tableAuthors.setPreferredScrollableViewportSize(new Dimension(150,55));
+		tableAuthors.setFillsViewportHeight(true);
 		
-		JTextField TFauthor = new JTextField();
-		TFauthor.setText(book.getLanguage());
-		TFauthor.setEditable(false);
-		TFauthor.setBounds(179, 253, 122, 20);
-		for(int i = 1 ; i<book.getAuthors().size();i++)
-		{
-			authors += ",";
-			if(i<3)
-				TFauthor.resize((i+1)*122, 25);
-			authors += book.getAuthors().get(i);
-		}
-		TFauthor.setText(authors);
-		add(TFauthor);
-		TFauthor.setColumns(10);
+		DefaultTableCellRenderer r1 = new DefaultTableCellRenderer();
+		r1.setHorizontalAlignment( SwingConstants.CENTER );
+		for (int j = 0; j < headerAuthors.length; j++)
+			tableAuthors.getColumnModel().getColumn(j).setCellRenderer(r1);
+		
+		JScrollPane pane1 = new JScrollPane(tableAuthors);//add table to scroll bar
+		pane1.setBounds(179, 253, 150, 55);//set table dimention
+		add(pane1);
+		
 		
 		JLabel lblLanguange = new JLabel("languange : ");
 		lblLanguange.setHorizontalAlignment(SwingConstants.CENTER);
@@ -451,14 +463,11 @@ public class userBookGUI extends mainPanel {
 		textPane_1.setBounds(664, 188, 243, 131);
 		add(textPane_1);
 		
-		JLabel lblScopes = new JLabel("Scope(s): ");
-		lblScopes.setHorizontalAlignment(SwingConstants.CENTER);
-		lblScopes.setFont(new Font("Tahoma", Font.BOLD, 14));
-		lblScopes.setBounds(79, 192, 97, 14);
-		add(lblScopes);
 		
 		String[] headerScope = {"Scopes"};
-		String[][] dataScopes = new String[1][book.getScope().size()];
+		String[][] dataScopes = new String[book.getScope().size()][1];
+		for(int i = 0 ; i<book.getScope().size();i++)
+			dataScopes[i][0] = book.getScope().get(i);
 		tableScopes = new JTable(dataScopes,headerScope){
 			public boolean isCellEditable(int data,int columns){
 				return false;
@@ -466,57 +475,35 @@ public class userBookGUI extends mainPanel {
 			
 			public Component prepareRenderer(TableCellRenderer r,int data ,int column){
 				Component c = super.prepareRenderer(r,data,column);
-				
-				
-				if(data % 2 == 0)
-				{
-					c.setForeground(Color.BLACK);
-					c.setBackground(Color.WHITE);
-				}
-				else
-				{
-					c.setForeground(Color.BLACK);
-					c.setBackground(Color.LIGHT_GRAY);
-				}
-				bool = true;
 				return c;
 			}
 		};
-		tableScopes.setPreferredScrollableViewportSize(new Dimension(179,194));
+		tableScopes.setPreferredScrollableViewportSize(new Dimension(130,55));
 		tableScopes.setFillsViewportHeight(true);
 		
 		DefaultTableCellRenderer r = new DefaultTableCellRenderer();
 		r.setHorizontalAlignment( SwingConstants.CENTER );
 		for (int j = 0; j < headerScope.length; j++)
 			tableScopes.getColumnModel().getColumn(j).setCellRenderer(r);
-		tableScopes.setBounds(179, 194, 106, 51);
-		JScrollPane pane = new JScrollPane(tableScopes);//add table to scroll bar
-		pane.setBounds(181, 376, 583, 191);//set table dimention
-		add(pane);
-		add(tableScopes);
 		
-		/*JTextField TFScope= new JTextField();
-		TFScope.setText(book.getLanguage());
-		TFScope.setEditable(false);
-		TFScope.setBounds(179, 194, 70, 20);
-		for(int i = 1 ; i<book.getScope().size();i++)
-		{
-			scopes += ",";
-			if(i<4)
-				TFScope.resize((i+1)*70, 25);
-			scopes += book.getScope().get(i);
-		}
-		TFScope.setText(scopes);
-		add(TFScope);
-		TFScope.setColumns(10);*/
+		JScrollPane pane = new JScrollPane(tableScopes);//add table to scroll bar
+		pane.setBounds(179, 160, 150, 55);//set table dimention
+		add(pane);
+		
 		
 		JLabel lblChooseFormatTo = new JLabel("Choose format to Download:");
 		lblChooseFormatTo.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChooseFormatTo.setFont(new Font("Tahoma", Font.BOLD , 14));
 		lblChooseFormatTo.setBounds(269, 404, 228, 23);
+
 		if(loginController.use.getprivilege()==2);
 			add(lblChooseFormatTo);
 		
+
+		if(loginController.use.getprivilege() == 2)
+			add(lblChooseFormatTo);
+			
+
 		JComboBox formatBox = new JComboBox();	//a combo box which will allow the reader to choose a format to download
 		formatBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		formatBox.addItem("pdf");	//PDF format
@@ -538,13 +525,12 @@ public class userBookGUI extends mainPanel {
 			public void actionPerformed(ActionEvent arg0) {
 				//TODO - implement book ordering
 				
-				String username = loginController.use.getUsername();
-				String title = lblBookTitle.getText();
 				String format = formatBox.getSelectedItem().toString();	//save the requested format to download
-				System.out.println(format);
+				//System.out.println(format);
+				
 				try {
-					userController.addBookToOrderList(title, username);
-					bookController.downloadBook(book.getBookID(),format,title);
+					userController.addBookToOrderList(book.getTitle(), loginController.use.getUsername(), book.getCost());
+					bookController.downloadBook(book.getBookID(),format,book.getTitle());
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

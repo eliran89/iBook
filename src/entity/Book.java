@@ -20,6 +20,9 @@ public class Book {
 	private int absoluteRank;
 	private float cost;
 	private boolean suspended;
+	private String pdfLocation;
+	private String docxLocation;
+	private String fb2Location;
 	
 	/**
 	 * 
@@ -92,6 +95,21 @@ public class Book {
 	 */
 	public float getCost(){return cost;}
 	/**
+	 * getPdf
+	 * @return pdf Location
+	 */
+	public String getPdf(){return pdfLocation;}
+	/**
+	 * getDocx
+	 * @return docx Location
+	 */
+	public String getDocx(){return docxLocation;}
+	/**
+	 * getFb2
+	 * @return fb2 Location
+	 */
+	public String getFb2(){return fb2Location;}
+	/**
 	 * setAuthors
 	 * @param authors ArrayList<String>
 	 */
@@ -162,30 +180,40 @@ public class Book {
 		this.cost = cost;
 	}
 	
-	
-	public int getNumberOfSearches() {
-		return this.numberOfSearches;
-	}
 
-	public int getNumberOfOrders() {
-		// TODO - implement Book.getNumberOfOrders
-		throw new UnsupportedOperationException();
+	/**
+	 * setPdf
+	 * @param pdfLocation
+	 */
+	public void setPdf(String pdfLocation){
+		this.pdfLocation = pdfLocation;
 	}
-
-	public int getAbsRank() {
-		// TODO - implement Book.getAbsRank
-		throw new UnsupportedOperationException();
+	/**
+	 * setDocx
+	 * @param docxLocation
+	 */
+	public void setDocx(String docxLocation){
+		this.docxLocation = docxLocation;
 	}
-	
+	/**
+	 * setFb2
+	 * @param fb2Location
+	 */
+	public void setFb2(String fb2Location){
+		this.fb2Location = fb2Location;
+	}
+	/**
+	 * isSuspended return true if the book is Suspended else false
+	 * @return suspended - the book status
+	 */
 	public boolean isSuspended() {
 	return suspended;
 	}
 
-	public void destroy() {
-		// TODO - implement Book.destroy
-		throw new UnsupportedOperationException();
-	}
-
+	/**
+	 * isBookComplete - return true if all the required fields are filled else false
+	 * @return boolean
+	 */
 	public boolean isBookComplete() {
 		boolean bool = true;
 		if(this.Appendix == null ||this.Scope == null || this.Subject == null||this.authors == null||this.Brief == null || this.cost < 0

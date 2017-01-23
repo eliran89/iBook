@@ -9,11 +9,14 @@ import boundry.*;
 
 
 public class reviewController {
+
 /**
- * searchReview check if there are review according to type and item
- * @param type String
- * @param item String
+ * searchReview - get the type of search the user wants to make(by book name or book ID)
+ * get from the database information about reviews about the book that match the search
+ * @param type - the type of search(by book name or book ID)
+ * @param item String - the word or phrase we look for 
  */
+
 	public static void searchReview(String type,String item) {
 		
 		ArrayList <String> info = null;
@@ -76,7 +79,7 @@ public class reviewController {
 	}
 
 /**
- * checkReview 
+ * checkReview - build a new reviewGUI and display the search
  */
 	public static void checkReview() {
 		
@@ -91,7 +94,7 @@ public class reviewController {
 	}
 	
 	/**
-	 * GoToMainWindow display  the main window 
+	 * GoToMainWindow - display  the main window(according to the privilege level)
 	 */
 	public static void GoToMainWindow()
 	{
@@ -114,9 +117,9 @@ public class reviewController {
 	
 
 	/**
-	 * displayReview display the chose review
-	 * @param bName String
-	 * @param uName String
+	 * displayReview - get the selected review and display the review
+	 * @param bName String - book name
+	 * @param uName String - the reader that made the review
 	 */
 	public static void displayReview(String bTitle, String uName) {
 		ArrayList <String> info = null;
@@ -301,6 +304,9 @@ public class reviewController {
 	
 	
 	}
+	
+	
+	
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails
 		throw new UnsupportedOperationException();
