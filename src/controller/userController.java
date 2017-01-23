@@ -29,6 +29,8 @@ import entity.*;
 public class userController {
 
 	static public void logout(){
+		
+		loginController.mainG.dispose();
 		LoginGUI.err = false;
 		LoginGUI log = new LoginGUI();
 			log.setSize(550,320);

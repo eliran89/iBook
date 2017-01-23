@@ -30,13 +30,7 @@ public class MainWindowGUI extends JFrame{
 		
 		
 		/**Logout Listener*/
-		panel.btnLogout.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-				LoginGUI.err = false;
-				userController.logout();
-			}
-		});
+		
 		/**END Logout Listener*/
 		
 		
