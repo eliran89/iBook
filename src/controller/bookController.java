@@ -749,7 +749,7 @@ public static void displayUserOrders(String uName) {
 												+" from reviews r where r.username = '"+loginController.use.getUsername()+"' and r.BookID = '"+bid+"'");
 		if(bool)
 		{
-			mainPanel.errorBox("A review about this book as already been made by you","Error");
+			mainPanel.errorBox("A review about this book has already been made by you","Error");
 			order.showOrders();
 			order.makeReview();
 		}
@@ -768,6 +768,7 @@ public static void displayUserOrders(String uName) {
 	 * @throws SQLException
 	 */
 	public static void sendTheReview(String bid , String text,String title) throws SQLException{
+		// info= max review id+1 for new review
 		ArrayList<String> info = DBController.getFromDB("select max(reviews.reviewid)+1 from reviews");
 		DBController.insertToDB("INSERT INTO `ibookdb`.`reviews` (`reviewid`, `BookID`, `title`, `username`, `visible`, `text`) "
 													+ " VALUES ('"+info.get(0)+"', '"+bid+"', '"+title+"', '"+loginController.use.getUsername()+"', '0', '"+text+"');");
