@@ -9,12 +9,14 @@ import boundry.*;
 
 
 public class reviewController {
+
 /**
  * searchReview - get the type of search the user wants to make(by book name or book ID)
  * get from the database information about reviews about the book that match the search
  * @param type - the type of search(by book name or book ID)
  * @param item String - the word or phrase we look for 
  */
+
 	public static void searchReview(String type,String item) {
 		
 		ArrayList <String> info = null;
@@ -302,6 +304,9 @@ public class reviewController {
 	
 	
 	}
+	
+	
+	
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails
 		throw new UnsupportedOperationException();

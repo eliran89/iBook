@@ -47,7 +47,7 @@ public class OpenMailGUI extends mainPanel {
 		super(name,role);
 		
 		
-		//btnLogout.setBounds(26, 11, 77, 16);
+	
 		setForeground(Color.WHITE);
 		
 		/* Button for main window */
