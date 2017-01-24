@@ -353,7 +353,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**ID label and textField */
 		JLabel lblTitle = new JLabel("ID");
-		lblTitle.setToolTipText("Enter 6-digit ID");
+		lblTitle.setToolTipText("Enter 5-digit ID");
 		lblTitle.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblTitle.setHorizontalAlignment(SwingConstants.LEFT);
 		lblTitle.setForeground(Color.BLACK);
@@ -409,7 +409,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**password label and textField */
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setToolTipText("Enter 6-chars account password");
+		lblPassword.setToolTipText("Enter 5-chars account password");
 		lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPassword.setForeground(Color.BLACK);
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -685,7 +685,6 @@ public class UserSearchGUI extends mainPanel{
 					if (!(arngmnt.equals("NONE"))){
 					//this is a case of conflict agreements
 						boolean dialogResult = mainPanel.yesNoBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?", "Payment Conflict Occured");
-						//int dialogResult = mainPanel.confirmBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?");
 						if(dialogResult){
 							setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment);
 						}

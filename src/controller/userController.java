@@ -341,8 +341,8 @@ public class userController {
 					ir.setLastName(lname);
 					ir.setUsername(uname);
 					ir.setPassword(pass);
-					
-/*					System.out.println("ID: "+ir.getUserID());
+				/*	
+					System.out.println("ID: "+ir.getUserID());
 					System.out.println("fName: "+ir.getFirstName());
 					System.out.println("lName: "+ir.getLastName());
 					System.out.println("UN: "+ir.getUsername()); 
@@ -485,15 +485,17 @@ public class userController {
 		
 		/**get first and last name*/
 		firstLastName = DBController.getFromDB("select ir.firstName, ir.lastName from interestedreader ir where ir.userID = '"+id+"'");
-		String firstName = firstLastName.get(0);
-		String lastName = firstLastName.get(1);
+		String firstName = (String) firstLastName.get(0);
+		String lastName = (String) firstLastName.get(1);
+		String newPaymentToDBFormat = newPayment.equals("One-by-One")?"onebyone":"periodic";
+		
 		
 		/**get ID if exists in reader table*/
 		idIsReader = DBController.getFromDB("select r.userID from reader r where r.userID = '"+id+"'");
-			if(idIsReader.get(0) == null){
-				UserSearchGUI.infoBox("ID "+idIsReader.toString()+" is NOT a reader!", "My check");
-				DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPayment+"', '"+firstName+"', '"+lastName+"', '"+uName+"')");
+			if(idIsReader == null){
+				UserSearchGUI.infoBox("ID is NOT a reader!", "My check");
 				DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"'");	//updating into reader privilege level
+				DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPaymentToDBFormat+"', '"+firstName+"', '"+lastName+"', '"+uName+"')");
 			}
 			if (newPayment.equals("Periodic")){
 				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");

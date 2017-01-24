@@ -46,8 +46,8 @@ public class interestedReader extends User {
 	
 	/**setters*/
 	public void setUserID(int iD){
-		if ((iD < 11111) || (iD > 99999)){
-			//UserSearchGUI.errorBox("Please enter a legal ID (greater than 11111 and lower than 99999)","Validate User ID");
+		if ((iD <= 10000) || (iD > 99999)){
+			UserSearchGUI.errorBox("Please enter a legal ID (greater than 11111 and lower than 99999)","Validate User ID");
 		//	backToUserSearch();
 			return;
 		}
