@@ -9,11 +9,14 @@ import boundry.*;
 
 
 public class reviewController {
+
 /**
- * searchReview check if there are review according to type and item
- * @param type String
- * @param item String
+ * searchReview - get the type of search the user wants to make(by book name or book ID)
+ * get from the database information about reviews about the book that match the search
+ * @param type - the type of search(by book name or book ID)
+ * @param item String - the word or phrase we look for 
  */
+
 	public static void searchReview(String type,String item) {
 		
 		ArrayList <String> info = null;
@@ -48,8 +51,21 @@ public class reviewController {
 			panel = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
 		
 		/*if his a reader add it to the title*/
-		else
+		else if(loginController.use.getprivilege() == 2)
 			panel = new reviewGUI(loginController.use.getUsername(),"Reader");
+		
+	
+		else if(loginController.use.getprivilege() == 3)
+			panel = new reviewGUI(loginController.use.getUsername(),"Editor");
+		
+		else if(loginController.use.getprivilege() == 4)
+			panel = new reviewGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			panel = new reviewGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			panel = new reviewGUI(loginController.use.getUsername(),"Manager");
 		
 		/*if we get results we add the results table*/
 		if(info != null)
@@ -76,47 +92,67 @@ public class reviewController {
 	}
 
 /**
- * checkReview 
+ * checkReview - build a new reviewGUI and display the search
  */
 	public static void checkReview() {
 		
 		reviewGUI review = null;
+		
 		if(loginController.use.getprivilege() == 1)
 			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
-		else
+		
+		else if(loginController.use.getprivilege() == 2)
 			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		else if(loginController.use.getprivilege() == 3)
+			review = new reviewGUI(loginController.use.getUsername(),"Editor");
+		
+		else if(loginController.use.getprivilege() == 4)
+			review = new reviewGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			review = new reviewGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			review = new reviewGUI(loginController.use.getUsername(),"Manager");
+		
+	
 		loginController.mainG.setContentPane(review);
 		loginController.mainG.revalidate();
 
 	}
 	
 	/**
-	 * GoToMainWindow display  the main window 
+	 * GoToMainWindow - display  the main window(according to the privilege level)
 	 */
 	public static void GoToMainWindow()
 	{
 		mainPanel mainP = null;
 		if(loginController.use.getprivilege() == 1)
 			mainP = new InterestedReaderGUI(loginController.use.getUsername(),"Interested Reader");
+		
 		else if(loginController.use.getprivilege() == 2)
 			mainP = new readerGUI(loginController.use.getUsername(),"Reader");
 		else if(loginController.use.getprivilege() == 3)
 			mainP = new editorGUI(loginController.use.getUsername(),"Editor");
+		
 		else if(loginController.use.getprivilege() == 4)
 			mainP = new LWorkerGUI(loginController.use.getUsername(),"Library Worker");
+		
 		else if(loginController.use.getprivilege() == 5)
 			mainP = new librarianGUI(loginController.use.getUsername(),"Librarian");
+		
 		else 
 			mainP = new managerGUI(loginController.use.getUsername(),"Manager");
+		
 		loginController.mainG.setContentPane(mainP);
 		loginController.mainG.revalidate();
 	}
 	
 
 	/**
-	 * displayReview display the chose review
-	 * @param bName String
-	 * @param uName String
+	 * displayReview - get the selected review and display the review
+	 * @param bName String - book name
+	 * @param uName String - the reader that made the review
 	 */
 	public static void displayReview(String bTitle, String uName) {
 		ArrayList <String> info = null;
@@ -127,11 +163,20 @@ public class reviewController {
 		if(loginController.use.getprivilege() == 1)
 			review = new reviewGUI(loginController.use.getUsername(),"Interested Reader");
 		
-		if(loginController.use.getprivilege() == 3)
+		else if(loginController.use.getprivilege() == 2)
+			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		
+		else if(loginController.use.getprivilege() == 3)
 			review = new reviewGUI(loginController.use.getUsername(),"Editor");
 		
-		else
-			review = new reviewGUI(loginController.use.getUsername(),"Reader");
+		else if(loginController.use.getprivilege() == 4)
+			review = new reviewGUI(loginController.use.getUsername(),"Library Worker");
+		
+		else if(loginController.use.getprivilege() == 5)
+			review = new reviewGUI(loginController.use.getUsername(),"Librarian");
+		
+		else 
+			review = new reviewGUI(loginController.use.getUsername(),"Manager");
 		
 		review.displayReview(info.get(0)); // returns the first cell in the arraylist which is the text of the review
 		loginController.mainG.setContentPane(review);
@@ -301,6 +346,9 @@ public class reviewController {
 	
 	
 	}
+	
+	
+	
 	public boolean checkDetails() {
 		// TODO - implement reviewController.checkDetails
 		throw new UnsupportedOperationException();

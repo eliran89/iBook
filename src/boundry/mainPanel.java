@@ -31,14 +31,14 @@ import controller.userController;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
 
-public class mainPanel extends JPanel {
+public abstract class  mainPanel extends JPanel {
 	
 	public  JLabel img;
 	public static String hello;
 	public static String role;
 	JButton btnCheckBookReviews;
 
-	public static JButton btnLogout = new JButton("Logout");
+	public JButton btnLogout = new JButton("Logout");
 	
 	public mainPanel( String name , String role){
 		super();
@@ -51,7 +51,11 @@ public class mainPanel extends JPanel {
 		btnLogout.setForeground(Color.WHITE);
 		btnLogout.setFont(new Font("AR CENA", Font.BOLD, 13));
 		btnLogout.setBackground(Color.RED);
-		
+		btnLogout.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				userController.logout();
+			}
+		});
 		btnLogout.setBounds(26, 11, 83, 16);
 		add(btnLogout);
 		

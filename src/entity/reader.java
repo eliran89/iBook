@@ -113,9 +113,11 @@ public class reader extends interestedReader {
 	 * addToDebt - method
 	 * Adds a certain amount of money (book cost) to the debt a reader already has 
 	 * @param extraDebt - float
+	 * @return updated debt
 	 */
-	public void addToDebt(float extraDebt) {
+	public float addToDebt(float extraDebt) {
 		debt += extraDebt;
+		return debt;
 	}
 
 }

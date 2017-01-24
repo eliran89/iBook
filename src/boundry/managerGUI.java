@@ -16,7 +16,7 @@ public class managerGUI extends GWorkerGUI {
 	public managerGUI( String name , String role) {
 		
 		super(name,role);
-		JButton btnRaports = new JButton("Raports");
+		JButton btnRaports = new JButton("Reports");
 		btnRaports.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnRaports.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -34,18 +34,9 @@ public class managerGUI extends GWorkerGUI {
 
 	}
 
-	public void suspendBook() {
-		// TODO - implement managerGUI.suspendBook
-		throw new UnsupportedOperationException();
-	}
 
 	public void changePrivilages() {
 		// TODO - implement managerGUI.changePrivilages
-		throw new UnsupportedOperationException();
-	}
-
-	public void changeUserDetails() {
-		// TODO - implement managerGUI.changeUserDetails
 		throw new UnsupportedOperationException();
 	}
 

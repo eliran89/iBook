@@ -66,7 +66,7 @@ public  class IBookServer extends AbstractServer
   (Object msg, ConnectionToClient client)
   {
 	   String   query = msg.toString();
-	   if(query.contains("select") || query.contains("SELECT"))
+	    if(query.contains("select") || query.contains("SELECT"))
 	    {
 	    	ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
 		    ArrayList<String> result1 = null;
