@@ -426,7 +426,6 @@ public class userController {
 	
 	/**
 	 * 
-	 * 
 	 * @param creditNum
 	 * @param expMonth
 	 * @param expYear
@@ -508,7 +507,6 @@ public class userController {
 		String firstName = (String) firstLastName.get(0);
 		String lastName = (String) firstLastName.get(1);
 		String newPaymentToDBFormat = newPayment.equals("One-by-One")?"onebyone":"periodic";
-		
 		
 		/**get ID if exists in reader table*/
 		idIsReader = DBController.getFromDB("select r.userID from reader r where r.userID = '"+id+"'");
