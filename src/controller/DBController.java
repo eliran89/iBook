@@ -222,7 +222,7 @@ public class DBController {
 	 * @param bookName - will be the file name in the client
 	 * @throws SQLException
 	 */
-	static synchronized public void getFile(String bid,String format,String bookName) throws SQLException{
+	static synchronized public void getFile(String bid,String format,String bookName,String path) throws SQLException{
 		
 		String file = bid+"."+format;
 		try {
@@ -236,8 +236,8 @@ public class DBController {
 		}
 
 		while(allowToProceed == false);	
-		boolean success = (new File("C:/iBook Files")).mkdir();
-		File f = new File("C:/iBook Files/"+bookName+"."+format);
+		//boolean success = (new File("C:/iBook Files")).mkdir();
+		File f = new File(path+"/"+bookName+"."+format);
 		  try {
 			FileOutputStream output = new FileOutputStream(f);
 			try {
@@ -252,29 +252,24 @@ public class DBController {
 			e.printStackTrace();
 		}
 	  }
-	static synchronized public void sendFile(String location){
-		try {
-			InputStream inputStream = new FileInputStream(new File(location));
-			byte[] buffer = new byte[1024];
-			try {
-				ArrayList<byte[]> buffers = new ArrayList<byte[]>();
-				while(inputStream.read(buffer)>0)
-					buffers.add(buffer.clone());
-				byte[][] buff = new byte[buffers.size()][1024];
-				for(int i = 0 ;i<buffers.size();i++)
-					buff[i]=buffers.get(i);
-				inputStream.close();
-				ClientConsole chat= new ClientConsole(host, port);
-				rs = null;
-				allowToProceed = false;
-				ClientConsole.accept(buff);	
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		} catch (FileNotFoundException e) {
-			mainPanel.errorBox("File Not Found", "File");
-			bookController.addBook();
-		}
+	/**
+	 * get 3 files - pdf,docx,fb2 and put them in an ArrayList and send it to the server
+	 * @param pdf
+	 * @param docx
+	 * @param fb2
+	 */
+	static synchronized public void sendFile(File pdf,File docx,File fb2){
+		
+		ArrayList<File> files = new ArrayList<File>();
+		files.add(pdf);
+		files.add(docx);
+		files.add(fb2);
+		
+		ClientConsole chat= new ClientConsole(host, port);
+		rs = null;
+		allowToProceed = false;
+		ClientConsole.accept(files);	
+			
 		while(allowToProceed == false);	
 		
 	}

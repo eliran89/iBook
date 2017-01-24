@@ -2,6 +2,7 @@ package boundry;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import entity.Book;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JComboBox.KeySelectionManager;
 
 import java.awt.Color;
@@ -21,6 +23,7 @@ import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
 
@@ -28,10 +31,10 @@ public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldTitle;
 	private JTextField textFieldAuthor;
 	private JTextField textFieldLangu;
-	private JTextField textFieldBrief;
+	private JTextPane textFieldBrief;
 	private JTextField textFieldScope;
 	private JTextField textFieldKey;
-	private JTextField textFieldAppen;
+	private JTextPane textFieldAppen;
 	private JTextField textFieldCost;
 	ArrayList<String> authors;
 	ArrayList<String> keywords;
@@ -50,6 +53,9 @@ public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldPdf;
 	private JTextField textFieldDocx;
 	private JTextField textFieldFb;
+	File fPdf ;
+	File fDocx ;
+	File fFb2 ;
 	/**
 	 * workerBookGUI
 	 * @param name String
@@ -60,8 +66,7 @@ public class workerBookGUI extends userBookGUI {
 
 
 		
-		
-		
+
 		
 
 		
@@ -141,9 +146,8 @@ public class workerBookGUI extends userBookGUI {
 		textFieldLangu.setBounds(626, 123, 148, 20);
 		add(textFieldLangu);
 		
-		textFieldBrief = new JTextField();
-		textFieldBrief.setColumns(10);
-		textFieldBrief.setScrollOffset(1);
+		textFieldBrief = new JTextPane();
+		textFieldBrief.setBackground(Color.LIGHT_GRAY);
 		textFieldBrief.setBounds(220, 313, 264, 131);
 		add(textFieldBrief);
 		
@@ -260,41 +264,82 @@ public class workerBookGUI extends userBookGUI {
 		lblAppendix.setBounds(556, 303, 62, 29);
 		add(lblAppendix);
 		
-		textFieldAppen = new JTextField();
-		textFieldAppen.setScrollOffset(1);
-		textFieldAppen.setColumns(10);
+		textFieldAppen = new JTextPane();
+		textFieldAppen.setBackground(Color.LIGHT_GRAY);
 		textFieldAppen.setBounds(634, 313, 264, 131);
 		add(textFieldAppen);
 		
-		/*textFieldPdf = new JTextField();
-		textFieldPdf.setBounds(675, 482, 117, 20);
+		textFieldPdf = new JTextField();
+		textFieldPdf.setBounds(753, 482, 117, 20);
 		add(textFieldPdf);
 		textFieldPdf.setColumns(10);
 		
-		JLabel lblPdf = new JLabel("PDF Location :");
-		lblPdf.setHorizontalAlignment(SwingConstants.CENTER);
-		lblPdf.setBounds(592, 485, 83, 14);
-		add(lblPdf);
+		
+		JButton btnChoosePdf = new JButton("Choose PDF");
+		btnChoosePdf.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File("C:\\"));
+				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("PDF Documents", "pdf"));
+				fileChooser.setAcceptAllFileFilterUsed(false);
+				fileChooser.setDialogTitle("Select a diractory");
+				int returnValue = fileChooser.showOpenDialog(null);
+				if(returnValue == JFileChooser.APPROVE_OPTION){
+					textFieldPdf.setText(fileChooser.getSelectedFile().getPath());
+					fPdf = fileChooser.getSelectedFile();
+				}
+			}
+		});
+		btnChoosePdf.setBounds(635, 482, 108, 20);
+		add(btnChoosePdf);
 		
 		textFieldDocx = new JTextField();
 		textFieldDocx.setColumns(10);
-		textFieldDocx.setBounds(465, 482, 117, 20);
+		textFieldDocx.setBounds(500, 482, 117, 20);
 		add(textFieldDocx);
 		
-		JLabel lblDocxLocation = new JLabel("Docx Location :");
-		lblDocxLocation.setHorizontalAlignment(SwingConstants.CENTER);
-		lblDocxLocation.setBounds(382, 485, 83, 14);
-		add(lblDocxLocation);
+		JButton btnChooseDocx = new JButton("Choose Docx");
+		btnChooseDocx.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File("C:\\"));
+				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("Microsoft Word Documents","docx"));
+				fileChooser.setAcceptAllFileFilterUsed(false);
+				fileChooser.setDialogTitle("Select a diractory");
+				int returnValue = fileChooser.showOpenDialog(null);
+				if(returnValue == JFileChooser.APPROVE_OPTION){
+					textFieldDocx.setText(fileChooser.getSelectedFile().getPath());
+					fDocx = fileChooser.getSelectedFile();
+				}
+			}
+		});
+		btnChooseDocx.setBounds(370, 482, 120, 20);
+		add(btnChooseDocx);
 		
 		textFieldFb = new JTextField();
 		textFieldFb.setColumns(10);
-		textFieldFb.setBounds(255, 482, 117, 20);
+		textFieldFb.setBounds(237, 482, 117, 20);
 		add(textFieldFb);
+
 		
-		JLabel lblFbLocation = new JLabel("FB2 Location :");
-		lblFbLocation.setHorizontalAlignment(SwingConstants.CENTER);
-		lblFbLocation.setBounds(172, 485, 83, 14);
-		add(lblFbLocation);*/
+		JButton btnChooseFb2 = new JButton("Choose FB2");
+		btnChooseFb2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				JFileChooser fileChooser = new JFileChooser();
+				fileChooser.setCurrentDirectory(new File("C:\\"));
+				fileChooser.setCurrentDirectory(new File("C:\\"));
+				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("FB2 Documents","fb2"));
+				fileChooser.setAcceptAllFileFilterUsed(false);
+				fileChooser.setDialogTitle("Select a diractory");
+				int returnValue = fileChooser.showOpenDialog(null);
+				if(returnValue == JFileChooser.APPROVE_OPTION){
+					textFieldFb.setText(fileChooser.getSelectedFile().getPath());
+					fFb2 = fileChooser.getSelectedFile();
+				}
+			}
+		});
+		btnChooseFb2.setBounds(121, 482, 108, 20);
+		add(btnChooseFb2);
 		
 		JButton btnNewButton = new JButton("Add Book");
 		btnNewButton.setBounds(476, 535, 120, 42);
@@ -380,7 +425,8 @@ public class workerBookGUI extends userBookGUI {
 					errorBox("cost must be a number at least 0","cost");
 				}
 				
-				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0)
+				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0
+						||textFieldPdf.getText().equals("") ||textFieldDocx.getText().equals("") ||textFieldFb.getText().equals(""))
 					toContinue = false;
 				if(costi < 0)
 				{
@@ -402,7 +448,7 @@ public class workerBookGUI extends userBookGUI {
 					if(keywords.size()>0)
 						book.setKey(keywords);
 					try {
-						bookController.addBook(book);
+						bookController.addBook(book,fPdf,fDocx,fFb2);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}

@@ -228,7 +228,7 @@ public class userController {
 	 * @param bookCost - float. The cost of the desired book
 	 * @throws SQLException 
 	 */
-	public static void addBookToOrderList(String title, String username, float bookCost) throws SQLException {
+	public static boolean addBookToOrderList(String title, String username, float bookCost) throws SQLException {
 
 		ArrayList<String> readerDetails = new ArrayList<String>();
 		ArrayList<String> bookID = new ArrayList<String>();
@@ -261,7 +261,7 @@ public class userController {
 		//if book already been purchased show pop up message
 		if(rs){
 			mainPanel.errorBox("Book has already been purchased!", "Book Already Purchased Error");	//failure message
-			return;
+			return false;
 		}
 
 			ArrayList<String> now = DBController.getFromDB("SELECT NOW() ");	//get date
@@ -284,7 +284,7 @@ public class userController {
 				//System.out.println("debt is: "+loginController.RDetails.getDebt());
 			}
 			
-			mainPanel.infoBox("The Book "+title+" has been sent to you!", "Book Ordered Message");	//show success message
+			return true;
 		}
 	
 	
@@ -676,7 +676,6 @@ public class userController {
 		if(info == null  || nows.equals(info))
 			nows = DBController.getFromDB("select now()");
 		 String now = nows.get(0).substring(0,7);
-		 System.out.println("now is: "+now);
 		 ArrayList<String> dataT = new  ArrayList<String>();
 	      double[] data;
 	      int size;
@@ -698,31 +697,22 @@ public class userController {
 	        	for(int i = 0;i < dataT.size();i++)
 	        		data[i] = Double.parseDouble(dataT.get(i));
 	        	
-	        	int[] appears = new int[31];
+	        	double[] appears = new double[31];
 	        	for(int i = 0;i<31;i++)
 	        		appears[i] = 0;
 	        	for(int i = 0;i<data.length;i++)
 	        		appears[(int) data[i]]++;
-	        	int appearsSize = 0;
 	        	
-	        	for(int i = 0;i<31;i++)
-	        		if(appears[i] != 0)
-	        			appearsSize++;
-		        HistogramDataset dataset = new HistogramDataset();
-		        dataset.setType(HistogramType.FREQUENCY);
-		        dataset.addSeries("Book",data,appearsSize); // Number of bins is 50
-		        PlotOrientation orientation = PlotOrientation.VERTICAL;
-		        
-		        boolean show = false;
-		        boolean toolTips = false;
-		        boolean urls = true;
-		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
-		                
-		        chart.setBackgroundPaint(Color.white);
-	
-		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
-		    	                   	    	                     	    	                 	    	                	    	                  	    	        
-		        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+
+	            final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+	            
+	            for(int i = 0;i < 31 ; i++)
+	            	dataset.addValue( appears[i] , "Number Of Searches" , Integer.toString(i+1) );
+
+	            JFreeChart barChart = ChartFactory.createBarChart("Searches Report", "Day", "Number Of Searches",   dataset,
+	            		PlotOrientation.VERTICAL, true, true, false);
+
+	            ChartFrame frame = new ChartFrame("Search Chart",barChart,true);
 		        frame.setVisible(true);
 		        frame.setSize(700, 600);
 	        }
@@ -746,7 +736,7 @@ public class userController {
 				rank++;
 				i-=2;
 			}
-			if(i == 0)
+			if(i == 0 && !bid.equals(info.get(1)))
 				rank ++;
 		}
 		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");	
@@ -767,12 +757,11 @@ public class userController {
 			int i = info.size()-2;
 			while(i>0 && !bid.equals(info.get(i+1)))
 			{
-				System.out.println("i is : "+i);
 				if(i>0 && Integer.parseInt(info.get(i))>Integer.parseInt(info.get(i-2)))
 					rank++;
 				i-=2;
 			}
-		if(i == 0)
+		if(i == 0 && !info.get(i+1).equals(bid))
 			rank ++;
 		}
 		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");	
@@ -788,7 +777,6 @@ public class userController {
 		if(info == null  || nows.equals(info))
 			nows = DBController.getFromDB("select now()");
 		 String now = nows.get(0).substring(0,7);
-		 System.out.println("now is: "+now);
 		 ArrayList<String> dataT = new  ArrayList<String>();
 	      double[] data;
 	      int size;
@@ -801,7 +789,6 @@ public class userController {
 	        	if (date.contains(now))
 	        	{
 	        		date = date.substring(8, 10);
-	        		System.out.println(date);
 	        		dataT.add(date);
 	        	}
 	             
@@ -818,26 +805,15 @@ public class userController {
 	        		appears[(int) data[i]]++;
 	        	int appearsSize = 0;
 	        	
-	        	for(int i = 0;i<31;i++)
-	        		if(appears[i] != 0)
-	        			appearsSize++;
-	        	System.out.println(appearsSize);
-		        HistogramDataset dataset = new HistogramDataset();
-		        dataset.setType(HistogramType.FREQUENCY);
-		        dataset.addSeries("Book",data,appearsSize); // Number of bins is 50
-		        PlotOrientation orientation = PlotOrientation.VERTICAL;
-	
-		        boolean show = false;
-		        boolean toolTips = false;
-		        boolean urls = false;
-		        JFreeChart chart = ChartFactory.createHistogram("Orders Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
-		                
-	
-		        chart.setBackgroundPaint(Color.white);
-	
-		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
-		    	                   	    	                     	    	                 	    	                	    	                  	    	        
-		        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+	        	final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+	            
+	            for(int i = 0;i < 31 ; i++)
+	            	dataset.addValue( appears[i] , "Number Of Orders" , Integer.toString(i+1) );
+
+	            JFreeChart barChart = ChartFactory.createBarChart("Orders Report", "Day", "Number Of Orders",   dataset,
+	            		PlotOrientation.VERTICAL, true, true, false);
+
+	            ChartFrame frame = new ChartFrame("Orders Chart",barChart,true);
 		        frame.setVisible(true);
 		        frame.setSize(700, 600);
 	        }

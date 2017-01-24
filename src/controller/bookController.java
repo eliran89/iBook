@@ -1,8 +1,11 @@
 package controller;
 
 
+import java.io.File;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import javax.swing.JFileChooser;
 
 import boundry.OpenMailGUI;
 import boundry.ReportsGUI;
@@ -42,7 +45,7 @@ public class bookController {
 	 * @param Book book 
 	 * @throws SQLException 
 	 */
-	public static void addBook(Book book) throws SQLException {
+	public static void addBook(Book book,File pdf,File docx,File fb2) throws SQLException {
 		ArrayList<String> info =null;
 		ArrayList<String> temp;
 		info = DBController.getFromDB("select max(author.authorID) from author");
@@ -56,9 +59,10 @@ public class bookController {
 				aNewID++;
 			}
 		temp = book.getKey();
-		for( int i =0;i<temp.size();i++)
-			if(!verifyKeyword(temp.get(i)))
-				DBController.insertToDB("INSERT INTO `ibookdb`.`keyword` (`word`) VALUES ('"+temp.get(i)+"');");
+		if(temp != null)
+			for( int i =0;i<temp.size();i++)
+				if(!verifyKeyword(temp.get(i)))
+					DBController.insertToDB("INSERT INTO `ibookdb`.`keyword` (`word`) VALUES ('"+temp.get(i)+"');");
 		
 		info =DBController.getFromDB("select max(book.bookID) from book");
 		bNewID = Integer.parseInt(info.get(0))+1;
@@ -94,6 +98,7 @@ public class bookController {
 			}
 		for(int i =0 ; i<temp.size() ; i++)
 			DBController.insertToDB("INSERT INTO `ibookdb`.`bscope` (`bookID`, `scopeName`, `rank`, `subject`) VALUES ('"+bNewID+"', '"+temp.get(i)+"', '0', '"+temp2.get(i)+"');");
+		DBController.sendFile(pdf, docx, fb2);
 			
 	}
 	/**
@@ -661,7 +666,17 @@ public class bookController {
 	 */
 
 	public static void downloadBook(String bid,String format,String bookName) throws SQLException{
-		DBController.getFile(bid,format,bookName);
+		
+		String path = null;
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File("C:\\"));
+		fileChooser.setDialogTitle("Select a diractory");
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		int returnValue = fileChooser.showOpenDialog(null);
+		if(returnValue == JFileChooser.APPROVE_OPTION)
+			path = fileChooser.getSelectedFile().getPath();
+		DBController.getFile(bid,format,bookName,path);
+		mainPanel.infoBox("The Book "+bookName+" has been sent to you!", "Book Ordered Message");	//show success message
 	}
 
 /**
