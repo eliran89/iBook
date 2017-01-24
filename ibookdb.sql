@@ -1,4 +1,6 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
+CREATE DATABASE  IF NOT EXISTS `ibookdb` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `ibookdb`;
+-- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
 --
 -- Host: localhost    Database: ibookdb
 -- ------------------------------------------------------
@@ -458,6 +460,7 @@ CREATE TABLE `user` (
   `password` varchar(45) DEFAULT NULL,
   `privilege` int(11) NOT NULL,
   `status` varchar(45) DEFAULT NULL,
+  `logged` int(11) DEFAULT '0',
   PRIMARY KEY (`username`),
   KEY `fk_user_privilege_idx` (`privilege`),
   CONSTRAINT `fk_user_privilege` FOREIGN KEY (`privilege`) REFERENCES `privilege` (`privilege`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -470,7 +473,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('Avi','12345',3,'1'),('elir','*****',1,'1'),('eliran','98765',4,'1'),('guy','12345',6,'1'),('malki','12345',2,'0'),('mosheg','55555',1,'1'),('nimrod','12345',1,'1'),('zachi','98765',2,'1');
+INSERT INTO `user` VALUES ('Avi','12345',3,'1',0),('elir','*****',1,'1',0),('eliran','98765',4,'1',0),('guy','12345',6,'1',0),('malki','12345',2,'0',0),('mosheg','55555',1,'1',0),('nimrod','12345',1,'1',0),('zachi','98765',2,'1',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -483,4 +486,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-22 23:57:47
+-- Dump completed on 2017-01-24 15:54:34

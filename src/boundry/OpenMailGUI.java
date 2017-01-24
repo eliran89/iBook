@@ -22,6 +22,7 @@ import com.jgoodies.forms.factories.DefaultComponentFactory;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -147,33 +148,42 @@ public class OpenMailGUI extends mainPanel {
 		
 		btnApprove.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnApprove.setBounds(845, 238, 131, 23);
-		
+		add(btnApprove);
+		row=-1;
 		btnApprove.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-								
+					if (row!=-1){			
 					String bTitle = new String( table.getValueAt(row, 0).toString());
 					String uName= new String( table.getValueAt(row, 3).toString());
-					
+				//	try {
 					reviewController.ApproveReview(bTitle,uName);
+					//}catch (SQLException e1) {
+					//	e1.printStackTrace();
+					//}
+					} // end if row
+					else 
+						errorBox("Please choose review first","Error");
 				
 			}
 		});
 				
-		 add(btnApprove);
+		
 		
 		/** Button for Reject **/
 	
 		btnReject.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnReject.setBounds(844, 296, 131, 23);
 		add(btnReject);
+		row=-1;
 		btnReject.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//if(row != -1){
+				if(row != -1){
 					String bTitle = new String( table.getValueAt(row, 0).toString());
 					String uName= new String( table.getValueAt(row, 3).toString());
 					reviewController.removeReview(bTitle,uName);
-			//	}
-				
+				}
+				else
+					errorBox("Please choose review first","Error");
 			}
 		});
 		add(btnReject);
@@ -185,19 +195,22 @@ public class OpenMailGUI extends mainPanel {
 		btnDisplayReview.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnDisplayReview.setBounds(374, 596, 131, 23);
 		add(btnDisplayReview);
+		row=-1;
 		btnDisplayReview.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//if(row != -1){
+				if (row != -1){
 					String bTitle = new String( table.getValueAt(row, 0).toString());
 					String uName = new String( table.getValueAt(row, 3).toString());
-				//	row = -1;
+					row = -1;
 					reviewController.displayMailReview(bTitle,uName);
-				//}
+				}
+				else	
+					errorBox("Please choose review first","Error");
 				
 			}
 		});
 			
-	
+		
 		
 		
   }// end of getReview()
@@ -227,11 +240,11 @@ public class OpenMailGUI extends mainPanel {
 			txtpnFds.setBorder(new EtchedBorder(EtchedBorder.RAISED, null, null));
 			add(txtpnFds);
 			
-			//System.out.println("text is="+txtpnFds.getText());
+			
 			if(loginController.use.getprivilege() == 3) {
 			
 			/** button Approve **/
-			//JButton btnApprove = new JButton("Approve");
+			
 			btnApprove.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnApprove.setBounds(845, 238, 131, 23);
 			add(btnApprove);
