@@ -516,7 +516,7 @@ public class userController {
 				DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"'");	//updating into reader privilege level
 				DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPaymentToDBFormat+"', '"+firstName+"', '"+lastName+"', '"+uName+"')");
 			}
-		//works till hereeee !!! !!! !!! !!!
+		//works till hereeee !!! !!! !!! !!
 			if (newPayment.equals("Periodic")){
 				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
 				if(idIsPeriodic == null)		//means user is NOT defined as periodic reader in DB
