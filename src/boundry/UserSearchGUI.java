@@ -539,7 +539,7 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**password label and textField */
 		JLabel lblPassword = new JLabel("Password");
-		lblPassword.setToolTipText("Enter 6 chars account password");
+		lblPassword.setToolTipText("Enter 5 chars account password");
 		lblPassword.setHorizontalAlignment(SwingConstants.LEFT);
 		lblPassword.setForeground(Color.BLACK);
 		lblPassword.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -677,7 +677,8 @@ public class UserSearchGUI extends mainPanel{
 		btnSet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String newPayment = (String) comboBoxPayment.getSelectedItem();	//value for new payment arrangement
-		
+				boolean visFlag = newPayment.equals("One-by-One")?false:true;	//in case it's a one-by-one arrangement, on next screen we'll not show number of periods for arrangement thus false
+				
 				if (!(arngmnt.equals(newPayment))){
 				//means there is a conflict between two payment arrangements or there is no agreement
 					//System.out.println("currPaynt :"+arngmnt+" newPayment: "+newPayment);
@@ -685,11 +686,11 @@ public class UserSearchGUI extends mainPanel{
 					//this is a case of conflict agreements
 						boolean dialogResult = mainPanel.yesNoBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?", "Payment Conflict Occured");
 						if(dialogResult){
-							setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment);
+							setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment,visFlag);
 						}
 					}
 					else{
-						setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment);
+						setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment,visFlag);
 					}
 				}
 			}
@@ -719,7 +720,7 @@ public class UserSearchGUI extends mainPanel{
 		loginController.mainG.revalidate();
 	}
 	
-	public static void setNewPaymentArrangement(String id, String fName, String lName, String uName, String priv, String newPayment) {
+	public static void setNewPaymentArrangement(String id, String fName, String lName, String uName, String priv, String newPayment, boolean visFlag) {
 		UserSearchGUI panelSetNewPayment;
 
 		//System.out.println(loginController.use.getprivilege());
@@ -832,6 +833,8 @@ public class UserSearchGUI extends mainPanel{
 		lblNumberOfPeriod.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		lblNumberOfPeriod.setBounds(274, 390, 197, 20);
 		panelSetNewPayment.add(lblNumberOfPeriod);
+		if (!visFlag)
+			lblNumberOfPeriod.setVisible(false);
 		
 		JTextField txtNumOfPeriod;
 		txtNumOfPeriod = new JTextField();
@@ -840,6 +843,8 @@ public class UserSearchGUI extends mainPanel{
 		txtNumOfPeriod.setColumns(10);
 		txtNumOfPeriod.setBounds(481, 390, 27, 20);
 		panelSetNewPayment.add(txtNumOfPeriod);
+		if (!visFlag)
+			txtNumOfPeriod.setVisible(false);
 		
 		/**Years/Months period comboBox */
 		JComboBox comboBoxYearMonth = new JComboBox();
@@ -847,7 +852,8 @@ public class UserSearchGUI extends mainPanel{
 		comboBoxYearMonth.addItem("Months");
 		comboBoxYearMonth.addItem("Years");
 		panelSetNewPayment.add(comboBoxYearMonth);
-
+		if (!visFlag)
+			comboBoxYearMonth.setVisible(false);
 		
 		/**button Set */
 		JButton btnSet = new JButton("Set");

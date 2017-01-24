@@ -424,6 +424,16 @@ public class userController {
 		return "NONE";
 	}
 	
+	/**
+	 * 
+	 * 
+	 * @param creditNum
+	 * @param expMonth
+	 * @param expYear
+	 * @param cvv
+	 * @param periodNum
+	 * @return
+	 */
 	public static boolean validateCreditCard(String creditNum, String expMonth, String expYear, String cvv, String periodNum){
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		int month = Calendar.getInstance().get(Calendar.MONTH);
@@ -464,6 +474,10 @@ public class userController {
 		}
 		if (!((cvvInt <= 999) && (cvvInt >= 100))){
 			mainPanel.errorBox("CVV value invalid\nPlease enter a 3-digit number", "Credit Card Error");
+			return false;
+		}
+		if (!((periodNumInt > 0) && (periodNumInt < 100))){
+			mainPanel.errorBox("Number of periods invalid\nPlease enter a value between 1 to 99", "Credit Card Error");
 			return false;
 		}
 		mainPanel.infoBox("Your credit card checked and confirmed!", "Credit Card Validated");
