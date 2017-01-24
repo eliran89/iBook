@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.12, for Win32 (AMD64)
 --
 -- Host: localhost    Database: ibookdb
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.16-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -25,7 +25,8 @@ DROP TABLE IF EXISTS `author`;
 CREATE TABLE `author` (
   `authorID` int(11) NOT NULL,
   `authorName` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`authorID`)
+  PRIMARY KEY (`authorID`),
+  UNIQUE KEY `authorName_UNIQUE` (`authorName`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -35,7 +36,7 @@ CREATE TABLE `author` (
 
 LOCK TABLES `author` WRITE;
 /*!40000 ALTER TABLE `author` DISABLE KEYS */;
-INSERT INTO `author` VALUES (1,' J. D. Salinger'),(2,'J.K.Rowling');
+INSERT INTO `author` VALUES (10,'David Grossman'),(5,'Eliran'),(11,'George Lucas'),(8,'Grim Brothers'),(3,'Guy'),(1,'J. D. Salinger'),(2,'J.K.Rowling'),(9,'miriam ruth'),(4,'Nimrod'),(7,'R.R.Martin'),(12,'Yochi Brandes'),(6,'Zachi');
 /*!40000 ALTER TABLE `author` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -63,7 +64,7 @@ CREATE TABLE `bauthor` (
 
 LOCK TABLES `bauthor` WRITE;
 /*!40000 ALTER TABLE `bauthor` DISABLE KEYS */;
-INSERT INTO `bauthor` VALUES (2,34),(1,35);
+INSERT INTO `bauthor` VALUES (1,37),(3,38),(4,38),(5,38),(6,38),(2,39),(7,40),(8,41),(8,42),(8,43),(10,44),(11,45),(12,46);
 /*!40000 ALTER TABLE `bauthor` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -81,7 +82,7 @@ CREATE TABLE `bkey` (
   KEY `word_idx` (`Word`),
   KEY `fk_bkey_book_idx` (`bookID`),
   CONSTRAINT `fk_bkey_book` FOREIGN KEY (`bookID`) REFERENCES `book` (`bookID`) ON DELETE CASCADE ON UPDATE NO ACTION,
-  CONSTRAINT `fk_bkey_key` FOREIGN KEY (`Word`) REFERENCES `keyword` (`word`) ON DELETE CASCADE ON UPDATE NO ACTION
+  CONSTRAINT `fk_bkey_key` FOREIGN KEY (`Word`) REFERENCES `keyword` (`word`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -91,7 +92,7 @@ CREATE TABLE `bkey` (
 
 LOCK TABLES `bkey` WRITE;
 /*!40000 ALTER TABLE `bkey` DISABLE KEYS */;
-INSERT INTO `bkey` VALUES (34,'fantacy'),(34,'greate'),(34,'O.K'),(35,'kill'),(35,'Suck'),(35,'Very Suck');
+INSERT INTO `bkey` VALUES (37,'kill'),(37,'Very Suck'),(38,'hard'),(38,'long'),(38,'test'),(39,'fantasy'),(39,'greate'),(40,'Medieval'),(41,'kids'),(41,'legend'),(42,'kids'),(42,'legend'),(43,'kids'),(43,'legends'),(44,'Fiction'),(44,'run'),(45,'Fiction'),(45,'Star Wars'),(46,'Israeli');
 /*!40000 ALTER TABLE `bkey` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -106,13 +107,11 @@ CREATE TABLE `book` (
   `bookID` int(11) NOT NULL,
   `Title` varchar(45) DEFAULT NULL,
   `language` varchar(45) DEFAULT NULL,
-  `brief` varchar(45) DEFAULT NULL,
-  `appendix` varchar(45) DEFAULT NULL,
-  `numOfSearches` int(11) DEFAULT NULL,
+  `brief` varchar(500) DEFAULT NULL,
+  `appendix` varchar(500) DEFAULT NULL,
   `numOfOrders` int(11) DEFAULT NULL,
-  `absoluteRank` int(11) DEFAULT NULL,
   `cost` float DEFAULT NULL,
-  `suspended` bit(1) DEFAULT b'0',
+  `suspended` int(11) DEFAULT '0',
   PRIMARY KEY (`bookID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -123,7 +122,7 @@ CREATE TABLE `book` (
 
 LOCK TABLES `book` WRITE;
 /*!40000 ALTER TABLE `book` DISABLE KEYS */;
-INSERT INTO `book` VALUES (34,'Harry Poter','English','a book','a book',4,1,2,40,'\0'),(35,'The Catcher in the Rye','english','no','no',30,1,1,35,'\0');
+INSERT INTO `book` VALUES (37,'The Catcher in the Rye','english','no','no',0,35,0),(38,'Project Test','english','This is a test','No',0,35,1),(39,'Harry Potter','English','a book','a book',0,40,0),(40,'Game Of Thrones','English','a book about the game of thrones','no',0,40,0),(41,'Snow White','English','no','no',0,20,0),(42,'Pinocchio','English','no','no',0,20,0),(43,'Cinderella','English','no','no',0,20,0),(44,'Someone to Run with ','Hebrew','no','no',0,17,0),(45,'Star Wars','English','no','no',0,40,0),(46,'Seven Mothers','Hebrew','no','no',0,20,0);
 /*!40000 ALTER TABLE `book` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -152,7 +151,7 @@ CREATE TABLE `bscope` (
 
 LOCK TABLES `bscope` WRITE;
 /*!40000 ALTER TABLE `bscope` DISABLE KEYS */;
-INSERT INTO `bscope` VALUES (35,'adults',NULL,'Boring'),(35,'Drama',NULL,'Boring'),(34,'Fantasy',NULL,'Kids'),(35,'Fantasy',NULL,'Boring'),(34,'Kids',NULL,'Magic');
+INSERT INTO `bscope` VALUES (37,'Adults',0,'Boring'),(38,'Adults',0,'test'),(37,'Drama',0,'Boring'),(46,'Drama',0,'Israeli'),(40,'fantacy',0,'Medieval'),(37,'Fantasy',0,'Boring'),(39,'Fantasy',0,'Kids'),(44,'Fiction',0,'Literature'),(45,'Fiction',0,'Fiction'),(39,'Kids',0,'Magic'),(41,'kids',0,'fantacy'),(42,'kids',0,'fantacy'),(43,'kids',0,'fantacy'),(38,'test',0,'test');
 /*!40000 ALTER TABLE `bscope` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -207,7 +206,7 @@ CREATE TABLE `interestedreader` (
 
 LOCK TABLES `interestedreader` WRITE;
 /*!40000 ALTER TABLE `interestedreader` DISABLE KEYS */;
-INSERT INTO `interestedreader` VALUES (22222,'Nimrod','Mendel','nimrod');
+INSERT INTO `interestedreader` VALUES (15,'moshe','galamin','mosheg'),(22222,'Nimrod','Mendel','nimrod'),(32156,'felix','cat','elir');
 /*!40000 ALTER TABLE `interestedreader` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +229,7 @@ CREATE TABLE `keyword` (
 
 LOCK TABLES `keyword` WRITE;
 /*!40000 ALTER TABLE `keyword` DISABLE KEYS */;
-INSERT INTO `keyword` VALUES ('fantacy'),('greate'),('kill'),('O.k'),('Suck'),('Very Suck');
+INSERT INTO `keyword` VALUES ('fantasy'),('Fiction'),('greate'),('hard'),('Israeli'),('kids'),('kill'),('legend'),('legends'),('long'),('Medieval'),('run'),('Star Wars'),('test'),('Very Suck');
 /*!40000 ALTER TABLE `keyword` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,7 +243,7 @@ DROP TABLE IF EXISTS `periodicreader`;
 CREATE TABLE `periodicreader` (
   `userID` int(11) NOT NULL,
   `pType` varchar(45) DEFAULT NULL,
-  `dateOfEnd` datetime DEFAULT NULL,
+  `dateOfEnd` date DEFAULT NULL,
   PRIMARY KEY (`userID`),
   KEY `userID_idx` (`userID`),
   CONSTRAINT `userID` FOREIGN KEY (`userID`) REFERENCES `reader` (`userID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -257,7 +256,7 @@ CREATE TABLE `periodicreader` (
 
 LOCK TABLES `periodicreader` WRITE;
 /*!40000 ALTER TABLE `periodicreader` DISABLE KEYS */;
-INSERT INTO `periodicreader` VALUES (13,'yearly','2017-01-15 14:00:00');
+INSERT INTO `periodicreader` VALUES (13,'yearly','2020-11-15');
 /*!40000 ALTER TABLE `periodicreader` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -295,7 +294,7 @@ DROP TABLE IF EXISTS `reader`;
 CREATE TABLE `reader` (
   `userID` int(11) NOT NULL,
   `creditCard` varchar(45) NOT NULL,
-  `debt` float NOT NULL,
+  `debt` int(11) DEFAULT '0',
   `rType` varchar(45) NOT NULL,
   `firstName` varchar(45) NOT NULL,
   `lastName` varchar(45) NOT NULL,
@@ -312,7 +311,7 @@ CREATE TABLE `reader` (
 
 LOCK TABLES `reader` WRITE;
 /*!40000 ALTER TABLE `reader` DISABLE KEYS */;
-INSERT INTO `reader` VALUES (13,'4545',350,'periodic','zachi','mayer','zachi'),(14,'2332',350,'onbyone','malki','grosman','malki');
+INSERT INTO `reader` VALUES (13,'4545',350,'periodic','zachi','meyer','zachi'),(14,'2332',350,'onebyone','malki','grosman','malki'),(15,'5555',0,'periodic','moshe','galamin','mosheg');
 /*!40000 ALTER TABLE `reader` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,7 +339,7 @@ CREATE TABLE `readerorder` (
 
 LOCK TABLES `readerorder` WRITE;
 /*!40000 ALTER TABLE `readerorder` DISABLE KEYS */;
-INSERT INTO `readerorder` VALUES (13,35,'2017-01-14 16:54:32');
+INSERT INTO `readerorder` VALUES (13,37,'2017-01-19 00:00:00'),(14,39,'2017-01-01 18:00:00');
 /*!40000 ALTER TABLE `readerorder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -372,7 +371,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (1,35,'Suck','zachi',1,'this book is suck'),(2,35,'bad','malki',1,'i dont like this book at all he killed john lennon and the author is a murderer'),(3,34,'Great','zachi',1,'its a greate book i love fantasy books'),(4,34,'O.K','malki',1,'this book is O.K and not more then that');
+INSERT INTO `reviews` VALUES (1,37,'Suck','zachi',0,'This book is suck'),(2,37,'Bad ','malki',0,'I don\'t like this book at all he killed John Lennon and the author is a murderer'),(3,39,'Great ','zachi',1,'I don\'t like this book at all he killed John Lennon and the author is a murderer'),(4,39,'O.K.','malki',1,'This Book is O.K and not more then that');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -396,8 +395,33 @@ CREATE TABLE `scope` (
 
 LOCK TABLES `scope` WRITE;
 /*!40000 ALTER TABLE `scope` DISABLE KEYS */;
-INSERT INTO `scope` VALUES ('Adults',NULL),('Drama',NULL),('Fantasy',NULL),('Kids',NULL);
+INSERT INTO `scope` VALUES ('Adults',NULL),('Drama',NULL),('fantacy',NULL),('Fantasy',NULL),('Fiction',NULL),('Kids',NULL),('test',NULL);
 /*!40000 ALTER TABLE `scope` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `searches`
+--
+
+DROP TABLE IF EXISTS `searches`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `searches` (
+  `bookID` int(11) NOT NULL DEFAULT '0',
+  `date` datetime DEFAULT NULL,
+  KEY `fk_search_book_idx` (`bookID`),
+  CONSTRAINT `fk_search_book` FOREIGN KEY (`bookID`) REFERENCES `book` (`bookID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `searches`
+--
+
+LOCK TABLES `searches` WRITE;
+/*!40000 ALTER TABLE `searches` DISABLE KEYS */;
+INSERT INTO `searches` VALUES (37,'2016-12-25 17:00:00'),(37,'2017-01-20 14:49:28'),(39,'2017-01-20 14:51:35'),(39,'2017-01-20 14:52:02'),(37,'2017-01-20 14:52:09'),(39,'2017-01-20 14:52:22'),(37,'2017-01-20 14:52:26'),(39,'2017-01-20 14:52:41'),(38,'2017-01-20 14:52:46'),(37,'2017-01-20 14:52:50'),(37,'2017-01-20 14:52:56'),(38,'2017-01-20 14:52:59'),(37,'2017-01-22 18:16:11'),(37,'2017-01-22 18:16:40'),(37,'2017-01-22 18:16:57'),(40,'2017-01-22 18:17:20');
+/*!40000 ALTER TABLE `searches` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -446,7 +470,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('Avi','12345',3,'1'),('eliran','98765',4,'1'),('guy','12345',6,'1'),('malki','12345',2,'1'),('nimrod','12345',1,'1'),('zachi','98765',2,'1');
+INSERT INTO `user` VALUES ('Avi','12345',3,'1'),('elir','*****',1,'1'),('eliran','98765',4,'1'),('guy','12345',6,'1'),('malki','12345',2,'0'),('mosheg','55555',1,'1'),('nimrod','12345',1,'1'),('zachi','98765',2,'1');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -459,4 +483,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-17 15:34:55
+-- Dump completed on 2017-01-22 23:57:47
