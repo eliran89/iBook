@@ -632,7 +632,7 @@ public class userController {
 		loginController.mainG.revalidate();
 	}
 	/**
-	 * 
+	 *  
 	 * @param bid
 	 */
 	public static void displaySearchReport(String bid,String bName){
@@ -654,7 +654,6 @@ public class userController {
 	        	if (date.contains(now))
 	        	{
 	        		date = date.substring(8, 10);
-	        		System.out.println(date);
 	        		dataT.add(date);
 	        	}
 	             
@@ -663,18 +662,27 @@ public class userController {
 	        	data = new double[dataT.size()];
 	        	for(int i = 0;i < dataT.size();i++)
 	        		data[i] = Double.parseDouble(dataT.get(i));
-	        
+	        	
+	        	int[] appears = new int[31];
+	        	for(int i = 0;i<31;i++)
+	        		appears[i] = 0;
+	        	for(int i = 0;i<data.length;i++)
+	        		appears[(int) data[i]]++;
+	        	int appearsSize = 0;
+	        	
+	        	for(int i = 0;i<31;i++)
+	        		if(appears[i] != 0)
+	        			appearsSize++;
 		        HistogramDataset dataset = new HistogramDataset();
 		        dataset.setType(HistogramType.FREQUENCY);
-		        dataset.addSeries("Book",data,30); // Number of bins is 50
+		        dataset.addSeries("Book",data,appearsSize); // Number of bins is 50
 		        PlotOrientation orientation = PlotOrientation.VERTICAL;
-	
+		        
 		        boolean show = false;
 		        boolean toolTips = false;
-		        boolean urls = false;
+		        boolean urls = true;
 		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
 		                
-	
 		        chart.setBackgroundPaint(Color.white);
 	
 		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
@@ -768,15 +776,26 @@ public class userController {
 	        	for(int i = 0;i < dataT.size();i++)
 	        		data[i] = Double.parseDouble(dataT.get(i));
 	        
+	        	int[] appears = new int[31];
+	        	for(int i = 0;i<31;i++)
+	        		appears[i] = 0;
+	        	for(int i = 0;i<data.length;i++)
+	        		appears[(int) data[i]]++;
+	        	int appearsSize = 0;
+	        	
+	        	for(int i = 0;i<31;i++)
+	        		if(appears[i] != 0)
+	        			appearsSize++;
+	        	System.out.println(appearsSize);
 		        HistogramDataset dataset = new HistogramDataset();
 		        dataset.setType(HistogramType.FREQUENCY);
-		        dataset.addSeries("Book",data,30); // Number of bins is 50
+		        dataset.addSeries("Book",data,appearsSize); // Number of bins is 50
 		        PlotOrientation orientation = PlotOrientation.VERTICAL;
 	
 		        boolean show = false;
 		        boolean toolTips = false;
 		        boolean urls = false;
-		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
+		        JFreeChart chart = ChartFactory.createHistogram("Orders Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
 		                
 	
 		        chart.setBackgroundPaint(Color.white);
