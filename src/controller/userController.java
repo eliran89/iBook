@@ -507,6 +507,7 @@ public class userController {
 		String firstName = (String) firstLastName.get(0);
 		String lastName = (String) firstLastName.get(1);
 		String newPaymentToDBFormat = newPayment.equals("One-by-One")?"onebyone":"periodic";
+		String perTypeToDBFormat = perType.equals("Years")?"yearly":"monthly";
 		
 		/**get ID if exists in reader table*/
 		idIsReader = DBController.getFromDB("select r.userID from reader r where r.userID = '"+id+"'");
@@ -515,13 +516,14 @@ public class userController {
 				DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"'");	//updating into reader privilege level
 				DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPaymentToDBFormat+"', '"+firstName+"', '"+lastName+"', '"+uName+"')");
 			}
+		//works till hereeee !!! !!! !!! !!!
 			if (newPayment.equals("Periodic")){
 				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
-				if(idIsPeriodic.get(0) == null)		//means user is NOT defined as periodic reader in DB
+				if(idIsPeriodic == null)		//means user is NOT defined as periodic reader in DB
 					if (perType.equals("Months"))
-						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perType+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
 					else
-						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perType+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
 				else								//means user defined as periodic and we're about to extend his arrangement
 					if (perType.equals("Months"))	//means we're about to extend in 'month' periods
 						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' MONTH) WHERE `userID`='"+id+"'");
