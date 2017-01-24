@@ -260,4 +260,15 @@ public abstract class  mainPanel extends JPanel {
 	public static int confirmBox(String infoMessage){
 		return JOptionPane.showConfirmDialog (null, infoMessage);
 	}
+	
+	  //JDialog.setDefaultLookAndFeelDecorated(true);
+	public static boolean yesNoBox(String msg, String lbl){
+	int response = JOptionPane.showConfirmDialog(null, msg, lbl, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
+	    if (response == JOptionPane.YES_OPTION){
+	      //System.out.println(yesMessage);	   
+	      return true;
+	    }
+	    return false;
+	}
 }

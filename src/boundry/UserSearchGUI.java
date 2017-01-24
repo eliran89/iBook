@@ -684,8 +684,9 @@ public class UserSearchGUI extends mainPanel{
 					//System.out.println("currPaynt :"+arngmnt+" newPayment: "+newPayment);
 					if (!(arngmnt.equals("NONE"))){
 					//this is a case of conflict agreements
-						int dialogResult = mainPanel.confirmBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?");
-						if(dialogResult == JOptionPane.YES_OPTION){
+						boolean dialogResult = mainPanel.yesNoBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?", "Payment Conflict Occured");
+						//int dialogResult = mainPanel.confirmBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?");
+						if(dialogResult){
 							setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment);
 						}
 					}

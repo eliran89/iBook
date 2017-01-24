@@ -464,6 +464,19 @@ public class userController {
 		return true;
 	}
 	
+	/**
+	 
+	 * @param id
+	 * @param uName
+	 * @param creditNum
+	 * @param expYear
+	 * @param expMonth
+	 * @param cvv
+	 * @param perType
+	 * @param periodNum
+	 * @param newPayment
+	 * @throws SQLException
+	 */
 	public static void setNewPaymentArrangement(String id, String uName, String creditNum, String expYear, String expMonth, String cvv,String perType, String periodNum, String newPayment) throws SQLException {
 
 		ArrayList<String> idIsReader = null;	//if exist means user defined as a reader
@@ -809,7 +822,6 @@ public class userController {
 	        else
 	        	mainPanel.infoBox("No Orders", "Report");
 	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
-		
 		
 	}
 	
