@@ -41,7 +41,6 @@ public class UserSearchGUI extends mainPanel{
 	
 	JTable table;
 	
-	
 	public UserSearchGUI(String name , String role)
 	{
 		super(name,role);
