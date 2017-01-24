@@ -692,7 +692,7 @@ public class userController {
 	        	for(int i = 0;i<31;i++)
 	        		if(appears[i] != 0)
 	        			appearsSize++;
-		        HistogramDataset dataset = new HistogramDataset();
+		        /*HistogramDataset dataset = new HistogramDataset();
 		        dataset.setType(HistogramType.FREQUENCY);
 		        dataset.addSeries("Book",data,appearsSize); // Number of bins is 50
 		        PlotOrientation orientation = PlotOrientation.VERTICAL;
@@ -703,10 +703,44 @@ public class userController {
 		        JFreeChart chart = ChartFactory.createHistogram("Seach Chart", "Day", "Number Of Searches",dataset, orientation, show, toolTips, urls);
 		                
 		        chart.setBackgroundPaint(Color.white);
-	
-		     // JFreeChart chart = ChartFactory.createBarChart( "Seach Chart","Book", "Number Of Searches",   dataset,  PlotOrientation.VERTICAL,  true, true, false);
 		    	                   	    	                     	    	                 	    	                	    	                  	    	        
 		        ChartFrame frame = new ChartFrame("Search Chart",chart,true);
+		        frame.setVisible(true);
+		        frame.setSize(700, 600);*/
+	        	
+	        	final String fiat = "FIAT";
+	            final String audi = "AUDI";
+	            final String ford = "FORD";
+	            final String speed = "Speed";
+	            final String millage = "Millage";
+	            final String userrating = "User Rating";
+	            final String safety = "safety";
+
+	            final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
+	            
+	            for(int i = 0;i<31 )
+
+	           /* dataset.addValue( 1.0 , fiat , speed );
+	            dataset.addValue( 3.0 , fiat , userrating );
+	            dataset.addValue( 5.0 , fiat , millage );
+	            dataset.addValue( 5.0 , fiat , safety );
+
+	            dataset.addValue( 5.0 , audi , speed );
+	            dataset.addValue( 6.0 , audi , userrating );
+	            dataset.addValue( 10.0 , audi , millage );
+	            dataset.addValue( 4.0 , audi , safety );
+
+	            dataset.addValue( 4.0 , ford , speed );
+	            dataset.addValue( 2.0 , ford , userrating );
+	            dataset.addValue( 3.0 , ford , millage );
+	            dataset.addValue( 6.0 , ford , safety );*/
+
+	            JFreeChart barChart = ChartFactory.createBarChart("CAR USAGE STATIStICS", "Category", "Score",   dataset,
+	            		PlotOrientation.VERTICAL, true, true, false);
+
+	            int width = 640; /* Width of the image */
+	            int height = 480; /* Height of the image */ 
+	            ChartFrame frame = new ChartFrame("Search Chart",barChart,true);
 		        frame.setVisible(true);
 		        frame.setSize(700, 600);
 	        }
@@ -772,7 +806,7 @@ public class userController {
 		if(info == null  || nows.equals(info))
 			nows = DBController.getFromDB("select now()");
 		 String now = nows.get(0).substring(0,7);
-		 System.out.println("now is: "+now);
+		 System.out.println("now is: "+nows);
 		 ArrayList<String> dataT = new  ArrayList<String>();
 	      double[] data;
 	      int size;
