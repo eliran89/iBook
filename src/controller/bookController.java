@@ -309,7 +309,7 @@ public class bookController {
 		
 		else 
 			panel = new workerBookGUI(loginController.use.getUsername(),"Manager");
-		if(loginController.use.getprivilege() > 3)
+		if(loginController.use.getprivilege() < 3)
 			try {
 				DBController.insertToDB("INSERT INTO `ibookdb`.`searches`(`bookID`,`date`)VALUES("+bid+",now());");
 			} catch (SQLException e) {
@@ -678,7 +678,7 @@ public static void displayUserOrders(String uName) {
 			"WHERE re.username='"+uName+"' and ro.bookID=b.bookID and ro.userID=re.userID"); 
 
 	
-	if(!(orders.isEmpty())){
+	if(orders != null){
 		
 		orderListGUI.data = new String[orders.size()/3][3];
 		int count =0;
