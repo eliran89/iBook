@@ -1,10 +1,13 @@
 package controller;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.JFrame;
+
 
 import boundry.*;
 import simpleChat.ClientConsole;
@@ -41,6 +44,14 @@ public class loginController {
 		if(bool == false)
 		{
 			LoginGUI.err=true;
+			LoginGUI log = new LoginGUI();
+			log.setSize(550,320);
+			log.setVisible(true);
+		    log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		}
+		else if(DBController.existsInDB("SELECT user.username from user where user.logged = 1 and username = '"+username+"'"))
+		{
+			mainPanel.errorBox("User already logged in", "Error");
 			LoginGUI log = new LoginGUI();
 			log.setSize(550,320);
 			log.setVisible(true);
@@ -105,9 +116,19 @@ public class loginController {
 				IRDetails = new interestedReader(Integer.parseInt((usel.get(2))) , usel.get(0) , usel.get(1));
 				
 			}
+			DBController.insertToDB("UPDATE `ibookdb`.`user` SET `logged`='1' WHERE `username`='"+username+"';");
 			mainG.setSize(1000,900);
 			mainG.setVisible(true);
 			mainG.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			mainG.addWindowListener(new WindowAdapter ()
+					{
+						public void windowClosing(WindowEvent e){
+							userController.logout();
+							mainG.dispose();
+						}
+					});
+				
+			
 		}
 	}
 		

@@ -30,6 +30,12 @@ public class userController {
 
 	static public void logout(){
 		
+		try {
+			DBController.insertToDB("UPDATE `ibookdb`.`user` SET `logged`='0' "
+					+ "WHERE `username`='"+loginController.use.getUsername()+"';");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		loginController.mainG.dispose();
 		LoginGUI.err = false;
 		LoginGUI log = new LoginGUI();
