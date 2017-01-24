@@ -151,7 +151,7 @@ public class orderListGUI extends mainPanel {
 					}
 				}
 				else
-					errorBox("Press a book line","Error");
+					errorBox("Please choose a book  first","Error");
 			}
 		});
 		btnReviewBook.setBounds(400, 580, 111, 23);
