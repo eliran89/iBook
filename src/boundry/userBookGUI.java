@@ -529,8 +529,8 @@ public class userBookGUI extends mainPanel {
 				//System.out.println(format);
 				
 				try {
-					userController.addBookToOrderList(book.getTitle(), loginController.use.getUsername(), book.getCost());
-					bookController.downloadBook(book.getBookID(),format,book.getTitle());
+					if(userController.addBookToOrderList(book.getTitle(), loginController.use.getUsername(), book.getCost()))
+						bookController.downloadBook(book.getBookID(),format,book.getTitle());
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}

@@ -65,8 +65,63 @@ public  class IBookServer extends AbstractServer
   public synchronized void handleMessageFromClient
   (Object msg, ConnectionToClient client)
   {
-	   String   query = msg.toString();
-	    if(query.contains("select") || query.contains("SELECT"))
+	  String   query = null;
+	  if(msg instanceof String)
+		  query = msg.toString();
+	  if(msg instanceof ArrayList)
+	  {
+		  ArrayList<File> files = (ArrayList<File>) msg;
+		  try {
+			 /*pdf writing*/
+			InputStream inputStream = new FileInputStream(files.get(0));//get the pdf file
+			byte[] buffer = new byte[1024];
+			ResultSet queryAns = ((ResultSet) dbConn.QueryHandler("select max(book.bookID) from book"));//get the file name
+			queryAns.next();
+			String id = queryAns.getString(1);
+			File f = new File("C:/files/"+id+".pdf");
+			FileOutputStream output = new FileOutputStream(f);
+			try {
+				while (inputStream.read(buffer)>0)
+					output.write(buffer);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			/*docx writing*/
+			inputStream = new FileInputStream(files.get(1));
+			f = new File("C:/files/"+id+".docx");
+			output = new FileOutputStream(f);
+			try {
+				while (inputStream.read(buffer)>0)
+					output.write(buffer);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			/*fb2 writing*/
+			inputStream = new FileInputStream(files.get(2));
+			f = new File("C:/files/"+id+".fb2");
+			output = new FileOutputStream(f);
+			try {
+				while (inputStream.read(buffer)>0)
+					output.write(buffer);
+				inputStream.close();
+				output.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		  try {
+			  
+			client.sendToClient(null);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	  }
+	  else if(query.contains("select") || query.contains("SELECT"))
 	    {
 	    	ResultSet queryAns = ((ResultSet) dbConn.QueryHandler(msg));
 		    ArrayList<String> result1 = null;

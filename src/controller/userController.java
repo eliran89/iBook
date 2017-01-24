@@ -228,7 +228,7 @@ public class userController {
 	 * @param bookCost - float. The cost of the desired book
 	 * @throws SQLException 
 	 */
-	public static void addBookToOrderList(String title, String username, float bookCost) throws SQLException {
+	public static boolean addBookToOrderList(String title, String username, float bookCost) throws SQLException {
 
 		ArrayList<String> readerDetails = new ArrayList<String>();
 		ArrayList<String> bookID = new ArrayList<String>();
@@ -261,7 +261,7 @@ public class userController {
 		//if book already been purchased show pop up message
 		if(rs){
 			mainPanel.errorBox("Book has already been purchased!", "Book Already Purchased Error");	//failure message
-			return;
+			return false;
 		}
 
 			ArrayList<String> now = DBController.getFromDB("SELECT NOW() ");	//get date
@@ -284,7 +284,7 @@ public class userController {
 				//System.out.println("debt is: "+loginController.RDetails.getDebt());
 			}
 			
-			mainPanel.infoBox("The Book "+title+" has been sent to you!", "Book Ordered Message");	//show success message
+			return true;
 		}
 	
 	
@@ -696,7 +696,7 @@ public class userController {
 	        	for(int i = 0;i < dataT.size();i++)
 	        		data[i] = Double.parseDouble(dataT.get(i));
 	        	
-	        	int[] appears = new int[31];
+	        	double[] appears = new double[31];
 	        	for(int i = 0;i<31;i++)
 	        		appears[i] = 0;
 	        	for(int i = 0;i<data.length;i++)
@@ -732,28 +732,12 @@ public class userController {
 
 	            final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
 	            
-	            for(int i = 0;i<31 )
-
-	           /* dataset.addValue( 1.0 , fiat , speed );
-	            dataset.addValue( 3.0 , fiat , userrating );
-	            dataset.addValue( 5.0 , fiat , millage );
-	            dataset.addValue( 5.0 , fiat , safety );
-
-	            dataset.addValue( 5.0 , audi , speed );
-	            dataset.addValue( 6.0 , audi , userrating );
-	            dataset.addValue( 10.0 , audi , millage );
-	            dataset.addValue( 4.0 , audi , safety );
-
-	            dataset.addValue( 4.0 , ford , speed );
-	            dataset.addValue( 2.0 , ford , userrating );
-	            dataset.addValue( 3.0 , ford , millage );
-	            dataset.addValue( 6.0 , ford , safety );*/
+	            for(int i = 0;i < 31 ; i++)
+	            	dataset.addValue( appears[i] , "Number Of Searches" , Integer.toString(i) );
 
 	            JFreeChart barChart = ChartFactory.createBarChart("CAR USAGE STATIStICS", "Category", "Score",   dataset,
 	            		PlotOrientation.VERTICAL, true, true, false);
 
-	            int width = 640; /* Width of the image */
-	            int height = 480; /* Height of the image */ 
 	            ChartFrame frame = new ChartFrame("Search Chart",barChart,true);
 		        frame.setVisible(true);
 		        frame.setSize(700, 600);
