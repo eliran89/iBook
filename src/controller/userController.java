@@ -465,7 +465,7 @@ public class userController {
 	}
 	
 	/**
-	 * 
+	 
 	 * @param id
 	 * @param uName
 	 * @param creditNum
