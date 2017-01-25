@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import controller.bookController;
 import controller.userController;
@@ -16,6 +17,31 @@ public class managerGUI extends GWorkerGUI {
 	public managerGUI( String name , String role) {
 		
 		super(name,role);
+		
+		
+		/** button for user details **/
+		JButton btnUserManagement = new JButton("User details management");
+		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnUserManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				userController.userSuspendSearch();
+					
+			}
+		});
+		
+		/** adding a user icon**/
+		JLabel userPic = new JLabel("");
+		userPic.setIcon(new ImageIcon(LWorkerGUI.class.getResource("/boundry/User-Group-icon.png")));
+		userPic.setHorizontalAlignment(SwingConstants.CENTER);
+		userPic.setBounds(171, 165, 163, 153);
+		add(userPic);
+		
+		
+		btnUserManagement.setBounds(138, 344, 228, 27);
+		add(btnUserManagement);
+		
+		/** button for reports **/
 		JButton btnRaports = new JButton("Reports");
 		btnRaports.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnRaports.addActionListener(new ActionListener() {
@@ -24,6 +50,8 @@ public class managerGUI extends GWorkerGUI {
 			}
 		});
 
+		
+		
 		btnRaports.setBounds(396, 551,155, 27);
 		add(btnRaports);
 		

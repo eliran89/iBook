@@ -62,6 +62,16 @@ public class userController {
 		
 			
 	}
+		public static void userSuspendSearch() {
+	
+			UserSearchGUI panel= new UserSearchGUI(loginController.use.getUsername(),"Manager");
+			panel.searchForSuspendUser();
+		
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+		
+	}
 	
 	/**
 	 * GoToMainWindow - display the main window(according to the level)
@@ -165,6 +175,8 @@ public class userController {
 										+" from reader r, user u, privilege p"
 										+" where r.username like '%"+search+"%' and r.username = u.username and u.privilege = p.privilege");
 		}
+		
+		
 		if(item.equals("UserID"))
 			info = DBController.getFromDB(	" select r.userID, r.firstName, r.lastName, r.username, p.description"
 											+" from reader r, user u, privilege p"
@@ -199,7 +211,48 @@ public class userController {
 	}
 			
 	
-	
+	public static void UserSearchForSuspends(String item , String search){
+		UserSearchGUI panel;
+		ArrayList <String> info = null;
+		panel = new UserSearchGUI(loginController.use.getUsername(),"Manager");
+		if(item.equals("Username") ){
+			info = DBController.getFromDB(" select distinct r.userID, r.firstName, r.lastName, r.username, u.status"
+										+" from reader r, user u"
+										+" where r.username like '%"+search+"%' and r.username = u.username");
+		}
+		
+		if(item.equals("UserID"))
+			info = DBController.getFromDB(	" select distinct r.userID, r.firstName, r.lastName, r.username, u.status"
+											+" from reader r, user u, privilege p"
+											+" where r.userID = '"+search+"' and r.username = u.username");
+
+		if(info != null)
+		{
+			UserSearchGUI.data1 = new String[info.size()/5][5];
+			
+			int count =0;
+			for(int i = 0 ; i < info.size()/5 ; i++)
+				for(int j = 0 ; j < 5 ; j++){
+					UserSearchGUI.data1[i][j] = info.get(count);
+					count++;
+				}
+			
+			panel.getUserSuspendDetails();
+			panel.searchForSuspendUser();
+			//panel.managerReportButtons();
+		}
+
+//		if there are no results at all we add a lable that says "no results"
+		else
+		{
+			panel.searchForSuspendUser();
+			panel.noResults();
+		}
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+									
+		
+	}
 	public static void displayUser(String bName, String uName) {
 		ArrayList <String> info = null;
 		info = DBController.getFromDB("select reviews.text from reviews , book"
@@ -878,5 +931,7 @@ public class userController {
 	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 	}
+	
+	
 	
 }
