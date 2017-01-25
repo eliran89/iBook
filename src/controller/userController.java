@@ -62,6 +62,16 @@ public class userController {
 		
 			
 	}
+		public static void userSuspendSearch() {
+	
+			UserSearchGUI panel= new UserSearchGUI(loginController.use.getUsername(),"Manager");
+			panel.searchForSuspendUser();
+		
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+		
+		
+	}
 	
 	/**
 	 * GoToMainWindow - display the main window(according to the level)
@@ -165,6 +175,8 @@ public class userController {
 										+" from reader r, user u, privilege p"
 										+" where r.username like '%"+search+"%' and r.username = u.username and u.privilege = p.privilege");
 		}
+		
+		
 		if(item.equals("UserID"))
 			info = DBController.getFromDB(	" select r.userID, r.firstName, r.lastName, r.username, p.description"
 											+" from reader r, user u, privilege p"
@@ -199,6 +211,76 @@ public class userController {
 	}
 			
 	
+	public static void UserSearchForSuspends(String item , String search){
+		UserSearchGUI panel;
+		ArrayList <String> info = null;
+		panel = new UserSearchGUI(loginController.use.getUsername(),"Manager");
+		if(item.equals("Username") ){
+			info = DBController.getFromDB(" select distinct r.userID, r.firstName, r.lastName, r.username, u.status"
+										+" from reader r, user u"
+										+" where r.username like '%"+search+"%' and r.username = u.username");
+		}
+		
+		if(item.equals("UserID"))
+			info = DBController.getFromDB(	" select distinct r.userID, r.firstName, r.lastName, r.username, u.status"
+											+" from reader r, user u"
+											+" where r.userID = '"+search+"' and r.username = u.username");
+
+		if(info != null)
+		{
+			UserSearchGUI.data1 = new String[info.size()/5][5];
+			
+			int count =0;
+			for(int i = 0 ; i < info.size()/5 ; i++)
+				for(int j = 0 ; j < 5 ; j++){
+					UserSearchGUI.data1[i][j] = info.get(count);
+					//if (UserSearchGUI.data1[i][4].equals("1")) UserSearchGUI.data1[i][4]="unsuspended";
+					//else UserSearchGUI.data1[i][4]="suspended";
+					count++;
+				}
+			
+			panel.getUserSuspendDetails();
+			panel.searchForSuspendUser();
+			//panel.managerReportButtons();
+		}
+
+//		if there are no results at all we add a lable that says "no results"
+		else
+		{
+			panel.searchForSuspendUser();
+			panel.noResults();
+		}
+		loginController.mainG.setContentPane(panel);
+		loginController.mainG.revalidate();
+									
+		
+	}
+	
+	public static void changeStatus(String uName , String status){
+		ArrayList <String> info = null;
+		ArrayList <String> statusChange = null;
+		
+		
+		if (status.equals("1")) { // if unsuspended
+		
+			statusChange = DBController.getFromDB("UPDATE user u SET status='0' "+
+					"WHERE u.username='"+uName+"' and u.status='1'");
+			// message for changing status
+			UserSearchGUI.infoBox("The user '"+uName+"' is suspended", "Status change");
+		}
+		else { // if suspended			
+			statusChange = DBController.getFromDB("UPDATE user u SET status='1' "+
+					"WHERE u.username='"+uName+"' and u.status='0'");
+				UserSearchGUI.infoBox("The user "+uName+" is unsuspended", "Status change");
+			}
+		
+	
+		
+		
+		//userController.UserSearchForSuspends(item, search);;
+		
+		
+	}
 	
 	public static void displayUser(String bName, String uName) {
 		ArrayList <String> info = null;
@@ -214,7 +296,7 @@ public class userController {
 		loginController.mainG.setContentPane(account);
 		loginController.mainG.revalidate();
 		
-	}/**displayRiview method END*/
+	}/**displayReview method END*/
 	
 	
 	/**
@@ -281,7 +363,7 @@ public class userController {
 						" where `reader`.`userID` = '"+readerDetails.get(0)+ "' ");	//insert debt
 				
 				loginController.RDetails.setDebt(loginController.RDetails.addToDebt(bookCost));	//set new debt
-				//System.out.println("debt is: "+loginController.RDetails.getDebt());
+			
 			}
 			
 			return true;
@@ -987,5 +1069,7 @@ public class userController {
 		displayWorkerSearch();
 		
 	}
+	
+	
 	
 }

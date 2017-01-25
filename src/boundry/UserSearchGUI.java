@@ -32,6 +32,7 @@ import javax.swing.JTextPane;
 public class UserSearchGUI extends mainPanel{
 	private static JTextField textField;
 	private String[] columnHeader1 = {"ID","First Name","Last Name","User Name", "Privilege Level"};
+	private String[] columnHeader2 = {"ID","First Name","Last Name","User Name", "Status"};	
 	public static String[][] data1;
 	private static int row1 = -1;
 	
@@ -44,7 +45,7 @@ public class UserSearchGUI extends mainPanel{
 	public UserSearchGUI(String name , String role)
 	{
 		super(name,role);
-		btnLogout.setBounds(26, 11, 77, 16);
+		btnLogout.setBounds(26, 11, 88, 16);
 		setForeground(Color.WHITE);
 		
 		/* Button for main window */
@@ -126,6 +127,20 @@ public class UserSearchGUI extends mainPanel{
 				String item = (String) comboBox.getSelectedItem();
 				String search = (String) textField.getText();
 				controller.userController.UserSearchForReports(item, search);
+			}
+		});
+		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnSearch.setBounds(553, 137, 107, 23);
+		add(btnSearch);
+	}
+	/**searchForSuspendUser- the manager results for suspended and unsuspended users **/ 
+	public void searchForSuspendUser(){
+		JButton btnSearch = new JButton("Search");
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = (String) comboBox.getSelectedItem();
+				String search = (String) textField.getText();
+				controller.userController.UserSearchForSuspends(item, search);
 			}
 		});
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
@@ -217,20 +232,6 @@ public class UserSearchGUI extends mainPanel{
 		
 		
 		
-		/*JButton btnDisplayReview = new JButton("Display User");
-		btnDisplayReview.setBounds(374, 596, 131, 23);
-		add(btnDisplayReview);
-		btnDisplayReview.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				if(row1 != -1){
-					String bName = new String( table.getValueAt(row1, 0).toString());
-					String uName = new String( table.getValueAt(row1, 2).toString());
-					row1 = -1;
-					userController.displayUser(bName,uName);
-				}
-				
-			}
-		});*/
 		
 		/*Buttons for actions on users like: Add, Edit, Remove, Set Payment Arrangement*/
 		JButton btnAdd = new JButton("Add");
@@ -292,6 +293,115 @@ public class UserSearchGUI extends mainPanel{
 		
 		
 		//scrollBar.addAdjustmentListener(l);
+		
+	}
+	
+	/** table for suspended/unsuspended users **/
+	public void getUserSuspendDetails()
+	{
+		/**Create The Result Table after performing a user search*/
+		table = new JTable(data1,columnHeader2)
+		{
+			
+			public boolean isCellEditable(int data1,int columns){
+				return false;
+			}
+			public Component prepareRenderer(TableCellRenderer r,int data1 ,int column){
+				Component c = super.prepareRenderer(r,data1,column);
+				
+				if(data1 % 2 == 0)
+				{
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.WHITE);
+				}
+				else
+				{
+					c.setForeground(Color.BLACK);
+					c.setBackground(Color.LIGHT_GRAY);
+				}
+				if(isCellSelected(data1,column))
+				{
+					c.setBackground(Color.CYAN);
+					row1 = data1;
+				}
+					
+				return c;
+			}
+			
+		};
+		table.setForeground(Color.BLUE);
+		table.setBackground(Color.WHITE);
+		table.setFont(new Font("Arial", Font.PLAIN, 12));
+		//table.setBounds(79, 230, 687, 325);
+		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
+		table.setPreferredScrollableViewportSize(new Dimension(687,325));
+		table.setFillsViewportHeight(true);
+		
+		/* Scroll Pane */
+		JScrollPane pane = new JScrollPane(table);
+		pane.setBounds(79, 230, 687, 325);
+		add(pane);
+		
+		JLabel lblUserID = DefaultComponentFactory.getInstance().createTitle("User ID");
+		lblUserID.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUserID.setForeground(Color.WHITE);
+		lblUserID.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUserID.setBounds(67, 198, 107, 32);
+		add(lblUserID);
+		
+		/***/
+		JLabel lblFirstName = DefaultComponentFactory.getInstance().createLabel("First Name");
+		lblFirstName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblFirstName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblFirstName.setForeground(Color.WHITE);
+		lblFirstName.setBounds(205, 198, 107, 32);
+		add(lblFirstName);
+		
+		/***/
+		JLabel lblLastName = DefaultComponentFactory.getInstance().createLabel("Last Name");
+		lblLastName.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblLastName.setHorizontalAlignment(SwingConstants.CENTER);
+		lblLastName.setForeground(Color.WHITE);
+		lblLastName.setBounds(342, 200, 107, 29);
+		add(lblLastName);
+		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUsername.setBounds(480, 202, 87, 24);
+		add(lblUsername);
+		
+		JLabel lblStatus = new JLabel("Status");
+		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
+		lblStatus.setForeground(Color.WHITE);
+		lblStatus.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblStatus.setBounds(633, 202, 87, 24);
+		add(lblStatus);
+		
+		
+		/** buttons **/
+		
+		JButton btnStatus = new JButton("Change Status");
+		btnStatus.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnStatus.setBounds(835, 238, 131, 23);
+		add(btnStatus);
+		btnStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				String uName = new String( table.getValueAt(row1,3).toString());
+				String status = new String( table.getValueAt(row1,4).toString());
+				userController.changeStatus(uName, status);				
+			}
+			
+		});
+		
+		
+			
+	
+		
+		
+	
 		
 	}
 	/**

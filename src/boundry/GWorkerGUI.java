@@ -10,10 +10,23 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import controller.bookController;
+import controller.loginController;
+import controller.userController;
 
 public abstract class GWorkerGUI extends editorGUI {
 	public GWorkerGUI( String name , String role) {
 		super(name,role);
+		
+		
+		JButton btnUserManagement = new JButton("User details management");
+		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnUserManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+
+				userController.userSearch();
+					
+			}
+		});
 		
 		JButton btnBookSearch = new JButton("Book Management");
 		btnBookSearch.setFont(new Font("Tahoma", Font.BOLD, 15));

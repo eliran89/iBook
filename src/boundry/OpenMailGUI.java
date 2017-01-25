@@ -155,12 +155,10 @@ public class OpenMailGUI extends mainPanel {
 					if (row!=-1){			
 					String bTitle = new String( table.getValueAt(row, 0).toString());
 					String uName= new String( table.getValueAt(row, 3).toString());
-				//	try {
+				
 					reviewController.ApproveReview(bTitle,uName);
-					//}catch (SQLException e1) {
-					//	e1.printStackTrace();
-					//}
-					} // end if row
+					
+					} 
 					else 
 						errorBox("Please choose review first","Error");
 				
