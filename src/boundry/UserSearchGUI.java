@@ -651,7 +651,7 @@ public class UserSearchGUI extends mainPanel{
 		lblCurrPayment.setBounds(274, 250, 197, 20);
 		panelSetPayment.add(lblCurrPayment);
 		
-		String arngmnt = (String) userController.getReaderArrangement(id, uName);
+		String arngmnt = userController.getReaderArrangement(id, uName);
 		JTextField textCurrPmnt = new JTextField(arngmnt);
 		textCurrPmnt.setColumns(10);
 		textCurrPmnt.setBounds(481, 250, 124, 20);
@@ -696,6 +696,12 @@ public class UserSearchGUI extends mainPanel{
 						setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment,visFlag);
 					}
 				}
+				else{
+					boolean dialogResult = mainPanel.yesNoBox("You are about to extend current arrangement!\nWould you like to proceed?", "Payment Extension");
+					if(dialogResult){
+						setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment,visFlag);
+					}
+				}	
 			}
 		});
 		btnSet.setBounds(516, 441, 89, 23);
@@ -871,7 +877,7 @@ public class UserSearchGUI extends mainPanel{
 				String perType = new String (comboBoxYearMonth.getSelectedItem().toString());
 				String periodNum = new String (txtNumOfPeriod.getText());
 
-				boolean validate = userController.validateCreditCard(creditNum, expMonth, expYear, cvv, periodNum);
+				boolean validate = userController.validateCreditCard(creditNum, expMonth, expYear, cvv, periodNum, visFlag);
 				if (validate)
 					try {
 						userController.setNewPaymentArrangement(id, uName, creditNum, expYear, expMonth, cvv, perType, periodNum, newPayment);
