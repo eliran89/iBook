@@ -223,7 +223,7 @@ public class userController {
 		
 		if(item.equals("UserID"))
 			info = DBController.getFromDB(	" select distinct r.userID, r.firstName, r.lastName, r.username, u.status"
-											+" from reader r, user u, privilege p"
+											+" from reader r, user u"
 											+" where r.userID = '"+search+"' and r.username = u.username");
 
 		if(info != null)
@@ -234,6 +234,8 @@ public class userController {
 			for(int i = 0 ; i < info.size()/5 ; i++)
 				for(int j = 0 ; j < 5 ; j++){
 					UserSearchGUI.data1[i][j] = info.get(count);
+					//if (UserSearchGUI.data1[i][4].equals("1")) UserSearchGUI.data1[i][4]="unsuspended";
+					//else UserSearchGUI.data1[i][4]="suspended";
 					count++;
 				}
 			
@@ -253,6 +255,33 @@ public class userController {
 									
 		
 	}
+	
+	public static void changeStatus(String uName , String status){
+		ArrayList <String> info = null;
+		ArrayList <String> statusChange = null;
+		
+		
+		if (status.equals("1")) { // if unsuspended
+		
+			statusChange = DBController.getFromDB("UPDATE user u SET status='0' "+
+					"WHERE u.username='"+uName+"' and u.status='1'");
+			// message for changing status
+			UserSearchGUI.infoBox("The user '"+uName+"' is suspended", "Status change");
+		}
+		else { // if suspended			
+			statusChange = DBController.getFromDB("UPDATE user u SET status='1' "+
+					"WHERE u.username='"+uName+"' and u.status='0'");
+				UserSearchGUI.infoBox("The user "+uName+" is unsuspended", "Status change");
+			}
+		
+	
+		
+		
+		//userController.UserSearchForSuspends(item, search);;
+		
+		
+	}
+	
 	public static void displayUser(String bName, String uName) {
 		ArrayList <String> info = null;
 		info = DBController.getFromDB("select reviews.text from reviews , book"
@@ -267,7 +296,7 @@ public class userController {
 		loginController.mainG.setContentPane(account);
 		loginController.mainG.revalidate();
 		
-	}/**displayRiview method END*/
+	}/**displayReview method END*/
 	
 	
 	/**
@@ -334,7 +363,7 @@ public class userController {
 						" where `reader`.`userID` = '"+readerDetails.get(0)+ "' ");	//insert debt
 				
 				loginController.RDetails.setDebt(loginController.RDetails.addToDebt(bookCost));	//set new debt
-				//System.out.println("debt is: "+loginController.RDetails.getDebt());
+			
 			}
 			
 			return true;

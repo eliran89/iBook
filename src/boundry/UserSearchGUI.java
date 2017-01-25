@@ -32,6 +32,7 @@ import javax.swing.JTextPane;
 public class UserSearchGUI extends mainPanel{
 	private static JTextField textField;
 	private String[] columnHeader1 = {"ID","First Name","Last Name","User Name", "Privilege Level"};
+	private String[] columnHeader2 = {"ID","First Name","Last Name","User Name", "Status"};	
 	public static String[][] data1;
 	private static int row1 = -1;
 	
@@ -299,7 +300,7 @@ public class UserSearchGUI extends mainPanel{
 	public void getUserSuspendDetails()
 	{
 		/**Create The Result Table after performing a user search*/
-		table = new JTable(data1,columnHeader1)
+		table = new JTable(data1,columnHeader2)
 		{
 			
 			public boolean isCellEditable(int data1,int columns){
@@ -364,6 +365,13 @@ public class UserSearchGUI extends mainPanel{
 		lblLastName.setBounds(342, 200, 107, 29);
 		add(lblLastName);
 		
+		JLabel lblUsername = new JLabel("Username");
+		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
+		lblUsername.setForeground(Color.WHITE);
+		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
+		lblUsername.setBounds(480, 202, 87, 24);
+		add(lblUsername);
+		
 		JLabel lblStatus = new JLabel("Status");
 		lblStatus.setHorizontalAlignment(SwingConstants.CENTER);
 		lblStatus.setForeground(Color.WHITE);
@@ -371,27 +379,29 @@ public class UserSearchGUI extends mainPanel{
 		lblStatus.setBounds(633, 202, 87, 24);
 		add(lblStatus);
 		
-		JLabel lblUsername = new JLabel("Username");
-		lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
-		lblUsername.setForeground(Color.WHITE);
-		lblUsername.setFont(new Font("Tahoma", Font.BOLD, 12));
-		lblUsername.setBounds(480, 202, 87, 24);
-		add(lblUsername);
-		/***/
+		
+		/** buttons **/
+		
+		JButton btnStatus = new JButton("Change Status");
+		btnStatus.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnStatus.setBounds(835, 238, 131, 23);
+		add(btnStatus);
+		btnStatus.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				String uName = new String( table.getValueAt(row1,3).toString());
+				String status = new String( table.getValueAt(row1,4).toString());
+				userController.changeStatus(uName, status);				
+			}
+			
+		});
 		
 		
-		
-		
-		
+			
+	
 		
 		
 	
-	
-		
-	
-		
-		
-		//scrollBar.addAdjustmentListener(l);
 		
 	}
 	/**
