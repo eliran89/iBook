@@ -18,9 +18,12 @@ import simpleChatCommon.ChatIF;
 import client.IBookClient;
 import entity.*;
 /**
- * DBController input and output from the DB
- * @author Admin
- *
+ * DBController -  input and output from the DB
+ * the DBController gets a query from the user and send it to the server
+ * it also get a file and upload it to the server or download a file from the server
+ * and gets an answer and send the results to the user.
+ * @author Guy Cohen 
+
  */
 public class DBController {
 	static public ArrayList<String> rs = null;

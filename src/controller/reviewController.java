@@ -7,7 +7,12 @@ import javax.swing.JFrame;
 import boundry.*;
 
 
-
+/**
+ * this controller is responsible for every use of reviews such as review search,review check or making a review.
+ * it contains the connection to the database(throw DBController) and display the windows that related to reviews
+ * @author Guy Cohen , Zachi Meyer
+ *
+ */
 public class reviewController {
 
 /**

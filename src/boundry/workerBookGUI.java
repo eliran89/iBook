@@ -912,8 +912,16 @@ public class workerBookGUI extends userBookGUI {
 					warningBox("name remained the same","Scope");
 					bookController.scopeEdit();
 				}
-				else
-					bookController.updateScope(from, to);
+				else {
+					boolean bool = true;
+					for(int i = 0 ; i < scopes.size();i++)
+						if(to.equalsIgnoreCase(to))
+							bool = false;
+					if(!bool)
+						errorBox("Scope name already exist","Error");
+					else
+						bookController.updateScope(from, to);
+				}
 			}
 		});
 		btnEdit.setBounds(716, 197, 89, 23);
