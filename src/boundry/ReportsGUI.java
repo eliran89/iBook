@@ -83,7 +83,6 @@ public class ReportsGUI extends mainPanel {
 		
 
 
-	
 	/**
 	 * displayReportsMain - display the main report panel
 	 */
