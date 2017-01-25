@@ -59,6 +59,21 @@ public class managerGUI extends GWorkerGUI {
 		imgReports = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/reports.png")));
 		imgReports.setBounds(407, 412, 128, 128);
 		add(imgReports);
+		
+		JLabel imgWorker;
+		imgWorker = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/worker.jpg")));
+		imgWorker.setBounds(359, 168, 211, 105);
+		add(imgWorker);
+		
+		JButton btnWorkerManagement = new JButton("Workers");
+		btnWorkerManagement.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				userController.displayWorkerSearch();
+			}
+		});
+		btnWorkerManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
+		btnWorkerManagement.setBounds(396, 329, 155, 27);
+		add(btnWorkerManagement);
 
 	}
 

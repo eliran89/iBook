@@ -110,6 +110,16 @@ public class UserSearchGUI extends mainPanel{
 	 * searchForManager- the manager results need to be different for the others
 	 */
 	public void searchForManager(){
+		
+		JButton btnChooseUser = new JButton("Watch Order List");
+		btnChooseUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				userController.showAllUserReport();
+			}
+		});
+		btnChooseUser.setBounds(685, 137, 185, 23);
+		add(btnChooseUser);
+		
 		JButton btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -390,17 +400,10 @@ public class UserSearchGUI extends mainPanel{
 	 */
 	public void managerReportButtons(){
 		
-		JButton btnChooseUser = new JButton("Watch Order List");
-		btnChooseUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				userController.showAllUserReport();
-			}
-		});
-		btnChooseUser.setBounds(581, 596, 185, 23);
-		add(btnChooseUser);
+		
 		
 		JButton btnWatchUserOrder = new JButton("Watch User Order List");
-		btnWatchUserOrder.setBounds(79, 596, 185, 23);
+		btnWatchUserOrder.setBounds(120, 596, 185, 23);
 		btnWatchUserOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String username = table.getValueAt(row1, 3).toString();

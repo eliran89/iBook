@@ -931,6 +931,64 @@ public class userController {
 	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 	}
+	public static void displayWorkerSearch(){
+		WorkerManagementGUI workers = new WorkerManagementGUI(loginController.use.getUsername());
+		
+		ArrayList<String> info = DBController.getFromDB("select u.username , p.description from user u , privilege p "
+														+" where u.privilege = p.privilege and u.privilege>2 and p.privilege<6");
+		
+		if (info != null){
+			int count = 0;
+			workers.data = new String[info.size()/2][2];
+			for(int i = 0 ; i < info.size()/2;i++)
+				for(int j = 0 ; j < 2 ; j++){
+					workers.data[i][j] = info.get(count);
+					count++;
+				}
+			workers.displayWorkers();
+			loginController.mainG.setContentPane(workers);
+			loginController.mainG.revalidate();
+		}
+		else
+			mainPanel.warningBox("No workers in the system", "Worker Management");
+		
+		
+	}
+	public static void displayEditPrivilege(String username,String oldPriv){
+		
+		ArrayList<String> privileges = new ArrayList<String>();
+		privileges.add("Editor");
+		privileges.add("Library Worker");
+		privileges.add("Librarian");
+		
+		if(oldPriv.equals("Editor"))
+			privileges.remove(0);
+		
+		if(oldPriv.equals("Library Worker"))
+			privileges.remove(1);
+		
+		if(oldPriv.equals("Librarian"))
+			privileges.remove(2);
+		
+		WorkerManagementGUI worker = new WorkerManagementGUI(loginController.use.getUsername());
+		worker.editWorker(username, oldPriv, privileges);
+		loginController.mainG.setContentPane(worker);
+		loginController.mainG.revalidate();
+	}
+	public static void  changePrivilege(String username,String newPriv) throws SQLException{
+		//UPDATE `ibookdb`.`user` SET `privilege`='4' WHERE `username`='Avi';
+		if(newPriv.equals("Editor"))
+			DBController.insertToDB("UPDATE `ibookdb`.`user` SET `privilege`='3' WHERE `username`='"+username+"';");
+		
+		else if(newPriv.equals("Library Worker"))
+			DBController.insertToDB("UPDATE `ibookdb`.`user` SET `privilege`='4' WHERE `username`='"+username+"';");
+		else
+			DBController.insertToDB("UPDATE `ibookdb`.`user` SET `privilege`='5' WHERE `username`='"+username+"';");
+		
+		mainPanel.infoBox(username+"'s privilege has been changed","Privilege");
+		displayWorkerSearch();
+		
+	}
 	
 	
 	

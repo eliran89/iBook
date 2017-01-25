@@ -15,11 +15,15 @@ import controller.DBController;
 import entity.*;
 
 
-
+/**
+ * this controller is responsible for getting a username and a password and send it to
+ * DBController for verification and display the main window if the user was verified 
+ * or showing an error message if not(does not exists or already logged in) 
+ * @author Guy cCohen
+ *
+ */
 public class loginController {
-	/**
-	 * 
-	 */
+
 	public static User use;
 	private static ArrayList<String> usel;
 	public static MainWindowGUI mainG = null;

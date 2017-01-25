@@ -32,9 +32,7 @@ public class ReportsGUI extends mainPanel {
 	public static String[] columnHeader2 = {"Scope","Subject","Book Name","Book ID"};
 	public static String[][] data2;
 	private static int row1 = -1;
-	private JTextField textFieldDay;
-	private JTextField textFieldYear;
-	private JTextField textField_2;
+
 	
 	public ReportsGUI(String name, String type){
 		super(name,type);
@@ -174,6 +172,7 @@ public class ReportsGUI extends mainPanel {
 		table.setFont(new Font("Arial", Font.PLAIN, 12));
 		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
 		table.setPreferredScrollableViewportSize(new Dimension(687,325));
+		table.setFillsViewportHeight(true);
 		
 		/* Scroll Pane */
 		JScrollPane pane = new JScrollPane(table);
