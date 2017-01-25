@@ -24,16 +24,33 @@ import controller.loginController;
 import controller.reviewController;
 import controller.userController;
 import javax.swing.JComboBox;
-
+/**
+ * 
+ * @author Guy Cohen
+ * this class contains every button text filed and table that is being displayed to 
+ * the manager for the reports
+ *
+ */
 public class ReportsGUI extends mainPanel {
 	boolean bool =true;
-	public static String[] columnHeader1;// = {"username","bookName","date"};// = {"bookName","date"};
+	/**the headers of user search table*/
+	public static String[] columnHeader1;
+	/**the results for the user search table*/
 	public static String[][] data1;
+	/**the headers for the book search table*/
 	public static String[] columnHeader2 = {"Scope","Subject","Book Name","Book ID"};
+	/**the results for the book search table*/
 	public static String[][] data2;
+	/**indicates the number of the pressed row in the table(-1 in none pressed)*/
 	private static int row1 = -1;
 
-	
+	/**
+	 * this is a constructor for the reports window for the manager
+	 * the basic components are what he gets from the main panel(that it extends)
+	 * a main window button that redirect the user to the main window
+	 * @param name the user name for mainPanel use
+	 * @param type the type of user(privilege level) for mainPanel use
+	 */
 	public ReportsGUI(String name, String type){
 		super(name,type);
 
@@ -57,29 +74,7 @@ public class ReportsGUI extends mainPanel {
 		btnMainWindow.setBounds(26, 38, 138, 23);
 		add(btnMainWindow);
 		
-		
-		/*JButton btnChoose = new JButton("Choose");
-		btnChoose.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
-		btnChoose.setBounds(527, 500, 89, 23);
-		add(btnChoose);
-		
-		JLabel label = new JLabel("<dynamic>");
-		label.setFont(new Font("Tahoma", Font.BOLD, 14));
-		label.setHorizontalAlignment(SwingConstants.CENTER);
-		label.setBounds(656, 500, 138, 23);
-		add(label);*/
 
-		/*JTable table = new JTable();
-		table.setForeground(Color.BLUE);
-		table.setBackground(Color.WHITE);
-		table.setFont(new Font("Arial", Font.PLAIN, 12));
-		table.setBounds(181, 376, 583, 191);
-		table.setBorder(new LineBorder(Color.LIGHT_GRAY));
-		add(table);*/
-		
 		
 		
 		
@@ -132,6 +127,7 @@ public class ReportsGUI extends mainPanel {
  * and the method update a table with the information in the arrays and displays it 
  */
 	public void displayUsersReport() {
+		/**the result table*/
 		JTable table = new JTable(data1,columnHeader1)
 		{
 			
@@ -329,8 +325,13 @@ public class ReportsGUI extends mainPanel {
 
 		
 	}
+	/**
+	 * this method displays all the books(according to the search) in a table 
+	 * and an option to choose one of the rows in the table and press
+	 * the "Display Book Statistics" button
+	 */
 	public void displayBookSearchResults(){
-		
+		/**the result table*/
 		JTable table = new JTable(data2,columnHeader2)
 		{
 			
@@ -470,7 +471,7 @@ public class ReportsGUI extends mainPanel {
 		btnBySearches.setBounds(180, 421, 211, 27);
 		btnBySearches.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-					userController.displaySearchReport(ID,bookName);
+					userController.displaySearchReport(ID);
 				
 			}
 		});

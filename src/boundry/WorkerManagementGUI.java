@@ -22,17 +22,27 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 /**
- * 
- * @author Admin
+ * this class contains every component that displayed to the manager for the 
+ * workers management (every method make a new window on the panel)
+ * @author Guy Cohen
  *
  */
 public class WorkerManagementGUI extends mainPanel {
+	/**the workers search results table*/
 	private JTable table;
+	/**the header fo the workers search results table*/
 	public static String[] columnHeader = {"Username","Privilege"};
+	/**the results that been display in the table*/
 	public static String[][] data;
+	/**indicates the row number that the user pressed in the table(-1 in none pressed)*/
 	private static int row1 = -1;
 	private JTextField textFieldOldPrivilege;
-	
+	/**
+	 * this is a constructor that gets the username and use 
+	 * the constructor of the mainPanel(which it extends)
+	 * this method send the user name and a constant role to mainPanel(only manager can access this class)
+	 * @param name a username for mainPanel use
+	 */
 	public WorkerManagementGUI(String name){
 		super(name,"Manager");
 		
@@ -48,12 +58,12 @@ public class WorkerManagementGUI extends mainPanel {
 		btnMainWindow.setBounds(26, 38, 138, 23);
 		add(btnMainWindow);
 		
-	
-		
-		
-		
-		
 	}
+	/**
+	 * this method display a table with the workers search results
+	 * witch is being initialized by the userController
+	 * and a button that redirect to the privilege change method(editWorker)
+	 */
 	public void displayWorkers(){
 		
 		row1 = -1;
@@ -130,6 +140,15 @@ public class WorkerManagementGUI extends mainPanel {
 			
 		
 	}
+	/**
+	 * this method is a window that shows the username of the worker the manager
+	 * chose to change his privilege,
+	 * it also shows the worker's current privilege and a comboBox with all the other privileges.
+	 * if the manager press the "change" button then the workers privilege is being changed.
+	 * @param name the worker's username
+	 * @param oldPriv the worker's current privileges
+	 * @param newPrivs a list with the other privileges names
+	 */
 	public void editWorker(String name, String oldPriv,ArrayList<String> newPrivs){
 		
 		JLabel lblOldPrivilege = new JLabel("Old Privilege :");

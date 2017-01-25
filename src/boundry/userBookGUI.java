@@ -32,7 +32,12 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.table.DefaultTableModel;
-
+/**
+ * this method contains every screen and components the the user see in the book search 
+ * or the book page and every interaction the a regular user has with the system's books
+ * @author Guy Cohen,Nimrod Mendel
+ *
+ */
 public class userBookGUI extends mainPanel {
 	boolean bool =true;
 	private JTextField textTitle;
@@ -42,20 +47,20 @@ public class userBookGUI extends mainPanel {
 	private JTextField textAppendix;
 	private JTextField textScope;
 	private JTextField textBrief;
-	
+	/**the headers for the book search table*/
 	private String[] columnHeader = {"Scope","Subject","Book Name","Book ID"};
+	/**the results of the book search table*/
 	public static String[][] data;
+	/**a number of row that had been pressed in a table(-1 none pressed)*/
 	private static int row = -1;
-	private JTable table_1;
-	private JTable athorsTable;
+	
 	private JTextField TFLang;
-	private JTable scopeTable;
-	private JTable table_2;
 	private JTable tableScopes;
 	/**
-	 * userBookGUI Constructor
-	 * @param name String
-	 * @param type String
+	 * this is the constructor, it contains only the basic components that appears at every different window in this class
+	 * with is every thing in mainPanel (witch this class extends) and a main window button
+	 * @param name String the username for mainPanel use
+	 * @param type String the type of the user(privilege level) for the mainPanel use
 	 */
 	public userBookGUI(String name,String type){
 		super(name,type);
@@ -71,43 +76,7 @@ public class userBookGUI extends mainPanel {
 		btnMainWindow.setForeground(Color.BLACK);
 		btnMainWindow.setBounds(26, 38, 122, 23);
 		add(btnMainWindow);
-		
-
-	/*	JTextField TFScope= new JTextField();
-		//TFScope.setText(book.getLanguage());
-		TFScope.setEditable(false);
-		TFScope.setBounds(179, 194, 70, 20);
-		add(TFScope);*/
-		
-		
-
-		/*if(loginController.use.getprivilege() != 2)
-			btnOrderTheBook.setVisible(false);*/
-		
-		
-		
-		/*table_2 = new JTable();
-		table_2.setModel(new DefaultTableModel(
-			new Object[][] {
-				{null, null},
-				{null, null},
-			},
-			new String[] {
-				"New column", "New column"
-			}
-		));
-		table_2.setBounds(179, 253, 239, 56);;
-		add(table_2);*/
-		
-		
-		
-		/*table_1 = new JTable();
-		table_1.setBounds(181, 376, 583, 191);
-		add(table_1);*/
-		
-		
-		
-		
+				
 		
 		
 		
@@ -249,14 +218,17 @@ public class userBookGUI extends mainPanel {
 		
 	}
 	/**
-	 * displayResults - display the search results
+	 * this method displays the book search results table that the information array(data)
+	 * is being initialized in the boocController
+	 * and an option to choose one of the results and a button to display this book's information
 	 */
 	public void displayResults()
 	{
 		/**Create The Result Table
 		 * 
 		 */
-		JButton btnRemoveBook = new JButton("Remove Book");;
+		JButton btnRemoveBook = new JButton("Remove Book");
+		/**the book search table*/
 		JTable table = new JTable(data,columnHeader)
 		{
 			
@@ -355,22 +327,9 @@ public class userBookGUI extends mainPanel {
 		
 	}
 	
-	public void orderBook() {
-		// TODO - implement userBookGUI.orderBook
-		throw new UnsupportedOperationException();
-	}
-
-	public void approvePayment() {
-		// TODO - implement userBookGUI.approvePayment
-		throw new UnsupportedOperationException();
-	}
-
-	public void displayWindow() {
-		// TODO - implement userBookGUI.displayWindow
-		throw new UnsupportedOperationException();
-	}
 	/**
-	 * displayBook display book information
+	 * get an instance of Book class with the chosen book's information and display all 
+	 * that information.
 	 * @param book Book
 	 */
 	public void displayBook(Book book){
@@ -396,8 +355,9 @@ public class userBookGUI extends mainPanel {
 		lblAthors.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblAthors.setBounds(79, 251, 97, 14);
 		add(lblAthors);*/
-		
+		/**the header of the authors table*/
 		String[] headerAuthors = {"Authors"};
+		/**the name of all the authors inside the authors table*/
 		String[][] dataAuthors = new String[book.getAuthors().size()][1];
 		for(int i = 0 ; i<book.getAuthors().size();i++)
 			dataAuthors[i][0] = book.getAuthors().get(i);
@@ -443,7 +403,7 @@ public class userBookGUI extends mainPanel {
 		lblBrief.setFont(new Font("Tahoma", Font.BOLD, 14));
 		lblBrief.setBounds(568, 331, 72, 23);
 		add(lblBrief);
-		
+		/**a text pane for the brief*/
 		JTextPane textPane = new JTextPane();
 		textPane.setEditable(false);
 		textPane.setText(book.getBrief());
@@ -457,14 +417,16 @@ public class userBookGUI extends mainPanel {
 		lblAppendix_1.setBounds(557, 188, 97, 23);
 		add(lblAppendix_1);
 		
+		/**a text pane for the appendix*/
 		JTextPane textPane_1 = new JTextPane();
 		textPane_1.setText(book.getAppendix());
 		textPane_1.setEditable(false);
 		textPane_1.setBounds(664, 188, 243, 131);
 		add(textPane_1);
 		
-		
+		/**the header of the scopes table*/
 		String[] headerScope = {"Scopes"};
+		/**the name of all the scopes in the scopes table*/
 		String[][] dataScopes = new String[book.getScope().size()][1];
 		for(int i = 0 ; i<book.getScope().size();i++)
 			dataScopes[i][0] = book.getScope().get(i);
@@ -574,7 +536,7 @@ public class userBookGUI extends mainPanel {
 		add(btnEditTheBook);
 		if(loginController.use.getprivilege() < 4)
 			btnEditTheBook.setVisible(false);
-		
+		/**an image that indicates if the book is suspended*/
 		JLabel imgS;
 		imgS = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/suspended.jpg")));
 		imgS.setBounds(361, 11, 211, 79);

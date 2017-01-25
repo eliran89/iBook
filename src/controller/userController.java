@@ -27,7 +27,11 @@ import entity.*;
 
 
 public class userController {
-
+/**
+ * this method is being activate when the user press on the logout button or exits the main window.
+ * if he presses on the logout button then the method updates the DB and display the login fram.
+ * if he presses the exit button then it only updates the DB
+ */
 	static public void logout(){
 		
 		try {
@@ -38,6 +42,9 @@ public class userController {
 		}
 		loginController.mainG.dispose();
 		LoginGUI.err = false;
+		/**
+		 * the login frame that is being displayed when the user is logging out 
+		 */
 		LoginGUI log = new LoginGUI();
 			log.setSize(550,320);
 			log.setVisible(true);
@@ -716,17 +723,26 @@ public class userController {
 		
 		
 	}
+	/**
+	 * this method displays the manager book search when he wants to get a book report
+	 * 
+	 */
 	public static void displayBookSearchForReports(){
+		/**
+		 * a panel for the manager's reports
+		 */
 		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"manager");
 		panel.displayBookSearchForReports();
 		loginController.mainG.setContentPane(panel);
 		loginController.mainG.revalidate();
 	}
-	/**
-	 *  
-	 * @param bid
-	 */
-	public static void displaySearchReport(String bid,String bName){
+	 /**this method gets a book id and bring from the database all the searches of this book
+	 * then it filters the search results for the book that been searched in the last month
+	 * them it display the results(after putting the in an array) on a graph
+	 * @param bid the book id that the graph is about
+	 * 
+	 * */
+	public static void displaySearchReport(String bid){
 		ArrayList<String> info = DBController.getFromDB("select searches.date from searches where searches.bookID = "+bid);
 		ArrayList<String> nows = DBController.getFromDB("select now()");
 		if(info == null  || nows.equals(info))
@@ -777,6 +793,15 @@ public class userController {
 	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 	}
+	/**
+	 * this method gets a book id,scope name and then gets a list with the number of orders for all the book 
+	 * in the scope(from lowest to highest) from the DB and check the place of the book with the bid we got.
+	 * we also get an ArrayList of String with all the scope and the book's name in order to be able to call for other methods
+	 * @param scope the scope name
+	 * @param bid the book's id
+	 * @param bookName the book's name
+	 * @param scopes list of all the scopes
+	 */
 	public static void displayOrderRankByScope(String scope , String bid , String bookName,ArrayList<String> scopes){
 		ArrayList<String> info = DBController.getFromDB("select count(readerorder.userID) cnt,book.bookID"
 														+" from book,readerorder ,bscope where readerorder.bookID = book.bookID and book.bookID = bscope.bookID and bscope.scopeName = '"+scope+"' "
@@ -803,6 +828,14 @@ public class userController {
 		
 		
 	}
+	/**
+	 * this method gets a book id and then gets a list with the number of orders for all the book 
+	 * in the library(from lowest to highest) from the DB and check the place of the book with the bid we got.
+	 * we also get an ArrayList of String with all the scope and the book's name in order to be able to call for other methods.
+	 * @param bid the book's id
+	 * @param scopes list of all the scopes
+	 * @param bookName the book's name
+	 */
 	public static void displayOrderRank( String bid , ArrayList<String> scopes,String bookName){
 		ArrayList<String> info = DBController.getFromDB("select count(readerorder.userID) cnt,book.bookID"
 														+" from book,readerorder where readerorder.bookID = book.bookID"
@@ -826,11 +859,17 @@ public class userController {
 		loginController.mainG.setContentPane(panel);
 		loginController.mainG.revalidate();
 	}
+	/**
+	 * this method gets a book id and bring from the database all the orders of this book
+	 * then it filters the search results for the book that been purchased in the last month
+	 * them it display the resuts(after putting the in aa array) on a graph
+	 * @param bid the book id that the graph is about
+	 */
 	public static void displayOrdersReport(String bid){
 		
 		ArrayList<String> info = DBController.getFromDB("select readerorder.date from readerorder where readerorder.bookID = "+bid+"");
 		ArrayList<String> nows = DBController.getFromDB("select now()");
-		if(info == null  || nows.equals(info))
+		if(info != null  && nows.equals(info))
 			nows = DBController.getFromDB("select now()");
 		 String now = nows.get(0).substring(0,7);
 		 ArrayList<String> dataT = new  ArrayList<String>();
@@ -859,7 +898,6 @@ public class userController {
 	        		appears[i] = 0;
 	        	for(int i = 0;i<data.length;i++)
 	        		appears[(int) data[i]]++;
-	        	int appearsSize = 0;
 	        	
 	        	final DefaultCategoryDataset dataset = new DefaultCategoryDataset( );
 	            
@@ -878,6 +916,10 @@ public class userController {
 	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
 		
 	}
+	/**
+	 * this method gets the information(username and privilege level) of all the workers
+	 * , insert them to the JTable's data and display the window of the results
+	 */
 	public static void displayWorkerSearch(){
 		WorkerManagementGUI workers = new WorkerManagementGUI(loginController.use.getUsername());
 		
@@ -901,6 +943,12 @@ public class userController {
 		
 		
 	}
+	/**
+	 * this method gets a worker username and his old privilege and display 
+	 * a window where the manager is able to change his privilege level
+	 * @param username the worker's username
+	 * @param oldPriv - the worker's current privilege 
+	 */
 	public static void displayEditPrivilege(String username,String oldPriv){
 		
 		ArrayList<String> privileges = new ArrayList<String>();
@@ -922,8 +970,15 @@ public class userController {
 		loginController.mainG.setContentPane(worker);
 		loginController.mainG.revalidate();
 	}
+	/**
+	 * this method get a worker username and the privilege the manager wants this worker to have
+	 * so a query has been sent to the DB to change the worker's current privilege to the new one
+	 * @param username the worker's username
+	 * @param newPriv the privilege the manager wants this worker to have
+	 * @throws SQLException
+	 */
 	public static void  changePrivilege(String username,String newPriv) throws SQLException{
-		//UPDATE `ibookdb`.`user` SET `privilege`='4' WHERE `username`='Avi';
+
 		if(newPriv.equals("Editor"))
 			DBController.insertToDB("UPDATE `ibookdb`.`user` SET `privilege`='3' WHERE `username`='"+username+"';");
 		
