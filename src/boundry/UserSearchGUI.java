@@ -644,7 +644,6 @@ public class UserSearchGUI extends mainPanel{
 		
 		/**Current Payment Arrangement label and textField */
 		JLabel lblCurrPayment = new JLabel("Current Payment Arrangement");
-		//lblLastName.setToolTipText("Enter new account last name");
 		lblCurrPayment.setHorizontalAlignment(SwingConstants.LEFT);
 		lblCurrPayment.setForeground(Color.BLACK);
 		lblCurrPayment.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -689,17 +688,21 @@ public class UserSearchGUI extends mainPanel{
 					//this is a case of conflict agreements
 						boolean dialogResult = mainPanel.yesNoBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?", "Payment Conflict Occured");
 						if(dialogResult){
-							setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment,visFlag);
+							setNewPaymentArrangementGUI(id,fName,lName,uName,priv,newPayment,visFlag);
 						}
 					}
 					else{
-						setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment,visFlag);
+						setNewPaymentArrangementGUI(id,fName,lName,uName,priv,newPayment,visFlag);
 					}
 				}
 				else{
-					boolean dialogResult = mainPanel.yesNoBox("You are about to extend current arrangement!\nWould you like to proceed?", "Payment Extension");
-					if(dialogResult){
-						setNewPaymentArrangement(id,fName,lName,uName,priv,newPayment,visFlag);
+					if (!visFlag)
+						errorBox("One-by-One Arrangement already exists!\nAction aborted", "Payment Conflict Occured");
+					else{
+						boolean dialogResult = mainPanel.yesNoBox("You are about to extend current arrangement!\nWould you like to proceed?", "Payment Extension");
+						if(dialogResult){
+							setNewPaymentArrangementGUI(id,fName,lName,uName,priv,newPayment,visFlag);
+					}
 					}
 				}	
 			}
@@ -729,7 +732,7 @@ public class UserSearchGUI extends mainPanel{
 		loginController.mainG.revalidate();
 	}
 	
-	public static void setNewPaymentArrangement(String id, String fName, String lName, String uName, String priv, String newPayment, boolean visFlag) {
+	public static void setNewPaymentArrangementGUI(String id, String fName, String lName, String uName, String priv, String newPayment, boolean visFlag) {
 		UserSearchGUI panelSetNewPayment;
 
 		//System.out.println(loginController.use.getprivilege());
@@ -880,7 +883,7 @@ public class UserSearchGUI extends mainPanel{
 				boolean validate = userController.validateCreditCard(creditNum, expMonth, expYear, cvv, periodNum, visFlag);
 				if (validate)
 					try {
-						userController.setNewPaymentArrangement(id, uName, creditNum, expYear, expMonth, cvv, perType, periodNum, newPayment);
+						userController.setNewPaymentArrangement(id, uName, creditNum, expYear, expMonth, cvv, perType, periodNum, newPayment, visFlag);
 					} catch (SQLException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
