@@ -433,22 +433,24 @@ public class userController {
 	 * @param periodNum
 	 * @return
 	 */
-	public static boolean validateCreditCard(String creditNum, String expMonth, String expYear, String cvv, String periodNum){
+	public static boolean validateCreditCard(String creditNum, String expMonth, String expYear, String cvv, String periodNum, boolean visFlag){
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		int month = Calendar.getInstance().get(Calendar.MONTH);
+		month++;		//to get current month
 		
 		int creditNumInt;
 		int expMonthInt;
 		int expYearInt;
 		int cvvInt;
-		int periodNumInt;
+		int periodNumInt = 0;
 		
 		try{
 			creditNumInt = Integer.parseInt(creditNum);
 			expMonthInt = Integer.parseInt(expMonth);
 			expYearInt = Integer.parseInt(expYear);
 			cvvInt = Integer.parseInt(cvv);
-			periodNumInt = Integer.parseInt(periodNum);
+			if (visFlag)
+				periodNumInt = Integer.parseInt(periodNum);
 		}
 		catch (NumberFormatException e){	//it's not a number!!
 			mainPanel.errorBox("Please enter valid numbers\nChars and symbols are not allowed", "Credit Card Error");
@@ -475,25 +477,28 @@ public class userController {
 			mainPanel.errorBox("CVV value invalid\nPlease enter a 3-digit number", "Credit Card Error");
 			return false;
 		}
-		if (!((periodNumInt > 0) && (periodNumInt < 100))){
-			mainPanel.errorBox("Number of periods invalid\nPlease enter a value between 1 to 99", "Credit Card Error");
-			return false;
-		}
+		if (visFlag)		//only if the field was visible user could edit it
+			if (!((periodNumInt > 0) && (periodNumInt < 100))){
+				mainPanel.errorBox("Number of periods invalid\nPlease enter a value between 1 to 99", "Credit Card Error");
+				return false;
+			}
 		mainPanel.infoBox("Your credit card checked and confirmed!", "Credit Card Validated");
 		return true;
 	}
 	
 	/**
-	 
+	 * The method updates relevant records according to following logic: <br>
+	 * If a user is already a periodic reader - extend his payment arrangement <br>
+	 * If a user is an interested reader - update his privilege into a reader and set arrangement <br>
 	 * @param id
-	 * @param uName
+	 * @param uName: user name
 	 * @param creditNum
-	 * @param expYear
-	 * @param expMonth
-	 * @param cvv
-	 * @param perType
-	 * @param periodNum
-	 * @param newPayment
+	 * @param expYear: credit card expired year
+	 * @param expMonth: credit card expired month
+	 * @param cvv: 3-security-digits on user's credit card
+	 * @param perType: period type. If a new arrangement is periodic, set monthly or yearly values
+	 * @param periodNum: number of periods to set
+	 * @param newPayment: type of new payment arrangement defined
 	 * @throws SQLException
 	 */
 	public static void setNewPaymentArrangement(String id, String uName, String creditNum, String expYear, String expMonth, String cvv,String perType, String periodNum, String newPayment) throws SQLException {
@@ -513,25 +518,76 @@ public class userController {
 		idIsReader = DBController.getFromDB("select r.userID from reader r where r.userID = '"+id+"'");
 			if(idIsReader == null){
 				UserSearchGUI.infoBox("ID is NOT a reader!", "My check");
-				DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"'");	//updating into reader privilege level
+				DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"'");	//updating into privilege level to reader
 				DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPaymentToDBFormat+"', '"+firstName+"', '"+lastName+"', '"+uName+"')");
-			}
-		//works till hereeee !!! !!! !!! !!
-			if (newPayment.equals("Periodic")){
-				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
-				if(idIsPeriodic == null)		//means user is NOT defined as periodic reader in DB
+				if (newPayment.equals("Periodic")){
 					if (perType.equals("Months"))
 						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
 					else
 						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
+					UserSearchGUI.infoBox("Periodic arrangement has set successfully!", "Periodic Arrangement Set");
+					getUserDetails("Username","");
+				} 	//end case user is going to be a periodic
+				else{
+					UserSearchGUI.infoBox("One-by-One arrangement has set successfully!", "One-by-One Arrangement Set");
+					getUserDetails("Username","");
+				}
+			} 		//end case user is not a reader yet
+			else{	//case user is already a reader
+				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
+				if(idIsPeriodic == null){		//means reader is NOT defined as periodic reader in DB
+					if (newPayment.equals("Periodic")){
+						DBController.insertToDB("UPDATE ibookdb.reader SET creditCard='"+creditNum+"', rType='"+newPaymentToDBFormat+"' WHERE userID='"+id+"'");
+						if (perType.equals("Months"))
+							DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
+						else
+							DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
+						UserSearchGUI.infoBox("Periodic arrangement has set successfully!", "Periodic Arrangement Set");
+						getUserDetails("Username","");
+					}
+					else
+						mainPanel.errorBox("User is already defined as One-by-One reader\nAction aborted", "Payment Arrangements Issue");
+				}
+				else{							//means reader is defined as periodic reader in DB
+					if (newPayment.equals("Periodic")){
+						DBController.insertToDB("UPDATE ibookdb.reader SET creditCard='"+creditNum+"' WHERE userID='"+id+"'");
+						if (perType.equals("Months"))	//means we're about to extend in 'month' periods
+							DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' MONTH), pType='"+perTypeToDBFormat+"' WHERE `userID`='"+id+"'");
+						else							//means we're about to extend in 'year' periods
+							DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' YEAR), pType='"+perTypeToDBFormat+"' WHERE `userID`='"+id+"'");
+						UserSearchGUI.infoBox("Periodic arrangement extended successfully!", "Periodic Arrangement Extension");
+						getUserDetails("Username","");
+					}
+					else{
+						DBController.insertToDB("UPDATE ibookdb.reader SET creditCard='"+creditNum+"', rType='"+newPaymentToDBFormat+"' WHERE userID='"+id+"'");
+						DBController.insertToDB("DELETE FROM ibookdb.periodicreader WHERE userID='"+id+"'");
+						UserSearchGUI.infoBox("One-by-One arrangement has set successfully!", "One-by-One Arrangement Set");
+						getUserDetails("Username","");
+					}
+				}
+			}
+	}
+		
+	/*		if (newPayment.equals("Periodic")){
+				idIsPeriodic = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
+				if(idIsPeriodic == null)		//means user is NOT defined as periodic reader in DB
+					if (perType.equals("monthly"))
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
+					else
+						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
 				else								//means user defined as periodic and we're about to extend his arrangement
-					if (perType.equals("Months"))	//means we're about to extend in 'month' periods
+					if (perType.equals("yearly"))	//means we're about to extend in 'month' periods
 						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' MONTH) WHERE `userID`='"+id+"'");
 					else							//means we're about to extend in 'year' periods
 						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' YEAR) WHERE `userID`='"+id+"'");
+				UserSearchGUI.infoBox("Periodic arrangement has set successfully!", "Periodic Arrangement Set");
 			}
+			else
+			{
+				
+			}
+	*/
 	
-	}
 	
 	public void checkOrderDetails() {
 		// TODO - implement userController.checkOrderDetails
