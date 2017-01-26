@@ -72,6 +72,7 @@ public  class IBookServer extends AbstractServer
 	  {
 		  ArrayList<File> files = (ArrayList<File>) msg;
 		  try {
+			  new File("C:\\files").mkdir();
 			 /*pdf writing*/
 			InputStream inputStream = new FileInputStream(files.get(0));//get the pdf file
 			byte[] buffer = new byte[1024];

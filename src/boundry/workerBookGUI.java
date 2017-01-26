@@ -40,6 +40,7 @@ public class workerBookGUI extends userBookGUI {
 	ArrayList<String> keywords;
 	ArrayList<String> scopes;
 	ArrayList<String> subjects;
+	/**an entity that contains the book details*/
 	Book book;
 	private JTextField textFieldSubject;
 	private JTextField textFieldAuthorEdit;
@@ -327,7 +328,6 @@ public class workerBookGUI extends userBookGUI {
 			public void actionPerformed(ActionEvent arg0) {
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setCurrentDirectory(new File("C:\\"));
-				fileChooser.setCurrentDirectory(new File("C:\\"));
 				fileChooser.addChoosableFileFilter(new FileNameExtensionFilter("FB2 Documents","fb2"));
 				fileChooser.setAcceptAllFileFilterUsed(false);
 				fileChooser.setDialogTitle("Select a diractory");
@@ -425,7 +425,7 @@ public class workerBookGUI extends userBookGUI {
 					errorBox("cost must be a number at least 0","cost");
 				}
 				
-				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0
+				if(title.equals("") || langu.equals("") || brief.equals("") ||appen.equals("") || cost.equals("") || authors.size() == 0 || scopes.size() == 0|| keywords.size() == 0
 						||textFieldPdf.getText().equals("") ||textFieldDocx.getText().equals("") ||textFieldFb.getText().equals(""))
 					toContinue = false;
 				if(costi < 0)
