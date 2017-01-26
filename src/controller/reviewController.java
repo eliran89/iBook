@@ -190,9 +190,11 @@ public class reviewController {
 	}
 
 	
+	/**openMailScreen - opens the table that displays the reviews which are not visible **/
 
+	
 
-	public static void  openMailScreen(){ // opens the table that displays the reviews
+	public static void  openMailScreen(){ 
 		ArrayList <String> info = null;
 		
 		
@@ -300,7 +302,7 @@ public class reviewController {
 
 	
 	}
-	// removed review the 'rejected button' pressed
+	/** removes review when the 'rejected button' pressed **/
 
 	public static void removeReview(String bTitle,String uName) {
 		ArrayList <String> info = null;
@@ -323,6 +325,7 @@ public class reviewController {
 		
 	}
 	
+	/** Edits review after pressing "update" **/
 	public static void editReview(String bTitle,String uName,String text) {
 	
 		ArrayList <String> info = null;
