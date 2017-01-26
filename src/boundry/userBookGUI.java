@@ -458,7 +458,7 @@ public class userBookGUI extends mainPanel {
 		lblChooseFormatTo.setFont(new Font("Tahoma", Font.BOLD , 14));
 		lblChooseFormatTo.setBounds(269, 404, 228, 23);
 
-		if(loginController.use.getprivilege()==2);
+		if(loginController.use.getprivilege()==2)
 			add(lblChooseFormatTo);
 		
 
