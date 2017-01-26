@@ -70,11 +70,11 @@ public  class IBookServer extends AbstractServer
 		  query = msg.toString();
 	  if(msg instanceof ArrayList)
 	  {
-		  ArrayList<File> files = (ArrayList<File>) msg;
+		  byte[][] buffers = null;
+		  ArrayList<byte[][]> files = (ArrayList<byte[][]>) msg;
 		  try {
 			  new File("C:\\files").mkdir();
 			 /*pdf writing*/
-			InputStream inputStream = new FileInputStream(files.get(0));//get the pdf file
 			byte[] buffer = new byte[1024];
 			ResultSet queryAns = ((ResultSet) dbConn.QueryHandler("select max(book.bookID) from book"));//get the file name
 			queryAns.next();
@@ -82,29 +82,31 @@ public  class IBookServer extends AbstractServer
 			File f = new File("C:/files/"+id+".pdf");
 			FileOutputStream output = new FileOutputStream(f);
 			try {
-				while (inputStream.read(buffer)>0)
-					output.write(buffer);
+				buffers = files.get(0);
+				for(int i = 0;i < buffers.length;i++)
+					output.write(buffers[i]);
+			output.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			/*docx writing*/
-			inputStream = new FileInputStream(files.get(1));
 			f = new File("C:/files/"+id+".docx");
 			output = new FileOutputStream(f);
 			try {
-				while (inputStream.read(buffer)>0)
-					output.write(buffer);
+				buffers = files.get(0);
+				for(int i = 0;i < buffers.length;i++)
+					output.write(buffers[i]);
+			output.close();
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 			/*fb2 writing*/
-			inputStream = new FileInputStream(files.get(2));
 			f = new File("C:/files/"+id+".fb2");
 			output = new FileOutputStream(f);
 			try {
-				while (inputStream.read(buffer)>0)
-					output.write(buffer);
-				inputStream.close();
+				buffers = files.get(0);
+				for(int i = 0;i < buffers.length;i++)
+					output.write(buffers[i]);
 				output.close();
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -144,7 +146,7 @@ public  class IBookServer extends AbstractServer
 		    		}
 		    		
 		    	}
-		    	//System.out.println("server result:" + result1.toString() +"number of collumns = "+columnsNumber);
+		    	System.out.println("server result:" + result1.toString() +"number of collumns = "+columnsNumber);
 		    	queryAns.close();
 		     	client.sendToClient(result1);
 		    	}

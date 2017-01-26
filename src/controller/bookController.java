@@ -2,6 +2,7 @@ package controller;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -98,7 +99,12 @@ public class bookController {
 			}
 		for(int i =0 ; i<temp.size() ; i++)
 			DBController.insertToDB("INSERT INTO `ibookdb`.`bscope` (`bookID`, `scopeName`, `rank`, `subject`) VALUES ('"+bNewID+"', '"+temp.get(i)+"', '0', '"+temp2.get(i)+"');");
-		DBController.sendFile(pdf, docx, fb2);
+		try {
+			DBController.sendFile(pdf, docx, fb2);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 			
 	}
 	/**

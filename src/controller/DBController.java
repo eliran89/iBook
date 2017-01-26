@@ -260,18 +260,68 @@ public class DBController {
 	 * @param pdf
 	 * @param docx
 	 * @param fb2
+	 * @throws FileNotFoundException 
 	 */
-	static synchronized public void sendFile(File pdf,File docx,File fb2){
+	static synchronized public void sendFile(File pdf,File docx,File fb2) throws FileNotFoundException{
 		
-		ArrayList<File> files = new ArrayList<File>();
-		files.add(pdf);
+		ArrayList<byte[][]> buffersT = new ArrayList<byte[][]>();
+		/*files.add(pdf);
 		files.add(docx);
-		files.add(fb2);
+		files.add(fb2);*/
+		InputStream inputStream = new FileInputStream(pdf);
+		byte[][] buff = null;
+		byte[] buffer = new byte[1024];
+		
+		/*build pdf*/
+		try {
+			ArrayList<byte[]> buffe = new ArrayList<byte[]>();
+			while(inputStream.read(buffer)>0)
+				buffe.add(buffer.clone());
+			buff = new byte[buffe.size()][1024];
+			for(int i = 0 ;i<buffe.size();i++)
+				buff[i]=buffe.get(i);
+			inputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		buffersT.add(buff.clone());
+		
+		/*build docx*/
+		inputStream = new FileInputStream(docx);
+		buffer = new byte[1024];
+		try {
+			ArrayList<byte[]> buffe = new ArrayList<byte[]>();
+			while(inputStream.read(buffer)>0)
+				buffe.add(buffer.clone());
+			buff = new byte[buffe.size()][1024];
+			for(int i = 0 ;i<buffe.size();i++)
+				buff[i]=buffe.get(i);
+			inputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		buffersT.add(buff.clone());
+		
+		/*build fb2*/
+		inputStream = new FileInputStream(fb2);
+		buffer = new byte[1024];
+		try {
+			ArrayList<byte[]> buffe = new ArrayList<byte[]>();
+			while(inputStream.read(buffer)>0)
+				buffe.add(buffer.clone());
+			buff = new byte[buffe.size()][1024];
+			for(int i = 0 ;i<buffe.size();i++)
+				buff[i]=buffe.get(i);
+			inputStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		buffersT.add(buff.clone());
 		
 		ClientConsole chat= new ClientConsole(host, port);
 		rs = null;
 		allowToProceed = false;
-		ClientConsole.accept(files);	
+		ClientConsole.accept(buffersT);	
 			
 		while(allowToProceed == false);	
 		
