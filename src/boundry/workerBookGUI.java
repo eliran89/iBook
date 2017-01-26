@@ -27,6 +27,12 @@ import javax.swing.JFileChooser;
 import javax.swing.JSeparator;
 import javax.swing.JCheckBox;
 
+/**
+ * this class responsible for everything that is presented to workers that related to books
+ * that can't be presented  to regular users
+ * @author Guy Cohen
+ *
+ */
 public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldTitle;
 	private JTextField textFieldAuthor;
@@ -36,9 +42,13 @@ public class workerBookGUI extends userBookGUI {
 	private JTextField textFieldKey;
 	private JTextPane textFieldAppen;
 	private JTextField textFieldCost;
+	/**a list that gathers all the authors the worker inserting */
 	ArrayList<String> authors;
+	/**a list that gathers all the keywords the worker inserting */
 	ArrayList<String> keywords;
+	/**a list that gathers all the scopes the worker inserting */
 	ArrayList<String> scopes;
+	/**a list that gathers all the subjects the worker inserting */
 	ArrayList<String> subjects;
 	/**an entity that contains the book details*/
 	Book book;
@@ -58,23 +68,20 @@ public class workerBookGUI extends userBookGUI {
 	File fDocx ;
 	File fFb2 ;
 	/**
-	 * workerBookGUI
-	 * @param name String
-	 * @param type String
+	 * this is the constructor for this class
+	 * is basic appearance is similar to the userBookGUI class witch it extends
+	 * @param name a username for userBookGUI use
+	 * @param type the kind of user(privilege level) for userBookGUI use
 	 */
 	public workerBookGUI(String name , String type) {
 		super(name,type);
 
-
-		
-
-		
-
 		
 	}
 	/**
-	 * addBook - display the window of the book add  
-	 * display a screen with book information to fill
+	 * this method display the adding book window
+	 * that contains components that helps the user to insert the book information 
+	 * 
 	 */
 	public void addBook() {
 		
@@ -203,9 +210,7 @@ public class workerBookGUI extends userBookGUI {
 							}
 							else
 								warningBox("You already added this scope, the first one were erased","textFieldScope");
-								
-						
-					
+	
 				}
 				
 				
@@ -355,11 +360,13 @@ public class workerBookGUI extends userBookGUI {
 				String subject = textFieldSubject.getText();
 				String pdf = textFieldPdf.getText();
 				String docx = textFieldDocx.getText();
+				String fb2 = textFieldFb.getText();
 				
 				try {
-					if(pdf.equals("") || docx.equals(""))
+					if(pdf.equals("") || docx.equals("")||fb2.equals(""))
+						toContinue = false;
 						
-					if( !scope.equals("") && !subject.equals("") && bookController.verifyScope(scope))
+					if( !scope.equals("") && !subject.equals("") && !bookController.verifyScope(scope))
 					{	
 						boolean bool = true;
 						for (int i =0;i<scopes.size();i++)
@@ -475,9 +482,9 @@ public class workerBookGUI extends userBookGUI {
 		
 	}
 	/**
-	 * editBook - display the book information 
-	 * with option to change them
-	 * @param book Book
+	 *this method gets an instance of Book class filled with book information
+	 *and present this information on the panel with GUI components
+	 * @param book the Book instance that contains the chosen book information
 	 */
 	public void editBook(Book book) {
 		
@@ -490,12 +497,12 @@ public class workerBookGUI extends userBookGUI {
 			chckbxSuspended.setSelected(true);
 		if(loginController.use.getprivilege() == 6)
 			add(chckbxSuspended);
-		
+		/**a textPane that contains the book's brief*/
 		JTextPane textPane = new JTextPane();
 		textPane.setText(book.getBrief());
 		textPane.setBounds(664, 331, 243, 131);
 		add(textPane);
-		
+		/**a textPane that contains the book's appendix*/
 		JTextPane textPane_1 = new JTextPane();
 		textPane_1.setText(book.getAppendix());
 		textPane_1.setBounds(664, 188, 243, 131);
@@ -874,7 +881,7 @@ public class workerBookGUI extends userBookGUI {
 	/**
 	 * get a list of scopes, displays them and 
 	 * a text field for new names
-	 * @param scopes - the list of the scopes
+	 * @param scopes  the list of all the scopes
 	 */
 	public void editScope(ArrayList<String> scopes) {
 		JComboBox comboBoxScope = new JComboBox();
@@ -941,7 +948,7 @@ public class workerBookGUI extends userBookGUI {
 
 
 	}
-
+	/**this method display a lable the say "No Scopes To Show"*/
 	public void noScope() {
 		JLabel label = new JLabel("<<No Scopes To Show>>");
 		label.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
@@ -952,18 +959,4 @@ public class workerBookGUI extends userBookGUI {
 			
 	}
 
-	public void chooseBook() {
-		// TODO - implement workerBookGUI.chooseBook
-		throw new UnsupportedOperationException();
-	}
-
-	public void operation() {
-		// TODO - implement workerBookGUI.operation
-		throw new UnsupportedOperationException();
-	}
-	private static class __Tmp {
-		private static void __tmp() {
-			  javax.swing.JPanel __wbp_panel = new javax.swing.JPanel();
-		}
-	}
 }

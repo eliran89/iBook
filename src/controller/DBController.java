@@ -37,8 +37,8 @@ public class DBController {
 	/**
 	 * Constructor get the connection details from the user 
 	 * and put them in static variables
-	 * @param host
-	 * @param port
+	 * @param host a String for the host(for the iBookClient use)
+	 * @param portan int for the port (for the iBookClient use)
 	 */
 	public DBController(String host , int port)
 	{
@@ -101,7 +101,7 @@ public class DBController {
 			res.setPassword(rs.get(1));
 			i=Integer.parseInt((rs.get(2)));
 			res.setprivilege(i);
-			System.out.println("the user we got is: "+rs.toString());
+			//System.out.println("the user we got is: "+rs.toString());
 			
 			return rs;
 		}
@@ -145,7 +145,7 @@ public class DBController {
 		else
 		{
 			bool = true;
-			System.out.println("rs is: "+rs.toString());
+			//System.out.println("rs is: "+rs.toString());
 		}
 			
 		
@@ -154,12 +154,12 @@ public class DBController {
 	
 	
 	
-	/**exitsInDB General*/
+	
 	/**
 	 * exitsInDB General
-	 * check if query return answer
-	 * @param query String
-	 * @return Boolean
+	 * this method sends a query to the server and if it gets a result it returns true else false
+	 * @param query the query that been sent to the server
+	 * @return Boolean if the method gets a result from the server then its true else false
 	 * @throws SQLException
 	 */
 	static synchronized public boolean existsInDB(String query) throws SQLException{
@@ -178,19 +178,24 @@ public class DBController {
 		
 		if( rs == null)
 		{
-			System.out.println("rs is: null");
+			//System.out.println("rs is: null");
 			bool = false;
 		}
 		else
 		{
 			bool = true;
-			System.out.println("rs is: "+rs.toString());
+			//System.out.println("rs is: "+rs.toString());
 		}
 			
 		
 		return bool;
 	}
-	
+	/**
+	 * this method is responsible for sending values to the database
+	 * it gets an update or insert or delete query and send it to the server
+	 * @param query the query that is been sent to the server
+	 * @throws SQLException
+	 */
 	static synchronized public void insertToDB(String query) throws SQLException{
 		boolean bool;
 		try {
@@ -218,11 +223,13 @@ public class DBController {
 			
 	}
 	/**
-	 * getFile - get book information and get the relevant file from the server
-	 * and write the file to c drive 
-	 * @param bid book ID - will be the book name in the server
-	 * @param format - the type of the file (also part of the file name)
-	 * @param bookName - will be the file name in the client
+	 * this method gets a book id,book name,file format name,and a path.
+	 * it gets the chosen book file from the server(witch is the book id . the wanted format in the server's computer)
+	 * and opens a new file that its name is the book name and it saves it in the wanted path
+	 * @param bid the book id witch is the wanted book's name
+	 * @param format the wanted format for the file
+	 * @param bookName the name of the file in the client's computer
+	 * @param path where the file is being saved
 	 * @throws SQLException
 	 */
 	static synchronized public void getFile(String bid,String format,String bookName,String path) throws SQLException{
@@ -256,18 +263,18 @@ public class DBController {
 		}
 	  }
 	/**
-	 * get 3 files - pdf,docx,fb2 and put them in an ArrayList and send it to the server
-	 * @param pdf
-	 * @param docx
-	 * @param fb2
+	 * this metod gets 3 instances of files and write every one of them to an instace of byte[][]
+	 * every byte[][] contains buffers for a whole file.
+	 * every file(byte[][]) puts into an arraylist and sent to the server
+	 * @param pdf an instance of File that contains a pdf file
+	 * @param docx an instance of File that contains a docx file
+	 * @param fb2 an instance of File that contains a fb2 file
 	 * @throws FileNotFoundException 
 	 */
 	static synchronized public void sendFile(File pdf,File docx,File fb2) throws FileNotFoundException{
 		
 		ArrayList<byte[][]> buffersT = new ArrayList<byte[][]>();
-		/*files.add(pdf);
-		files.add(docx);
-		files.add(fb2);*/
+
 		InputStream inputStream = new FileInputStream(pdf);
 		byte[][] buff = null;
 		byte[] buffer = new byte[1024];
