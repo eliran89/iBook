@@ -650,7 +650,6 @@ public class userController {
 		System.out.println(lastName + " is the last name");		
 			
 		if(!idIsReader){
-			//UserSearchGUI.infoBox("ID is NOT a reader!", "My check");
 			DBController.insertToDB("DELETE FROM ibookdb.interestedreader WHERE userID='"+id+"';");			//delete interested reader before making him a reader
 			DBController.insertToDB("UPDATE ibookdb.user SET privilege='2' WHERE username='"+uName+"';");	//updating into privilege level to reader
 			DBController.insertToDB("INSERT INTO ibookdb.reader (`userID`, `creditCard`, `rType`, `firstName`, `lastName`, `username`) VALUES ('"+id+"', '"+creditNum+"', '"+newPaymentToDBFormat+"', '"+firstName+"', '"+lastName+"', '"+uName+"');");
