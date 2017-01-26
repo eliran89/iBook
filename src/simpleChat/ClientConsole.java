@@ -127,15 +127,15 @@ public class ClientConsole implements ChatIF
     int port = 0;  //The port number
     try
     {
-    	/*BufferedReader fromConsole = 
+    	BufferedReader fromConsole = 
     	        new BufferedReader(new InputStreamReader(System.in));
     	System.out.println("Enter ip addess");
     	try {
 			host = fromConsole.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}*/
-      host = args[0];
+		}
+      //host = args[0];
     }
     catch(ArrayIndexOutOfBoundsException e)
     {

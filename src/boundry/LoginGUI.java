@@ -80,9 +80,11 @@ public class LoginGUI extends JFrame {
 				String password;
 				username = textField_1.getText();
 				password = passwordField_1.getText();
-				dispose();
+				//dispose();
 				try {
+					
 					loginController.login(username, password);
+					dispose();
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
@@ -105,6 +107,5 @@ public class LoginGUI extends JFrame {
 		}
 		
 	}
-		
 	}
 
