@@ -14,10 +14,17 @@ import java.awt.Font;
 import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * this class is the main frame that every panel goes into
+ * @author GuyCohen, Nimrod mendel , Eliran Ifrah, Zachi Mayer
+ *
+ */
 public class MainWindowGUI extends JFrame{
 	public static JLabel img;
-	
+	/**
+	 * this is the constructor that gets the first panel(the rest of panels replaces them)
+	 * @param panel the first panel that opens
+	 */
 	public MainWindowGUI(mainPanel panel) {
 		super();
 		

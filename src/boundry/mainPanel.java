@@ -30,7 +30,13 @@ import controller.loginController;
 import controller.userController;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
-
+/**
+ * this class is an abstract class that Layout the basic design for every panel 
+ * in the project , it contains the basic components for all the panel (a logout button ,image.....)
+ * every other panel extends this panel
+ * @author GuyCohen, Nimrod mendel , Eliran Ifrah, Zachi Mayer
+ *
+ */
 public abstract class  mainPanel extends JPanel {
 	
 	public  JLabel img;
@@ -39,7 +45,12 @@ public abstract class  mainPanel extends JPanel {
 	JButton btnCheckBookReviews;
 
 	public JButton btnLogout = new JButton("Logout");
-	
+	/**
+	 * this is a constructor that displays the basic components for all the project(a logout button ,image.....)
+	 * it gets the username and the type of the user(privilege level) and displays them in labels on the window
+	 * @param name the usename
+	 * @param role type of user(privilege level)
+	 */
 	public mainPanel( String name , String role){
 		super();
 		this.hello = name;

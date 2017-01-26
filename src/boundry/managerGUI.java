@@ -38,7 +38,7 @@ public class managerGUI extends GWorkerGUI {
 		add(userPic);
 		
 		
-		btnUserManagement.setBounds(138, 344, 228, 27);
+		btnUserManagement.setBounds(138, 329, 228, 27);
 		add(btnUserManagement);
 		
 		/** button for reports **/

@@ -17,15 +17,19 @@ import boundry.reviewGUI;
 import boundry.userBookGUI;
 import boundry.workerBookGUI;
 import entity.Book;
-
+/**
+ * this class is responsible for everything that relates to the books
+ * it contains every action and method that is being made on the books
+ * @author Guy Cohen, Nimrod Mendel
+ *
+ */
 public class bookController {
-	public void newOrder() {
-		// TODO - implement bookController.newOrder
-		throw new UnsupportedOperationException();
-	}
+	
 	
 	/**
-	 * addBook - display adding a book window
+	 * this method display the adding book window .
+	 * it opens a new workerBookGUI panel and puts the components for adding book
+	 * and inserts that panel to the main frame
 	 */
 	public static void addBook() {
 			workerBookGUI panel;
@@ -42,16 +46,27 @@ public class bookController {
 			
 	}
 	/**
-	 * addBook get book information and add it to DB
-	 * @param Book book 
-	 * @throws SQLException 
+	 * this method gets an instance of Book class that contains all the new book information
+	 * it sends this information to the server(to the DB).
+	 * it also gets 3 files that contains the book itself(3 different format)
+	 * and send it also to the server
+	 * @param book the book instance that contains the new book information
+	 * @param pdf a File instance with a pdf file
+	 * @param docx a File instance with a docx file
+	 * @param fb2 a File instance with a fb2 file
+	 * @throws SQLException
 	 */
 	public static void addBook(Book book,File pdf,File docx,File fb2) throws SQLException {
+		/**an attribute that gets the query answers from the DB*/
 		ArrayList<String> info =null;
+		/**an array list that gets lists that is inside the Book instance*/
 		ArrayList<String> temp;
 		info = DBController.getFromDB("select max(author.authorID) from author");
+		/**a new author id*/
 		int aNewID = Integer.parseInt(info.get(0)) + 1;
+		/**a new book id*/
 		int bNewID;
+		
 		temp = book.getAuthors();
 		for(int i =0 ; i < temp.size() ; i++)
 			if(!verifyAuthor(temp.get(i)))
@@ -109,8 +124,8 @@ public class bookController {
 	}
 	/**
 	 * removeBook - get a book id and remove it from DB
-	 * the method gets an instance of String(witch is the book ID and erase the book from the database
-	 * @param bid String
+	 * the method gets an instance of String(witch is the book ID and erase the book from the database)
+	 * @param bid the id of the book that is being removed
 	 * @throws SQLException
 	 * if the book ID is not a number or not exists in the data base it gets an exception
 	 */
@@ -119,22 +134,13 @@ public class bookController {
 		searchBook();
 	}
 
-	public void removeBookFromCatalog() {
-		// TODO - implement bookController.removeBookFromCatalog
-		throw new UnsupportedOperationException();
-	}
 
-	public void lockBook() {
-		// TODO - implement bookController.lockBook
-		throw new UnsupportedOperationException();
-	}
-
-	/**Book Search*/
 	/**
-	 * searchBook - display the search book screen
+	 * this method open a new userBookGUI panel and add the book search components to it 
+	 * and put it inside the main frame
 	 */
 	public static void searchBook() {
-		
+		/**the newpanel that goes inside the main frame*/ 
 		userBookGUI panel;
 		if(loginController.use.getprivilege() == 1)
 			panel = new userBookGUI(loginController.use.getUsername(),"Interested Reader");
