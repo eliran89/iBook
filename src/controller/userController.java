@@ -50,7 +50,9 @@ public class userController {
 			log.setVisible(true);
 		    log.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
-
+/**
+ * User search general page
+ */
 	public static void userSearch() {
 		
 		UserSearchGUI panel;
@@ -65,9 +67,7 @@ public class userController {
 			panel.searchForManager();
 		}
 		loginController.mainG.setContentPane(panel);
-		loginController.mainG.revalidate();
-		
-			
+		loginController.mainG.revalidate();	
 	}
 		public static void userSuspendSearch() {
 	
@@ -107,7 +107,11 @@ public class userController {
 	}/**goToMainWindow method END*/
 
 	
-
+/**
+ * Get all user details by search criteria: user name or id
+ * @param item the type value to search by. Might be user name or ID
+ * @param search the content value to search by
+ */
 	public static void getUserDetails(String item , String search)
 	{
 		UserSearchGUI panel;
@@ -281,7 +285,11 @@ public class userController {
 		
 		
 	}
-	
+	/**
+	 * 
+	 * @param bName
+	 * @param uName
+	 */
 	public static void displayUser(String bName, String uName) {
 		ArrayList <String> info = null;
 		info = DBController.getFromDB("select reviews.text from reviews , book"
@@ -318,8 +326,7 @@ public class userController {
 		bookID = DBController.getFromDB("select b.bookID "
 				+ "from book b "
 				+ "where b.Title = '"+title+"' ");	//get bookID
-		
-		
+
 		readerDetails = DBController.getFromDB("select r.userID "
 									+ "from reader r "
 									+ "where r.username = '"+username+"' ");	//get userID
@@ -333,13 +340,9 @@ public class userController {
 				+ "from readerorder ro "
 				+ "where ro.userID = '"+readerDetails.get(0)+ "' and "
 						+ "ro.bookID = '"+bookID.get(0)+"' ";	//check orders
-		
-		
-		
+
 		boolean rs = DBController.existsInDB(q);	//indicates whether a reader had already ordered the book he/she is trying to order
-		
-		//System.out.println(rs);
-		
+				
 		//if book already been purchased show pop up message
 		if(rs){
 			mainPanel.errorBox("Book has already been purchased!", "Book Already Purchased Error");	//failure message
@@ -368,7 +371,7 @@ public class userController {
 			
 			return true;
 		}
-	
+/*	
 	
 	public void setDetails() {
 		// TODO - implement userController.setDetails
@@ -385,24 +388,21 @@ public class userController {
 		throw new UnsupportedOperationException();
 	}
 
-	/**
+	*//**
 	 * Enables to set a new user's privilege
-	 */
+	 *//*
 	public void setPrivilege() {
 		// TODO - implement userController.setPrivilege
 		throw new UnsupportedOperationException();
 	}
 
-	
+*/
 	/**
 	 * Open an Interested reader account
 	 * @param ID, firstName, lastName, userName, Password
 	 * @throws SQLException 
 	 */
 	public static void setUserDetails(int ID, String fname, String lname, String uname, String pass) throws SQLException {
-		
-		//System.out.println(loginController.use.getprivilege());
-		
 		interestedReader ir = new interestedReader();
 		
 		String idstr = Integer.toString(ID);
@@ -428,12 +428,6 @@ public class userController {
 					ir.setLastName(lname);
 					ir.setUsername(uname);
 					ir.setPassword(pass);
-				/*	
-					System.out.println("ID: "+ir.getUserID());
-					System.out.println("fName: "+ir.getFirstName());
-					System.out.println("lName: "+ir.getLastName());
-					System.out.println("UN: "+ir.getUsername()); 
-					System.out.println("pass: "+ir.getpassword()); */
 
 					if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
 						DBController.insertToDB("INSERT INTO ibookdb.user (`username`, `password`, `privilege`, `status`) VALUES ('"+ir.getUsername()+"', '"+ir.getpassword()+"', '1', '1')");
@@ -445,7 +439,15 @@ public class userController {
 			}
 	}
 
-
+	/**
+	 * Edit user by user name and id: enables to update user's first name, last name and password
+	 * @param id
+	 * @param fname first name
+	 * @param lname last name
+	 * @param uname user name
+	 * @param pass password
+	 * @throws SQLException
+	 */
 	public static void editUserDetails(String id, String fname, String lname, String uname, String pass) throws SQLException {
 
 		ArrayList<String> priv = null;
@@ -457,7 +459,6 @@ public class userController {
 		ir.setUsername(uname);
 		ir.setPassword(pass);
 		
-		/**Edit user by user name and id*/
 		priv = DBController.getFromDB("select u.privilege from ibookdb.user u where u.username = '"+uname+"'");
 		if (Integer.parseInt(priv.get(0)) < 3){				//edit only reader or interested reader
 			if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
@@ -474,7 +475,12 @@ public class userController {
 			UserSearchGUI.errorBox("You are not allowed to change workers details!", "Edit User Error");
 	}
 	
-	
+	/**
+	 * removes user from DB
+	 * @param id
+	 * @param uname user name
+	 * @throws SQLException
+	 */
 	public static void removeUser(String id, String uname) throws SQLException {
 
 		ArrayList<String> priv = null;
@@ -492,7 +498,13 @@ public class userController {
 		}
 	}
 	
+	/**
+	 * Get user privilege
+	 * @param uname
+	 * @return user privilege
+	 */
 	public static int getUserPrivilege(String uname){
+
 		ArrayList<String> priv;
 		int privInt;
 		
@@ -502,13 +514,16 @@ public class userController {
 		return privInt;		
 	}
 	
+	/**
+	 * get user payment arrangement type
+	 * @param ID
+	 * @param uname user name
+	 * @return type of reader arrangement: periodic, one-by-one ore none
+	 */
 	public static String getReaderArrangement(String ID, String uname){
 		ArrayList<String> rType = null;
-		
-		//if (getUserPrivilege(uname) == 2){
+
 			rType = DBController.getFromDB("select r.rType from reader r where r.userID = '"+ID+"';");
-			//System.out.println("uID: "+ID+"zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
-			//System.out.println("type "+rType.get(0)+" zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz");
 			if (rType != null){
 				if (rType.get(0).equals("periodic")){
 					return "Periodic";
@@ -523,13 +538,14 @@ public class userController {
 	}
 	
 	/**
-	 * 
-	 * @param creditNum
-	 * @param expMonth
-	 * @param expYear
-	 * @param cvv
-	 * @param periodNum
-	 * @return
+	 * Validating credit card details
+	 * @param creditNum credit card number
+	 * @param expMonth expired month of credit card
+	 * @param expYear expired date of credit card
+	 * @param cvv 3-digit number on the back of credit card
+	 * @param periodNum number of periods (years/months) for arrangement
+	 * @param visFlag is used to describe whether the user is a periodic reader. Will be true if it is.
+	 * @return true if all details are correct false otherwise
 	 */
 	public static boolean validateCreditCard(String creditNum, String expMonth, String expYear, String cvv, String periodNum, boolean visFlag){
 		int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -708,28 +724,7 @@ public class userController {
 			}
 		}
 	}
-		
-	/*		if (newPayment.equals("Periodic")){
-				periodicResult = DBController.getFromDB("select pr.userID from periodicreader pr where pr.userID = '"+id+"'");
-				if(periodicResult == null)		//means user is NOT defined as periodic reader in DB
-					if (perType.equals("monthly"))
-						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' MONTH))");
-					else
-						DBController.insertToDB("INSERT INTO ibookdb.periodicreader (`userID`, `pType`, `dateOfEnd`) VALUES ('"+id+"', '"+perTypeToDBFormat+"', DATE_ADD(SYSDATE(),INTERVAL '"+periodNum+"' YEAR))");
-				else								//means user defined as periodic and we're about to extend his arrangement
-					if (perType.equals("yearly"))	//means we're about to extend in 'month' periods
-						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' MONTH) WHERE `userID`='"+id+"'");
-					else							//means we're about to extend in 'year' periods
-						DBController.insertToDB("UPDATE ibookdb.periodicreader SET `dateOfEnd` = DATE_ADD(dateOfEnd,INTERVAL '"+periodNum+"' YEAR) WHERE `userID`='"+id+"'");
-				UserSearchGUI.infoBox("Periodic arrangement has set successfully!", "Periodic Arrangement Set");
-			}
-			else
-			{
-				
-			}
-	*/
-	
-	
+
 	public void checkOrderDetails() {
 		// TODO - implement userController.checkOrderDetails
 		throw new UnsupportedOperationException();
@@ -923,12 +918,10 @@ public class userController {
 		        frame.setSize(700, 600);
 	        }
 	        else
-	        	mainPanel.infoBox("No searches", "Report");
-	     //   frame.setDefaultCloseOperation(ChartFrame.EXIT_ON_CLOSE);
-		
+	        	mainPanel.infoBox("No searches", "Report");		
 	}
 	/**
-	 * this method gets a book id,scope name and then gets a list with the number of orders for all the book 
+	 * this method gets a book id,scope name and then gets a list with the number of orders for all the book
 	 * in the scope(from lowest to highest) from the DB and check the place of the book with the bid we got.
 	 * we also get an ArrayList of String with all the scope and the book's name in order to be able to call for other methods
 	 * @param scope the scope name
@@ -1125,7 +1118,4 @@ public class userController {
 		displayWorkerSearch();
 		
 	}
-	
-	
-	
 }
