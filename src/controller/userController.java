@@ -111,8 +111,6 @@ public class userController {
 	public static void getUserDetails(String item , String search)
 	{
 		UserSearchGUI panel;
-		//System.out.println(loginController.use.getprivilege());
-		//System.out.println("right here!!");
 		if(loginController.use.getprivilege() == 4)
 			panel = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
 		else
@@ -129,10 +127,8 @@ public class userController {
 										+" UNION"
 										+" select r.userID, r.firstName, r.lastName, r.username, p.description"
 										+" from reader r, user u, privilege p"
-										+" where r.username like '%"+search+"%' and r.username = u.username and u.privilege = p.privilege");
-		if(info!=null)
-			System.out.println(info.toString());
-
+										+" where r.username like '%"+search+"%' and r.username = u.username and u.privilege = p.privilege"
+										+" order by firstName");
 		}
 		/**Search by UserID*/
 		if(item.equals("UserID"))
@@ -142,9 +138,8 @@ public class userController {
 										+" UNION"
 										+" select r.userID, r.firstName, r.lastName, r.username, p.description"
 										+" from reader r, user u, privilege p"
-										+" where r.userID = '"+search+"' and r.username = u.username and u.privilege = p.privilege");
-		
-		//System.out.println(info.toString());
+										+" where r.userID = '"+search+"' and r.username = u.username and u.privilege = p.privilege"
+										+" order by firstName");
 
 		if(info != null)
 		{
@@ -156,17 +151,15 @@ public class userController {
 					UserSearchGUI.data1[i][j] = info.get(count);
 					count++;
 				}
-			//System.out.println(UserSearchGUI.data1[0][0]);
 			panel.getUserDetails();
 		}
 
-//		if there are no results at all we add a lable that says "no results"
+		/**if there are no results at all we add a label that says "no results"*/
 		else
 			panel.noResults();
 		loginController.mainG.setContentPane(panel);
 		loginController.mainG.revalidate();
-		
-		
+
 	}
 	/**
 	 * UserSearchForReports - get all the readers information and insert the information to the panel's array and display the panel
@@ -420,7 +413,6 @@ public class userController {
 		/**get ID if exists*/
 			idInDB = DBController.getFromDB("select i.userID from interestedreader i where i.userID = '"+idstr+"'");
 			if(idInDB != null){
-				//System.out.println("ID " +idInDB.toString()+ " is already exists !");
 				UserSearchGUI.errorBox("ID "+idInDB.toString()+" is already exists!\nPlease pick another one", "Add User");
 			}
 		/**get user name if exists*/
@@ -456,8 +448,7 @@ public class userController {
 
 	public static void editUserDetails(String id, String fname, String lname, String uname, String pass) throws SQLException {
 
-		ArrayList<String> iReaderUpdate = null;
-		ArrayList<String> userUpdate = null;
+		ArrayList<String> priv = null;
 		interestedReader ir = new interestedReader();
 		
 		ir.setUserID(Integer.parseInt(id));
@@ -467,11 +458,20 @@ public class userController {
 		ir.setPassword(pass);
 		
 		/**Edit user by user name and id*/
-		if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
-			iReaderUpdate = DBController.getFromDB("UPDATE ibookdb.interestedreader i set i.firstName='"+fname+"', i.lastName='"+lname+"' where i.userID='"+id+"'");
-			userUpdate = DBController.getFromDB("UPDATE ibookdb.user u set u.password='"+pass+"' where u.username='"+uname+"'");
-			UserSearchGUI.infoBox("Edit user details succeeded!", "Edit User");
+		priv = DBController.getFromDB("select u.privilege from ibookdb.user u where u.username = '"+uname+"'");
+		if (Integer.parseInt(priv.get(0)) < 3){				//edit only reader or interested reader
+			if ((ir.getUserID() != -1) && (ir.getFirstName() != null) && (ir.getLastName() != null) && (ir.getUsername() != null) && (ir.getpassword()) != null ){
+				if (!(pass.equals("*****")))				//update password only if changed
+					DBController.insertToDB("UPDATE ibookdb.user u set u.password='"+pass+"' where u.username='"+uname+"'");
+				if (Integer.parseInt(priv.get(0)) == 2)		//means user is a reader
+					DBController.insertToDB("UPDATE ibookdb.reader r set r.firstName='"+fname+"', r.lastName='"+lname+"' where r.userID='"+id+"'");
+				else										//user is an interested reader
+					DBController.insertToDB("UPDATE ibookdb.interestedreader i set i.firstName='"+fname+"', i.lastName='"+lname+"' where i.userID='"+id+"'");
+				UserSearchGUI.infoBox("Edit user details succeeded!", "Edit User");
+			}
 		}
+		else
+			UserSearchGUI.errorBox("You are not allowed to change workers details!", "Edit User Error");
 	}
 	
 	
@@ -481,6 +481,8 @@ public class userController {
 		priv = DBController.getFromDB("select u.privilege from ibookdb.user u where u.username = '"+uname+"'");
 		/**make sure privilege is less than 3 means remove only reader or interested reader*/
 		if (Integer.parseInt(priv.get(0)) < 3){
+			DBController.insertToDB("delete from ibookdb.periodicreader where userID='"+id+"'");
+			DBController.insertToDB("delete from ibookdb.reader where userID='"+id+"'");
 			DBController.insertToDB("delete from ibookdb.interestedreader where userID='"+id+"'");
 			DBController.insertToDB("delete from ibookdb.user where username='"+uname+"'");
 			UserSearchGUI.infoBox("User removal succeeded", "User Removal");

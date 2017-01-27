@@ -48,7 +48,6 @@ public class interestedReader extends User {
 	public void setUserID(int iD){
 		if ((iD <= 10000) || (iD > 99999)){
 			UserSearchGUI.errorBox("Please enter a legal ID (greater than 11111 and lower than 99999)","Validate User ID");
-		//	backToUserSearch();
 			return;
 		}
 		this.userID = iD;
@@ -57,7 +56,6 @@ public class interestedReader extends User {
 	public void setFirstName(String firstName){
 		if ((firstName.matches(".*\\d.*"))||firstName.contains(" ")){
 			UserSearchGUI.errorBox("Please enter a legal first name\nNo digits or spaces allowed!","Validate First Name");
-		//	backToUserSearch();
 			return;
 		}
 		this.firstName = firstName;
@@ -66,7 +64,6 @@ public class interestedReader extends User {
 	public void setLastName(String lastName){
 		if ((lastName.matches(".*\\d.*"))||lastName.contains(" ")){
 			UserSearchGUI.errorBox("Please enter a legal last name\nNo digits or spaces allowed!","Validate Last Name");
-		//	backToUserSearch();
 			return;
 		}	
 		this.lastName = lastName;
