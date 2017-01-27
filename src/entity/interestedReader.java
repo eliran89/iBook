@@ -2,23 +2,15 @@ package entity;
 
 import boundry.UserSearchGUI;
 import controller.loginController;
-
+/**
+ * Contains all relevant getters and setters for an interested reader
+ * @author Eliran
+ */
 public class interestedReader extends User {
 
 	private int userID;
 	private String firstName;
 	private String lastName;
-	
-/*	public void backToUserSearch()
-	{
-		UserSearchGUI panelInException;
-		if(loginController.use.getprivilege() == 4)
-			panelInException = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
-		else
-			panelInException = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
-		loginController.mainG.setContentPane(panelInException);
-		loginController.mainG.revalidate();
-	}*/
 	/**
 	 * interestedReader - constructor
 	 * @param userID int
@@ -69,15 +61,4 @@ public class interestedReader extends User {
 		this.lastName = lastName;
 	}
 	/**setters END*/
-	
-	public void destroy() {
-		// TODO - implement interestedReader.destroy
-		throw new UnsupportedOperationException();
-	}
-
-	public void create() {
-		// TODO - implement interestedReader.create
-		throw new UnsupportedOperationException();
-	}
-
 }

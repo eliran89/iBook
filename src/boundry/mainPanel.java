@@ -89,27 +89,48 @@ public abstract class  mainPanel extends JPanel {
 		
 
 	}
-	
+	/**
+	 * Shows an info box
+	 * @param infoMessage content of info box
+	 * @param titleBar label of box
+	 */
    	public static void infoBox(String infoMessage, String titleBar)
     {
         JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.INFORMATION_MESSAGE);
     }
-   	
+   	/**
+   	 * Shows a warning box
+   	 * @param infoMessage content of info box
+   	 * @param titleBar label of box
+   	 */
 	public static void warningBox(String infoMessage, String titleBar)
     {
         JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.WARNING_MESSAGE);
     }
-	
+	/**
+	 * Shows an error box
+	 * @param infoMessage content of info box
+	 * @param titleBar label of box
+	 */
 	public static void errorBox(String infoMessage, String titleBar)
     {
         JOptionPane.showMessageDialog(null,infoMessage,titleBar,JOptionPane.ERROR_MESSAGE);
     }
-	
+	/**
+	 * Shows a confirm box contains buttons: Yes, No, Cancel
+	 * @param infoMessage content of info box
+	 * @return
+	 */
 	public static int confirmBox(String infoMessage){
 		return JOptionPane.showConfirmDialog (null, infoMessage);
 	}
 	
-	  //JDialog.setDefaultLookAndFeelDecorated(true);
+	/**
+	 * Shows a Yes/No box contains buttons: Yes, No
+	 * @param msg content of info box
+	 * @param lbl label of box
+	 * @return
+	 */
 	public static boolean yesNoBox(String msg, String lbl){
 	int response = JOptionPane.showConfirmDialog(null, msg, lbl, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 

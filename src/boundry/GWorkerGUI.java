@@ -13,23 +13,20 @@ import controller.bookController;
 import controller.loginController;
 import controller.userController;
 /**
- * 
+ * this class is an abstract class that responsible for the window that related to both manager and library worker<br>
+ * it contains the components that they both allowed to access 
  * @author Guy Cohen
- *this class is an abstract class that responsible for the window that related to both manager and library worker
- *it contains the components that they both allowed to access 
  */
 public abstract class GWorkerGUI extends editorGUI {
 	public GWorkerGUI( String name , String role) {
 		super(name,role);
-		
-		
+
 		JButton btnUserManagement = new JButton("User details management");
 		btnUserManagement.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnUserManagement.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				userController.userSearch();
-					
+				userController.userSearch();	
 			}
 		});
 		
@@ -49,9 +46,6 @@ public abstract class GWorkerGUI extends editorGUI {
 		imgB.setBounds(171, 422, 211, 105);
 		imgB.setBounds(137, 418, 211, 105);
 		add(imgB);
-
 	}
-
-
 
 }

@@ -16,8 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 /**
  * this class is the main frame that every panel goes into
- * @author GuyCohen, Nimrod mendel , Eliran Ifrah, Zachi Mayer
- *
+ * @author GuyCohen, Nimrod mendel , Eliran Ifrach, Zachi Meyer
  */
 public class MainWindowGUI extends JFrame{
 	public static JLabel img;

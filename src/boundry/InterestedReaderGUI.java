@@ -17,7 +17,6 @@ import java.awt.event.ActionEvent;
  * this class is responsible for the main window of the interested reader
  * it contains all the components related to the interested reader's main window 
  * @author Guy Cohen
- *
  */
 public class InterestedReaderGUI extends mainPanel{
 	/**
@@ -66,7 +65,5 @@ public class InterestedReaderGUI extends mainPanel{
 		imgB = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/booksearch.jpg")));
 		imgB.setBounds(120, 184, 211, 105);
 		add(imgB);
-		
-
 	}
 }

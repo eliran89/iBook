@@ -1,7 +1,11 @@
 package entity;
 
 import boundry.UserSearchGUI;
-
+/**
+ * cantains all relevant getters and setters for user entity
+ * @author Eliran
+ *
+ */
 public class User {
 	private String username;
 	private String password;
