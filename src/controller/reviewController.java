@@ -354,20 +354,6 @@ public class reviewController {
 	
 	
 	}
-	
-	
-	
-	public boolean checkDetails() {
-		// TODO - implement reviewController.checkDetails
-		throw new UnsupportedOperationException();
-	}
 
-	public void sendToEditor() {
-		// TODO - implement reviewController.sendToEditor
-		throw new UnsupportedOperationException();
-	}
-
-
-	
 
 }

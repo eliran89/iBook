@@ -15,8 +15,20 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
-
+/**
+ * this class is responsible for the main window of the library worker
+ * it contains all the components related to the library worker's main window 
+ * @author Guy Cohen
+ *
+ */
 public class LWorkerGUI extends GWorkerGUI {
+	/**
+	 * this is the constructor.
+	 * it puts the general worke's components and the components that related to library worker
+	 * on the panel.
+	 * @param name the user name for the mainPanel use
+	 * @param role the privilege level for the mainPanel use
+	 */
 	public LWorkerGUI( String name , String role) {
 		super(name,role);
 		
@@ -44,28 +56,4 @@ public class LWorkerGUI extends GWorkerGUI {
 		
 	}
 
-	public void editReaderDetails() {
-		// TODO - implement LWorkerGUI.editReaderDetails
-		throw new UnsupportedOperationException();
-	}
-
-	public boolean checkPaymentArrangement() {
-		// TODO - implement LWorkerGUI.checkPaymentArrangement
-		throw new UnsupportedOperationException();
-	}
-
-	public void setPaymentArrangements() {
-		// TODO - implement LWorkerGUI.setPaymentArrangements
-		throw new UnsupportedOperationException();
-	}
-
-	/**
-	 * Open an Interested reader account
-	 * @param ID, firstName, lastName, userName, Password
-	 */
-	public void interestedReaderAcountOpening() {
-		
-		// TODO - implement LWorkerGUI.readerAcountOpening
-		throw new UnsupportedOperationException();
-	}
 }

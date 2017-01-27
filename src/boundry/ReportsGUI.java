@@ -126,6 +126,7 @@ public class ReportsGUI extends mainPanel {
  * and the method update a table with the information in the arrays and displays it 
  */
 	public void displayUsersReport() {
+		row1=-1;
 		/**the result table*/
 		JTable table = new JTable(data1,columnHeader1)
 		{
@@ -197,6 +198,15 @@ public class ReportsGUI extends mainPanel {
 		label.setForeground(Color.RED);
 		label.setBounds(393, 163, 177, 36);
 		add(label);
+		
+		JButton btnBackToSearch = new JButton("Back To Search");
+		btnBackToSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				userController.userSearch();
+			}
+		});
+		btnBackToSearch.setBounds(330, 583, 154, 23);
+		add(btnBackToSearch);
 	}
 	/**
 	 * displayBookSearchForReports - display the search panel for the manager
@@ -500,6 +510,10 @@ public class ReportsGUI extends mainPanel {
 		add(btnBySearches);
 		
 	}
+	/**
+	 * this method gets a rank of a book and display a label with that rank
+	 * @param rank the rank of the book
+	 */
 	public void displayRank(String rank){
 		
 		JLabel label = new JLabel("Rank is: "+rank);

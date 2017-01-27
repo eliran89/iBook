@@ -13,12 +13,19 @@ import controller.reviewController;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+/**
+ * this class is responsible for the main window of the interested reader
+ * it contains all the components related to the interested reader's main window 
+ * @author Guy Cohen
+ *
+ */
 public class InterestedReaderGUI extends mainPanel{
 	/**
-	 * InterestedReaderGUI - constructor
-	 * @param name String
-	 * @param role String
+	 * this is the constructor.
+	 * it presents the components of the mainPanel(witch it extends) and a components for
+	 * book search and review search
+	 * @param name String a user name for the mainPanel yse
+	 * @param role String the privilege level for the mainPanel use
 	 */
 	public InterestedReaderGUI( String name , String role) {
 		super(name,role);

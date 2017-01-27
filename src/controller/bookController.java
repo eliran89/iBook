@@ -166,21 +166,22 @@ public class bookController {
 		loginController.mainG.setContentPane(panel);
 		loginController.mainG.revalidate();
 	}
-	/**Book Search END*/
-	
 	/**
-	 * displayResults - get a book information and searching books
-	 * in the database that matches the search
-	 *  
-	 * @param brief String
-	 * @param title String
-	 * @param langu String 
-	 * @param keyWord String 
-	 * @param author String 
-	 * @param appendix String 
-	 * @param scope String 
+	 * this method get an information about the (kind of) book the user is looking for
+	 * it sends a query to the DataBase get get a list of books that answers this search.
+	 * then it opens a userBookGUI panel and fill its results table data with the list of the books.
+	 * if the are no results it display "no results" label
+	 * and displays that panel on the main frame 
+	 * @param brief a String with the wanted book's brief
+	 * @param title a String with the wanted book's title
+	 * @param langu a String with the wanted book's brief
+	 * @param keyWord a String with the wanted book's language
+	 * @param author a String with the wanted book's author
+	 * @param appendix a String with the wanted book's appendix
+	 * @param scope a String with the wanted book's scope
 	 */
 	public static void displayResults(String brief,String title,String langu,String keyWord,String author,String appendix,String scope ){
+		/**an arrayList that gets the query results from the DB*/
 		ArrayList<String> info;
 		
 			if(loginController.use.getprivilege() == 6)
@@ -200,7 +201,7 @@ public class bookController {
 						+" and b.brief like '%"+brief+"%' and b.language like '%"+langu+"%' and b.suspended = 0 and a.authorName like '%"+author+"%' and k.word like '%"+keyWord+"%'"
 						+" and sc.scopeName like '%"+scope+"%'"
 						+" order by sc.scopeName");
-			
+			/**the new panel the is being opend*/
 			userBookGUI panel;
 			
 			/*if his an interested reader add it to the title*/ 
@@ -252,7 +253,11 @@ public class bookController {
 			
 	}
 	/**
-	 * chooseBook display the chosen book
+	 * this method get a book id of the chosen book, 
+	 * sends a query to the DB that gets the information about the book.
+	 * it opens an instance of Book class and fill it with the information from the DB
+	 * then it open a new  userBookGUI panel and displays the book information on it
+	 * (by using  displayBook method)
 	 * @param bid a String instance for the book id
 	 */
 
@@ -339,8 +344,9 @@ public class bookController {
 		
 	}
 	/**
-	 * editBookinfo - gets a Book class and open the edit book page
-	 * @param book Book
+	 * this method gets an existing book information(it gets a Book class instance filled with the information)
+	 * and replace the book's information(that had been asked to replace) in the DB
+	 * @param book the book's new information
 	 */
 	public static void editBookinfo(Book book) {
 		workerBookGUI panel;
@@ -361,15 +367,14 @@ public class bookController {
 		loginController.mainG.revalidate();
 	}
 
-	public void setAbsRank() {
-		// TODO - implement bookController.setAbsRank
-		throw new UnsupportedOperationException();
-	}
 	/**
-	 * display the scope edit panel
+	 * this method gets all the scopes names from the DB  and
+	 * display them in the scope edit panel 
 	 */
 	public static void scopeEdit() {
+		/**the new panel that is being opened*/
 		workerBookGUI panel = new workerBookGUI(loginController.use.getUsername(),"Librarian");
+		/**an arrayList that gets the query results from the DB*/
 		ArrayList<String> info = DBController.getFromDB("select scope.scopeName from scope");
 		if(info != null)
 			panel.editScope(info);
@@ -394,9 +399,10 @@ public class bookController {
 		
 	}
 	/**
-	 * verifyAuthor - Check the existence of an author
-	 * @param author String
-	 * @return boolean
+	 * Check the existence of an author in the DB
+	 * if it exists return true else false
+	 * @param author the authors name
+	 * @return boolean if the author exists return true else false
 	 * @throws SQLException 
 	 */
 	public synchronized static boolean verifyAuthor(String author) throws SQLException{
@@ -405,9 +411,10 @@ public class bookController {
 				+" where author.authorName = '"+author+"'");
 	}
 	/**
-	 * verifyScope - Check the existence of a scope
-	 * @param scope String
-	 * @return boolean
+	 * Check the existence of a scope in the DB
+	 * if it exists return true else false
+	 * @param scope the scope name
+	 * @return boolean if the scope exists return true else false
 	 * @throws SQLException
 	 */
 	public synchronized static boolean verifyScope(String scope) throws SQLException{
@@ -416,16 +423,16 @@ public class bookController {
 									+" where scope.scopeName = '"+scope+"'");
 	}
 	/**
-	 * verifyKeyword - Check the existence of a Keyword
-	 * @param key String
-	 * @return boolean
+	 * Check the existence of a Keyword in the DB
+	 * if it exists return true else false
+	 * @param key the keyword
+	 * @return boolean if the keyword exists return true else false
 	 * @throws SQLException
 	 */
 	public synchronized static boolean verifyKeyword(String key) throws SQLException{
 		return DBController.existsInDB("select keyword.word from keyword where keyword.word = '"+key+"'");
 	}
-	/**
-	 * changeBookInfo - 
+	/** 
 	 * The method gets a Book instance and compare every detail of the book in the database 
 	 * (for example if a certain author exists and if he is already connected to the book
 	 * if he's not the method connects him
@@ -434,9 +441,12 @@ public class bookController {
 	 * 
 	 */
 	public static void changeBookInfo(Book book) throws SQLException{
+		/**an arrayList that gets the query results from the DB*/
 		ArrayList<String> info =null;
+		/**an array ilst that get all the lists from the Book instance*/
 		ArrayList<String> temp;
 		info = DBController.getFromDB("select max(author.authorID) from author");
+		/**a new author id*/
 		int aNewID = Integer.parseInt(info.get(0)) + 1;
 		int bNewID;
 		temp = book.getAuthors();
@@ -519,68 +529,24 @@ public class bookController {
 			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `Title`='', `language`='', `brief`='', `appendix`='', `cost`='-1', `suspended`='1' WHERE `bookID`='"+bNewID+"';");
 			DBController.insertToDB("UPDATE `ibookdb`.`book` SET `Title`='"+book.getTitle()+"', `language`='"+book.getLanguage()+"', `brief`='"+book.getBrief()+"', `appendix`='"+book.getAppendix()+"', `cost`='"+book.getCost()+"', `suspended`='0'  WHERE `bookID`='"+bNewID+"';");
 		}
-		
-		/*
-		temp = book.getAuthors();
-		for(int i = 0;i < temp.size();i++){
 			
-			int aID; //Variable that saves the author ID
-			int laID=0;
-			info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
-			aID = Integer.parseInt(info.get(0)); // gets the current authors ID
-			if(aID == laID){
-				info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
-				aID = Integer.parseInt(info.get(i));
-			}
-			try {
-				if(!DBController.existsInDB("select bauthor.bookID from bauthor  where bauthor.bookID = '"+bNewID+"' and bauthor.authorID = '"+aID+"'"))
-					DBController.insertToDB("INSERT INTO `ibookdb`.`bauthor` (`authorID`, `bookID`) VALUES ('"+aID+"', '"+bNewID+"');");
-			} catch (SQLException e) {
-			}
-			laID = aID;
-		}
-		temp = book.getKey();
-		for(int i =0 ; i<temp.size() ; i++)
-			try {
-				if(!DBController.existsInDB("select bkey. bookID from bkey where bkey.bookID = '"+bNewID+"' and bkey.Word ='"+temp.get(i)+"'"));
-					DBController.insertToDB("INSERT INTO `ibookdb`.`bkey` (`bookID`, `Word`) VALUES ('"+bNewID+"', '"+temp.get(i)+"');");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		
-		temp = book.getScope();
-		ArrayList<String> temp2 = book.getSubject();
-		for(int i =0 ; i < temp.size() ; i++)
-			try {
-				if(!verifyScope(temp.get(i)))
-					DBController.insertToDB("INSERT INTO `ibookdb`.`scope` (`scopeName`) VALUES ('"+temp.get(i)+"');");
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		for(int i =0 ; i<temp.size() ; i++)
-			try {
-				if(!DBController.existsInDB("select bscope.bookID from bscope where bscope.bookID = '"+bNewID+"' and bscope.scopeName = '"+temp.get(i)+"'"));
-					DBController.insertToDB("INSERT INTO `ibookdb`.`bscope` (`bookID`, `scopeName`, `rank`, `subject`) VALUES ('"+bNewID+"', '"+temp.get(i)+"', '0', '"+temp2.get(i)+"');");
-			} catch (SQLException e) {
-				e.printStackTrace();
-
-			}
-	*/	
 	}
 	/**
-	 * displayResultsForReports - get a book information and searching books
-	 * in the database that matches the search
-	 *  
-	 * @param brief String
-	 * @param title String
-	 * @param langu String 
-	 * @param keyWord String 
-	 * @param author String 
-	 * @param appendix String 
-	 * @param scope String 
+	 * this method get an information about the (kind of) book the manager is looking for
+	 * it sends a query to the DataBase get get a list of books that answers this search.
+	 * then it opens a RepotsGUI panel and fill its results table data with the list of the books.
+	 * if the are no results it display "no results" label
+	 * and displays that panel on the main frame 
+	 * @param brief a String with the wanted book's brief
+	 * @param title a String with the wanted book's title
+	 * @param langu a String with the wanted book's brief
+	 * @param keyWord a String with the wanted book's language
+	 * @param author a String with the wanted book's author
+	 * @param appendix a String with the wanted book's appendix
+	 * @param scope a String with the wanted book's scope
 	 */
 	public static void displayResultsForReports(String brief,String title,String langu,String keyWord,String author,String appendix,String scope){
-		
+		/**an arrayList that gets the query results from the DB*/
 		ArrayList<String> info;
 		
 		info = DBController.getFromDB("select distinct sc.scopeName,bsc.subject,b.Title,b.bookID " 
@@ -620,13 +586,14 @@ public class bookController {
 		
 	}
 	/**
-	 * cooseBookForReports - get book name and id and display the panel where the 
-	 * manager choose what kind of report he wants
-	 * @param bookName - a string contains the book name
-	 * @param ID - a string contains the book ID
+	 * this method gets a book name and a book id , get the needed information about that book
+	 * a display the reports window for that book(by opening a new RepotsGUI a put the needed componnets in it)
+	 * @param bookName the chosen book's name
+	 * @param ID the chosen book's id
 	 */
 	public static void cooseBookForReports(String bookName,String ID){
 		ReportsGUI panel = new ReportsGUI(loginController.use.getUsername(),"Manager");
+		/**an arrayList that gets the query results from the DB*/
 		ArrayList<String> info =DBController.getFromDB("select scope.scopeName from scope,bscope where bscope.bookID = '"+ID+"' and scope.scopeName = bscope.scopeName");
 		
 		panel.chooseBy(bookName, ID,info);
@@ -634,46 +601,11 @@ public class bookController {
 		loginController.mainG.revalidate();
 	}
 
-	
-	
-	/**
-	 * findUsersOrders - method.
-	 * The method finds all the books ordered by a reader.
-	 * (NOT DONE YET)
-	 * @param user - String, a username
-	 */
-
-
-/*	public static void findUsersOrders(String user) {
-		
-		ArrayList<String> orders = new ArrayList<String>();
-		
-		orders = DBController.getFromDB("select b.Title, ro.date "
-						+"from book b, reader r, readerorder ro "
-						+"where r.username like '%" +user+"' and " 
-						+	   "r.userID = ro.userID and "
-						+	   "b.bookID = ro.bookID ");
-		
-		if(!(orders.isEmpty())){
-			
-			readerGUI.data = new String[orders.size()/3][3];
-			int count =0;
-			for(int i = 0 ; i < orders.size()/3 ; i++)
-				for(int j = 0 ; j < 3 ; j++){
-					readerGUI.data[i][j] = orders.get(count);
-					count++;
-				}
-		}
-		
-		
-		System.out.println(orders.toString());
-
-	}*/
 	/**
 	 * get a book information and pass it to DBController to download the wanted file
-	 * @param bid
-	 * @param format
-	 * @param bookName
+	 * @param bid the book id (also the file's name on the server's computer)
+	 * @param format the wanted format for the book
+	 * @param bookName the wanted book name(will also be the file name in the client's computer)
 	 * @throws SQLException
 	 */
 
@@ -692,13 +624,14 @@ public class bookController {
 	}
 
 /**
- * displayUserOrders - get a username , get his orders from the datatbase 
- * and display a window with the results table or a lable "no results"
+ * get a username , get his orders from the database 
+ * and display a window with the results table or a label "no results"
  * @param uName - the username
  */
 public static void displayUserOrders(String uName) {
 	
 	orderListGUI reader= new orderListGUI(loginController.use.getUsername(),"Reader");
+	/**an array list that gets the orders from the DB*/
 	ArrayList<String> orders = new ArrayList<String>();
 	
 	orders = DBController.getFromDB("SELECT  b.bookID ,b.Title , ro.date FROM readerorder ro , reader re , book b "+
@@ -727,9 +660,16 @@ public static void displayUserOrders(String uName) {
 	loginController.mainG.revalidate();
 	System.out.println(orders.toString());
 	}
+/**
+ * this method gets a user name and bring from the DB all the books that this user had been ordered
+ * , puts the books information from the DB in a new orderListGUI panel's table
+ * and displays it with an option to make review about this books
+ * @param uName the user name
+ */
 	public static void displayMakeAReview(String uName){
 		
 		orderListGUI order= new orderListGUI(loginController.use.getUsername(),"Reader");
+		/**an array list that gets the orders list from the DB*/
 		ArrayList<String> orders = new ArrayList<String>();
 		
 		orders = DBController.getFromDB("SELECT b.bookID, b.Title , ro.date FROM readerorder ro , reader re , book b "+

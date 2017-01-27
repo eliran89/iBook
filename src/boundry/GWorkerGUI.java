@@ -12,7 +12,12 @@ import javax.swing.JLabel;
 import controller.bookController;
 import controller.loginController;
 import controller.userController;
-
+/**
+ * 
+ * @author Guy Cohen
+ *this class is an abstract class that responsible for the window that related to both manager and library worker
+ *it contains the components that they both allowed to access 
+ */
 public abstract class GWorkerGUI extends editorGUI {
 	public GWorkerGUI( String name , String role) {
 		super(name,role);
@@ -38,7 +43,7 @@ public abstract class GWorkerGUI extends editorGUI {
 
 		btnBookSearch.setBounds(138, 552,228, 27);
 		add(btnBookSearch);
-		
+		/**this label display an image of the book search*/
 		JLabel imgB;
 		imgB = new JLabel(new ImageIcon(InterestedReaderGUI.class.getResource("/boundry/booksearch.jpg")));
 		imgB.setBounds(171, 422, 211, 105);
@@ -47,24 +52,6 @@ public abstract class GWorkerGUI extends editorGUI {
 
 	}
 
-	public void addBook() {
-		// TODO - implement GWorkerGUI.addBook
-		throw new UnsupportedOperationException();
-	}
 
-	public void removeBook() {
-		// TODO - implement GWorkerGUI.removeBook
-		throw new UnsupportedOperationException();
-	}
-
-	public void bookSearch() {
-		// TODO - implement GWorkerGUI.bookSearch
-		throw new UnsupportedOperationException();
-	}
-
-	public void InventoryManagement() {
-		// TODO - implement GWorkerGUI.InventoryManagement
-		throw new UnsupportedOperationException();
-	}
 
 }

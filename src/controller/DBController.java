@@ -33,7 +33,6 @@ public class DBController {
 	ClientConsole chat;
 	static public byte[][] buffers;
 	
-	 /** Constractor*/
 	/**
 	 * Constructor get the connection details from the user 
 	 * and put them in static variables
@@ -45,7 +44,6 @@ public class DBController {
 		this.host = host;
 		this.port = port;
 	}
-	/**END Constractor*/
 	
 	
 	

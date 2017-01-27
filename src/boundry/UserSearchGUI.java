@@ -409,15 +409,17 @@ public class UserSearchGUI extends mainPanel{
 	 * can so he has his own buttons and needs to be displayed only for reports
 	 */
 	public void managerReportButtons(){
-		
-		
-		
+
 		JButton btnWatchUserOrder = new JButton("Watch User Order List");
 		btnWatchUserOrder.setBounds(120, 596, 185, 23);
+
 		btnWatchUserOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String username = table.getValueAt(row1, 3).toString();
-				userController.showUserReport(username);
+				String username;
+				if(row1 != -1){
+					 username = table.getValueAt(row1, 3).toString();
+					 userController.showUserReport(username);
+				}
 			}
 		});
 		add(btnWatchUserOrder);
@@ -432,6 +434,8 @@ public class UserSearchGUI extends mainPanel{
 		label.setForeground(Color.RED);
 		label.setBounds(299, 242, 177, 36);
 		add(label);
+		
+		
 	}
 	
 	

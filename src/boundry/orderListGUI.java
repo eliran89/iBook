@@ -24,19 +24,30 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 
-
+/**
+ * this class is responsible for the orders list display(for users and manager)
+ * @author Guy Cohen
+ *
+ */
 public class orderListGUI extends mainPanel {
-	
+	/**a String[][] that contains the results table's data*/
 	public static String[][] data;
+	/**an integer that indicates the number of the selected row(-1 if not selected*/
 	private static int row = -1;
 	public static int n = 0;	
+	/**the headers of the orders list table*/
 	private static String[] columnHeader = {"Book ID","Book Name","Date"};
 	private JTable ordersTable;
 	private JTextField textFieldReview;
 	private JTextField textFieldTitle;
 	
 	
-	
+	/**
+	 * this is the constructor, it displays the main panel's components and the basic  components
+	 * for every window in that class
+	 * @param name the use name for mainPanel use
+	 * @param role the privilege level for mainPanel use
+	 */
 	public orderListGUI(String name, String role){
 		super(name,role);
 		
@@ -65,7 +76,7 @@ public class orderListGUI extends mainPanel {
 	
 	
 	/**
-	 * showOrders - display a table with the user's order list
+	 * this method display a table with the user's order list
 	 */
 	public  void showOrders() {
 	
@@ -132,7 +143,7 @@ public class orderListGUI extends mainPanel {
 
 	}
 	/**
-	 * makeReview - (comes with the method showOrders) display a button for make a review about a 
+	 * (comes with the method showOrders) display a button for make a review about a 
 	 * book from the order list
 	 */
 	public void makeReview() {
@@ -172,6 +183,12 @@ public class orderListGUI extends mainPanel {
 		label.setBounds(270, 188, 177, 36);
 		add(label);
 	}
+	/**
+	 * this method gets a book name and a book id and 
+	 * display a window for writing a review about that book
+	 * @param bName the chosen book name
+	 * @param bid the chosen book id
+	 */
 	public void writeReview(String bName,String bid){
 		
 		
