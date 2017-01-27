@@ -28,7 +28,11 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
-
+/**
+ * Shows user search main frame
+ * @author Eliran
+ *
+ */
 public class UserSearchGUI extends mainPanel{
 	private static JTextField textField;
 	private String[] columnHeader1 = {"ID","First Name","Last Name","User Name", "Privilege Level"};
@@ -48,7 +52,7 @@ public class UserSearchGUI extends mainPanel{
 		btnLogout.setBounds(26, 11, 88, 16);
 		setForeground(Color.WHITE);
 		
-		/* Button for main window */
+		/** Button for main window */
 		JButton btnMainWindow = new JButton("Main Window");
 		btnMainWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -61,7 +65,6 @@ public class UserSearchGUI extends mainPanel{
 		btnMainWindow.setBounds(26, 38, 138, 23);
 		add(btnMainWindow);
 
-		
 		lblSearchBy = new JLabel("Search By :");
 		lblSearchBy.setFont(new Font("AR CENA", Font.BOLD, 18));
 		lblSearchBy.setHorizontalAlignment(SwingConstants.CENTER);
@@ -70,7 +73,7 @@ public class UserSearchGUI extends mainPanel{
 		lblSearchBy.setBounds(131, 115, 107, 66);
 		add(lblSearchBy);
 		
-		/* Definition of comboBox used for search by ID or user name */
+		/** Definition of comboBox used for search by ID or user name */
 		comboBox = new JComboBox();
 		comboBox.setFont(new Font("Tahoma", Font.PLAIN, 13));
 		comboBox.addItem("Username");
@@ -94,18 +97,7 @@ public class UserSearchGUI extends mainPanel{
 		btnSearch.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnSearch.setBounds(553, 137, 107, 23);
 		if(loginController.use.getprivilege() < 6)//only library worker and librarian will be able to use this button
-			add(btnSearch);
-		
-		
-
-		/*JTable table = new JTable();
-		table.setForeground(Color.WHITE);
-		table.setBackground(Color.WHITE);
-		table.setFont(new Font("Arial", Font.PLAIN, 14));
-		table.setBounds(79, 230, 687, 325);
-		table.setPreferredScrollableViewportSize(new Dimension(17,325));
-		add(table);*/
-			
+			add(btnSearch);	
 	}
 	/**
 	 * searchForManager- the manager results need to be different for the others
@@ -230,10 +222,7 @@ public class UserSearchGUI extends mainPanel{
 		add(lblUsername);
 		/***/
 		
-		
-		
-		
-		/*Buttons for actions on users like: Add, Edit, Remove, Set Payment Arrangement*/
+		/**Buttons for actions on users like: Add, Edit, Remove, Set Payment Arrangement*/
 		JButton btnAdd = new JButton("Add");
 		btnAdd.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -289,11 +278,6 @@ public class UserSearchGUI extends mainPanel{
 		btnPymnt.setBounds(581, 596, 185, 23);
 		if(loginController.use.getprivilege() < 6)
 			add(btnPymnt);
-	
-		
-		
-		//scrollBar.addAdjustmentListener(l);
-		
 	}
 	
 	/** table for suspended/unsuspended users **/
@@ -425,7 +409,9 @@ public class UserSearchGUI extends mainPanel{
 		add(btnWatchUserOrder);
 	}
 	
-	
+	/**
+	 * Shows <<No Results Found>> when no user meets search criteria
+	 */
 	public void noResults()
 	{
 		JLabel label = new JLabel("<<No Results Found>>");
@@ -434,10 +420,7 @@ public class UserSearchGUI extends mainPanel{
 		label.setForeground(Color.RED);
 		label.setBounds(299, 242, 177, 36);
 		add(label);
-		
-		
 	}
-	
 	
 	public void displayUser(String text) {
 		JTextPane txtpnFds = new JTextPane();
@@ -445,16 +428,14 @@ public class UserSearchGUI extends mainPanel{
 		txtpnFds.setText(text);
 		txtpnFds.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		txtpnFds.setBounds(206, 252, 439, 228);
-		add(txtpnFds);
-		
+		add(txtpnFds);	
 	}
-	
-
-	
+	/**
+	 * Shows add a new user screen
+	 */
 	public static void displayAddUserDetails() {
 		UserSearchGUI panelAdd;
-
-		//System.out.println(loginController.use.getprivilege());
+		
 		if(loginController.use.getprivilege() == 4)
 			panelAdd = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
 		else
@@ -559,13 +540,11 @@ public class UserSearchGUI extends mainPanel{
 		JButton btnBack = new JButton("Back");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//userController.userSearch();
 				userController.getUserDetails("Username","");
 			}
 		});
 		btnBack.setBounds(274, 441, 89, 23);
 		panelAdd.add(btnBack);
-		
 		
 		lblSearchBy.setVisible(false);
 		comboBox.setVisible(false);
@@ -574,11 +553,14 @@ public class UserSearchGUI extends mainPanel{
 		
 		loginController.mainG.setContentPane(panelAdd);
 		loginController.mainG.revalidate();
-		//throw new UnsupportedOperationException();
 	}	
-
-	
-
+	/**
+	 * Shows edit user details screen
+	 * @param id
+	 * @param fName first name
+	 * @param lName last name
+	 * @param uName user name
+	 */
 	public static void displayEditUserDetails(String id, String fName, String lName, String uName) {
 		UserSearchGUI panelEdit;
 
@@ -669,7 +651,6 @@ public class UserSearchGUI extends mainPanel{
 		textPassword.setEditable(true);
 		panelEdit.add(textPassword);
 
-		
 		/**button Update */
 		JButton btnUpdate = new JButton("Update");
 		btnUpdate.setToolTipText("Click here to update account");
@@ -682,7 +663,6 @@ public class UserSearchGUI extends mainPanel{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 		btnUpdate.setBounds(516, 441, 89, 23);
@@ -709,11 +689,17 @@ public class UserSearchGUI extends mainPanel{
 		loginController.mainG.setContentPane(panelEdit);
 		loginController.mainG.revalidate();
 	}
-	
+	/**
+	 * Shows set payment arrangement screen
+	 * @param id
+	 * @param fName first name
+	 * @param lName last name
+	 * @param uName user name
+	 * @param priv user privilege level
+	 */
 	public static void displaySetPayment(String id, String fName, String lName, String uName, String priv) {
 		UserSearchGUI panelSetPayment;
 
-		//System.out.println(loginController.use.getprivilege());
 		if(loginController.use.getprivilege() == 4)
 			panelSetPayment = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
 		else
@@ -797,7 +783,6 @@ public class UserSearchGUI extends mainPanel{
 				
 				if (!(arngmnt.equals(newPayment))){
 				//means there is a conflict between two payment arrangements or there is no agreement
-					//System.out.println("currPaynt :"+arngmnt+" newPayment: "+newPayment);
 					if (!(arngmnt.equals("NONE"))){
 					//this is a case of conflict agreements
 						boolean dialogResult = mainPanel.yesNoBox("There is a conflict between payment arrangements!\nWould you like to make a new arrangement?", "Payment Conflict Occured");
@@ -829,7 +814,6 @@ public class UserSearchGUI extends mainPanel{
 		btnBack.setToolTipText("Click here to view all users details");
 		btnBack.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				//userController.userSearch();
 				userController.getUserDetails("Username","");
 			}
 		});
@@ -845,7 +829,16 @@ public class UserSearchGUI extends mainPanel{
 		loginController.mainG.setContentPane(panelSetPayment);
 		loginController.mainG.revalidate();
 	}
-	
+	/**
+	 * Shows screen including all necessary details in order to add a new payment arrangement
+	 * @param id
+	 * @param fName first name
+	 * @param lName last name
+	 * @param uName user name
+	 * @param priv privilege
+	 * @param newPayment
+	 * @param visFlag user is already defined as a periodic reader if true
+	 */
 	public static void setNewPaymentArrangementGUI(String id, String fName, String lName, String uName, String priv, String newPayment, boolean visFlag) {
 		UserSearchGUI panelSetNewPayment;
 
@@ -854,7 +847,6 @@ public class UserSearchGUI extends mainPanel{
 			panelSetNewPayment = new UserSearchGUI(loginController.use.getUsername(),"Library Worker");
 		else
 			panelSetNewPayment = new UserSearchGUI(loginController.use.getUsername(),"Librarian");
-		
 		
 		/**Frame label */
 		JLabel lblSetPayment = new JLabel("Set a New Payment Arrangement");
@@ -985,8 +977,6 @@ public class UserSearchGUI extends mainPanel{
 		JButton btnSet = new JButton("Set");
 		btnSet.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//String id = new String (textId.getText());
-				//String uName = new String (textUname.getText());
 				String creditNum = new String (textCreditNum.getText());
 				String expMonth = new String (textExpMonth.getText());
 				String expYear = new String (textExpYear.getText());
@@ -1002,8 +992,6 @@ public class UserSearchGUI extends mainPanel{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-				
-				
 			}
 		});
 		btnSet.setToolTipText("Click here to set a new payment arrangement");
@@ -1022,8 +1010,6 @@ public class UserSearchGUI extends mainPanel{
 		});
 		panelSetNewPayment.add(btnBack);
 		
-		
-
 		//Hiding unnecessary components
 		lblSearchBy.setVisible(false);
 		comboBox.setVisible(false);
@@ -1032,9 +1018,6 @@ public class UserSearchGUI extends mainPanel{
 		
 		loginController.mainG.setContentPane(panelSetNewPayment);
 		loginController.mainG.revalidate();
-	
 	}
-
-
 }
 	
