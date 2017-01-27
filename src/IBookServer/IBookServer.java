@@ -1,4 +1,4 @@
-package simpleChat;
+package IBookServer;
 
 //lalala
 

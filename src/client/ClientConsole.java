@@ -1,4 +1,4 @@
-package simpleChat;
+package client;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,9 +12,6 @@ import java.io.InputStreamReader;
 import javax.swing.JFrame;
 
 import boundry.LoginGUI;
-
-import client.IBookClient;
-import simpleChatCommon.ChatIF;
 import controller.DBController;
 /**
  * This class constructs the UI for a chat client.  It implements the

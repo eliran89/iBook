@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 
 
 import boundry.*;
-import simpleChat.ClientConsole;
+import client.ClientConsole;
 import controller.DBController;
 import entity.*;
 

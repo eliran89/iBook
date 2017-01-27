@@ -5,8 +5,6 @@
 package client;
 
 import ocsf.client.*;
-import simpleChat.ClientConsole;
-import simpleChatCommon.*;
 
 import java.io.*;
 import java.sql.SQLException;

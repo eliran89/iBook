@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import com.mysql.jdbc.ResultSet;
 
 import boundry.mainPanel;
-import simpleChat.ClientConsole;
-import simpleChatCommon.ChatIF;
+import client.ChatIF;
+import client.ClientConsole;
 import client.IBookClient;
 import entity.*;
 /**
