@@ -297,7 +297,7 @@ public class reviewController {
 		System.out.println(info.get(0));
 		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
 		// dialog box before taking action
-		boolean dialogResult = mainPanel.yesNoBox("Are you sure to approve this review?", "Remove Review");
+		boolean dialogResult = mainPanel.yesNoBox("Are you sure to approve this review?", "Approve Review");
 		if(dialogResult){
 		updateVis = DBController.getFromDB("UPDATE reviews r SET visible=1 "
 				+ "WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
