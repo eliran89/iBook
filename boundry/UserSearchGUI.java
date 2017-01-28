@@ -35,9 +35,13 @@ import javax.swing.JTextPane;
  */
 public class UserSearchGUI extends mainPanel{
 	private static JTextField textField;
+	/** headers2 for searching users table **/
 	private String[] columnHeader1 = {"ID","First Name","Last Name","User Name", "Privilege Level"};
+	/** headers2 for suspended/unsuspended users table **/
 	private String[] columnHeader2 = {"ID","First Name","Last Name","User Name", "Status"};	
+	/**a String[][] that contains the results table's data*/
 	public static String[][] data1;
+	/**an integer that indicates the number of the selected row(-1) if not selected*/
 	private static int row1 = -1;
 	
 	private static JLabel lblSearchBy;
@@ -45,7 +49,12 @@ public class UserSearchGUI extends mainPanel{
 	private static JButton btnSearch;
 	
 	JTable table;
-	
+	/**
+	 * this is the constructor, it displays the main panel's components and the basic  components
+	 * for every window in that class
+	 * @param name the use name for mainPanel use
+	 * @param role the privilege level for mainPanel use
+	 */
 	public UserSearchGUI(String name , String role)
 	{
 		super(name,role);
@@ -139,6 +148,8 @@ public class UserSearchGUI extends mainPanel{
 		btnSearch.setBounds(553, 137, 107, 23);
 		add(btnSearch);
 	}
+	
+	/** Getting user details after searching users **/
 	public void getUserDetails()
 	{
 		/**Create The Result Table after performing a user search*/

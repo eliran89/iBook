@@ -331,26 +331,38 @@ public class userController {
 					+ "from reader r "
 					+ "where r.username = '"+username+"' ");
 		
+		String rt = loginController.RDetails.getReaderType().toString();	//get reader type
 		
-			ArrayList<String> now = DBController.getFromDB("SELECT NOW() ");	//get date
+		
+		if(rt.equalsIgnoreCase("onebyone")){	//if one by one
+			
+			DBController.insertToDB("update `ibookdb`.`reader` set `reader`.`debt` = "
+					+ ""+(loginController.RDetails.getDebt() + bookCost)+
+					" where `reader`.`userID` = '"+readerDetails.get(0)+ "' ");	//update debt
+			
+			loginController.RDetails.setDebt(loginController.RDetails.addToDebt(bookCost));	//set new debt
+		
+		}
+	
+		else if(rt.equalsIgnoreCase("periodic")){
+			
+			String q = "select p.dateOfEnd "+ 
+					"from periodicreader p "+ 
+					"where p.userID = '"+readerDetails.get(0)+"' "+ 
+						  "and p.dateOfEnd > sysdate();";
+			
+			if(!DBController.existsInDB(q)){
+				mainPanel.errorBox("Subscription Expired!\n Can't order book!", "Subscription Expired Error");
+				return false;
+			}
+		}
+		
+			ArrayList<String> now = DBController.getFromDB("SELECT SYSDATE()");	//get date
 			
 			String query = "INSERT INTO `ibookdb`.`readerorder` (`userID`, `bookID`, `date`) "
 					+ "VALUES ('"+readerDetails.get(0)+"', '"+bookID.get(0)+"', '"+now.get(0)+"')";	//insert to orders
 		
-			ArrayList<String> info = DBController.getFromDB(query);	//execute update
-		
-			/*check payment*/
-			String rt = loginController.RDetails.getReaderType().toString();	//get reader type
-			
-			if(rt.equalsIgnoreCase("onebyone")){	//if one by one
-				
-				ArrayList<String>debtCalc = DBController.getFromDB("update `ibookdb`.`reader` set `reader`.`debt` = "
-						+ ""+(loginController.RDetails.getDebt() + bookCost)+
-						" where `reader`.`userID` = '"+readerDetails.get(0)+ "' ");	//insert debt
-				
-				loginController.RDetails.setDebt(loginController.RDetails.addToDebt(bookCost));	//set new debt
-			
-			}
+			DBController.insertToDB(query);	//execute update
 			
 			return true;
 		}
@@ -708,7 +720,35 @@ public class userController {
 		}
 	}
 
-	
+	public void checkOrderDetails() {
+		// TODO - implement userController.checkOrderDetails
+		throw new UnsupportedOperationException();
+	}
+
+	public void makeTheOrder() {
+		// TODO - implement userController.makeTheOrder
+		throw new UnsupportedOperationException();
+	}
+
+	public void extendSubscription() {
+		// TODO - implement userController.extendSubscription
+		throw new UnsupportedOperationException();
+	}
+
+	public void changePrivilege() {
+		// TODO - implement userController.changePrivilege
+		throw new UnsupportedOperationException();
+	}
+
+	public void insertToDB() {
+		// TODO - implement userController.insertToDB
+		throw new UnsupportedOperationException();
+	}
+
+	public void legalDate() {
+		// TODO - implement userController.legalDate
+		throw new UnsupportedOperationException();
+	}
 	/**
 	 * showReportsMain - open the main reports panel
 	 */

@@ -32,7 +32,7 @@ import javax.swing.JTextPane;
 public class orderListGUI extends mainPanel {
 	/**a String[][] that contains the results table's data*/
 	public static String[][] data;
-	/**an integer that indicates the number of the selected row(-1 if not selected*/
+	/**an integer that indicates the number of the selected row(-1) if not selected*/
 	private static int row = -1;
 	public static int n = 0;	
 	/**the headers of the orders list table*/
@@ -127,7 +127,7 @@ public class orderListGUI extends mainPanel {
 		for (int j = 0; j < columnHeader.length; j++)
 			ordersTable.getColumnModel().getColumn(j).setCellRenderer(r);
 		
-		//table.setForeground(Color.BLUE);
+		
 		ordersTable.setBackground(Color.WHITE);
 		ordersTable.setFont(new Font("Arial", Font.PLAIN, 12));
 		ordersTable.setBorder(new LineBorder(Color.LIGHT_GRAY));

@@ -33,17 +33,28 @@ import javax.swing.border.BevelBorder;
 import javax.swing.ListSelectionModel;
 import javax.swing.JPanel;
 import javax.swing.border.EtchedBorder;
+/**This class for display all the mail box of unpublished reviews  **/
 
 public class OpenMailGUI extends mainPanel {
+	
+	
 	private JTable table;
+	/**the headers for the unpublished review table*/
 	private String[] columnHeader = {"Title","authorName"," Review Title","Review Username","Review Text"};
+	/**the results of the unpublished review table*/
 	public static String[][] data; // the data from the DB
+	/**a number of row that had been pressed in a table(-1 none pressed)*/
 	private static int row = -1;
 	JButton btnApprove = new JButton("Approve");
 	JButton btnReject = new JButton("Reject");
 	JButton btnUpdate = new JButton("Update");
 	
-	
+	/** this is the constructor.
+	 * it puts the general worke's components and the components that related to library worker
+	 * on the panel.
+	 * @param name the user name for the mainPanel use
+	 * @param role the privilege level for the mainPanel use
+	 */
 	public OpenMailGUI(String name , String role){
 		super(name,role);
 		
@@ -51,7 +62,7 @@ public class OpenMailGUI extends mainPanel {
 	
 		setForeground(Color.WHITE);
 		
-		/* Button for main window */
+		/** Button for main window **/
 		JButton btnMainWindow = new JButton("Main Window");
 		btnMainWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -188,7 +199,7 @@ public class OpenMailGUI extends mainPanel {
 		
 		}// end of if privilege==3
 		
-		
+		/**Button for Display Review **/
 		JButton btnDisplayReview = new JButton("Display Review");
 		btnDisplayReview.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnDisplayReview.setBounds(374, 596, 131, 23);
@@ -212,6 +223,7 @@ public class OpenMailGUI extends mainPanel {
 		
 		
   }// end of getReview()
+	/** When there are no result for unpublished review**/
 	public void noResults()
 	{
 		JLabel label = new JLabel("<<No Results Found>>");
@@ -222,7 +234,12 @@ public class OpenMailGUI extends mainPanel {
 		add(label);
 	}
 	
-	/**displayReview display chosen review **/
+	/**
+		Method for displaying review when click a review in the list
+	 * @param text Review text
+	 * @param bTitle The book title 
+	 * @param uName reviewer's user name
+	 */
 	 
 	public void displayReview(String text,String bTitle,String uName) {
 			
