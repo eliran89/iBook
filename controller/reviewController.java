@@ -356,9 +356,11 @@ public class reviewController {
 		System.out.println(bookId);
 		// Edit review text
 		if (text.contains(",")|| text.contains("'")|| text.contains(" ''"))
-		{
 			OpenMailGUI.errorBox("Review must no be contain punctuation such  ' , ","Error in review");
-		}
+		else
+		if (text.equals("")) 
+			OpenMailGUI.errorBox("Review must not be empty , ","Error in review");
+			
 		else{
 		System.out.println("UPDATE reviews r SET r.text='"+text+
 				"' WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
