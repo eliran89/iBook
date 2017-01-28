@@ -336,13 +336,17 @@ public class reviewController {
 		info = DBController.getFromDB("select  r.BookID "+
 		"from book b, reviews r "+
 		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
-		//System.out.println(info.get(0));
+		
 		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
 		System.out.println("user: "+uName+", book title: "+bTitle);
 		System.out.println("Text: "+text);
 		System.out.println(bookId);
 		// Edit review text
-		
+		if (text.contains(",")|| text.contains("'")|| text.contains(" ''"))
+		{
+			OpenMailGUI.errorBox("Review must no be contain punctuation such  ' , ","Error in review");
+		}
+		else{
 		System.out.println("UPDATE reviews r SET r.text='"+text+
 				"' WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
 		editDisplayReview = DBController.getFromDB("UPDATE reviews r SET r.text='"+text+
@@ -352,7 +356,7 @@ public class reviewController {
 		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was edited successfully", "Edit Confirmation");
 		//reviewController.openMailScreen();
 	
-	
+		}
 	}
 
 

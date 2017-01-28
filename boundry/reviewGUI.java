@@ -54,7 +54,7 @@ public class reviewGUI extends mainPanel {
 			btnMainWindow.setFont(new Font("AR CENA", Font.BOLD, 14));
 			btnMainWindow.setBackground(Color.GREEN);
 			btnMainWindow.setForeground(Color.BLACK);
-			btnMainWindow.setBounds(26, 38, 122, 23);
+			btnMainWindow.setBounds(26, 38, 138, 23);
 			add(btnMainWindow);
 			
 			lblSearchBy = new JLabel("Search By : ");

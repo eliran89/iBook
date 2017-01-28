@@ -61,7 +61,6 @@ public class orderListGUI extends mainPanel {
 		btnMainWindow.setBackground(Color.GREEN);
 		btnMainWindow.setForeground(Color.WHITE);
 		btnMainWindow.setBounds(26, 38, 138, 23);
-		//JButton btnMainWindow = new JButton("Main Window");
 		btnMainWindow.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				userController.GoToMainWindow();
@@ -232,8 +231,9 @@ public class orderListGUI extends mainPanel {
 				String title = textFieldTitle.getText();
 				if (text.equals("") || title.equals(""))
 					errorBox("Must enter a review and a title","Error");
-				if (text.equals("'") || title.equals("'") ||text.equals(",")|| title.equals(","))
-					errorBox("The title and review must be without ' and ,","Error");
+			
+				if (title.contains("'") || title.contains(",") ||text.contains("'") || title.contains(","))
+					errorBox("Must enter a review and a title without panctuation like , or '","Error");
 				else{
 						infoBox("Review sent to be checked","Review Sent");
 						try {

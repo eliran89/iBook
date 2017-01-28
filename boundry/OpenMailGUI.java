@@ -229,7 +229,8 @@ public class OpenMailGUI extends mainPanel {
 			JTextPane txtpnFds = new JTextPane();
 			
 			/** editable text privileges **/
-			if(loginController.use.getprivilege() == 3 || loginController.use.getprivilege() == 4 || loginController.use.getprivilege() == 5  ) txtpnFds.setEditable(true);
+			if(loginController.use.getprivilege() == 3 || loginController.use.getprivilege() == 4 || loginController.use.getprivilege() == 5  ) 
+				txtpnFds.setEditable(true);
 			else txtpnFds.setEditable(false);
 			
 			txtpnFds.setText(text);
@@ -271,7 +272,7 @@ public class OpenMailGUI extends mainPanel {
 				
 			});
 			
-			// Button for edit //
+			/** Button for edit **/
 			JButton btnEdit = new JButton("Update");
 			btnEdit.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnEdit.setBounds(844, 354, 131, 23);
@@ -299,6 +300,8 @@ public class OpenMailGUI extends mainPanel {
 			btnBack.setFont(new Font("Tahoma", Font.BOLD, 12));
 			btnBack.setBounds(374, 596, 131, 23);
 			add(btnBack);
+			
+			
 			
 		}
 }

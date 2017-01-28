@@ -1,5 +1,12 @@
 package entity;
 
+/**
+ * Class - reader<br>
+ * The class represents a user with "Reader" privileges.<br>
+ * Extends interestedReader class.<br>
+ * Uses parameters: creditCard (String); debt (float); readerType (readerType) 
+ * @author Nimrod Mendel
+ */
 import boundry.UserSearchGUI;
 
 public class reader extends interestedReader {
@@ -99,7 +106,7 @@ public class reader extends interestedReader {
 	 * @param rType - ENUM
 	 */
 	public void setrType(readerType rType){	
-		//need checking!!!!
+	
 	
 		if(!rType.equals("ONEBYONE") || !rType.equals("PERIODIC")){
 			UserSearchGUI.errorBox("Illegal payment method!", "Illegal Payment Method!");

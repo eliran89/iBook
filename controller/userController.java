@@ -23,9 +23,6 @@ import javax.swing.JFrame;
 import boundry.*;
 import entity.*;
 
-
-
-
 public class userController {
 /**
  * this method is being activate when the user press on the logout button or exits the main window.
@@ -281,7 +278,7 @@ public class userController {
 	
 		
 		
-		//userController.UserSearchForSuspends(item, search);;
+	
 		
 		
 	}
@@ -308,10 +305,8 @@ public class userController {
 	
 	
 	/**
-	 * adds a book order for a reader to the database.
-	 * The method checks whether a reader had already purchased a book using SQL queries that are being sent to the database
-	 * and updates it in case a reader hadn't already purchased the book he is trying to purchase.
-	 * In addition, the method checks what payment agreement a user has, and if it's a "pay per view" kind of payment agreement,
+	 * adds a book order for a reader to the database.<br>
+	 * The method checks what payment agreement a user has, and if it's a "pay per view" kind of payment agreement,
 	 * the method adds the cost of the book to his debt
 	 * @param title - String. The title of the book
 	 * @param username  - String. Username
@@ -336,19 +331,7 @@ public class userController {
 					+ "from reader r "
 					+ "where r.username = '"+username+"' ");
 		
-		String q = "select ro.userID, ro.bookID "
-				+ "from readerorder ro "
-				+ "where ro.userID = '"+readerDetails.get(0)+ "' and "
-						+ "ro.bookID = '"+bookID.get(0)+"' ";	//check orders
-
-		boolean rs = DBController.existsInDB(q);	//indicates whether a reader had already ordered the book he/she is trying to order
-				
-		//if book already been purchased show pop up message
-		if(rs){
-			mainPanel.errorBox("Book has already been purchased!", "Book Already Purchased Error");	//failure message
-			return false;
-		}
-
+		
 			ArrayList<String> now = DBController.getFromDB("SELECT NOW() ");	//get date
 			
 			String query = "INSERT INTO `ibookdb`.`readerorder` (`userID`, `bookID`, `date`) "
