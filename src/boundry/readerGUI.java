@@ -31,7 +31,16 @@ import javax.swing.ImageIcon;
 
 public class readerGUI extends InterestedReaderGUI {
 	
-	
+	/**
+	 * readerGUI - GUI class.<br>
+	 * The class creates the Graphical user interface for a reader.<br>
+	 * Extends "InterestedReaderGUI".<br>
+	 * Uses parameters:<br>
+	 * @param name - String: username
+	 * @param role - String: privilege level
+	 * 
+	 * @author Nimrod Mendel
+	 */
 	
 	public readerGUI( String name , String role) {
 		super(name,role);
@@ -53,16 +62,17 @@ public class readerGUI extends InterestedReaderGUI {
 		btnNewButton.setBounds(644, 320, 185, 47);
 		add(btnNewButton);
 		
+		/**Write a review Icon**/
 		JLabel lblNewLabel = new JLabel("New label");
 		lblNewLabel.setIcon(new ImageIcon(readerGUI.class.getResource("/boundry/write-ballpoint-ballpen-icon.png")));
 		lblNewLabel.setBounds(666, 184, 128, 100);
 		add(lblNewLabel);
 		
+		/**View orders icon**/
 		JButton btnViewOrders = new JButton("View orders");
 		btnViewOrders.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String user = loginController.use.getUsername();
-				//bookController.findUsersOrders(user);
 				bookController.displayUserOrders(user);
 			}
 		});
@@ -84,11 +94,8 @@ public class readerGUI extends InterestedReaderGUI {
 		
 		ArrayList<String> info;
 		info =  DBController.getFromDB("SELECT  b.Title   , ro.date	FROM readerorder ro , reader r , book b "
-				+"WHERE ro.userID="+userId+" and ro.bookID=b.bookID and ro.userID=r.userID ");
-		
+				+"WHERE ro.userID="+userId+" and ro.bookID=b.bookID and ro.userID=r.userID ");	
 	}
-
-	
 	/** No orders results**/
 	
 	

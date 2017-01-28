@@ -35,7 +35,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * this method contains every screen and components the the user see in the book search 
  * or the book page and every interaction the a regular user has with the system's books
- * @author Guy Cohen,Nimrod Mendel
+ * @author Guy Cohen, Nimrod Mendel
  *
  */
 public class userBookGUI extends mainPanel {
@@ -381,10 +381,10 @@ public class userBookGUI extends mainPanel {
 			tableAuthors.getColumnModel().getColumn(j).setCellRenderer(r1);
 		
 		JScrollPane pane1 = new JScrollPane(tableAuthors);//add table to scroll bar
-		pane1.setBounds(179, 253, 150, 55);//set table dimention
+		pane1.setBounds(179, 253, 150, 55);//set table dimension
 		add(pane1);
 		
-		
+		/**Language labek**/
 		JLabel lblLanguange = new JLabel("languange : ");
 		lblLanguange.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLanguange.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -398,6 +398,7 @@ public class userBookGUI extends mainPanel {
 		add(TFLang);
 		TFLang.setColumns(10);
 		
+		/**Brief labek**/
 		JLabel lblBrief = new JLabel("Brief : ");
 		lblBrief.setHorizontalAlignment(SwingConstants.CENTER);
 		lblBrief.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -411,6 +412,7 @@ public class userBookGUI extends mainPanel {
 		textPane.setBounds(664, 331, 243, 131);
 		add(textPane);
 		
+		/**Appendix labek**/
 		JLabel lblAppendix_1 = new JLabel("Appendix : ");
 		lblAppendix_1.setHorizontalAlignment(SwingConstants.CENTER);
 		lblAppendix_1.setFont(new Font("Tahoma", Font.BOLD, 14));
@@ -473,7 +475,7 @@ public class userBookGUI extends mainPanel {
 		formatBox.addItem("docx");	//doc format
 		formatBox.setBounds(589, 407, 89, 20);
 		
-		if(loginController.use.getprivilege() == 2)
+		if(loginController.use.getprivilege() == 2)	//only a reader will be able to see it
 			add(formatBox);
 		
 		
@@ -485,10 +487,8 @@ public class userBookGUI extends mainPanel {
 			btnOrderTheBook.setVisible(false);
 		btnOrderTheBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				//TODO - implement book ordering
-				
+			
 				String format = formatBox.getSelectedItem().toString();	//save the requested format to download
-				//System.out.println(format);
 				
 				try {
 					if(userController.addBookToOrderList(book.getTitle(), loginController.use.getUsername(), book.getCost()))
@@ -512,8 +512,9 @@ public class userBookGUI extends mainPanel {
 				//userController.addBookToOrderList(title);
 			}
 		});
-		add(btnOrderTheBook);
+		add(btnOrderTheBook);	
 		
+		/**Back to search button**/
 		JButton btnBackToSearch = new JButton("Back To Search");
 		btnBackToSearch.setBackground(Color.RED);
 		btnBackToSearch.setBounds(145, 534, 150, 23);
@@ -525,6 +526,7 @@ public class userBookGUI extends mainPanel {
 			
 		add(btnBackToSearch);
 		
+		/**Edit book button**/
 		JButton btnEditTheBook = new JButton("Edit Book Information");
 		btnEditTheBook.setBackground(Color.GREEN);
 		btnEditTheBook.addActionListener(new ActionListener() {
