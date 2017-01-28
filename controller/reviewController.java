@@ -296,13 +296,16 @@ public class reviewController {
 		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
 		System.out.println(info.get(0));
 		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
-		
+		// dialog box before taking action
+		boolean dialogResult = mainPanel.yesNoBox("Are you sure to approve this review?", "Remove Review");
+		if(dialogResult){
 		updateVis = DBController.getFromDB("UPDATE reviews r SET visible=1 "
 				+ "WHERE r.BookID="+bookId+" and r.username='"+uName+"' and r.visible=0");
 		
 		// message for approval
 		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was approved", "Approval confirmation");
 		// return to the review's table screen
+		}
 		reviewController.openMailScreen();
 		
 
@@ -323,12 +326,16 @@ public class reviewController {
 		"where b.bookID = r.bookID and r.username='"+uName+"' and b.Title='"+bTitle+"' and r.visible = 0");
 		System.out.println(info.get(0));
 		bookId=Integer.parseInt(info.get(0)); // converting the string bookId to integer
-		
+		// dialog box before taking action
+		boolean dialogResult = mainPanel.yesNoBox("Are you sure to remove this review?", "Remove Review");
+		if(dialogResult){
 		deleteReview = DBController.getFromDB("DELETE FROM reviews"
 				+" WHERE reviews.BookID="+bookId+" and reviews.username='"+uName+"' and reviews.visible=0");
 		// Message for rejected
 		OpenMailGUI.infoBox(uName+"'s review of the book ''"+bTitle+"'' was deleted", "Reject confirmation");
+		}
 		reviewController.openMailScreen();
+		
 		
 		
 		
