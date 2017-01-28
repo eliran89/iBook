@@ -24,9 +24,9 @@ import javax.swing.border.LineBorder;
 import javax.swing.table.TableCellRenderer;
 import java.util.Calendar;
 
-
-
+import controller.bookController;
 import controller.loginController;
+import controller.reviewController;
 import controller.userController;
 import java.awt.event.MouseMotionAdapter;
 import java.awt.event.MouseEvent;
@@ -85,9 +85,6 @@ public abstract class  mainPanel extends JPanel {
 		wname.setForeground(Color.BLACK);
 		wname.setBounds(124, 9, 145, 17);
 		add(wname);
-		
-		
-
 	}
 	/**
 	 * Shows an info box
