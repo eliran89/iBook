@@ -364,11 +364,12 @@ public class UserSearchGUI extends mainPanel{
 		add(lblStatus);
 		
 		
-		/** buttons **/
+		/** button for change status , suspended=1 , unsuspended=0 **/
 		
 		JButton btnStatus = new JButton("Change Status");
 		btnStatus.setFont(new Font("Tahoma", Font.BOLD, 12));
 		btnStatus.setBounds(835, 238, 131, 23);
+		btnStatus.setToolTipText("'1' is unsuspended , '0' for suspended");
 		add(btnStatus);
 		btnStatus.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -377,14 +378,9 @@ public class UserSearchGUI extends mainPanel{
 				String status = new String( table.getValueAt(row1,4).toString());
 				userController.changeStatus(uName, status);				
 			}
-			
 		});
-		
-		
-			
 	
-		
-		
+					
 	
 		
 	}

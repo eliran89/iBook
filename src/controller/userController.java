@@ -725,35 +725,7 @@ public class userController {
 		}
 	}
 
-	public void checkOrderDetails() {
-		// TODO - implement userController.checkOrderDetails
-		throw new UnsupportedOperationException();
-	}
-
-	public void makeTheOrder() {
-		// TODO - implement userController.makeTheOrder
-		throw new UnsupportedOperationException();
-	}
-
-	public void extendSubscription() {
-		// TODO - implement userController.extendSubscription
-		throw new UnsupportedOperationException();
-	}
-
-	public void changePrivilege() {
-		// TODO - implement userController.changePrivilege
-		throw new UnsupportedOperationException();
-	}
-
-	public void insertToDB() {
-		// TODO - implement userController.insertToDB
-		throw new UnsupportedOperationException();
-	}
-
-	public void legalDate() {
-		// TODO - implement userController.legalDate
-		throw new UnsupportedOperationException();
-	}
+	
 	/**
 	 * showReportsMain - open the main reports panel
 	 */

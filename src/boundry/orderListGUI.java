@@ -232,6 +232,8 @@ public class orderListGUI extends mainPanel {
 				String title = textFieldTitle.getText();
 				if (text.equals("") || title.equals(""))
 					errorBox("Must enter a review and a title","Error");
+				if (text.equals("'") || title.equals("'") ||text.equals(",")|| title.equals(","))
+					errorBox("The title and review must be without ' and ,","Error");
 				else{
 						infoBox("Review sent to be checked","Review Sent");
 						try {
