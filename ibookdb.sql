@@ -1,6 +1,4 @@
-CREATE DATABASE  IF NOT EXISTS `ibookdb` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `ibookdb`;
--- MySQL dump 10.13  Distrib 5.6.17, for Win32 (x86)
+-- MySQL dump 10.13  Distrib 5.7.16, for Win64 (x86_64)
 --
 -- Host: localhost    Database: ibookdb
 -- ------------------------------------------------------
@@ -208,7 +206,7 @@ CREATE TABLE `interestedreader` (
 
 LOCK TABLES `interestedreader` WRITE;
 /*!40000 ALTER TABLE `interestedreader` DISABLE KEYS */;
-INSERT INTO `interestedreader` VALUES (15,'moshe','galamin','mosheg'),(22222,'Nimrod','Mendel','nimrod'),(32156,'felix','cat','elir');
+INSERT INTO `interestedreader` VALUES (22222,'Nimrod','Mendel','nimrod'),(68686,'moshe','galamin','mosheg'),(78978,'meni','mushonov','mushon');
 /*!40000 ALTER TABLE `interestedreader` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -258,7 +256,7 @@ CREATE TABLE `periodicreader` (
 
 LOCK TABLES `periodicreader` WRITE;
 /*!40000 ALTER TABLE `periodicreader` DISABLE KEYS */;
-INSERT INTO `periodicreader` VALUES (13,'yearly','2020-11-15');
+INSERT INTO `periodicreader` VALUES (11111,'yearly','2020-11-15'),(11225,'monthly','2017-08-25'),(44445,'monthly','2017-06-26'),(55145,'yearly','2020-01-25');
 /*!40000 ALTER TABLE `periodicreader` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -313,7 +311,7 @@ CREATE TABLE `reader` (
 
 LOCK TABLES `reader` WRITE;
 /*!40000 ALTER TABLE `reader` DISABLE KEYS */;
-INSERT INTO `reader` VALUES (13,'4545',350,'periodic','zachi','meyer','zachi'),(14,'2332',350,'onebyone','malki','grosman','malki'),(15,'5555',0,'periodic','moshe','galamin','mosheg');
+INSERT INTO `reader` VALUES (11111,'11111111',350,'periodic','zachi','meyer','zachi'),(11225,'12321234',0,'periodic','luach','trempim','lutrmp'),(11235,'12221545',0,'onebyone','Winnie','Pooh','winpo'),(44445,'44512457',0,'periodic','Shimon','Shimon','theking'),(55145,'55455454',0,'periodic','Yona','Yahav','yohav'),(64645,'64645645',350,'onebyone','malki','grosman','malki'),(78456,'12354123',0,'onebyone','James','Bond','jbond'),(78978,'11122233',0,'onebyone','meni','mushonov','mushon'),(85285,'54658452',0,'onebyone','Pika','Chu','Pikachu'),(87468,'11245123',0,'onebyone','Trump','Donald','Mcdonald');
 /*!40000 ALTER TABLE `reader` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +339,7 @@ CREATE TABLE `readerorder` (
 
 LOCK TABLES `readerorder` WRITE;
 /*!40000 ALTER TABLE `readerorder` DISABLE KEYS */;
-INSERT INTO `readerorder` VALUES (13,37,'2017-01-19 00:00:00'),(14,39,'2017-01-01 18:00:00');
+INSERT INTO `readerorder` VALUES (11111,37,'2017-01-19 00:00:00'),(64645,39,'2017-01-01 18:00:00');
 /*!40000 ALTER TABLE `readerorder` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -373,7 +371,7 @@ CREATE TABLE `reviews` (
 
 LOCK TABLES `reviews` WRITE;
 /*!40000 ALTER TABLE `reviews` DISABLE KEYS */;
-INSERT INTO `reviews` VALUES (1,37,'Suck','zachi',0,'This book is suck'),(2,37,'Bad ','malki',0,'I don\'t like this book at all he killed John Lennon and the author is a murderer'),(3,39,'Great ','zachi',1,'I don\'t like this book at all he killed John Lennon and the author is a murderer'),(4,39,'O.K.','malki',1,'This Book is O.K and not more then that');
+INSERT INTO `reviews` VALUES (1,37,'Suck','zachi',0,'This book is suck'),(2,37,'Bad ','malki',0,'I dont like this book at all because he killed John Lennon and the author is a murderer '),(3,39,'Great ','zachi',1,'I dont like this book at all he killed John Lennon and the author is a murderer'),(4,39,'O.K.','malki',1,'This Book is O.K and not more then that');
 /*!40000 ALTER TABLE `reviews` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -473,7 +471,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES ('Avi','12345',3,'1',0),('elir','*****',1,'1',0),('eliran','98765',4,'1',0),('guy','12345',6,'1',0),('malki','12345',2,'0',0),('mosheg','55555',1,'1',0),('nimrod','12345',1,'1',0),('zachi','98765',2,'1',0);
+INSERT INTO `user` VALUES ('Avi','12345',3,'1',0),('eliran','98765',4,'1',0),('guy','12345',6,'1',0),('jbond','45123',2,'1',0),('lutrmp','12345',2,'1',0),('malki','12345',2,'0',0),('Mcdonald','12345',2,'1',0),('mosheg','12345',2,'1',0),('mushon','12345',2,'1',0),('nimrod','12345',1,'1',0),('Pikachu','12345',2,'1',0),('theking','12345',2,'1',0),('winpo','12345',2,'1',0),('yohav','98765',2,'1',0),('zachi','98765',2,'1',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -486,4 +484,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2017-01-24 15:54:34
+-- Dump completed on 2017-01-26 20:46:08
