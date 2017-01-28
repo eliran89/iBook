@@ -66,7 +66,9 @@ public class userController {
 		loginController.mainG.setContentPane(panel);
 		loginController.mainG.revalidate();	
 	}
-		public static void userSuspendSearch() {
+	
+	/**   Method for searching suspend users by Manager**/
+	public static void userSuspendSearch() {
 	
 			UserSearchGUI panel= new UserSearchGUI(loginController.use.getUsername(),"Manager");
 			panel.searchForSuspendUser();
@@ -211,7 +213,10 @@ public class userController {
 		
 	}
 			
-	
+	/** Method for searching users with columns of status (suspend/unsuspend users)
+	 * @param item
+	 * @param search the user choose to search by username or userId 
+	 *  **/
 	public static void UserSearchForSuspends(String item , String search){
 		UserSearchGUI panel;
 		ArrayList <String> info = null;
@@ -256,7 +261,10 @@ public class userController {
 									
 		
 	}
-	
+	/** Method for suspending/unsuspending users
+	 * @param uName user name
+	 * @param status 0 for suspend and 1 for unsuspended 
+	 * **/
 	public static void changeStatus(String uName , String status){
 		ArrayList <String> info = null;
 		ArrayList <String> statusChange = null;
@@ -282,10 +290,10 @@ public class userController {
 		
 		
 	}
-	/**
+	/**Method for display user's review
 	 * 
-	 * @param bName
-	 * @param uName
+	 * @param bName- book name
+	 * @param uName - user name
 	 */
 	public static void displayUser(String bName, String uName) {
 		ArrayList <String> info = null;
@@ -436,7 +444,7 @@ public class userController {
 
 	/**
 	 * Edit user by user name and id: enables to update user's first name, last name and password
-	 * @param id
+	 * @param id identical number
 	 * @param fname first name
 	 * @param lname last name
 	 * @param uname user name
@@ -720,35 +728,7 @@ public class userController {
 		}
 	}
 
-	public void checkOrderDetails() {
-		// TODO - implement userController.checkOrderDetails
-		throw new UnsupportedOperationException();
-	}
-
-	public void makeTheOrder() {
-		// TODO - implement userController.makeTheOrder
-		throw new UnsupportedOperationException();
-	}
-
-	public void extendSubscription() {
-		// TODO - implement userController.extendSubscription
-		throw new UnsupportedOperationException();
-	}
-
-	public void changePrivilege() {
-		// TODO - implement userController.changePrivilege
-		throw new UnsupportedOperationException();
-	}
-
-	public void insertToDB() {
-		// TODO - implement userController.insertToDB
-		throw new UnsupportedOperationException();
-	}
-
-	public void legalDate() {
-		// TODO - implement userController.legalDate
-		throw new UnsupportedOperationException();
-	}
+	
 	/**
 	 * showReportsMain - open the main reports panel
 	 */

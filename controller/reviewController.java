@@ -244,7 +244,10 @@ public class reviewController {
 			loginController.mainG.revalidate();
 	}
 	
-	/** Display Mail Reviews in Mailbox**/
+	/** Display Mail Reviews in Mailbox
+	 * @param bTitle book title
+	 * @param uName user name of the reviewer
+	 * **/
 	
 	public static void displayMailReview(String bTitle, String uName) {
 		ArrayList <String> info = null;
@@ -279,7 +282,10 @@ public class reviewController {
 		
 	}
 
-	/**  Approved reviews to visible=1   **/
+	/**  Approved reviews to visible=1   
+	 * @param bTitle book title 
+	 * @param uName user name of the reviewer
+	 * **/
 	public static void ApproveReview(String bTitle,String uName) {
 		ArrayList <String> info = null;
 		ArrayList <String> updateVis = null;
@@ -302,7 +308,10 @@ public class reviewController {
 
 	
 	}
-	/** removes review when the 'rejected button' pressed **/
+	/** removes review when the 'rejected button' pressed
+	 * @param bTitle book title 
+	 * @param uName user name of the reviewer
+	 *  **/
 
 	public static void removeReview(String bTitle,String uName) {
 		ArrayList <String> info = null;
@@ -325,7 +334,11 @@ public class reviewController {
 		
 	}
 	
-	/** Edits review after pressing "update" **/
+	/** Edits review after pressing "update" 
+	 * @param bTitle book title 
+	 * @param uName user name of the reviewer
+	 * @param text review's text 
+	  **/
 	public static void editReview(String bTitle,String uName,String text) {
 	
 		ArrayList <String> info = null;
