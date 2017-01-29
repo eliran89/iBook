@@ -224,6 +224,7 @@ public class userBookGUI extends mainPanel {
 	 */
 	public void displayResults()
 	{
+		JButton btnDisplayBook = new JButton("Display Book");
 		/**Create The Result Table
 		 * 
 		 */
@@ -252,6 +253,7 @@ public class userBookGUI extends mainPanel {
 				}
 				if(isCellSelected(data,column))
 				{
+					btnDisplayBook.setEnabled(true);
 					btnRemoveBook.setEnabled(true);
 					c.setBackground(Color.CYAN);
 					row = data;
@@ -282,7 +284,7 @@ public class userBookGUI extends mainPanel {
 		
 		
 		
-		JButton btnDisplayBook = new JButton("Display Book");
+		
 		btnDisplayBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
@@ -292,6 +294,7 @@ public class userBookGUI extends mainPanel {
 			}
 		});
 		btnDisplayBook.setBounds(394, 596, 129, 23);
+		btnDisplayBook.setEnabled(false);
 		add(btnDisplayBook);
 		
 		btnRemoveBook.addActionListener(new ActionListener() {

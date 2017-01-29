@@ -81,7 +81,14 @@ public class bookController {
 					DBController.insertToDB("INSERT INTO `ibookdb`.`keyword` (`word`) VALUES ('"+temp.get(i)+"');");
 		
 		info =DBController.getFromDB("select max(book.bookID) from book");
-		bNewID = Integer.parseInt(info.get(0))+1;
+		System.out.println(info);
+		try{
+			bNewID = Integer.parseInt(info.get(0))+1;
+		}catch(Exception e){
+			info =DBController.getFromDB("select max(book.bookID) from book");
+			bNewID = Integer.parseInt(info.get(0))+1;
+		}
+		
 		if(book.isSuspended())
 			DBController.insertToDB("INSERT INTO `ibookdb`.`book` (`bookID`, `Title`, `language`, `brief`, `appendix`, `numOfOrders`,  `cost`, `suspended`) VALUES ('"+bNewID+"', '"+book.getTitle()+"', '"+book.getLanguage()+"', '"+book.getBrief()+"', '"+book.getAppendix()+"', '0',  '"+book.getCost()+"', 1);");
 		else
@@ -92,7 +99,13 @@ public class bookController {
 			int aID;
 			int laID=0;
 			info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
-			aID = Integer.parseInt(info.get(0));
+			try{
+				aID = Integer.parseInt(info.get(0));
+			}catch(Exception e){
+				info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
+				aID = Integer.parseInt(info.get(0));
+			}
+			
 			if(aID == laID){
 				info = DBController.getFromDB("select author.authorID from author where author.authorName = '"+temp.get(i)+"'");
 				aID = Integer.parseInt(info.get(i));
