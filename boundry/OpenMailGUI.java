@@ -152,7 +152,7 @@ public class OpenMailGUI extends mainPanel {
 		
 	
 		/** Buttons privileges**/
-		if(loginController.use.getprivilege() == 3 || loginController.use.getprivilege() == 4 || loginController.use.getprivilege() == 5  ){					
+		if(loginController.use.getprivilege() > 2  ){					
 		
 			
 		/** Button for Approve **/
@@ -246,7 +246,7 @@ public class OpenMailGUI extends mainPanel {
 			JTextPane txtpnFds = new JTextPane();
 			
 			/** editable text privileges **/
-			if(loginController.use.getprivilege() == 3 || loginController.use.getprivilege() == 4 || loginController.use.getprivilege() == 5  ) 
+			if(loginController.use.getprivilege() > 2  ) 
 				txtpnFds.setEditable(true);
 			else txtpnFds.setEditable(false);
 			
