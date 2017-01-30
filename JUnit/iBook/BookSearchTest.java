@@ -84,7 +84,7 @@ public class BookSearchTest extends TestCase {
 		assertTrue(panelTest.data[0][2].equals("Harry Potter"));
 		
 	}
-	
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/*through controller*/
 	public void testEmptyFieldsController(){
@@ -128,10 +128,6 @@ public class BookSearchTest extends TestCase {
 		//filling many text Fields in order to get a specific result and check if we got it
 		panelTest = new userBookGUI("test", "test");
 		loginController.mainG = new MainWindowGUI(panelTest);
-		panelTest.textTitle.setText("Harry Potter");
-		panelTest.textAuthor.setText("J.K.Rowling");
-		panelTest.textLangu.setText("English");
-		panelTest.textScope.setText("Kids");
 		bookController.displayResults("", "Harry Potter", "English", "", "J.K.Rowling", "", "Kids");
 		
 		assertTrue(panelTest.data.length == 1);
