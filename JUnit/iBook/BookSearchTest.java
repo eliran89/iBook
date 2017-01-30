@@ -15,14 +15,16 @@ import entity.User;
 import junit.framework.TestCase;
 
 public class BookSearchTest extends TestCase {
-	String[] fields = new String[7];
 	String text;
 	userBookGUI panelTest;
 	DBController dbhandler;
 	ArrayList<String> allBooks;
 	boolean exists[];
 	ArrayList<String> info = null;
+	
+	
 	/*through GUI*/
+
 	protected void setUp() throws Exception {
 		dbhandler = new DBController("localhost",5555);
 		loginController.use = new User();
@@ -62,12 +64,15 @@ public class BookSearchTest extends TestCase {
 	public void testBookNotExists(){//search by a word that will not give an answer and check if the table data is empty
 		panelTest = new userBookGUI("test", "test");
 		panelTest.displaySearch();
+		panelTest.data = null;
 		text = new String("15023");
 		panelTest.textTitle.setText(text);
 		loginController.mainG = new MainWindowGUI(panelTest);
 		panelTest.btnSearch.doClick();
 		if(panelTest.data == null)
 			assertTrue(true);
+		else
+			assertFalse(true);
 	}
 	public void SearchByManyFields(){
 		//filling many text Fields in order to get a specific result and check if we got it
@@ -87,6 +92,7 @@ public class BookSearchTest extends TestCase {
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/*through controller*/
+	
 	public void testEmptyFieldsController(){
 		panelTest = new userBookGUI("test", "test");
 		loginController.mainG = new MainWindowGUI(panelTest);
@@ -119,9 +125,12 @@ public class BookSearchTest extends TestCase {
 		panelTest = new userBookGUI("test", "test");
 		loginController.mainG = new MainWindowGUI(panelTest);
 		text = new String("15023");
+		panelTest.data = null;
 		bookController.displayResults("", text, "", "", "", "", "");
 		if(panelTest.data == null)
 			assertTrue(true);
+		else
+			assertFalse(true);
 	}
 	
 	public void SearchByManyFieldsController(){
