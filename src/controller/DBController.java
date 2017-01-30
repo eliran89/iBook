@@ -91,7 +91,7 @@ public class DBController {
 			e.printStackTrace();
 		}
 
-		while(allowToProceed == false);	
+		while(allowToProceed == false);	 
 		if(rs != null)
 		{
 			int i = 0;
