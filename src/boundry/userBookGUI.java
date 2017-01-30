@@ -40,17 +40,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class userBookGUI extends mainPanel {
 	boolean bool =true;
-	private JTextField textTitle;
-	private JTextField textLangu;
-	private JTextField textKeyWord;
-	private JTextField textAuthor;
-	private JTextField textAppendix;
-	private JTextField textScope;
-	private JTextField textBrief;
+	public JTextField textTitle;
+	public JTextField textLangu;
+	public JTextField textKeyWord;
+	public JTextField textAuthor;
+	public JTextField textAppendix;
+	public JTextField textScope;
+	public JTextField textBrief;
+	public JButton btnSearch;
 	/**the headers for the book search table*/
 	private String[] columnHeader = {"Scope","Subject","Book Name","Book ID"};
 	/**the results of the book search table*/
-	public static String[][] data;
+	public static String[][] data = null;
 	/**a number of row that had been pressed in a table(-1 none pressed)*/
 	private static int row = -1;
 	
@@ -177,7 +178,7 @@ public class userBookGUI extends mainPanel {
 		textBrief.setBounds(248, 211, 124, 20);
 		add(textBrief);
 		
-		JButton btnSearch = new JButton("Search");
+		btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
