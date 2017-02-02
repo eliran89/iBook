@@ -11,6 +11,10 @@
 	<p>
 		Acceptance Tests&nbsp; - Add a new book</p>
 	<p>
+		Description: Adding a new book requires the following fields: book&nbsp;title, author, keyword, language, scope, subject, cost, brief, appendix</p>
+	<p>
+		and three formats for the new book: fb2, docx, pdf. Missfilling one of those fields during adding a book might finished with error.</p>
+	<p>
 		Test 2- book add: scope entered without subject</p>
 	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
 		<tbody>
