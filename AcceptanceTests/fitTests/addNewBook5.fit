@@ -11,7 +11,7 @@
 	<p>
 		Acceptance Tests&nbsp; - Add a new book</p>
 	<p>
-		Test 1- book add: Acceptance test for adding a new book in a right way</p>
+		Test 5- book add: cost is illegal (negative)</p>
 	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
 		<tbody>
 			<tr>
@@ -113,7 +113,7 @@
 					set subject</td>
 				<td>
 					<p>
-						Home animals</p>
+						Home Animals</p>
 				</td>
 			</tr>
 			<tr>
@@ -133,7 +133,7 @@
 					set cost</td>
 				<td>
 					<p>
-						35</p>
+						-35</p>
 				</td>
 			</tr>
 			<tr>
@@ -143,7 +143,7 @@
 					set brief</td>
 				<td>
 					<p>
-						this is a book for children talking about dogs</p>
+						this is a brief</p>
 				</td>
 			</tr>
 			<tr>
@@ -200,8 +200,7 @@
 				<td>
 					check add book</td>
 				<td>
-					true</td>
+					false</td>
 			</tr>
-
 		</tbody>
 	</table></body>

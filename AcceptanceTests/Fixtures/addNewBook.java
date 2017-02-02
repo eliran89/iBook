@@ -5,6 +5,8 @@ package Fixtures;
 
 import fit.ActionFixture;
 
+import java.io.File;
+
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -22,14 +24,10 @@ import entity.User;
 public class addNewBook extends ActionFixture {
 	private DBController dbhandler;
 	private workerBookGUI panelTest ;
-	/*public JTextField textFieldTitle;
-	public JTextField textFieldAuthor;
-	public JTextField textFieldLangu;
-	public JTextPane textFieldBrief;
-	public JTextField textFieldScope;
-	public JTextField textFieldKey;
-	public JTextPane textFieldAppen;
-	public JTextField textFieldCost;*/
+	private String title;
+	private int maxBidBefore;
+	private int maxBidAfter;
+	
 	public void startAddBook() {
 		dbhandler = new DBController("localhost",5555);
 		loginController.use = new User();
@@ -38,55 +36,50 @@ public class addNewBook extends ActionFixture {
 		panelTest = new workerBookGUI("test", "test");
 		panelTest.addBook();
 		loginController.mainG = new MainWindowGUI(panelTest);
+		maxBidBefore = Integer.parseInt(DBController.getFromDB("select max(book.bookID) from book").get(0));
 		
 	}
 	
 	public void addAuthor() {
 		panelTest.btnAddAuthor.doClick();
 	}
-  
     
 	public void addBook() {
 		panelTest.btnNewButton.doClick();
 	}
   
-    
 	public void addKeyword() {
 		panelTest.btnAddKeyword.doClick();
 	}
   
-    
 	public void addScope() {
 		panelTest.btnAddScope.doClick();
 	}
     
 	public void setAppendix(String setAppendix) {
-		panelTest.textAppendix.setText(setAppendix);
+		panelTest.textFieldAppen.setText(setAppendix);
 	}
   
-    
 	public void setAuther(String setAuther) {
 		panelTest.textFieldAuthor.setText(setAuther);
 	}
   
-    
 	public void setBrief(String setBrief) {
 		panelTest.textFieldBrief.setText(setBrief);
 	}
   
-    
 	public void setCost(String setCost) {
 		panelTest.textFieldCost.setText(setCost);
 	}
   
-    
 	public void setDocx(String setDocx) {
+		panelTest.fDocx = new File(setDocx);
 		panelTest.textFieldDocx.setText(setDocx);
 	}
   
-    
 	public void setFb2(String setFb2) {
 		panelTest.textFieldFb.setText(setFb2);
+		panelTest.fFb2 = new File(setFb2);
 	}
   
     
@@ -94,17 +87,15 @@ public class addNewBook extends ActionFixture {
 		panelTest.textFieldKey.setText(setKeyword);
 	}
   
-    
 	public void setLanguage(String setLanguage) {
 		panelTest.textFieldLangu.setText(setLanguage);
 	}
   
-    
 	public void setPdf(String setPdf) {
+		panelTest.fPdf = new File(setPdf);
 		panelTest.textFieldPdf.setText(setPdf);
 	}
   
-    
 	public void setScope(String setScope) {
 		panelTest.textFieldScope.setText(setScope);
 	}
@@ -113,9 +104,23 @@ public class addNewBook extends ActionFixture {
 		panelTest.textFieldSubject.setText(setSubject);
 	}
   
-    
 	public void setTitle(String setTitle) {
+		title = setTitle;
 		panelTest.textFieldTitle.setText(setTitle);
+	}
+	
+
+	public boolean checkAddBook() {
+		maxBidAfter = Integer.parseInt(DBController.getFromDB("select max(book.bookID) from book").get(0));
+		if(maxBidBefore == maxBidAfter)
+			return false;
+		else
+		{
+			String maxTitle = DBController.getFromDB("select book.Title from book where book.bookID = "+maxBidAfter+"").get(0);
+			if(maxTitle.equals(title))
+				return true;
+		}
+		return false;
 	}
   
 

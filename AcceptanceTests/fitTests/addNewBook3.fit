@@ -11,7 +11,7 @@
 	<p>
 		Acceptance Tests&nbsp; - Add a new book</p>
 	<p>
-		Test 1- book add: Acceptance test for adding a new book in a right way</p>
+		Test 3- book add: cost contains chars</p>
 	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
 		<tbody>
 			<tr>
@@ -44,7 +44,7 @@
 				<td>
 					set title</td>
 				<td>
-					Dogs Dalmatians</td>
+					Cats Dalmatians</td>
 			</tr>
 			<tr>
 				<td>
@@ -53,7 +53,7 @@
 					set auther</td>
 				<td>
 					<p>
-						HB rose</p>
+						HB flower</p>
 				</td>
 			</tr>
 			<tr>
@@ -73,7 +73,7 @@
 					set keyword</td>
 				<td>
 					<p>
-						dogs</p>
+						cats</p>
 				</td>
 			</tr>
 			<tr>
@@ -133,7 +133,7 @@
 					set cost</td>
 				<td>
 					<p>
-						35</p>
+						3f5</p>
 				</td>
 			</tr>
 			<tr>
@@ -143,7 +143,7 @@
 					set brief</td>
 				<td>
 					<p>
-						this is a book for children talking about dogs</p>
+						this is a book for children talking about cats</p>
 				</td>
 			</tr>
 			<tr>
@@ -200,8 +200,7 @@
 				<td>
 					check add book</td>
 				<td>
-					true</td>
+					false</td>
 			</tr>
-
 		</tbody>
 	</table></body>
