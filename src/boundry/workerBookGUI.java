@@ -34,14 +34,14 @@ import javax.swing.JCheckBox;
  *
  */
 public class workerBookGUI extends userBookGUI {
-	private JTextField textFieldTitle;
-	private JTextField textFieldAuthor;
-	private JTextField textFieldLangu;
-	private JTextPane textFieldBrief;
-	private JTextField textFieldScope;
-	private JTextField textFieldKey;
-	private JTextPane textFieldAppen;
-	private JTextField textFieldCost;
+	public JTextField textFieldTitle;
+	public JTextField textFieldAuthor;
+	public JTextField textFieldLangu;
+	public JTextPane textFieldBrief;
+	public JTextField textFieldScope;
+	public JTextField textFieldKey;
+	public JTextPane textFieldAppen;
+	public JTextField textFieldCost;
 	/**a list that gathers all the authors the worker inserting */
 	ArrayList<String> authors;
 	/**a list that gathers all the keywords the worker inserting */
@@ -52,21 +52,26 @@ public class workerBookGUI extends userBookGUI {
 	ArrayList<String> subjects;
 	/**an entity that contains the book details*/
 	Book book;
-	private JTextField textFieldSubject;
-	private JTextField textFieldAuthorEdit;
-	private JTextField textFieldCostEdit;
-	private JTextField textFieldLanguEdit;
-	private JTextField textFieldScopeEdit;
-	private JTextField textFieldSubjectEdit;
-	private JTextField textFieldKeyEdit;
+	public JTextField textFieldSubject;
+	public JTextField textFieldAuthorEdit;
+	public JTextField textFieldCostEdit;
+	public JTextField textFieldLanguEdit;
+	public JTextField textFieldScopeEdit;
+	public JTextField textFieldSubjectEdit;
+	public JTextField textFieldKeyEdit;
 	private JComboBox comboBoxAuthor;
-	private JTextField textField;
-	private JTextField textFieldPdf;
-	private JTextField textFieldDocx;
-	private JTextField textFieldFb;
-	File fPdf ;
-	File fDocx ;
-	File fFb2 ;
+	public JTextField textField;
+	public JTextField textFieldPdf;
+	public JTextField textFieldDocx;
+	public JTextField textFieldFb;
+	public File fPdf ;
+	public File fDocx ;
+	public File fFb2 ;
+	
+	public JButton btnAddAuthor;
+	public JButton btnAddScope;
+	public JButton btnAddKeyword;
+	public JButton btnNewButton;
 	/**
 	 * this is the constructor for this class
 	 * is basic appearance is similar to the userBookGUI class witch it extends
@@ -119,7 +124,7 @@ public class workerBookGUI extends userBookGUI {
 		lblBrife.setBounds(148, 303, 62, 29);
 		add(lblBrife);
 		
-		JButton btnAddAuthor = new JButton("Add Author");
+		btnAddAuthor = new JButton("Add Author");
 		btnAddAuthor.setBounds(395, 179, 103, 23);
 		btnAddAuthor.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -181,7 +186,7 @@ public class workerBookGUI extends userBookGUI {
 		textFieldSubject.setBounds(626, 219, 148, 20);
 		add(textFieldSubject);
 		
-		JButton btnAddScope = new JButton("Add Scope");
+		btnAddScope = new JButton("Add Scope");
 		btnAddScope.setBounds(809, 179, 120, 23);
 		btnAddScope.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -241,7 +246,7 @@ public class workerBookGUI extends userBookGUI {
 		textFieldKey.setBounds(220, 240, 148, 20);
 		add(textFieldKey);
 		
-		JButton btnAddKeyword = new JButton("Add Keyword");
+		btnAddKeyword = new JButton("Add Keyword");
 		btnAddKeyword.setBounds(395, 239, 120, 23);
 		btnAddKeyword.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -346,7 +351,7 @@ public class workerBookGUI extends userBookGUI {
 		btnChooseFb2.setBounds(121, 482, 108, 20);
 		add(btnChooseFb2);
 		
-		JButton btnNewButton = new JButton("Add Book");
+		btnNewButton = new JButton("Add Book");
 		btnNewButton.setBounds(476, 535, 120, 42);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
