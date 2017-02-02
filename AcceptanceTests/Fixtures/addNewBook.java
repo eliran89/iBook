@@ -59,7 +59,6 @@ public class addNewBook extends ActionFixture {
 	public void addScope() {
 		panelTest.btnAddScope.doClick();
 	}
-  
     
 	public void setAppendix(String setAppendix) {
 		panelTest.textAppendix.setText(setAppendix);
