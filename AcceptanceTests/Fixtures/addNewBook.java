@@ -87,6 +87,7 @@ public class addNewBook extends ActionFixture {
 		panelTest.textFieldKey.setText(setKeyword);
 	}
   
+	
 	public void setLanguage(String setLanguage) {
 		panelTest.textFieldLangu.setText(setLanguage);
 	}
