@@ -33,13 +33,15 @@ public class orderListGUI extends mainPanel {
 	/**a String[][] that contains the results table's data*/
 	public static String[][] data;
 	/**an integer that indicates the number of the selected row(-1) if not selected*/
-	private static int row = -1;
+	public static int row = -1;
 	public static int n = 0;	
 	/**the headers of the orders list table*/
 	private static String[] columnHeader = {"Book ID","Book Name","Date"};
 	private JTable ordersTable;
-	private JTextField textFieldReview;
-	private JTextField textFieldTitle;
+	public JTextPane textPaneReview;
+	public JTextField textFieldTitle;
+	public JButton btnReviewBook;
+	public JButton btnSend;
 	
 	
 	/**
@@ -148,7 +150,7 @@ public class orderListGUI extends mainPanel {
 	public void makeReview() {
 		row =-1;
 		/** Button for writing review**/
-		JButton btnReviewBook = new JButton("Review Book");
+		btnReviewBook = new JButton("Review Book");
 		btnReviewBook.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(row != -1){
@@ -198,7 +200,7 @@ public class orderListGUI extends mainPanel {
 		label.setBounds(360, 98, 200, 30);
 		add(label);
 		
-		JTextPane textPaneReview = new JTextPane();
+		textPaneReview = new JTextPane();
 		textPaneReview.setBounds(290, 260, 372, 199);
 		textPaneReview.setBackground(Color.LIGHT_GRAY);
 		textPaneReview.setForeground(Color.BLACK);
@@ -223,7 +225,7 @@ public class orderListGUI extends mainPanel {
 	
 		
 		/**Need To Complete*/
-		JButton btnSend = new JButton("Send The Review");
+		btnSend = new JButton("Send The Review");
 		btnSend.setBounds(575, 480, 200, 31);
 		btnSend.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

@@ -159,30 +159,7 @@ public class reviewGUI extends mainPanel {
 			JScrollPane pane = new JScrollPane(table);
 			pane.setBounds(79, 230, 687, 325);
 			add(pane);
-			
-			/**/
-			/*JLabel lblBookName = DefaultComponentFactory.getInstance().createTitle("Book Name");
-			lblBookName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-			lblBookName.setForeground(Color.BLACK);
-			lblBookName.setHorizontalAlignment(SwingConstants.CENTER);
-			lblBookName.setBounds(79, 193, 216, 39);
-			add(lblBookName);
-			
-			/**/
-			/*JLabel lblReviewName = DefaultComponentFactory.getInstance().createLabel("Review Name");
-			lblReviewName.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-			lblReviewName.setHorizontalAlignment(SwingConstants.CENTER);
-			lblReviewName.setForeground(Color.BLACK);
-			lblReviewName.setBounds(329, 196, 186, 32);
-			add(lblReviewName);
-			
-			
-			JLabel lblReviewer = DefaultComponentFactory.getInstance().createLabel("Reviewer");
-			lblReviewer.setFont(new Font("Tahoma", Font.BOLD | Font.ITALIC, 18));
-			lblReviewer.setHorizontalAlignment(SwingConstants.CENTER);
-			lblReviewer.setForeground(Color.BLACK);
-			lblReviewer.setBounds(577, 198, 179, 29);
-			add(lblReviewer);*/
+		
 			
 			JButton btnDisplayReview = new JButton("Display Review");
 			btnDisplayReview.setBounds(374, 596, 131, 23);
@@ -199,7 +176,7 @@ public class reviewGUI extends mainPanel {
 				}
 			});
 			
-			//scrollBar.addAdjustmentListener(l);
+			
 		}
 		/**
 		 * noResults display a labal "<No Results>"
