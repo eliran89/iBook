@@ -16,7 +16,7 @@
 		&nbsp;</p>
 	<p>
 		Test 1- write review: missing title</p>
-	<table border="1" cellpadding="1" cellspacing="1" style="width: 250px;">
+	<table border="1" cellpadding="1" cellspacing="2" style="width: 496px; height: 308px;">
 		<tbody>
 			<tr>
 				<td>
@@ -57,7 +57,7 @@
 					set text</td>
 				<td>
 					<p>
-						good book</p>
+						very good book</p>
 				</td>
 			</tr>
 			<tr>
@@ -80,6 +80,9 @@
 						true</p>
 				</td>
 			</tr>
-			
 		</tbody>
-	</table></body>
+	</table>
+	<p>
+		&nbsp;</p>
+	<div id="cke_pastebin">
+		&nbsp;</div></body>

@@ -25,7 +25,9 @@ public class writeReview extends ActionFixture {
 	private DBController dbhandler;
 	private orderListGUI panelTest ;
 	private String title;
-
+	private int maxReviewBefore;
+	private int maxReviewAfter;
+	
 
 	/**
 	 * method creates a new connection to DB, log in as a reader and visualize test environment for writing a review
@@ -38,7 +40,8 @@ public class writeReview extends ActionFixture {
 		panelTest = new orderListGUI("test", "test");
 		panelTest.makeReview();
 		loginController.mainG = new MainWindowGUI(panelTest);
-	//	maxBidBefore = Integer.parseInt(DBController.getFromDB("select max(book.bookID) from book").get(0));
+		maxReviewBefore= Integer.parseInt(DBController.getFromDB("select max(review.reviewid) from reviews").get(0));
+		
 	}
 	
 	/**
@@ -61,6 +64,7 @@ public class writeReview extends ActionFixture {
 	
 	/** method for writing Review Title */
 	public void setReviewTitleField(String setReviewTitle) {
+		title= setReviewTitle;
 		panelTest.textFieldTitle.setText(setReviewTitle);
 	}
 	
@@ -81,7 +85,24 @@ public class writeReview extends ActionFixture {
 		else return false;
 			
 	}
-	
+	/** 
+	 * checks if the review was sent
+	 * @return true if review was sent successfully
+	 * */
+	public boolean checkSendReview() {
+		maxReviewAfter = Integer.parseInt(DBController.getFromDB("select max(review.reviewid) from reviews where reviews.visible = 0 ").get(0));
+		if(maxReviewBefore == maxReviewAfter)
+			return false;
+		else
+		{
+			String maxTitle = DBController.getFromDB("select review.title from review where review.reviewid = "+maxReviewAfter+"").get(0);
+			if(maxTitle.equals(title))
+				return true;
+		}
+		return false;
+		
+		
+	}
 	
 	
 	

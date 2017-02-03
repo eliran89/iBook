@@ -133,7 +133,7 @@ public class addNewBook extends ActionFixture {
 	 * checks whether adding a new book succeeded
 	 * @return true if a new book added: new book ID added and book's title is the new title added
 	 */
-	public boolean checkReview() {
+	public boolean checkAddBook() {
 		maxBidAfter = Integer.parseInt(DBController.getFromDB("select max(book.bookID) from book").get(0));
 		if(maxBidBefore == maxBidAfter)
 			return false;
