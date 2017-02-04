@@ -64,7 +64,7 @@ public  class IBookServer extends AbstractServer
    */
   public synchronized void handleMessageFromClient
   (Object msg, ConnectionToClient client)
-  {
+  { 
 	  String   query = null;
 	  if(msg instanceof String)
 		  query = msg.toString();
@@ -93,7 +93,7 @@ public  class IBookServer extends AbstractServer
 			f = new File("C:/files/"+id+".docx");
 			output = new FileOutputStream(f);
 			try {
-				buffers = files.get(0);
+				buffers = files.get(1);
 				for(int i = 0;i < buffers.length;i++)
 					output.write(buffers[i]);
 			output.close();
@@ -104,7 +104,7 @@ public  class IBookServer extends AbstractServer
 			f = new File("C:/files/"+id+".fb2");
 			output = new FileOutputStream(f);
 			try {
-				buffers = files.get(0);
+				buffers = files.get(2);
 				for(int i = 0;i < buffers.length;i++)
 					output.write(buffers[i]);
 				output.close();
