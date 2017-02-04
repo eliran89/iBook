@@ -4,27 +4,19 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="AcceptanceTests"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/forms-1.0.3.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/miglayout15-swing.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/mysql-connector-java-3.1.11-bin.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/hamcrest-core-1.3.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/jcommon-1.0.23.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/jfreechart-1.0.19.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/jfreechart-1.0.19-experimental.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/jfreechart-1.0.19-swt.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/jfreesvg-2.0.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/junit-4.11.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/orsoncharts-1.4-eval-nofx.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/orsonpdf-1.6-eval.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/servlet.jar"/>
-	<classpathentry kind="lib" path="C:/CodeRepository/iBook/chart jars/swtgraphics2d.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/commons-lang-2.3.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/fit.extensions.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/fitlibraryRunner.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/jdom.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/jericho-html-2.4.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/poi-3.0.1-FINAL-20070705.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/velocity-1.4.jar"/>
-	<classpathentry kind="lib" path="C:/eclipse/plugins/com.luxoft.eclipse.fit.runner_1.2.7.201108252030/lib/velocity-dep-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/forms-1.0.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/miglayout15-swing.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/mysql-connector-java-3.1.11-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/jfreechart-1.0.19-experimental.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/jfreechart-1.0.19-swt.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/jfreesvg-2.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/orsoncharts-1.4-eval-nofx.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/orsonpdf-1.6-eval.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/servlet.jar"/>
+	<classpathentry kind="lib" path="C:/Users/nimro/OneDrive/Assignments/Assignment 3/JARs/chart jars/swtgraphics2d.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
