@@ -48,12 +48,13 @@ public class userBookGUI extends mainPanel {
 	public JTextField textScope;
 	public JTextField textBrief;
 	public JButton btnSearch;
+	public JButton btnRemoveBook;
 	/**the headers for the book search table*/
 	private String[] columnHeader = {"Scope","Subject","Book Name","Book ID"};
 	/**the results of the book search table*/
 	public static String[][] data = null;
 	/**a number of row that had been pressed in a table(-1 none pressed)*/
-	private static int row = -1;
+	public static int row = -1;
 	
 	private JTextField TFLang;
 	private JTable tableScopes;
@@ -229,7 +230,7 @@ public class userBookGUI extends mainPanel {
 		/**Create The Result Table
 		 * 
 		 */
-		JButton btnRemoveBook = new JButton("Remove Book");
+		btnRemoveBook = new JButton("Remove Book");
 		/**the book search table*/
 		JTable table = new JTable(data,columnHeader)
 		{

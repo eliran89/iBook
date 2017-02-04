@@ -1,4 +1,26 @@
-<html>
+<html><head><title>Suite addNewBook6.fit run at: Thu Feb 02 21:35:02 IST 2017</title>
+	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="screen"/>
+ 	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="print"/>
+<script language="JavaScript" type="text/javascript">
+var collapsableOpenCss = "collapsable"
+var collapsableClosedCss = "hidden"
+var collapsableOpenImg = "images/collapsableOpen.gif"
+var collapsableClosedImg = "images/collapsableClosed.gif"
+function toggleCollapsable(id){
+var div = document.getElementById(id);
+var img = document.getElementById("img" + id);
+if(div.className.indexOf(collapsableClosedCss) != -1) {
+div.className = collapsableOpenCss;
+img.src = collapsableOpenImg;
+} else {
+div.className = collapsableClosedCss;
+img.src = collapsableClosedImg;
+} }
+</script>
+
+</head>
+<body>
+<div> Suite is: C:/Zachi Workspace/iBook/AcceptanceTests/fitTests/addNewBook6.fit</div><div class="test_output_name">Name: addNewBook6.fit</div><div> Suite executed at: Thu Feb 02 21:35:02 IST 2017 Elapsed time: 1 seconds 601 millseconds  </div><table><tr><td></td><td><a href="#3408cdee:15a0052aa88:-8000">addNewBook6.fit</a></td><td class="pass">1 right, 0 wrong, 0 ignored, 0 exceptions</td></tr></table><div class="test_output_name"><a name="3408cdee:15a0052aa88:-8000"/><p>Test file: addNewBook6.fit</p></div><html>
 	<head>
 		<meta content="MSHTML 11.00.10570.1001" name="GENERATOR" />
 	</head>
@@ -15,7 +37,7 @@
 	<p>
 		and three formats for the new book: fb2, docx, pdf. Missfilling one of those fields during adding a book might finished with error.</p>
 	<p>
-		Test 4- book add: brief is null</p>
+		Test 6- book add: pdf file does not exist</p>
 	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
 		<tbody>
 			<tr>
@@ -117,7 +139,7 @@
 					set subject</td>
 				<td>
 					<p>
-						Home animals</p>
+						Home Animals</p>
 				</td>
 			</tr>
 			<tr>
@@ -147,7 +169,7 @@
 					set brief</td>
 				<td>
 					<p>
-						&nbsp;</p>
+						this is a brief about the brief</p>
 				</td>
 			</tr>
 			<tr>
@@ -187,7 +209,7 @@
 					set pdf</td>
 				<td>
 					<p>
-						C:\Users\Eliran\Desktop\Dogs.pdf</p>
+						&nbsp;</p>
 				</td>
 			</tr>
 			<tr>
@@ -203,8 +225,10 @@
 					check</td>
 				<td>
 					check add book</td>
-				<td>
+				<td class="pass">
 					false</td>
 			</tr>
 		</tbody>
 	</table></body>
+
+</body></html>
