@@ -15,7 +15,7 @@
 	<p>
 		and three formats for the new book: fb2, docx, pdf. Missfilling one of those fields during adding a book might finished with error.</p>
 	<p>
-		Test 1- book add: Acceptance test for adding a new book in a right way</p>
+		Test 2- book add: scope entered without subject</p>
 	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
 		<tbody>
 			<tr>
@@ -48,16 +48,16 @@
 				<td>
 					set title</td>
 				<td>
-					Dogs Dalmatians</td>
+					Cats Dalmatians</td>
 			</tr>
 			<tr>
 				<td>
 					enter</td>
 				<td>
-					set auther</td>
+					set author</td>
 				<td>
 					<p>
-						HB rose</p>
+						HB flower</p>
 				</td>
 			</tr>
 			<tr>
@@ -77,7 +77,7 @@
 					set keyword</td>
 				<td>
 					<p>
-						dogs</p>
+						cats</p>
 				</td>
 			</tr>
 			<tr>
@@ -117,7 +117,7 @@
 					set subject</td>
 				<td>
 					<p>
-						Home animals</p>
+						&nbsp;</p>
 				</td>
 			</tr>
 			<tr>
@@ -147,7 +147,7 @@
 					set brief</td>
 				<td>
 					<p>
-						this is a book for children talking about dogs</p>
+						this is a book for children talking about cats</p>
 				</td>
 			</tr>
 			<tr>
@@ -204,7 +204,7 @@
 				<td>
 					check add book</td>
 				<td>
-					true</td>
+					false</td>
 			</tr>
 		</tbody>
 	</table></body>

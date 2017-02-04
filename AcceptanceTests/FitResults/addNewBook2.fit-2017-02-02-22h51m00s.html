@@ -1,0 +1,271 @@
+<html><head><title>Suite addNewBook2.fit run at: Thu Feb 02 22:51:03 IST 2017</title>
+	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="screen"/>
+ 	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="print"/>
+<script language="JavaScript" type="text/javascript">
+var collapsableOpenCss = "collapsable"
+var collapsableClosedCss = "hidden"
+var collapsableOpenImg = "images/collapsableOpen.gif"
+var collapsableClosedImg = "images/collapsableClosed.gif"
+function toggleCollapsable(id){
+var div = document.getElementById(id);
+var img = document.getElementById("img" + id);
+if(div.className.indexOf(collapsableClosedCss) != -1) {
+div.className = collapsableOpenCss;
+img.src = collapsableOpenImg;
+} else {
+div.className = collapsableClosedCss;
+img.src = collapsableClosedImg;
+} }
+</script>
+
+</head>
+<body>
+<div> Suite is: C:/Zachi Workspace/iBook/AcceptanceTests/fitTests/addNewBook2.fit</div><div class="test_output_name">Name: addNewBook2.fit</div><div> Suite executed at: Thu Feb 02 22:51:03 IST 2017 Elapsed time: 2 seconds 996 millseconds  </div><table><tr><td></td><td><a href="#295f75cf:15a009843f1:-8000">addNewBook2.fit</a></td><td class="error">0 right, 0 wrong, 0 ignored, 2 exceptions</td></tr></table><div class="test_output_name"><a name="295f75cf:15a009843f1:-8000"/><p>Test file: addNewBook2.fit</p></div><html>
+	<head>
+		<meta content="MSHTML 11.00.10570.1001" name="GENERATOR" />
+	</head>
+	<body>
+	</body>
+</html>
+<title></title>
+<br type="_moz" />
+<body>
+	<p>
+		Acceptance Tests&nbsp; - Add a new book</p>
+	<p>
+		Description: Adding a new book requires the following fields: book&nbsp;title, author, keyword, language, scope, subject, cost, brief, appendix</p>
+	<p>
+		and three formats for the new book: fb2, docx, pdf. Missfilling one of those fields during adding a book might finished with error.</p>
+	<p>
+		Test 2- book add: scope entered without subject</p>
+	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
+		<tbody>
+			<tr>
+				<td>
+					fit.ActionFixture</td>
+				<td>
+					&nbsp;</td>
+				<td>
+					&nbsp;</td>
+			</tr>
+			<tr>
+				<td>
+					start</td>
+				<td>
+					Fixtures.addNewBook</td>
+				<td>
+					&nbsp;</td>
+			</tr>
+			<tr>
+				<td>
+					press</td>
+				<td>
+					start add book</td>
+				<td>
+					&nbsp;</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set title</td>
+				<td>
+					Cats Dalmatians</td>
+			</tr>
+			<tr>
+				<td class="error">
+					enter<hr><pre><div class="fit_stacktrace">java.lang.Error: Unresolved compilation problem: 
+	setAuthor cannot be resolved to a variable
+
+	at Fixtures.addNewBook.setAuthor(addNewBook.java:75)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at fit.ActionFixture.enter(Unknown Source)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at fit.ActionFixture.doCells(Unknown Source)
+	at fit.Fixture.doRow(Unknown Source)
+	at fit.Fixture.doRows(Unknown Source)
+	at fit.Fixture.doTable(Unknown Source)
+	at fit.Fixture.interpretTables(Unknown Source)
+	at fit.Fixture.doTables(Unknown Source)
+	at fitlibrary.suite.IndependentSuiteRunner.runEachStorytest(IndependentSuiteRunner.java:53)
+	at fitlibrary.suite.IndependentSuiteRunner.runFirstStorytest(IndependentSuiteRunner.java:28)
+	at fitlibrary.suite.BatchFitLibrary.doTables(BatchFitLibrary.java:39)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.doTables(FitLibraryFitProvider.java:168)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.generateParseResult(FitLibraryFitProvider.java:96)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.runSingleFITTest(FitLibraryFitProvider.java:78)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.runValidTestFile(FitLibraryFitProvider.java:58)
+	at com.luxoft.fitpro.adapters.fit.FitLibraryFitProvider.runFIT(FitLibraryFitProvider.java:39)
+	at com.luxoft.fitpro.core.testcase.SequentialRunnerStrategy.run(SequentialRunnerStrategy.java:18)
+	at com.luxoft.fitpro.core.tester.RunnerVisitor.runTest(RunnerVisitor.java:59)
+	at com.luxoft.fitpro.core.tester.RunnerVisitor.visit(RunnerVisitor.java:51)
+	at com.luxoft.fitpro.core.testcase.TestFile.accept(TestFile.java:51)
+	at com.luxoft.fitpro.runner.TestCaseRunner.run(TestCaseRunner.java:100)
+	at com.luxoft.fitpro.runner.TestCaseRunner.main(TestCaseRunner.java:55)
+</div></pre></td>
+				<td>
+					set author</td>
+				<td>
+					<p>
+						HB flower</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					press</td>
+				<td>
+					add author</td>
+				<td>
+					<p>
+						&nbsp;</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set keyword</td>
+				<td>
+					<p>
+						cats</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					press</td>
+				<td>
+					add keyword</td>
+				<td>
+					<p>
+						&nbsp;</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set language</td>
+				<td>
+					<p>
+						russian</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set scope</td>
+				<td>
+					<p>
+						Animals</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set subject</td>
+				<td>
+					<p>
+						&nbsp;</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					press</td>
+				<td>
+					add scope</td>
+				<td>
+					<p>
+						&nbsp;</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set cost</td>
+				<td>
+					<p>
+						35</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set brief</td>
+				<td>
+					<p>
+						this is a book for children talking about cats</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set appendix</td>
+				<td>
+					<p>
+						none</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set fb2</td>
+				<td>
+					<p>
+						C:\Users\Eliran\Desktop\Dogs.fb2</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set docx</td>
+				<td>
+					<p>
+						C:\Users\Eliran\Desktop\Dogs.docx</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					enter</td>
+				<td>
+					set pdf</td>
+				<td>
+					<p>
+						C:\Users\Eliran\Desktop\Dogs.pdf</p>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					press</td>
+				<td>
+					add book</td>
+				<td>
+					&nbsp;</td>
+			</tr>
+			<tr>
+				<td class="error">
+					check<hr/> <span class="fit_label">Could not find method: checkAddBook.</span></td>
+				<td>
+					check add book</td>
+				<td>
+					false</td>
+			</tr>
+		</tbody>
+	</table></body>
+
+</body></html>

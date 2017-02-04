@@ -5,6 +5,8 @@ package Fixtures;
 
 import fit.ActionFixture;
 
+import java.io.File;
+
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
@@ -16,20 +18,20 @@ import controller.bookController;
 import controller.loginController;
 import entity.User;
 
-/*
- * TODO: modify class to match the FIT test - edit and add methods as required.
+/**
+ * Class for adding a new book tests 
+ * @author Eliran & Guy
  */
 public class addNewBook extends ActionFixture {
 	private DBController dbhandler;
 	private workerBookGUI panelTest ;
-	/*public JTextField textFieldTitle;
-	public JTextField textFieldAuthor;
-	public JTextField textFieldLangu;
-	public JTextPane textFieldBrief;
-	public JTextField textFieldScope;
-	public JTextField textFieldKey;
-	public JTextPane textFieldAppen;
-	public JTextField textFieldCost;*/
+	private String title;
+	private int maxBidBefore;
+	private int maxBidAfter;
+	
+	/**
+	 * method creates a new connection to DB, log in as a manager and visualize test environment for adding a new book
+	 */
 	public void startAddBook() {
 		dbhandler = new DBController("localhost",5555);
 		loginController.use = new User();
@@ -38,73 +40,82 @@ public class addNewBook extends ActionFixture {
 		panelTest = new workerBookGUI("test", "test");
 		panelTest.addBook();
 		loginController.mainG = new MainWindowGUI(panelTest);
-		
+		maxBidBefore = Integer.parseInt(DBController.getFromDB("select max(book.bookID) from book").get(0));
 	}
-	
+	/**
+	 * method makes a click on AddAuthor button in order to add a new author of a book 
+	 */
 	public void addAuthor() {
 		panelTest.btnAddAuthor.doClick();
 	}
-  
-    
+    /**
+     * method makes a click on AddBook button in order to add book with all details entered
+     */
 	public void addBook() {
 		panelTest.btnNewButton.doClick();
 	}
-  
-    
+	/**
+	 * method makes a click on AddKeyword button in order to add book's keywords
+	 */
 	public void addKeyword() {
 		panelTest.btnAddKeyword.doClick();
 	}
-  
-    
+	/**
+	 * method makes a click on AddScope button in order to add book's subject and scope 
+	 */
 	public void addScope() {
 		panelTest.btnAddScope.doClick();
 	}
-    
+
 	public void setAppendix(String setAppendix) {
-		panelTest.textAppendix.setText(setAppendix);
+		panelTest.textFieldAppen.setText(setAppendix);
 	}
-  
-    
+
 	public void setAuther(String setAuther) {
 		panelTest.textFieldAuthor.setText(setAuther);
 	}
-  
-    
+
 	public void setBrief(String setBrief) {
 		panelTest.textFieldBrief.setText(setBrief);
 	}
-  
-    
+
 	public void setCost(String setCost) {
 		panelTest.textFieldCost.setText(setCost);
 	}
-  
-    
+	/**
+	 * method adding a book docx file from given directory 
+	 * @param setDocx is docx directory path
+	 */
 	public void setDocx(String setDocx) {
+		panelTest.fDocx = new File(setDocx);
 		panelTest.textFieldDocx.setText(setDocx);
 	}
-  
-    
+	/**
+	 * method adding a book fb2 file from given directory 
+	 * @param setFb2 is fb2 directory path
+	 */
 	public void setFb2(String setFb2) {
 		panelTest.textFieldFb.setText(setFb2);
+		panelTest.fFb2 = new File(setFb2);
 	}
-  
-    
+	
 	public void setKeyword(String setKeyword) {
 		panelTest.textFieldKey.setText(setKeyword);
 	}
   
-    
+	
 	public void setLanguage(String setLanguage) {
 		panelTest.textFieldLangu.setText(setLanguage);
 	}
-  
-    
+	/**
+	 * method adding a book pdf file from given directory 
+	 * @param setPdf is pdf directory path
+	 */
 	public void setPdf(String setPdf) {
+		panelTest.fPdf = new File(setPdf);
 		panelTest.textFieldPdf.setText(setPdf);
 	}
   
-    
 	public void setScope(String setScope) {
 		panelTest.textFieldScope.setText(setScope);
 	}
@@ -113,9 +124,26 @@ public class addNewBook extends ActionFixture {
 		panelTest.textFieldSubject.setText(setSubject);
 	}
   
-    
 	public void setTitle(String setTitle) {
+		title = setTitle;
 		panelTest.textFieldTitle.setText(setTitle);
+	}
+	
+	/**
+	 * checks whether adding a new book succeeded
+	 * @return true if a new book added: new book ID added and book's title is the new title added
+	 */
+	public boolean checkAddBook() {
+		maxBidAfter = Integer.parseInt(DBController.getFromDB("select max(book.bookID) from book").get(0));
+		if(maxBidBefore == maxBidAfter)
+			return false;
+		else
+		{
+			String maxTitle = DBController.getFromDB("select book.Title from book where book.bookID = "+maxBidAfter+"").get(0);
+			if(maxTitle.equals(title))
+				return true;
+		}
+		return false;
 	}
   
 
