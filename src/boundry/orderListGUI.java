@@ -37,7 +37,7 @@ public class orderListGUI extends mainPanel {
 	public static int n = 0;	
 	/**the headers of the orders list table*/
 	private static String[] columnHeader = {"Book ID","Book Name","Date"};
-	private JTable ordersTable;
+	public JTable ordersTable;
 	public JTextPane textPaneReview;
 	public JTextField textFieldTitle;
 	public JButton btnReviewBook;

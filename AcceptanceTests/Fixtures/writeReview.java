@@ -27,6 +27,9 @@ public class writeReview extends ActionFixture {
 	private String title;
 	private int maxReviewBefore;
 	private int maxReviewAfter;
+	private String bid;
+	private String bName;
+	private boolean bool;
 	
 
 	/**
@@ -36,7 +39,7 @@ public class writeReview extends ActionFixture {
 		dbhandler = new DBController("localhost",5555);
 		loginController.use = new User();
 		loginController.use.setUsername("test");
-		loginController.use.setprivilege(6);
+		loginController.use.setprivilege(2);
 		panelTest = new orderListGUI("test", "test");
 		panelTest.makeReview();
 		loginController.mainG = new MainWindowGUI(panelTest);
@@ -81,9 +84,17 @@ public class writeReview extends ActionFixture {
 	 * @return true if book chosen in table
 	 */
 	public boolean checkOrderBook() {
-		if (panelTest.row != -1) return true;
-		else return false;
-			
+		if (panelTest.row == -1) return false; // if no book have chosen
+		/*	bid = (String) panelTest.ordersTable.getValueAt(panelTest.row, 0);
+			bName = (String) panelTest.ordersTable.getValueAt(panelTest.row, 1);
+		
+			bool = DBController.existsInDB("select r.username , r.BookID"
+					+" from reviews r where r.username = '"+loginController.use.getUsername()+"' and r.BookID = '"+bid+"'");
+		
+			if(bool) return false;
+		*/			
+			else return true;
+		
 	}
 	/** 
 	 * checks if the review was sent
