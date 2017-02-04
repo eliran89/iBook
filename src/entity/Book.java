@@ -6,23 +6,23 @@ import java.util.Collection;
 
 public class Book {
 
-	private ArrayList<String> authors;
-	private ArrayList<String> Scope;
-	private ArrayList<String> Key;
-	private ArrayList<String> Subject;
-	private String BookId;
-	private String Title;
-	private String Language;
-	private String Brief;
-	private String Appendix;
+	public ArrayList<String> authors;
+	public ArrayList<String> Scope;
+	public ArrayList<String> Key;
+	public ArrayList<String> Subject;
+	public String BookId;
+	public String Title;
+	public String Language;
+	public String Brief;
+	public String Appendix;
 	private int numberOfSearches;
-	private int numOfOrders;
+	public int numOfOrders;
 	private int absoluteRank;
-	private float cost;
-	private boolean suspended;
-	private String pdfLocation;
-	private String docxLocation;
-	private String fb2Location;
+	public float cost;
+	public boolean suspended;
+	public String pdfLocation;
+	public String docxLocation;
+	public String fb2Location;
 	
 	/**
 	 * 
@@ -43,6 +43,7 @@ public class Book {
 		cost = 0;
 		suspended = false;
 	}
+	
 	/**
 	 * getAuthors
 	 * @return ArrayList<String>
