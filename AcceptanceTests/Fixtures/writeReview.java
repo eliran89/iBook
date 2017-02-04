@@ -35,10 +35,10 @@ public class writeReview extends ActionFixture {
 	/**
 	 * method creates a new connection to DB, log in as a reader and visualize test environment for writing a review
 	 */
-	public void startwriteReview() {
+	public void startWriteReview() {
 		dbhandler = new DBController("localhost",5555);
 		loginController.use = new User();
-		loginController.use.setUsername("test");
+		loginController.use.setUsername("zachi");
 		loginController.use.setprivilege(2);
 		panelTest = new orderListGUI("test", "test");
 		panelTest.makeReview();
@@ -66,13 +66,13 @@ public class writeReview extends ActionFixture {
 	
 	
 	/** method for writing Review Title */
-	public void setReviewTitleField(String setReviewTitle) {
+	public void setTitle(String setReviewTitle) {
 		title= setReviewTitle;
 		panelTest.textFieldTitle.setText(setReviewTitle);
 	}
 	
 	/** method for writing Review Text */
-	public void setReviewTextField(String setReviewText) {
+	public void setText(String setReviewText) {
 		panelTest.textPaneReview.setText(setReviewText);
 	}
 	

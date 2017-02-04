@@ -1,4 +1,26 @@
-<html>
+<html><head><title>Suite addNewBook2.fit run at: Sat Feb 04 19:33:36 IST 2017</title>
+	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="screen"/>
+ 	<link rel="stylesheet" type="text/css" href="css/fitnesse.css" media="print"/>
+<script language="JavaScript" type="text/javascript">
+var collapsableOpenCss = "collapsable"
+var collapsableClosedCss = "hidden"
+var collapsableOpenImg = "images/collapsableOpen.gif"
+var collapsableClosedImg = "images/collapsableClosed.gif"
+function toggleCollapsable(id){
+var div = document.getElementById(id);
+var img = document.getElementById("img" + id);
+if(div.className.indexOf(collapsableClosedCss) != -1) {
+div.className = collapsableOpenCss;
+img.src = collapsableOpenImg;
+} else {
+div.className = collapsableClosedCss;
+img.src = collapsableClosedImg;
+} }
+</script>
+
+</head>
+<body>
+<div> Suite is: C:/Users/Admin/workspace/iBook/AcceptanceTests/fitTests/addNewBook2.fit</div><div class="test_output_name">Name: addNewBook2.fit</div><div> Suite executed at: Sat Feb 04 19:33:36 IST 2017 Elapsed time: 31 seconds 792 millseconds  </div><table><tr><td></td><td><a href="#-6b8b35b4:15a0a303545:-8000">addNewBook2.fit</a></td><td class="error">1 right, 0 wrong, 0 ignored, 1 exceptions</td></tr></table><div class="test_output_name"><a name="-6b8b35b4:15a0a303545:-8000"/><p>Test file: addNewBook2.fit</p></div><html>
 	<head>
 		<meta content="MSHTML 11.00.10570.1001" name="GENERATOR" />
 	</head>
@@ -15,7 +37,7 @@
 	<p>
 		and three formats for the new book: fb2, docx, pdf. Missfilling one of those fields during adding a book might finished with error.</p>
 	<p>
-		Test 4- book add: brief is null</p>
+		Test 2- book add: scope entered without subject</p>
 	<table border="1" cellpadding="1" cellspacing="1" style="width: 200px;">
 		<tbody>
 			<tr>
@@ -48,16 +70,16 @@
 				<td>
 					set title</td>
 				<td>
-					Dogs Dalmatians</td>
+					Cats Dalmatians</td>
 			</tr>
 			<tr>
+				<td class="error">
+					enter<hr/> <span class="fit_label">Could not find method: setAuthor.</span></td>
 				<td>
-					enter</td>
-				<td>
-					set auther</td>
+					set author</td>
 				<td>
 					<p>
-						HB rose</p>
+						HB flower</p>
 				</td>
 			</tr>
 			<tr>
@@ -77,7 +99,7 @@
 					set keyword</td>
 				<td>
 					<p>
-						dogs</p>
+						cats</p>
 				</td>
 			</tr>
 			<tr>
@@ -117,7 +139,7 @@
 					set subject</td>
 				<td>
 					<p>
-						Home animals</p>
+						&nbsp;</p>
 				</td>
 			</tr>
 			<tr>
@@ -147,7 +169,7 @@
 					set brief</td>
 				<td>
 					<p>
-						&nbsp;</p>
+						this is a book for children talking about cats</p>
 				</td>
 			</tr>
 			<tr>
@@ -203,8 +225,12 @@
 					check</td>
 				<td>
 					check add book</td>
-				<td>
+				<td class="pass">
 					false</td>
 			</tr>
 		</tbody>
-	</table></body>
+	</table>
+	<p>
+		&nbsp;</p></body>
+
+</body></html>
